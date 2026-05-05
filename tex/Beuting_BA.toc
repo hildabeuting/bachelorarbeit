@@ -1,0 +1,18 @@
+\babel@toc {ngerman}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\contentsline {chapter}{\numberline {1}inoffizielles Inhaltsverzeichnis}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Einleitung}{3}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Los geht's}{4}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Hier beginnt die Arbeit}{4}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Sinn einer Bachelorarbeit}{4}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Gut gemeinte Ratschläge}{6}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Ein paar allgemeine Hinweise}{6}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Beweise}{7}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Bilder}{8}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Zitieren + Literaturverzeichnis}{9}{section.4.4}%
+\contentsline {section}{\numberline {4.5}LaTeX}{9}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Englisch vs.\ Deutsch}{10}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Iterationen}{10}{section.4.7}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
