@@ -71,7 +71,7 @@
     \vskip 1cm%
     {\LARGE B~\Large A~C~H~E~L~O~R~A~R~B~E~I~T}
     \vskip 8mm
-    {\huge\bfseries\color{change}Wavelettransformation of EKG signals \\[1ex] ggf.\ mehrzeilig}
+    {\huge\bfseries\color{change}Wavelettransformation of ECG signals \\[1ex] ggf.\ mehrzeilig}
     \vskip 1cm
     \large 
     ausgef\"uhrt am    
@@ -175,31 +175,33 @@ hier die aktuelle Idee/Planung
 \\
 \\ 1. Einleitung 
 \\ Die (diskrete) Wavelet und Fourier Transformation wird ja insbesondere im Bereich von Signal-Analysen verwendet. Dabei geht es darum ein Signal von Störungen (Rauschen) zu befreien. Mit lokalen Störungen kann die Wavelettransformation besser als die Fourier-Transformation umgehen. Was ich dabei explizit im Kopf habe sind EKG Signale. Die Arbeit könnte sich also zuerst mit den Grundlagen von Wavelets beschäftigen (und auch der Fourier Transformation). Dort können Sie auch nochmal explizit Konvergenzaussagen besprechen etc… Dann diskutieren sie die diskrete Wavelettrafo, implementieren diese, und wenden Sie dann auf “echte” Signale an. Für EKG Signale gibt es zugängliche Datensätze (googlen Sie mal MIT-BIH).
-
-Grundlage Signalanalyse, Wie ensteht rasuchen? warum will man das vermeiden? Beide Methoden kurz anreißen. 
+\\Grundlage Signalanalyse, Wie ensteht rasuchen? warum will man das vermeiden? Beide Methoden kurz anreissen. 
 %\\ Literatur: 
 \\
-\\  2. mathematische Grundlagen - stellt sich dann später heraus was genau man da braucht - alles aufschreiben was ich zuerst nciht sofort verstehe 
-\\ 
-%\\ Literatur: 
-\\
-\\  3. Fourier Transformation 
-\\  3.1 Theorie 
-\\ 3.2 Konvergenzaussagen 
-\\ 3.3 Angewendet auf EKG Signal - hier python code selbst implementieren 
-\\
+\\ 2. mathematische Grundlagen - stellt sich dann später heraus was genau man da braucht - alles aufschreiben was ich zuerst nciht sofort verstehe 
+\\ $L^2$ Raum, Hilberträume, Orthonormalbasen
 \\ Literatur: 
 \\
-\\  4. wavelets 
-\\ 4.1 Theorie 
+\\ 3. Fourier Transformation 
+\\ 3.1 Theorie 
+\\ 3.2 Konvergenzaussagen 
+\\ 3.3 denoising mit Fouriertransformation 
+\\
+\\ Literatur: Fourier Analysis/ An Introduction - Elias M. Stein, Rami Shakarchi;
+\\ Fourier Analysis and Its Applications - G. B. Folland; 
+\\            
+\\
+\\ 4. wavelets 
+\\ 4.1 Theorie - haar wavelet, beweis orthognoalität haar-basis in $L^2$, Mulitresolution analysis
 \\ 4.2 Konvergenzaussagen 
-\\ 4.3 Angewendet auf EKG Signal - hier python code selbst implementieren 
 \\ Literatur: Ingrid Daubechies: Ten lectures on wavelets.
 \\
-\\  5. vergleich der beiden Methoden 
-\\ Vor und Nachteile, Beobachtungen, Grenzen was geht immer noch nicht?
-\\ Literatur: 
-\\
+\\ 5 . Anwendung auf EKG Signale 
+\\ 5.1 Datensätze und Vorbereitung
+\\ 5.2 Implementierung der Wavelettransformation mit fouriertransformation
+\\ 5.3 Implementierung der Wavelettransformation mit diskreter wavelettransformation - vll mit unterschiedlichen wavelets (Haar, Daubechies, Symlet, ...)
+\\ 5.4 Ergebnisse und Auswertung - Vor und Nachteile, Beobachtungen, Grenzen was geht immer noch nicht?
+\\ Literatur:
 \\
 \\  6. conclusion
 \\ Zusammenfassung der wichtigsten Punkte 
