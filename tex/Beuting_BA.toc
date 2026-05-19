@@ -1,18 +1,31 @@
 \babel@toc {ngerman}{}\relax 
-\babel@toc {ngerman}{}\relax 
-\babel@toc {ngerman}{}\relax 
-\babel@toc {ngerman}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
 \contentsline {chapter}{\numberline {1}inoffizielles Inhaltsverzeichnis}{1}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Einleitung}{3}{chapter.2}%
-\contentsline {chapter}{\numberline {3}Los geht's}{4}{chapter.3}%
+\contentsline {chapter}{\numberline {2}Introduction}{3}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Mathematical Foundations}{4}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Hier beginnt die Arbeit}{4}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Sinn einer Bachelorarbeit}{4}{section.3.2}%
-\contentsline {chapter}{\numberline {4}Gut gemeinte Ratschläge}{6}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Ein paar allgemeine Hinweise}{6}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Beweise}{7}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Bilder}{8}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Zitieren + Literaturverzeichnis}{9}{section.4.4}%
-\contentsline {section}{\numberline {4.5}LaTeX}{9}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Englisch vs.\ Deutsch}{10}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Iterationen}{10}{section.4.7}%
+\contentsline {chapter}{\numberline {4}Fourier Transform}{5}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Theoretical foundations}{5}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Definition of the Fourier Transform}{5}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Inverse Fourier Transform}{5}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Convergence results}{5}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Denoising/ Signal Processing with Fourier Transform}{5}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Limitations of Fourier Transform for Denoising}{5}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Wavelet Transform}{6}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Motivation}{7}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Theoretical foundations}{7}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Convergence results}{7}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Denoising/ Signal Processing with Wavelet Transform}{7}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Application to ECG signals}{8}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Datasets and preparation}{8}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Implementation of the Fourier Transform}{8}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Implementation of the Wavelet Transform}{8}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Results and discussion}{8}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Zitieren + Literaturverzeichnis}{8}{section.7.5}%
+\contentsline {section}{\numberline {7.6}LaTeX}{9}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Englisch vs.\ Deutsch}{9}{section.7.7}%
+\contentsline {section}{\numberline {7.8}Iterationen}{10}{section.7.8}%
+\contentsline {chapter}{\nonumberline Bibliography}{11}{chapter*.3}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -1,0 +1,21 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/Beuting_BA.aux": true,
+        "**/Beuting_BA.log": true,
+        "**/Beuting_BA.gz": true,
+        "**/Beuting_BA.out": true,
+        "**/beuting_seminar.aux": true,
+        "**/beuting_seminar.log": true,
+        "**/beuting_seminar.gz": true,
+        "**/beuting_seminar.out": true,
+        "**/beuting_seminar Kopie.aux": true,
+        "**/beuting_seminar Kopie.log": true,
+        "**/beuting_seminar Kopie.gz": true,
+        "**/beuting_seminar Kopie.out": true
+    }
+}

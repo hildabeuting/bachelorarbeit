@@ -19,7 +19,7 @@ from pathlib import Path # bibliothek zum arbeiten mit dateipfaden
 # ── 1. Datei auswählen ────────────────────────────────────────────────────
 
 # Temporär: Feste Datei verwenden, um das Skript zu testen
-record_pfad = "data/103"  # Beispiel: Record 100 aus dem data-Ordner
+record_pfad = "data/101"  # Beispiel: Record 100 aus dem data-Ordner
 
 # Original: Dialog für Dateiauswahl (funktioniert nur in GUI-Umgebung)
 # root = tk.Tk() # Hauptfenster erstellen
@@ -105,7 +105,7 @@ output_dir.mkdir(parents=True, exist_ok=True) #eigentlich unnötig, da der ordne
 output_path = output_dir / f"{Path(record_pfad).name}_plot.png" #erstellt den pfad für die ausgabedatei, z.b. "ergebnisse/100.hea_plot.png", indem es den namen der eingabedatei nimmt und "_plot.png" anhängt
 
 plt.savefig(output_path, dpi=150) #speichert den plot als png datei im angegebenen pfad, dpi = dots per inch = auflösung des bildes, 150 ist eine gute auflösung für web und druck
-plt.show() #öffnet ein fenster mit dem plot
+# plt.show() wird später aufgerufen
 
 print(f"Plot gespeichert als {output_path}") #gibt speicherort aus 
 
@@ -117,8 +117,8 @@ N = len(sig) #welches intervall deckt das signal ab
 # DFT diskrete fourier transformation berechnen
 X = np.fft.fft(sig) 
 
-# Nur positive Frequenzen (die andere Hälfte ist gespiegelt)
-X_halb = X[:N//2] #warum?
+# Nur positive Frequenzen (die andere Hälfte ist gespiegelt) -> siehe ergebnisse/101
+X_halb = X[:N//2] 
 
 # Frequenzachse bauen
 freqs = np.fft.fftfreq(N, d=1/abtastrate)[:N//2]
@@ -139,7 +139,7 @@ plt.tight_layout()
 # Speichern des Frequenzspektrums
 spectrum_output_path = output_dir / f"{Path(record_pfad).name}_spectrum_fft.png"
 plt.savefig(spectrum_output_path, dpi=150)
-plt.show()
+# plt.show() wird später aufgerufen
 
 print(f"Frequenzspektrum gespeichert als {spectrum_output_path}")
 
@@ -174,6 +174,9 @@ plt.tight_layout()
 # Speichern des kombinierten Plots
 combined_output_path = output_dir / f"{Path(record_pfad).name}_combined_plot.png"
 plt.savefig(combined_output_path, dpi=150)
-plt.show()
+# plt.show() wird später aufgerufen
 
 print(f"Kombinierter Plot gespeichert als {combined_output_path}")
+
+# Alle Plots anzeigen
+plt.show()
