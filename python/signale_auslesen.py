@@ -18,33 +18,16 @@ from pathlib import Path # bibliothek zum arbeiten mit dateipfaden
 
 # ── 1. Datei auswählen ────────────────────────────────────────────────────
 
-# Temporär: Feste Datei verwenden, um das Skript zu testen
-record_pfad = "data/101"  # Beispiel: Record 100 aus dem data-Ordner
+projekt_root = Path(__file__).resolve().parent.parent
+record_pfad = projekt_root / "data" / "101"  # Beispiel: Record 101 aus dem data-Ordner
 
-# Original: Dialog für Dateiauswahl (funktioniert nur in GUI-Umgebung)
-# root = tk.Tk() # Hauptfenster erstellen
-# root.withdraw()  # Hauptfenster verstecken
-
-# print("Bitte wähle die .hea Datei aus...")
-
-# hea_pfad = filedialog.askopenfilename( #der dateiauswahl dialog wird geöffnet und auswählter pfad wird in hea_pfad gespeichert
-#     title="EKG Datei auswählen (.hea)", 
-#     filetypes=[("EKG Header", "*.hea")]
-# )
-
-# if not hea_pfad:
-#     print("Keine Datei ausgewählt. Programm beendet.")
-#     exit()
-
-# # Dateipfad ohne .hea Endung (wfdb braucht das so)
-# record_pfad = hea_pfad.replace(".hea", "") #wfdb arbeitet mit basisnamen deswegen .hea entfernen
 print(f"Geladen: {record_pfad}") #zeigt an welche datei man ausgewählt hat
 
 
 # ── 2. Signal einlesen ────────────────────────────────────────────────────
 
-record = wfdb.rdrecord(record_pfad) #lädt die ekg daten in record
-ann    = wfdb.rdann(record_pfad, "atr") #lädt sich die zugehörige atr (= annotation datei) runter
+record = wfdb.rdrecord(str(record_pfad)) #lädt die ekg daten in record
+ann    = wfdb.rdann(str(record_pfad), "atr") #lädt sich die zugehörige atr (= annotation datei) runter
 
 print(record.sig_name) #zeigt welche kanäle in den ekg daten vorhanden sind
 
@@ -55,7 +38,7 @@ signal     = record.p_signal[:, 0]   # Kanal MLII
 # ── 3. Zeitfenster festlegen ──────────────────────────────────────────────
 
 start_sek = 0
-end_sek   = 10
+end_sek   = 50
 
 start_idx = start_sek * abtastrate 
 end_idx   = end_sek   * abtastrate # 10 sekunden * 360 messungen pro sekunde = 3600 messungen im zeitraum von 10 sekunden
@@ -119,12 +102,16 @@ X = np.fft.fft(sig)
 
 # Nur positive Frequenzen (die andere Hälfte ist gespiegelt) -> siehe ergebnisse/101
 X_halb = X[:N//2] 
+#alle frequenzen anzeigen
+Halb_alle = X[:N]
 
 # Frequenzachse bauen
 freqs = np.fft.fftfreq(N, d=1/abtastrate)[:N//2]
+freqs_alle = np.fft.fftfreq(N, d=1/abtastrate)[:N]
 
 # Amplitudenspektrum (Betrag)
 amplitude = np.abs(X_halb)
+amplitude_alle = np.abs(Halb_alle)
 
 # Plotten
 fig, ax = plt.subplots(figsize=(14, 4))
@@ -142,6 +129,16 @@ plt.savefig(spectrum_output_path, dpi=150)
 # plt.show() wird später aufgerufen
 
 print(f"Frequenzspektrum gespeichert als {spectrum_output_path}")
+
+fig, ax2 = plt.subplots(figsize=(14, 4))
+ax2.plot(freqs_alle, amplitude_alle, color="darkorange", linewidth=0.9)
+ax2.set_xlabel("Frequenz (Hz)")
+ax2.set_ylabel("|X[k]| – Amplitude")
+ax2.set_title("Frequenzspektrum des EKG-Signals (Alle Frequenzen)")
+ax2.set_xlim(-20, 20)   # Alle Frequenzen anzeigen
+ax2.grid(True, alpha=0.3)
+plt.tight_layout()  
+
 
 
 # ── Kombinierter Plot: EKG + Frequenzspektrum ───────────────────────────── 
