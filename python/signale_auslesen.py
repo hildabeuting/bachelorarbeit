@@ -38,7 +38,7 @@ signal     = record.p_signal[:, 0]   # Kanal MLII
 # ── 3. Zeitfenster festlegen ──────────────────────────────────────────────
 
 start_sek = 0
-end_sek   = 50
+end_sek   = 70
 
 start_idx = start_sek * abtastrate 
 end_idx   = end_sek   * abtastrate # 10 sekunden * 360 messungen pro sekunde = 3600 messungen im zeitraum von 10 sekunden
