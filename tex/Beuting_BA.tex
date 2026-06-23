@@ -666,6 +666,7 @@ Der Faktor $\frac{1}{|a|^{1/2}}$ sorgt dafür, dass die Transformation bezüglic
 $ ||\psi(a,b)||_{L^2} = ||\psi||_{L^2} = 1$, das $||\psi||_{L^2} = ||\psi_{a,b}||_{L^2}$ gilt kann man durch Substitution von $u= t-b/a$ sofort sehen. NACHRECHNEN
 
 
+
 \begin{beispiel}
   \textcolor{red}{Um die neuen Definitionen einordnen zu können, hier zur Veranschaulichung ein Beispiel.}
   Betrachte das Mexikanerhut-Wavelet, welches definiert ist durch die Funktion:
@@ -777,7 +778,7 @@ Dieses ist definiert durch
 
 
   % ------------------------------------------------------------
-  \subsection{Umkehrformel der Wavelet-Transformation}
+  \subsection{Kontinuierliche Umkehrformel der Wavelet-Transformation (ICWT)}
   % \cite[Section 3.3]{blatterWaveletsEinfuhrung2003}
   
   
@@ -898,104 +899,382 @@ Dieses ist definiert durch
   % \cite[ch. 3, p. 53--106]{daubechiesTenLecturesWavelets2006}
   % \cite[Section 4]{blatterWaveletsEinfuhrung2003}
 
-  \subsubsection{Motivation der Diskretisierung: Redundanz und das dyadische Gitter}
-  \begin{itemize}
-    %\item CWT: Parameter $a \in \mathbb{R}^*$, $b \in \mathbb{R}$ → unendlich viele Werte,
-    %  auf dem Computer nicht realisierbar
-    %  \cite[ch.\,3, p.\,53--106]{daubechiesTenLecturesWavelets2006}
-    %\item EKG-Signal bereits diskret (z.\,B. 360\,Hz beim MIT-BIH Datensatz)
+  MOTIVATION 
+  HIER AUF PASSENDE DEFINITOENN UND SO NOCH VERWEISEN....
+  Die Kontinuierliche Wavelet-Transformation (CWT) $Wf(a,b)$ ist abhängig von den reellen Paramtern $a,b$.
+  VERÄNDERN Man speichert in $Wf(a,b)$ quasi doppelt so viele Informationen wie zuvor, weil auch der Plot jetzt 3d und nicht mehr 2d ist....
+  Damit ist die CWT massiv redundant, das heisst konkret dass benachtbarte $(a,b)$-Werte fast identische Informationen liefern. 
 
-    \item CWT massiv redundant: benachbarte $(a,b)$-Werte liefern fast identische Information
+  Man will die CWT nach der Verarbeitung der Signale $f$ oft wieder rückgängig machen, mit Hilfe der 
+  Kontinuerlichen Umkehrformel der Wavelet-Transformation (ICWT). Hierbei wird das Signal $f$ rekonstruiert
+  durch die CWT $Wf(a,b)$ mit \ref{satz: Umkehrformel der CWT}, bei der Rekonstruktion wird über $a$ und $b$ integriert, 
+  dabei integriert man quasi die redundanten Informationen wieder hinaus. Das ist für die 
+  Signalverarbeitung Verschwendung.
+  KOMISCHER SATZ 
 
-    \item -> das ursprüngliche signal ist 1d das ergebnis der wavelettrafo 2d 
-
-    \item -> $W(a,b)$ hängt von skalierung $a$ und Verschiebung $b$ ab. 
-
-    \item -> hier DEFINITION FRAME \cite[S.87,88]{blatterWaveletsEinfuhrung2003}
-
-    \item -> Motiviation: Unterschied Frame vs BASIS
-
-    \item -> Wavelets bilden Frame: \cite[S.90, 91 / Satz 4.8]{blatterWaveletsEinfuhrung2003}
-
-                                    \cite[S.94 / Satz 4.10]{blatterWaveletsEinfuhrung2003}
+  Diese Redundanz motiviert die Wahl eines Gitters von $(a,b)$-Werten, statt kontinuerliche Parameter
+  die eine unnötige Redundanz vermeiden, ohne jedoch einen Informationsverlust zu erlauben und damit 
+  die Diskrete Wavelet-Transformation, die dann in der Praxis verwendet wird, um Signale effektiv zu verarbeiten.
 
 
-    \item -> weil a und b aus R sind hat man jetzt quasi doppelt so viele informationen 
+  Um die Redundanz mathematisch zu betrachten wird im folgendem der Begriff des Frames definiert.
 
-    \item -> eng benachtbarte punkte von W enthalten quasi die gleiche information -> unnötig
 
-    \item -> muss dann bei der Rücktransformation wieder über alle a und alle b zurückintegrieren 
-    dabei integriert man die rednundaten informationen wieder heraus
+  soll ich frame gleih auf $L^2$ defnienren? noch überlegen
+  \begin{definition}[Frame]
+    DEFINIERN GESCHEIT ÜBERELEGEN......
+    Eine Familie $h_\cdot := (h_j | j \in \mathbb{Z})$ WAS IST M IN MEINEM FALL KONKRET?? 
+    ist ein Frame, wenn gilt: 
+  \end{definition}  
 
-    \item -> ist für datenverarbeitung verschwendung 
 
-    \item -> deswegen stellt man sich die frage welche werte für a und b kann ich weglassen, 
-    welche sind wichtig damit ich bei der transformation keine informationen verliere
+  Der Unterschied zwischen einer Basis und einem Frame für eine Raum ist entscheidend. 
+  Eine Basis für einen Raum ? besteht aus die linear unahängigen Vektoren, die durch 
+  Linearkombination der einzelnen Vektoren den gesamten Raum aufspannen. 
+  Ein Frame spannt ebenfalls den gesamten Raum auf, jedoch müssen die Vektoren des Frames
+  nicht linear unanhänig sein. Eine Redundanz wie bei der CWT ist also erlaubt. 
 
-    \item Idee: Gitter von $(a,b)$-Werten statt kontinuierlicher Parameter
+  Bei der CWT bilden die verschobenen und skalierten Versionen des Mutterwavelets also einen Frame für $L^2$.
 
-    \item -> "Wie weit muss ich auf der a-Achse und der b-Achse springen (Abtastung), damit 
-    die Wavelets gerade so weit auseinanderliegen, dass sie sich nicht mehr gegenseitig 
-    behindern und die lineare Abhängigkeit verschwindet?"
+  Damit ist die Motivation der Diskretisierung der CWT erkennbar. Man will die Redundanz des 
+  Frames mit einer geeigenten Diskretisierung der $a,b$ Werte verkleinern. Im Optimalfall
+  sollte man genau so viele $a,b$ Werte betrachten, dass der Frame aus $\phi_{a,b}$ zu einer Orthonormalbasis
+  für $L^2$ wird.
 
-    \item -> antwort dydadisches gitter 
+  Die Standardwahl des Gitters für a,b ist das dydadische Gitter.
 
-    \item Standardwahl (dyadisches Gitter):
-      \[
-        a = a_0^m, \quad b = n \cdot b_0 \cdot a_0^m, \quad m,n \in \mathbb{Z}
-      \]
-      mit $a_0 = 2$ (Oktaven), $b_0 = 1$
-    \item Intuition: bei grober Skala weniger Verschiebungen nötig (Wavelet bereits breit)
-    \item Zentrale Frage: Geht durch Diskretisierung Information verloren? → Frame-Begriff
-    -> ziel der DWT: orthorormale Basis von $L^2$ finden, und zwar aus wavelets 
-  \end{itemize}
+  \begin{definition}[Das Dydadische Gitter]
+    ...
+  \end{definition}
+
+  Das das dydaschische Gitter für viele Mutterwavelets eine optimale Wahl ist soll noch gezeigt werden\dots
+  BIN MIR NOCH NICHT SICHER WANN\dots
+  
+
+
+  
+
+  %\subsubsection{Motivation der Diskretisierung: Redundanz und das dyadische Gitter}
+  %\begin{itemize}
+  %  %\item CWT: Parameter $a \in \mathbb{R}^*$, $b \in \mathbb{R}$ → unendlich viele Werte,
+  %  %  auf dem Computer nicht realisierbar
+  %  %  \cite[ch.\,3, p.\,53--106]{daubechiesTenLecturesWavelets2006}
+  %  %\item EKG-Signal bereits diskret (z.\,B. 360\,Hz beim MIT-BIH Datensatz)
+%
+  %  %\item CWT massiv redundant: benachbarte $(a,b)$-Werte liefern fast identische Information
+%
+  %  %\item -> das ursprüngliche signal ist 1d das ergebnis der wavelettrafo 2d 
+%
+  %  %\item -> $W(a,b)$ hängt von skalierung $a$ und Verschiebung $b$ ab. 
+%
+  %  \item -> hier DEFINITION FRAME \cite[S.87,88]{blatterWaveletsEinfuhrung2003}
+%
+  %  \item -> Motiviation: Unterschied Frame vs BASIS
+%
+  %  \item -> Wavelets bilden Frame: \cite[S.90, 91 / Satz 4.8]{blatterWaveletsEinfuhrung2003}
+%
+  %                                  \cite[S.94 / Satz 4.10]{blatterWaveletsEinfuhrung2003}
+%
+%
+  %  %\item -> weil a und b aus R sind hat man jetzt quasi doppelt so viele informationen 
+%
+  %  %\item -> eng benachtbarte punkte von W enthalten quasi die gleiche information -> unnötig
+%
+  %  %\item -> muss dann bei der Rücktransformation wieder über alle a und alle b zurückintegrieren 
+  %  %dabei integriert man die rednundaten informationen wieder heraus
+%
+  %  %\item -> ist für datenverarbeitung verschwendung 
+%
+  %  %\item -> deswegen stellt man sich die frage welche werte für a und b kann ich weglassen, 
+  %  %welche sind wichtig damit ich bei der transformation keine informationen verliere
+%
+  %  %\item Idee: Gitter von $(a,b)$-Werten statt kontinuierlicher Parameter
+%
+  %  %\item -> "Wie weit muss ich auf der a-Achse und der b-Achse springen (Abtastung), damit 
+  %  %die Wavelets gerade so weit auseinanderliegen, dass sie sich nicht mehr gegenseitig 
+  %  %behindern und die lineare Abhängigkeit verschwindet?"
+%
+  %  \item -> antwort dydadisches gitter 
+%
+  %  \item Standardwahl (dyadisches Gitter):
+  %    \[
+  %      a = a_0^m, \quad b = n \cdot b_0 \cdot a_0^m, \quad m,n \in \mathbb{Z}
+  %    \]
+  %    mit $a_0 = 2$ (Oktaven), $b_0 = 1$
+  %  \item Intuition: bei grober Skala weniger Verschiebungen nötig (Wavelet bereits breit)
+  %  \item Zentrale Frage: Geht durch Diskretisierung Information verloren? → Frame-Begriff
+  %  -> ziel der DWT: orthorormale Basis von $L^2$ finden, und zwar aus wavelets 
+  %\end{itemize}
+ %
 
   \subsection{Die Multiresoltionsanalyse (MRA)}
-  -> der hintergrund warum das dyadische Gitter eine orthornormalbasis bildet...
 
-  -> motivation - wie funktionert zerlegung
+  %-> motivation - wie funktionert zerlegung
+%
+  %-> definition $V_j$ und $W_j$
+%
+  %-> erklärung warum dann dyadisches Gitter orthonormalbasis liefert
 
-  -> definition $V_j$ und $W_j$
+   Die kontinuierliche Wavelet-Transformation liefert für jedes Signal
+   $f \in L^2(\mathbb{R})$ eine zweidimensionale Funktion
+   $(a,b) \mapsto Wf(a,b)$, die das Signal mit gro\ss er Redundanz
+   speichert \cite[S.\,91]{blatterWaveletsEinfuhrung2003}.
+   Die diskrete Wavelet-Transformation auf dem dyadischen Gitter
+   $a = 2^{-m}$, $b = n \cdot 2^{-m}$ behebt dieses Problem und liefert
+   unter geeigneten Voraussetzungen an $\psi$ einen Frame für
+   $L^2(\mathbb{R})$ \cite[S.\,106, Abschn.\,5.1]{blatterWaveletsEinfuhrung2003}.
+   Das Ziel der Multiresolutionsanalyse (MRA) ist es, diesen Frame
+   von vorneherein als orthonormierte Basis zu konstruieren -- und damit
+   die aufwendige Berechnung dualer Frame-Vektoren überflüssig zu machen.
 
-  -> erklärung warum dann dyadisches Gitter orthonormalbasis liefert
-
-
-  MRA zerlegt $L^2$ in eine Kette von ineinander verschachtelten Unterräumen $V_j$ 
-  (mit $j \in \mathbb(Z)$ die Aufölsungsstufe darstellt)
-
-  Es gilt 
-
-  $V_0$ ist ein grobes Sieb,
-
-  $V_1$ ist ein feineres Sieb,
-
-  $V_2$ ist ein ncoh feineres Sieb.
-
-  Es gilt die Verschachtelung: 
-
-  $\cdots \subset V_{-1} \subset V_0 \subset V_1 \subset \cdots \subset L^2(\mathbb(R))$
-
-  -> bei blatter andersrum...... \cite[S. 106]{blatterWaveletsEinfuhrung2003}
-  Das heisst: alles was im groben raum $V_0$ dargestellt werden kann, kann 
-  auch im feineren raum $V_1$ dargestellt werden... Wenn j gegen unendlcih geht kann man 
-  jedes beliebiges Signal perfekt beschreiben.
-
-  Wenn $V_0 \subset V_1$ echte teilmenge weil $V_1$ mehr details hat enthält als $V_0$
-  dann muss es einen Raum geben der genau diesen Unterschied beschreibt.
-  Nennen wir $W_0$, dieser Raum ist das orthogonlae Komplement von $V_0$ in $V_1$:
-
-  \cite[S. 108 / Satz 5.1]{blatterWaveletsEinfuhrung2003}
-  $V_1 = V_0 \otimes W_0$
-
-  wobei $\otimes$, dydadischwes Produkt/direkte Summe, bedeutet, dass man jede Funktion aus 
-  $V_1$ so aufteilen kann: ein groben anteil aus $V_0$ und einen Detailteil aus $W_0$
-
-  Man kann das weiter machen sodass man dann jede funktion aus $L^2$ darstellen kann
-  als ...
-
-  also: $L^2(\mathbb(R))= V_0 + W_0 \otimes W_1 \otimes W_2 \otimes \cdot$
+  %MRA zerlegt $L^2$ in eine Kette von ineinander verschachtelten Unterräumen $V_j$ 
+  %(mit $j \in \mathbb(Z)$ die Aufölsungsstufe darstellt)
+%
+  %Es gilt 
+%
+  %$V_0$ ist ein grobes Sieb,
+%
+  %$V_1$ ist ein feineres Sieb,
+%
+  %$V_2$ ist ein ncoh feineres Sieb.
+%
+  %Es gilt die Verschachtelung: 
+%
+  %$\cdots \subset V_{-1} \subset V_0 \subset V_1 \subset \cdots \subset L^2(\mathbb(R))$
+%
+  %-> bei blatter andersrum...... \cite[S. 106]{blatterWaveletsEinfuhrung2003}
+  %Das heisst: alles was im groben raum $V_0$ dargestellt werden kann, kann 
+  %auch im feineren raum $V_1$ dargestellt werden... Wenn j gegen unendlcih geht kann man 
+  %jedes beliebiges Signal perfekt beschreiben.
+%
+  %Wenn $V_0 \subset V_1$ echte teilmenge weil $V_1$ mehr details hat enthält als $V_0$
+  %dann muss es einen Raum geben der genau diesen Unterschied beschreibt.
+  %Nennen wir $W_0$, dieser Raum ist das orthogonlae Komplement von $V_0$ in $V_1$:
+%
+  %\cite[S. 108 / Satz 5.1]{blatterWaveletsEinfuhrung2003}
+  %$V_1 = V_0 \otimes W_0$
+%
+  %wobei $\otimes$, dydadischwes Produkt/direkte Summe, bedeutet, dass man jede Funktion aus 
+  %$V_1$ so aufteilen kann: ein groben anteil aus $V_0$ und einen Detailteil aus $W_0$
+%
+  %Man kann das weiter machen sodass man dann jede funktion aus $L^2$ darstellen kann
+  %als ...
+%
+  %also: $L^2(\mathbb(R))= V_0 + W_0 \otimes W_1 \otimes W_2 \otimes \cdot$
  
- 
+ %---------------------------------------------------------------
+   \subsubsection{Definition der Multiresolutionsanalyse}
+   \label{sec:mra-definition}
+   %---------------------------------------------------------------
+   
+   \begin{definition}[Multiresolutionsanalyse {\cite[S.\,106]{blatterWaveletsEinfuhrung2003}}]
+   \label{def:mra}
+   Eine \emph{Multiresolutionsanalyse} (MRA) von $L^2(\mathbb{R})$ besteht
+   aus einer zweiseitigen Folge $(V_j)_{j \in \mathbb{Z}}$ abgeschlossener
+   Teilräume von $L^2(\mathbb{R})$ sowie einer Skalierungsfunktion $\phi \in L^2(\mathbb{R}) \cap L^1(\mathbb{R})$,
+   die gemeinsam die folgenden Axiome erfüllen:
+   
+   \begin{enumerate}
+     \item \textbf{Inklusion (Schachtelung):}
+       \begin{equation}
+         \label{eq:mra-inklusion}
+         \cdots \subset V_2 \subset V_1 \subset V_0 \subset V_{-1}
+                \subset \cdots \subset L^2(\mathbb{R}).
+       \end{equation}
+       Dabei entspricht ein kleinerer Index $j$ einem gro \ss erem, feineren Raum.\footnote{%
+         Blatter \cite[S.\,106]{blatterWaveletsEinfuhrung2003}
+         folgt hier der Konvention von Daubechies \cite{daubechiesTenLecturesWavelets2006},
+         bei der kleineres $j$ feinere Auflösung bedeutet.
+         Mallat \cite{mallatWaveletTourSignal1999} nummeriert umgekehrt;
+         dort wächst die Auflösung mit $j$.}
+   
+     \item \textbf{Separationsaxiom:}
+       \begin{equation}
+         \label{eq:mra-sep}
+         \bigcap_{j \in \mathbb{Z}} V_j = \{0\}.
+       \end{equation}
+   
+     \item \textbf{Vollständigkeitsaxiom:}
+       \begin{equation}
+         \label{eq:mra-voll}
+         \overline{\bigcup_{j \in \mathbb{Z}} V_j} = L^2(\mathbb{R}).
+       \end{equation}
+   
+     \item \textbf{Skalierungsinvarianz:}
+       \begin{equation}
+         \label{eq:mra-skala}
+         f(\,\cdot\,) \in V_j
+         \quad\Longleftrightarrow\quad
+         f(2^j \,\cdot\,) \in V_0
+         \qquad \forall\, j \in \mathbb{Z},
+       \end{equation}
+       wobei $f$ ein Zeitsignal ist.
+   
+     \item \textbf{Translationsinvarianz:}
+       \begin{equation}
+         \label{eq:mra-trans}
+         f(\,\cdot\,) \in V_0
+         \quad\Longrightarrow\quad
+         f(\,\cdot - k) \in V_0
+         \qquad \forall\, k \in \mathbb{Z},
+       \end{equation}
+       wobei $f$ ein Zeitsignal ist.
+   
+     \item \textbf{Orthonormalbasis von $V_0$:}
+       Es gibt eine Skalierungsfunktion (engl. father wavelet) $\phi \in L^2(\mathbb{R}) \cap L^1(\mathbb{R})$,
+       sodass die Familie $\{\phi(\,\cdot - k)\}_{k \in \mathbb{Z}}$ eine
+       orthonormierte Basis von $V_0$ bildet.
+   \end{enumerate}
+   \end{definition}
+   
+   \begin{bemerkung}[Intuition der Axiome]
+   Die Axiome beschreiben eine aufsteigende Auflösungsleiter.
+   Die Räume $V_j$ enthalten Signale, deren feinstes Detail die
+   Zeitskala $2^j$ besitzt: Je kleiner $j$, desto feiner die
+   darstellbaren Details, desto größer der Raum.
+   Axiom~\eqref{eq:mra-inklusion} sichert die Konsistenz der Leiter;
+   Axiom~\eqref{eq:mra-sep} verhindert, dass ein nichttriviales Signal
+   in allen Räumen gleichzeitig liegt; Axiom~\eqref{eq:mra-voll}
+   garantiert, dass jedes $L^2$-Signal durch Elemente der Leiter
+   beliebig genau approximiert werden kann.
+   Die Skalierungsinvarianz~\eqref{eq:mra-skala} verknüpft die Räume
+   untereinander: Der Übergang $V_j \to V_{j-1}$ entspricht einer
+   Halbierung der Zeitskala, also einer Verdopplung der Auflösung.
+
+   Was macht 4.5?
+   \end{bemerkung}
+   
+   Aus Axiom~(6) ergibt sich, dass die Funktionenfamilie
+   $\phi_{j,k}(t) := 2^{-j/2}\,\phi(2^{-j}t - k)$, $k \in \mathbb{Z}$,
+   eine orthonormierte Basis von $V_j$ liefert; benachbarte Basisfunktionen
+   sind dabei um die Schrittweite $2^j$ gegeneinander verschoben
+   \cite[S.\,107]{blatterWaveletsEinfuhrung2003}.
+
+   %---------------------------------------------------------------
+   \subsubsection{Die Detailräume $W_j$ und die orthogonale Zerlegung}
+   \label{sec:mra-wj}
+   %---------------------------------------------------------------
+   
+   Da die Inklusion $V_j \subsetneq V_{j-1}$ echt ist, enthält
+   $V_{j-1}$ streng mehr Information als $V_j$.
+   Der Informationsgewinn beim Übergang von der gröberen Skala $V_j$
+   zur feineren Skala $V_{j-1}$ lässt sich algebraisch isolieren:
+   
+   \begin{definition}[Detailräume {\cite[S.\,107]{blatterWaveletsEinfuhrung2003}}]
+   \label{def:wj}
+   Sei $(V_j)_{j\in\mathbb{Z}}$ eine MRA. Für jedes $j \in \mathbb{Z}$
+   definiert man den Detailraum $W_j$ als das orthogonale
+   Komplement von $V_j$ in $V_{j-1}$:
+   \begin{equation}
+     \label{eq:def-wj}
+     V_{j-1} = V_j \oplus W_j, \qquad W_j \perp V_j,
+   \end{equation}
+   wobei $\oplus$ die direkte Summe bezeichnet.
+   \end{definition}
+   
+   Anschaulich gesprochen: Jede Funktion $f \in V_{j-1}$ lässt sich
+   eindeutig in einen groben Anteil $f_{\text{approx}} \in V_j$
+   und einen Detailanteil $f_{\text{detail}} \in W_j$ zerlegen,
+   die senkrecht aufeinander stehen.
+   Für ein EKG-Signal bedeutet das etwa: $f_{\text{approx}}$ erfasst
+   die grobe Hüllkurve auf Skala $2^j$, während $f_{\text{detail}}$
+   die feineren Strukturen -- wie die Flanken der QRS-Zacke -- enthält,
+   die $V_j$ allein nicht auflösen kann.
+   
+   \medskip
+   
+   Die sukzessive Anwendung der Zerlegung~\eqref{eq:def-wj} ergibt die
+   vollständige orthogonale Zerlegung von $L^2(\mathbb{R})$:
+   
+   \begin{satz}[Orthogonale Zerlegung von $L^2$
+     {\cite[S.\,108, Satz~5.1]{blatterWaveletsEinfuhrung2003}}]
+   \label{satz:l2-zerlegung}
+   Besitzt das System $(V_j)_{j\in\mathbb{Z}}$ die Eigenschaften einer MRA
+   gemä\ss Definition~\ref{def:mra}, so sind die zugehörigen Teilräume
+   $(W_j)_{j\in\mathbb{Z}}$ paarweise orthogonal, und es gilt 
+   \begin{equation}
+     \label{eq:l2-zerlegung}
+     L^2(\mathbb{R}) = \bigoplus_{j \in \mathbb{Z}} W_j.
+   \end{equation}
+   \end{satz}
+   
+
+   VORSCIHT DIE BEWEISIDEE IST NOCH ZU ÜBERARBEITEN
+   \begin{proof}[Beweisidee {\cite[S.\,108]{blatterWaveletsEinfuhrung2003}}]
+   Die paarweise Orthogonalität folgt direkt aus der Definition: Für $i > j$
+   gilt $W_i \subset V_{i-1} \subset V_j$, woraus mit~\eqref{eq:def-wj}
+   sofort $W_i \perp W_j$ folgt.
+   
+   Für den Vollständigkeitsteil sei $f \in L^2(\mathbb{R})$ orthogonal
+   zu allen $W_j$, $j \in \mathbb{Z}$. Nach dem Vollständigkeitsaxiom~%
+   \eqref{eq:mra-voll} existiert zu jedem $\varepsilon > 0$ ein $h_0 \in V_{j_0}$
+   mit $\|f - h_0\| < \varepsilon$. Durch sukzessive Zerlegung
+   $h_0 = h_n + \sum_{k=1}^n g_k$ mit $h_n \in V_{j_0+n}$,
+   $g_k \in W_{j_0+k}$ und Pythagoras' Satz konvergiert $h_n$ gegen
+   ein $h \in \bigcap_j V_j = \{0\}$ (Separationsaxiom~\eqref{eq:mra-sep}).
+   Da $f$ auf allen $g_k$ senkrecht steht, folgt $(f, h_0) = 0$,
+   und weil $\varepsilon > 0$ beliebig war, $f = 0$.
+   % \textcolor{blue}{[Details: Blatter, S.~108, vollständiger Beweis.]}
+   \end{proof}
+   
+   \medskip
+   
+   Gleichung~\eqref{eq:l2-zerlegung} lässt sich auch in der Form
+   \begin{equation}
+     \label{eq:l2-zerlegung-v0}
+     L^2(\mathbb{R}) = V_0 \oplus \bigoplus_{j \leq 0} W_j
+   \end{equation}
+   schreiben, indem man einen Anker-Raum $V_0$ explizit behält und
+   die Detailräume für feinere Skalen $j < 0$ hinzufügt.
+   Dies entspricht der praktischen Situation, in der man das Signal
+   bis zu einer Basisauflösung approximiert und anschließend sukzessive
+   Detailschichten hinzufügt.
+   
+   %---------------------------------------------------------------
+   \subsubsection{Tiefpass- und Hochpassinterpretation}
+   \label{sec:mra-filter}
+   %---------------------------------------------------------------
+   
+   Die Orthogonalprojektion $P_j$ von $L^2(\mathbb{R})$ auf $V_j$ wirkt
+   als \emph{Tiefpassfilter}: Das projizierte Signal $P_j f$ enthält noch
+   alle Anteile von $f$, die eine Zeitausdehnung von mindestens $2^j$
+   besitzen, schneidet aber feinere Details ab
+   \cite[S.\,107, 109]{blatterWaveletsEinfuhrung2003}.
+   Formal gilt
+   \begin{equation}
+     P_j f = \sum_{k=-\infty}^{\infty} \langle f,\, \phi_{j,k} \rangle\, \phi_{j,k}.
+   \end{equation}
+   
+   Entsprechend wirkt die Projektion $Q_j$ auf $W_j$ als
+   \emph{Bandpassfilter}: $Q_j f$ isoliert gerade die Details von $f$
+   mit einer Zeitausdehnung um $2^j/\sqrt{2}$
+   \cite[S.\,109]{blatterWaveletsEinfuhrung2003}:
+   \begin{equation}
+     Q_j f = P_{j-1}f - P_j f,
+     \qquad
+     Q_j f = \sum_{k=-\infty}^{\infty} \langle f,\, \psi_{j,k} \rangle\, \psi_{j,k},
+   \end{equation}
+   wobei $\psi$ das zu $\phi$ gehörende Mutter-Wavelet ist
+   (vgl. Abschnitt~\ref{sec:mutter-wavelet}).
+   Die Gesamtheit $\{\psi_{j,k}\}_{j,k \in \mathbb{Z}}$ bildet dann
+   eine orthonormierte Wavelet-Basis von $L^2(\mathbb{R})$
+   \cite[S.\,110]{blatterWaveletsEinfuhrung2003}.
+   
+   \begin{beispiel}[Haar-MRA]
+   \label{bsp:haar-mra}
+   Das einfachste Beispiel ist die Haar-MRA
+   \cite[S.\,107]{blatterWaveletsEinfuhrung2003}:
+   Man wählt die Skalierungsfunktion $\phi := \mathbf{1}_{[0,1[}$ und setzt
+   \[
+     V_0 := \bigl\{f \in L^2(\mathbb{R}) \bigm| f \text{ konstant auf } [k,\,k+1[\ \forall\, k \in \mathbb{Z}\bigr\}.
+   \]
+   Die feinen Räume $V_j$ ($j < 0$) entstehen durch Skalierung; zum Beispiel
+   enthält $V_{-1}$ stückweise konstante Funktionen auf Intervallen der
+   Länge $\tfrac{1}{2}$. Der zugehörige Detailraum $W_0$ wird durch das
+   Haar-Wavelet $\psi_{\mathrm{Haar}} = \mathbf{1}_{[0,\frac{1}{2}[} - \mathbf{1}_{[\frac{1}{2},1[}$
+   aufgespannt, dessen ganzzahlige Translate eine ONB von $W_0$ bilden.
+   \end{beispiel}
+
  
  \subsection{Skalierungs- und Waveletfunktion (Father vs Mother Wavelet)}
 
@@ -1014,7 +1293,7 @@ Dieses ist definiert durch
  Wie die Koeffizienten der Skalierungsgleichung zu Tiefpass- (h) und 
  Hochpassfiltern (g) werden. Das Prinzip des Downsamplings (↓2).
 
- \subsection{Die inverse DWT (IDWT)}
+ \subsection{Diskrete Umkehrformel der Wavelet-Transformation (IDWT)}
 
  -> Wie man aus den Approximations- und Detailkoeffizienten durch Upsampling 
  (↑2) und Synthese-Filter das Signal fehlerfrei rekonstruiert.
