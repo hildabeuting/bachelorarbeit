@@ -1,7 +1,0 @@
-note: Running TeX ...
-warning: Beuting_BA.tex:118: Overfull \hbox (2.9202pt too wide) in paragraph at lines 117--118
-warning: Beuting_BA.tex:223: Overfull \hbox (5.67513pt too wide) in paragraph at lines 222--223
-error: Beuting_BA.tex:259: Missing $ inserted
-note: Writing `Beuting_BA.log` (24.751953125 KiB)
-error: halted on potentially-recoverable error as specified
-zsh: command not found: tectonic

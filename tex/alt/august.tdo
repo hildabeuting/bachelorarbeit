@@ -1,0 +1,32 @@
+\contentsline {todo}{Einleitung ganz zum Schluss schreiben. Laut Vorlage muss hier stehen: (a) Worum geht es, (b) Einordnung ins Forschungsfeld, (c) Fragestellung, (d) Relevanz, (e) vorhandene Literatur, (f) EIGENER ANTEIL der Arbeit, (g) grober Aufbau der Arbeit.}{1}{section*.3}%
+\contentsline {todo}{Block A. Kapiteleinleitung: Ziel ist der funktionalanalytische Rahmen, in dem die Wavelet-Transformation als unitäre Abbildung erscheint.}{2}{section*.4}%
+\contentsline {todo}{Quelle: Serov, Satz 25.18 -- Charakterisierung von ONB}{2}{section*.5}%
+\contentsline {todo}{Quelle: Stein--Shakarchi, Fourier Analysis}{2}{section*.6}%
+\contentsline {todo}{Scharnier-Abschnitt: begründet, WARUM Wavelets nötig sind. Ohne ihn stehen Kapitel 2 und 3 unverbunden nebeneinander. Quelle: "Comparison on Fourier and Wavelet Transformation" (im Projekt).}{2}{section*.7}%
+\contentsline {todo}{Blöcke B und C.}{3}{section*.8}%
+\contentsline {todo}{Zulässigkeitsbedingung, Rekonstruktionsformel}{3}{section*.9}%
+\contentsline {todo}{Frameoperator; Hierarchie ONB $\subset $ Rieszbasis $\subset $ Frame}{3}{section*.10}%
+\contentsline {todo}{Hier die Begründung unterbringen, warum die DWT eine ONB braucht: (i) Rekonstruktionsaufwand, (ii) kritische Abtastung, (iii) Rauschstatistik nach Donoho--Johnstone -- Punkt (iii) ist der eigentliche Grund und verweist voraus auf Abschnitt~\ref {sec:onb-invarianz}.}{3}{section*.11}%
+\contentsline {todo}{Quelle: Blatter, Kap.~5.1, S.~105--108}{3}{section*.12}%
+\contentsline {todo}{OFFENER PUNKT: Cauchy-Folgen-Argument mit Betreuer klären!}{3}{section*.13}%
+\contentsline {todo}{Blöcke D, E, F. Mathematisches Herzstück -- hier liegt die Beweistiefe der Arbeit.}{4}{section*.14}%
+\contentsline {todo}{Herleitung über ONB-Entwicklung in $V_{-1}$}{4}{section*.15}%
+\contentsline {todo}{WICHTIG: Blatter und Hanke-Bourgeois verwenden unterschiedliche Index\-konventionen für die Zerlegungsstufen. Hier EINE Konvention festlegen und im Rest der Arbeit konsequent durchhalten.}{4}{section*.16}%
+\contentsline {todo}{$a_{0,k} := X(k)$ als EKG-Abtastwerte interpretieren -- Brücke zu Kap.~6}{4}{section*.17}%
+\contentsline {todo}{Konkretes Beispiel: Haar-Wavelet}{4}{section*.18}%
+\contentsline {todo}{Block G. Bewusst eigenes Kapitel: Kapitel~\ref {chapter:dwt} KONSTRUIERT die Transformation (Approximationstheorie), Kapitel~\ref {chapter:denoising} WENDET SIE STATISTISCH AN (Schätztheorie). Zwei verschiedene Arten von Mathematik.}{5}{section*.19}%
+\contentsline {todo}{Additives weißes Gaußsches Rauschen (AWGN)}{5}{section*.20}%
+\contentsline {todo}{Schlüsselresultat der ganzen Arbeit: Das Rauschen bleibt im Waveletbereich weiß, das Signal wird dünn besetzt. Genau diese Asymmetrie macht Thresholding überhaupt erst möglich. Vollständiger Beweis über das innere Produkt.}{5}{section*.21}%
+\contentsline {todo}{Minimax-Optimalität}{5}{section*.22}%
+\contentsline {todo}{Block H. Aufbau in drei Stufen mit ABNEHMENDER Referenzinformation: (1) synthetisch: sauberes Signal exakt bekannt -> SNR/MSE quantitativ messbar; (2) MIT-BIH: kein sauberes Signal, aber Experten-Annotationen -> indirekte Validierung; (3) Herzzentrum: weder Referenz noch Annotationen -> nur qualitative Beurteilung. Diese Abstufung ist der rote Faden des Kapitels.}{6}{section*.23}%
+\contentsline {todo}{Basislinienwanderung (Atmung, tieffrequent), Netzbrummen (50\,Hz), Muskelartefakte (EMG, breitbandig), Bewegungsartefakte. Wichtig: nur ein Teil davon ist weißes Rauschen im Sinne von Kapitel~\ref {chapter:denoising}. Diese Diskrepanz zwischen Modellannahme und Realität hier offen benennen -- sie wird in Abschnitt~\ref {sec:diskussion} wieder aufgegriffen. Quelle: "An Introduction to ECG Signal Processing and Analysis".}{6}{section*.24}%
+\contentsline {todo}{Zentraler methodischer Abschnitt. SNR und MSE setzen ein BEKANNTES sauberes Signal voraus. Auf realen Daten existiert dieses nicht -- sonst bräuchte man kein Denoising. Daraus folgt die Dreistufigkeit der folgenden Abschnitte. Hier definieren: $\SNR $, $\MSE $; und benennen, welche Ersatzkriterien auf realen Daten zur Verfügung stehen.}{6}{section*.25}%
+\contentsline {todo}{Ansatz überlegen: Summe von Gauß-Glocken für P/T-Wellen plus schmale, hohe Komponente für den QRS-Komplex. Vorteil gegenüber einem Testsignal aus der Literatur: die Parameter (Amplituden, Breiten, Herzfrequenz) sind frei wählbar und damit systematisch variierbar.}{6}{section*.26}%
+\contentsline {todo}{Pseudo-zufälliges Gaußsches Rauschen verwenden -- deterministische Alternativen verletzen die Voraussetzungen des MAD-Schätzers!}{7}{section*.27}%
+\contentsline {todo}{Systematischer Vergleich: Haar vs. db4 vs. Symlet; Zerlegungstiefe $J = 1,\dots ,6$. Erwartung aus den Vorexperimenten: db4 schlägt Haar, und die Zerlegungstiefe verhält sich NICHT monoton (Optimum um $J=3$). Genau dieses nichtmonotone Verhalten ist ein Ergebnis und sollte als solches dargestellt werden.}{7}{section*.28}%
+\contentsline {todo}{Tabelle mit SNR/MSE (booktabs) + Abbildung Original/verrauscht/entrauscht}{7}{section*.29}%
+\contentsline {todo}{MIT-BIH Arrhythmia Database (PhysioNet): Abtastrate, Auflösung, Ableitungen, Annotationen. Auswahl der verwendeten Datensätze begründen.}{7}{section*.30}%
+\contentsline {todo}{Hier greift Abschnitt~\ref {sec:bewertung}. Mögliche Wege: (a) künstliches Rauschen ZUSÄTZLICH aufaddieren und das Originalsignal als Pseudo-Referenz behandeln -- methodisch sauber, aber das Original ist selbst schon verrauscht; (b) Erhalt der annotierten R-Zacken-Positionen prüfen; (c) Amplitudentreue des QRS-Komplexes vor/nach Entrauschung. Die gewählte Strategie muss klar begründet werden.}{7}{section*.31}%
+\contentsline {todo}{VOR dem Schreiben klären: Datenformat, Abtastrate, Anzahl der Aufzeichnungen, und ob die Daten in der Arbeit gezeigt werden dürfen (Datenschutz / Einwilligung). Falls Abbildungen nicht zulässig sind, ändert das die Struktur dieses Abschnitts erheblich -- deshalb früh fragen.}{7}{section*.32}%
+\contentsline {todo}{Die drei Stufen zusammenführen: Wo hält die Theorie aus Kapitel~\ref {chapter:denoising}, wo bricht sie? Insbesondere: Basislinien\-wanderung und Netzbrummen sind kein weißes Rauschen, die Modellannahme ist auf realen Daten also nur teilweise erfüllt. Genau das erklärt eine mögliche Verschlechterung der Ergebnisse von Stufe~1 zu Stufe~3.}{8}{section*.33}%
+\contentsline {todo}{Ausblick: SureShrink (adaptive Schwellen pro Stufe), Cycle-Spinning (translationsinvariante Entrauschung), biorthogonale Wavelets.}{9}{section*.34}%

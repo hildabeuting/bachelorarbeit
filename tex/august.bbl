@@ -1,0 +1,59 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{CTY{\etalchar{+}}20}
+
+\bibitem[AJB17]{aqil}
+Mounaim Aqil, Atman Jbari, and Abdennasser Bourouhou.
+\newblock {ECG} signal denoising by discrete wavelet transform.
+\newblock {\em International Journal of Online Engineering (iJOE)}, 13(9):51--68, 2017.
+
+\bibitem[BK19]{bruntonkutz}
+Steven~L. Brunton and J.~Nathan Kutz.
+\newblock {\em Fourier and Wavelet Transforms}, pages 47--83.
+\newblock Cambridge University Press, Cambridge, 2019.
+
+\bibitem[Bla03]{blatter}
+Christian Blatter.
+\newblock {\em Wavelets -- Eine Einf\"uhrung}.
+\newblock Advanced Lectures in Mathematics. Vieweg, Braunschweig/Wiesbaden, 2., durchgesehene edition, 2003.
+
+\bibitem[CTY{\etalchar{+}}20]{chatterjee}
+Shubhojeet Chatterjee, Rini~Smita Thakur, Ram~Narayan Yadav, Lalita Gupta, and Deepak~Kumar Raghuvanshi.
+\newblock Review of noise removal techniques in {ECG} signals.
+\newblock {\em IET Signal Processing}, 14(9):569--590, 2020.
+
+\bibitem[Gac12]{gacek}
+Adam Gacek.
+\newblock An introduction to {ECG} signal processing and analysis.
+\newblock In Adam Gacek and Witold Pedrycz, editors, {\em ECG Signal Processing, Classification and Interpretation}, pages 21--46. Springer, London, 2012.
+
+\bibitem[HB09]{hankebourgeois}
+Martin Hanke-Bourgeois.
+\newblock {\em Grundlagen der Numerischen Mathematik und des Wissenschaftlichen Rechnens}.
+\newblock Vieweg+Teubner, Wiesbaden, 3., aktualisierte edition, 2009.
+
+\bibitem[LMR98]{lmr}
+Alfred~Karl Louis, Peter Maa{\ss}, and Andreas Rieder.
+\newblock {\em Wavelets: Theorie und Anwendungen}.
+\newblock Teubner-Studienb\"ucher: Mathematik. B.\,G. Teubner, Stuttgart, 2., \"uberarbeitete und erweiterte edition, 1998.
+
+\bibitem[Mal09]{mallat}
+St\'ephane Mallat.
+\newblock {\em A Wavelet Tour of Signal Processing: The Sparse Way}.
+\newblock Academic Press / Elsevier, Burlington, MA, 3. edition, 2009.
+
+\bibitem[Reb21]{rebstadt}
+Linda Rebstadt.
+\newblock Spark-basierte analyse von monitoring-daten intensiv \"uberwachter patienten zur identifikation von anomalien: Ein use case der charit\'e health data platform.
+\newblock Masterarbeit, Hochschule Darmstadt, 2021.
+
+\bibitem[Ser17]{serov}
+Valery Serov.
+\newblock {\em Fourier Series, Fourier Transform and Their Applications to Mathematical Physics}, volume 197 of {\em Applied Mathematical Sciences}.
+\newblock Springer, Cham, 2017.
+
+\bibitem[SS03]{steinshakarchi}
+Elias~M. Stein and Rami Shakarchi.
+\newblock {\em Fourier Analysis: An Introduction}, volume~I of {\em Princeton Lectures in Analysis}.
+\newblock Princeton University Press, Princeton, 2003.
+
+\end{thebibliography}

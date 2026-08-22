@@ -1,0 +1,64 @@
+\babel@toc {ngerman}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\contentsline {chapter}{\numberline {1}Einleitung}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Motivation: EKG-Signale und ihre Störquellen}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Zielsetzung und Abgrenzung}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Aufbau der Arbeit}{1}{section.1.3}%
+\contentsline {chapter}{\numberline {2}Funktionalanalytische Grundlagen}{2}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Der Hilbertraum $L^2(\mathbb {R})$}{2}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Orthonormalbasen und ihre Charakterisierung}{2}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Unitäre Operatoren}{2}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Fourier-Transformation und Satz von Plancherel}{2}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Grenzen der Fourier-Analyse bei nichtstationären Signalen}{2}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Von der kontinuierlichen Wavelet-Transformation zur Multiskalenanalyse}{3}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Die kontinuierliche Wavelet-Transformation}{3}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Diskretisierung: Frames und Rieszbasen}{3}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Das dyadische Gitter}{4}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Multiskalenanalyse: Axiome}{5}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Skalierungsfunktion und Orthonormalbasis der Räume $V_j$}{5}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Detailräume $W_j$ und die Zerlegung von $L^2(\mathbb {R})$}{6}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Konstruktion der diskreten Wavelet-Transformation}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Die Skalierungsgleichung}{7}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Filterkoeffizienten: Tiefpass und Hochpass}{7}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Bedingungen im Fourier-Bereich}{7}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Der Mallat-Algorithmus}{7}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Zwei-Skalen-Relation zwischen den Stufen}{7}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Analyse: Approximations- und Detailkoeffizienten}{7}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Synthese: Rekonstruktionsformel}{7}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Daubechies-Wavelets}{7}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Kompakter Träger und Filterlänge}{7}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Verschwindende Momente}{7}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Regularität}{7}{subsection.4.5.3}%
+\contentsline {chapter}{\numberline {5}Entrauschung durch Thresholding}{8}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Das additive Rauschmodell}{8}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Invarianz weißen Rauschens unter Orthonormaltransformation}{8}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Dünnbesetztheit von EKG-Signalen im Waveletbereich}{8}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Hard- und Soft-Thresholding}{8}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Der Satz von Donoho--Johnstone}{8}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Wahl des Schwellenwerts}{8}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}VisuShrink}{8}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Schätzung der Rauschstärke: der MAD-Schätzer}{8}{subsection.5.6.2}%
+\contentsline {chapter}{\numberline {6}Anwendung: Entrauschung von EKG-Signalen}{9}{chapter.6}%
+\contentsline {section}{\numberline {6.1}EKG-Signale: Morphologie und Störquellen}{9}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Der Herzzyklus: P-Welle, QRS-Komplex, T-Welle}{9}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Typische Störquellen}{9}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}Bewertungsmaße und das Problem der fehlenden Referenz}{9}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Stufe 1: Synthetisch konstruiertes EKG-Signal}{9}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Konstruktion des Modellsignals}{9}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Rauschmodell und Wahl der Parameter}{10}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Wahl von Wavelet und Zerlegungstiefe}{10}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}Vergleich von Hard- und Soft-Thresholding}{10}{subsection.6.3.4}%
+\contentsline {subsection}{\numberline {6.3.5}Ergebnisse}{10}{subsection.6.3.5}%
+\contentsline {section}{\numberline {6.4}Stufe 2: Reale Signale aus der MIT-BIH-Datenbank}{10}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Beschreibung des Datensatzes}{10}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Validierung ohne sauberes Referenzsignal}{10}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Ergebnisse}{10}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}Stufe 3: Klinische Daten des Herzzentrums}{10}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Datensatz und Vorverarbeitung}{11}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Anwendung der Verarbeitungskette}{11}{subsection.6.5.2}%
+\contentsline {subsection}{\numberline {6.5.3}Ergebnisse und Grenzen der Beurteilbarkeit}{11}{subsection.6.5.3}%
+\contentsline {section}{\numberline {6.6}Diskussion}{11}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{12}{chapter.7}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{13}{chapter*.2}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -1,0 +1,67 @@
+\babel@toc {ngerman}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\babel@toc {ngerman}{}\relax 
+\contentsline {chapter}{\numberline {1}Einleitung}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Motivation: EKG-Signale und ihre Störquellen}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Warum die Fourier-Analyse nicht genügt}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Zielsetzung und Abgrenzung}{2}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Aufbau der Arbeit}{2}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Funktionalanalytische Grundlagen}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Der Hilbertraum $L^2(\mathbb {R})$}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Orthonormalbasen und ihre Charakterisierung}{3}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Unitäre Operatoren}{4}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Fourier-Transformation und Satz von Plancherel}{4}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Die gefensterte Fourier-Transformation}{5}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Von der kontinuierlichen Wavelet-Transformation zur Multiskalenanalyse}{6}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Die kontinuierliche Wavelet-Transformation}{6}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Wavelets und die Zulässigkeitsbedingung}{8}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Die Wavelet-Familie und die Transformation}{10}{subsection.3.1.2}%
+\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{12}{paragraph*.6}%
+\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{13}{paragraph*.7}%
+\contentsline {paragraph}{\nonumberline Ergebnis.}{13}{paragraph*.8}%
+\contentsline {subsection}{\numberline {3.1.3}Die Plancherel-Formel}{15}{subsection.3.1.3}%
+\contentsline {section}{\numberline {3.2}Das dyadische Gitter und die Multiskalenanalyse}{16}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Die Axiome}{18}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}Skalierungsfunktion und Orthonormalbasis der Räume $V_j$}{19}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Die Orthonormalität im Fourier-Bereich}{21}{subsection.3.3.1}%
+\contentsline {section}{\numberline {3.4}Detailräume $W_j$ und die Zerlegung von $L^2(\mathbb {R})$}{22}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Das Konstruktionsziel}{24}{subsection.3.4.1}%
+\contentsline {chapter}{\numberline {4}Konstruktion der diskreten Wavelet-Transformation}{26}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Die Skalierungsgleichung}{26}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Filterkoeffizienten: Tiefpass und Hochpass}{26}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Bedingungen im Fourier-Bereich}{27}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Der Mallat-Algorithmus}{27}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Zwei-Skalen-Relation zwischen den Stufen}{28}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Analyse: Approximations- und Detailkoeffizienten}{28}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Synthese: Rekonstruktionsformel}{28}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}Daubechies-Wavelets}{28}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Kompakter Träger, Filterlänge und Regularität}{28}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Verschwindende Momente}{29}{subsection.4.5.2}%
+\contentsline {chapter}{\numberline {5}Entrauschung durch Thresholding}{30}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Das additive Rauschmodell}{30}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Invarianz weißen Rauschens unter Orthonormaltransformation}{30}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Dünnbesetztheit von EKG-Signalen im Waveletbereich}{31}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Hard- und Soft-Thresholding}{31}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Der Satz von Donoho--Johnstone}{31}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Wahl des Schwellenwerts}{32}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}VisuShrink}{32}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Schätzung der Rauschstärke: der MAD-Schätzer}{32}{subsection.5.6.2}%
+\contentsline {chapter}{\numberline {6}Anwendung: Entrauschung von EKG-Signalen}{33}{chapter.6}%
+\contentsline {section}{\numberline {6.1}EKG-Signale: Morphologie und Störquellen}{33}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Der Herzzyklus: P-Welle, QRS-Komplex, T-Welle}{33}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Typische Störquellen}{33}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}Bewertungsmaße und das Problem der fehlenden Referenz}{34}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Stufe 1: Synthetisch konstruiertes EKG-Signal}{35}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Konstruktion des Modellsignals}{35}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Rauschmodell und Wahl der Parameter}{35}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Wahl von Wavelet und Zerlegungstiefe}{35}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}Vergleich von Hard- und Soft-Thresholding}{35}{subsection.6.3.4}%
+\contentsline {subsection}{\numberline {6.3.5}Ergebnisse}{35}{subsection.6.3.5}%
+\contentsline {section}{\numberline {6.4}Stufe 2: Reale Signale aus der MIT-BIH-Datenbank}{36}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Beschreibung des Datensatzes}{36}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Validierung ohne sauberes Referenzsignal}{36}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Ergebnisse}{36}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}Diskussion}{36}{section.6.5}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{38}{chapter.7}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{39}{chapter*.11}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

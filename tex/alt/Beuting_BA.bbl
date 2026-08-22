@@ -1,0 +1,38 @@
+\begin{thebibliography}{CLW}
+
+\bibitem[Bla]{blatterWaveletsEinfuhrung2003}
+Christian Blatter.
+\newblock {\em Wavelets — {{Eine Einführung}}}.
+\newblock Advanced {{Lectures}} in {{Mathematics}}. Vieweg+Teubner Verlag.
+
+\bibitem[CLW]{cooleyFastFourierTransform1969}
+James~W. Cooley, Peter A.~W. Lewis, and Peter~D. Welch.
+\newblock The {{Fast Fourier Transform}} and {{Its Applications}}.
+\newblock 12(1):27--34.
+
+\bibitem[Dau]{daubechiesTenLecturesWavelets2006}
+Ingrid Daubechies.
+\newblock {\em Ten Lectures on Wavelets}.
+\newblock Number~61 in Regional Conference Series in Applied Mathematics. {Society for Industrial and Applied Mathematics}, 9. print edition.
+
+\bibitem[Gac]{gacekIntroductionECGSignal2012}
+Adam Gacek.
+\newblock An {{Introduction}} to {{ECG Signal Processing}} and {{Analysis}}.
+\newblock In Adam Gacek and Witold Pedrycz, editors, {\em {{ECG Signal Processing}}, {{Classification}} and {{Interpretation}}}, pages 21--46. Springer London.
+
+\bibitem[Mal]{mallatWaveletTourSignal1999}
+Stéphane Mallat.
+\newblock {\em A Wavelet Tour of Signal Processing}.
+\newblock Academic Press, 2nd ed edition.
+
+\bibitem[Ser]{serovFourierSeriesFourier2017}
+Valery Serov.
+\newblock {\em Fourier Series, {{Fourier}} Transform and Their Applications to Mathematical Physics}.
+\newblock Number v. 197 in Applied Mathematical Sciences. Springer.
+
+\bibitem[Ste]{steinFourierAnalysisIntroduction2003a}
+Elias~M. Stein.
+\newblock {\em Fourier {{Analysis}}: {{An Introduction}}}.
+\newblock Princeton University Press, 1st ed edition.
+
+\end{thebibliography}
