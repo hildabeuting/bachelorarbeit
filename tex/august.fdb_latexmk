@@ -1,17 +1,17 @@
 # Fdb version 4
-["bibtex august"] 1787213970.45005 "august.aux" "august.bbl" "august" 1787213972.61333 0
+["bibtex august"] 1790347361.32007 "august.aux" "august.bbl" "august" 1790347363.54768 0
   "./literature.bib" 1786538192.84014 4491 5bf55c5f88ac07f4a1576e911eb849ef ""
   "/usr/local/texlive/2026/texmf-dist/bibtex/bst/base/alpha.bst" 1292289607 23907 a5f93555796fb564b924339521f10a7c ""
-  "august.aux" 1787213972.29964 46063 f439701477c1fa1fe51f256363a721e3 "pdflatex"
+  "august.aux" 1790347363.29841 50577 886e1de69c627b6fb95028dab3116ff5 "pdflatex"
   (generated)
   "august.bbl"
   "august.blg"
   (rewritten before read)
-["pdflatex"] 1787213970.53945 "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" "august.pdf" "august" 1787213972.6135 0
+["pdflatex"] 1790347361.39429 "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" "august.pdf" "august" 1790347363.54785 0
   "../abbildungen/abb1_signal.png" 1787153054.52671 19884 72128d9fc349ee64f9a0e24cc4cf815a ""
   "../abbildungen/abb2_fourier.png" 1787153050.19768 16634 aa0150a1c98f62797ffb11afd2761f01 ""
   "../abbildungen/abb3_cwt_haar.png" 1787153047.27725 198661 1144100861ad9a06dbe72ed38f4815f9 ""
-  "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" 1787213967.85198 118156 768b4756458e176a97f569e0eab91189 ""
+  "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" 1790347358.70618 159823 decd3a9e82fb141da47d7b1b9b941d64 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -34,6 +34,7 @@
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ecsx2074.tfm" 1136768653 3584 5ba4d7d245f2ced66081d269e8c9a284 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1136768653 1536 06717a2b50de47d4087ac0e6cd759455 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcss1000.tfm" 1136768653 1536 293044035fd171bb1d18cf655049b101 ""
+  "/usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcss1095.tfm" 1136768653 1536 f0fa079cdc83a6ffeda21e42352cf1ea ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex9.tfm" 1246382020 996 a18840b13b499c08ac2de96a99eda4bc ""
@@ -49,6 +50,7 @@
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm" 1136768653 1344 8a0be4fe4d376203000810ad4dc81558 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm" 1136768653 1336 3125ccb448c1a09074e3aa4a9832f130 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm" 1136768653 1332 1fde11373e221473104d6cc5993f046e ""
+  "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx9.tfm" 1136768653 1328 5442e22a7072966dbaf88ca900acf3f0 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmex10.tfm" 1136768653 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm" 1136768653 1528 abec98dbc43e172678c11b3b9031252a ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1136768653 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -297,10 +299,10 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1774780092 5573038 b99aad5e4898a9034e953632f940512b ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774780042 3636775 82359f2a40b91f2d645c9e1419465481 ""
   "/usr/local/texlive/2026/texmf.cnf" 1774209515 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "august.aux" 1787213972.29964 46063 f439701477c1fa1fe51f256363a721e3 "pdflatex"
-  "august.bbl" 1787213970.53658 2607 f114c3415ccfb60fe6ff12409c89c7bb "bibtex august"
-  "august.tex" 1787213967.85198 118156 768b4756458e176a97f569e0eab91189 ""
-  "august.toc" 1787213972.30544 6287 492683a73fe1f476296801e83885ca10 "pdflatex"
+  "august.aux" 1790347363.29841 50577 886e1de69c627b6fb95028dab3116ff5 "pdflatex"
+  "august.bbl" 1790347361.3916 2607 f114c3415ccfb60fe6ff12409c89c7bb "bibtex august"
+  "august.tex" 1790347358.70618 159823 decd3a9e82fb141da47d7b1b9b941d64 ""
+  "august.toc" 1790347363.30471 6497 ce2df4d27e6f1be2b72084a65b9b8946 "pdflatex"
   "uhh-logo.png" 1730735493 166378 baeba9eac46e611cf8b926c484438ddd ""
   (generated)
   "august.aux"

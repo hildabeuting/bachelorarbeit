@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  20 AUG 2026 10:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  25 SEP 2026 16:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -704,8 +704,8 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 \Hy@SectionHShift=\skip76
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 103.
-Package hyperref Info: Option `unicode' set `true' on input line 103.
+Package hyperref Info: Option `colorlinks' set `true' on input line 104.
+Package hyperref Info: Option `unicode' set `true' on input line 104.
 
 
 Package typearea Warning: Bad type area settings!
@@ -723,31 +723,6 @@ Package typearea Info: These are the values describing the layout:
 (typearea)              DIV departure   = -23%
 (typearea)              \evensidemargin = 2.4185pt
 (typearea)              \oddsidemargin  = 2.4185pt
-(typearea)             \paperheight     = 845.04694pt
-(typearea)              \textheight     = 609.40027pt
-(typearea)              \topmargin      = -1.84941pt
-(typearea)              \headheight     = 17.0pt
-(typearea)              \headsep        = 20.40001pt
-(typearea)              \topskip        = 11.0pt
-(typearea)              \footskip       = 47.6pt
-(typearea)              \baselineskip   = 13.6pt
-(typearea)              on input line 111.
-
-Package typearea Warning: Bad type area settings!
-(typearea)                The detected line width is about 19%
-(typearea)                larger than the heuristically estimated maximum
-(typearea)                limit of typographical good line width.
-(typearea)                You should e.g. decrease DIV, increase fontsize
-(typearea)                or change papersize.
-
-Package typearea Info: These are the values describing the layout:
-(typearea)             DIV  = 12
-(typearea)             BCOR = 22.76219pt
-(typearea)             \paperwidth      = 597.50793pt
-(typearea)              \textwidth      = 431.05931pt
-(typearea)              DIV departure   = -19%
-(typearea)              \evensidemargin = 22.33542pt
-(typearea)              \oddsidemargin  = 22.33542pt
 (typearea)             \paperheight     = 845.04694pt
 (typearea)              \textheight     = 609.40027pt
 (typearea)              \topmargin      = -1.84941pt
@@ -781,7 +756,32 @@ Package typearea Info: These are the values describing the layout:
 (typearea)              \topskip        = 11.0pt
 (typearea)              \footskip       = 47.6pt
 (typearea)              \baselineskip   = 13.6pt
-(typearea)              on input line 115.
+(typearea)              on input line 113.
+
+Package typearea Warning: Bad type area settings!
+(typearea)                The detected line width is about 19%
+(typearea)                larger than the heuristically estimated maximum
+(typearea)                limit of typographical good line width.
+(typearea)                You should e.g. decrease DIV, increase fontsize
+(typearea)                or change papersize.
+
+Package typearea Info: These are the values describing the layout:
+(typearea)             DIV  = 12
+(typearea)             BCOR = 22.76219pt
+(typearea)             \paperwidth      = 597.50793pt
+(typearea)              \textwidth      = 431.05931pt
+(typearea)              DIV departure   = -19%
+(typearea)              \evensidemargin = 22.33542pt
+(typearea)              \oddsidemargin  = 22.33542pt
+(typearea)             \paperheight     = 845.04694pt
+(typearea)              \textheight     = 609.40027pt
+(typearea)              \topmargin      = -1.84941pt
+(typearea)              \headheight     = 17.0pt
+(typearea)              \headsep        = 20.40001pt
+(typearea)              \topskip        = 11.0pt
+(typearea)              \footskip       = 47.6pt
+(typearea)              \baselineskip   = 13.6pt
+(typearea)              on input line 116.
 Class scrbook Info: loading recommended package `bookmark'.
 (scrbook)           Using `bookmark' together with `hyperref' is recommended,
 (scrbook)           because of handling of possible bookmark level gaps.
@@ -789,7 +789,7 @@ Class scrbook Info: loading recommended package `bookmark'.
 (scrbook)           `bookmarkpackage=false' before \begin{document} and
 (scrbook)           you can avoid this message adding:
 (scrbook)             \usepackage{bookmark}
-(scrbook)           before \begin{document} on input line 147.
+(scrbook)           before \begin{document} on input line 148.
 (/usr/local/texlive/2026/texmf-dist/tex/latex/bookmark/bookmark.sty
 Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
  (/usr/local/texlive/2026/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
@@ -801,24 +801,24 @@ Package babel Info: 'ngerman' activates 'german' shorthands.
 )
 \openout1 = `august.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 147.
-LaTeX Font Info:    ... okay on input line 147.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 148.
+LaTeX Font Info:    ... okay on input line 148.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 148.
+LaTeX Font Info:    ... okay on input line 148.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 148.
+LaTeX Font Info:    ... okay on input line 148.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 148.
+LaTeX Font Info:    ... okay on input line 148.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 148.
+LaTeX Font Info:    ... okay on input line 148.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 148.
+LaTeX Font Info:    ... okay on input line 148.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 148.
+LaTeX Font Info:    ... okay on input line 148.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 148.
+LaTeX Font Info:    ... okay on input line 148.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 148.
+LaTeX Font Info:    ... okay on input line 148.
  (/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count356
@@ -840,16 +840,16 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable tick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into your preamble.
- on input line 147.
+ on input line 148.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 147.
+Package hyperref Info: Link coloring ON on input line 148.
 <uhh-logo.png, id=7, 3777.11125pt x 1275.76625pt>
 File: uhh-logo.png Graphic file (type png)
 <use uhh-logo.png>
-Package pdftex.def Info: uhh-logo.png  used on input line 158.
+Package pdftex.def Info: uhh-logo.png  used on input line 159.
 (pdftex.def)             Requested size: 193.97537pt x 65.50511pt.
 [1
 Non-PDF special ignored!
@@ -875,7 +875,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \openout5 = `august.toc'.
 
 Package babel Info: 'ngerman' activates 'german' shorthands.
-(babel)             Reported on input line 202.
+(babel)             Reported on input line 203.
  [2]
 chapter 1.
 [1
@@ -886,7 +886,7 @@ chapter 1.
 {/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [2]
 chapter 2.
 
-Overfull \hbox (5.95517pt too wide) in paragraph at lines 337--337
+Overfull \hbox (5.95517pt too wide) in paragraph at lines 338--338
 []\T1/cmss/m/n/10 HankeBourgeois, Ÿ31 ^^RIn-nen-pro-duk-träu-me, Or-tho-nor-mal-ba-sen und Gram-sche Ma-tri-zen", S. 275^^U282
  []
 
@@ -899,94 +899,150 @@ chapter 3.
 
 
 ] [7] [8] [9]
-Overfull \hbox (0.71785pt too wide) in paragraph at lines 839--853
+Overfull \hbox (0.71785pt too wide) in paragraph at lines 851--866
 [][]\T1/cmss/bx/n/10.95 Bemerkung 3.7 \T1/cmss/m/n/10.95 (Be-deu-tung der bei-den Pa-ra-me-ter)\T1/cmss/bx/n/10.95 . []\T1/cmss/m/n/10.95 Ist $\OML/cmm/m/it/10.95  $ \T1/cmss/m/n/10.95 kom-pakt ge-tra-gen, so gilt $[] \OML/cmm/m/it/10.95  [] \OT1/cmr/m/n/10.95 =
  []
 
-[10]
-<../abbildungen/abb1_signal.png, id=297, 505.89pt x 202.356pt>
+<../abbildungen/abb1_signal.png, id=294, 505.89pt x 202.356pt>
 File: ../abbildungen/abb1_signal.png Graphic file (type png)
 <use ../abbildungen/abb1_signal.png>
-Package pdftex.def Info: ../abbildungen/abb1_signal.png  used on input line 925.
+Package pdftex.def Info: ../abbildungen/abb1_signal.png  used on input line 938.
 (pdftex.def)             Requested size: 387.95074pt x 155.18161pt.
 
-Overfull \hbox (27.41376pt too wide) detected at line 947
+Overfull \hbox (27.41376pt too wide) detected at line 960
 []\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 !\OT1/cmr/m/n/10.95 ) = [] [][] \OML/cmm/m/it/10.95 f\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 e[] dt \OT1/cmr/m/n/10.95 = [] [] \OML/cmm/m/it/10.95 :
  []
 
-[11] [12 <../abbildungen/abb1_signal.png>]
+[10] [11 <../abbildungen/abb1_signal.png>]
 <../abbildungen/abb2_fourier.png, id=318, 505.89pt x 202.356pt>
 File: ../abbildungen/abb2_fourier.png Graphic file (type png)
 <use ../abbildungen/abb2_fourier.png>
-Package pdftex.def Info: ../abbildungen/abb2_fourier.png  used on input line 1039.
+Package pdftex.def Info: ../abbildungen/abb2_fourier.png  used on input line 1053.
 (pdftex.def)             Requested size: 387.95074pt x 155.18161pt.
- [13 <../abbildungen/abb2_fourier.png>]
-Overfull \hbox (4.62752pt too wide) detected at line 1101
+ [12] [13 <../abbildungen/abb2_fourier.png>]
+Overfull \hbox (4.62752pt too wide) detected at line 1117
 [][][]\OML/cmm/m/it/10.95 W[]f\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 a; b\OT1/cmr/m/n/10.95 ) = [] = []\OML/cmm/m/it/10.95 :
  []
 
-<../abbildungen/abb3_cwt_haar.png, id=335, 650.43pt x 331.7193pt>
+<../abbildungen/abb3_cwt_haar.png, id=340, 650.43pt x 331.7193pt>
 File: ../abbildungen/abb3_cwt_haar.png Graphic file (type png)
 <use ../abbildungen/abb3_cwt_haar.png>
-Package pdftex.def Info: ../abbildungen/abb3_cwt_haar.png  used on input line 1130.
+Package pdftex.def Info: ../abbildungen/abb3_cwt_haar.png  used on input line 1148.
 (pdftex.def)             Requested size: 431.05931pt x 219.8465pt.
-[14] [15 <../abbildungen/abb3_cwt_haar.png>] [16] [17] [18]
 
-LaTeX Warning: Command \textcircled invalid in math mode on input line 1490.
+LaTeX Warning: Reference `sec:fourier-plancherel' on page 14 undefined on input line 1252.
+
+[14]
+
+LaTeX Warning: Reference `a' on page 15 undefined on input line 1267.
+
+[15 <../abbildungen/abb3_cwt_haar.png>]
+
+LaTeX Warning: Reference `a' on page 16 undefined on input line 1312.
+
+[16]
+Overfull \hbox (2.97401pt too wide) in paragraph at lines 1421--1421
+[]\T1/cmss/bx/n/10 Anmerkung. \T1/cmss/m/n/10 fin-de das bei-spiel noch nciht wirk-lich gut... eher ncoh-mal was ein-fa-che-res/Anschaulicheres[] 
+ []
+
+[17] [18]
+
+LaTeX Warning: Reference `bsp:...' on page 19 undefined on input line 1674.
 
 
-LaTeX Warning: Command \textcircled invalid in math mode on input line 1490.
+LaTeX Warning: Reference `bsp:...' on page 19 undefined on input line 1674.
 
-[19] [20] [21] [22] [23] [24] [25]
+
+Overfull \hbox (2.85324pt too wide) in paragraph at lines 1701--1704
+[][]\T1/cmss/bx/n/10.95 Definition 3.16 \T1/cmss/m/n/10.95 (Mul-tis-ka-len-ana-ly-se, [[], Kap. 5.1, (a)--(c)])\T1/cmss/bx/n/10.95 . []\T1/cmss/m/n/10.95 Ei-ne Mul-tis-ka-len-ana-ly-se (MSA)
+ []
+
+[19]
+Overfull \hbox (2.58365pt too wide) in paragraph at lines 1726--1731
+[][]\T1/cmss/m/n/10.95 Die an-schau-li-che Be-deu-tung von
+ []
+
+[20]
+
+LaTeX Warning: Command \textcircled invalid in math mode on input line 1738.
+
+
+LaTeX Warning: Command \textcircled invalid in math mode on input line 1738.
+
+[21] [22] [23]
+Overfull \hbox (72.98683pt too wide) detected at line 2467
+\OML/cmm/m/it/10.95 a[] \OT1/cmr/m/n/10.95 = [](4 + 2 + 5 + 7) = 9\OML/cmm/m/it/10.95 ;  d[] \OT1/cmr/m/n/10.95 = [][](4 + 2) \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/10.95 (5 + 7)[] = \OMS/cmsy/m/n/10.95 ^^@\OT1/cmr/m/n/10.95 3\OML/cmm/m/it/10.95 ;  d[] \OT1/cmr/m/n/10.95 = [] = []\OML/cmm/m/it/10.95 ;  d[] \OT1/cmr/m/n/10.95 = [] = \OMS/cmsy/m/n/10.95 ^^@[]\OT1/cmr/m/n/10.95 ;
+ []
+
+[24]
+Overfull \hbox (3.12456pt too wide) in paragraph at lines 2551--2551
+[]\T1/cmss/bx/n/10 Anmerkung. \T1/cmss/m/n/10 Die Ener-gie-glei-chung [] ist das, was Ab-schnitt [][]5.2[][] braucht: Die Wavelet-Koeffizienten
+ []
+
+[25]
 chapter 4.
 
-Overfull \hbox (10.00504pt too wide) in paragraph at lines 1925--1925
+Overfull \hbox (10.00504pt too wide) in paragraph at lines 2574--2574
 []\T1/cmss/m/n/10 LMR, Gl. (2.4.12), S. 165 [be-stä-tigt] ^^V Ska-lie-rungs-glei-chung in der Form $\OML/cmm/m/it/10 ^^^\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = [] [][] \OML/cmm/m/it/10 h[]^^^\OT1/cmr/m/n/10 (2\OML/cmm/m/it/10 x \OMS/cmsy/m/n/10 ^^@
  []
 
 [26
 
 
-] [27] [28] [29]
+]
+
+LaTeX Warning: Reference `bem:indexkonvention' on page 27 undefined on input line 2601.
+
+[27]
+Overfull \hbox (9.13187pt too wide) in paragraph at lines 2709--2709
+[]\T1/cmss/bx/n/10 Anmerkung. \T1/cmss/m/n/10 Be-leg für den Ein-deu-tig-keits-satz (Fourier-Koeffizienten be-stim-men ei-ne $\OML/cmm/m/it/10 L[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ^^Y\OT1/cmr/m/n/10 )$\T1/cmss/m/n/10 -Funktion
+ []
+
+[28]
+Overfull \hbox (9.13187pt too wide) in paragraph at lines 2730--2730
+[]\T1/cmss/bx/n/10 Anmerkung. \T1/cmss/m/n/10 Be-leg für den Ein-deu-tig-keits-satz (Fourier-Koeffizienten be-stim-men ei-ne $\OML/cmm/m/it/10 L[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ^^Y\OT1/cmr/m/n/10 )$\T1/cmss/m/n/10 -Funktion
+ []
+
+[29] [30] [31]
 chapter 5.
 
-LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2079.
+LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2841.
 
 
-LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2079.
+LaTeX Warning: Command \textperiodcentered invalid in math mode on input line 2841.
 
 Missing character: There is no · in font cmr10!
-[30
+[32
 
 
 ]
-Overfull \hbox (1.23929pt too wide) in paragraph at lines 2112--2112
+Overfull \hbox (1.23929pt too wide) in paragraph at lines 2874--2874
 []\T1/cmss/m/n/10 HankeBourgeois, Bei-spiel S. 437^^U438 [be-stä-tigt] ^^V für $\OML/cmm/m/it/10 ^^_[]a; b\OT1/cmr/m/n/10 ]$ \T1/cmss/m/n/10 ge-nü-gen in der Haar-Multiskalenbasis
  []
 
-[31] [32]
+[33] [34]
 chapter 6.
-[33
+[35
 
 
 ]
 
-LaTeX Warning: Command \O invalid in math mode on input line 2247.
+LaTeX Warning: Command \O invalid in math mode on input line 3009.
 
 Missing character: There is no Ø in font cmr10!
 
-Overfull \hbox (18.6703pt too wide) in paragraph at lines 2247--2247
+Overfull \hbox (18.6703pt too wide) in paragraph at lines 3009--3009
 []\T1/cmss/m/n/10 LMR, Lem-ma 2.4.29 / Gl. (2.4.17), S. 175 [be-stä-tigt] ^^V die da-bei be-nö-tig-te Be-din-gung $[][] [] \OT1/cmr/m/n/10 =
  []
 
-[34] [35] [36] [37]
+[36] [37] [38] [39]
 chapter 7.
-(./august.bbl [38
+(./august.bbl [40
 
 
 ]
 chapter without number
-) [39
+) [41
 
 
 ] (./august.aux)
@@ -994,20 +1050,24 @@ chapter without number
 LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 38860 strings out of 467525
- 898649 string characters out of 5418982
- 1673334 words of memory out of 5000000
- 67016 multiletter control sequences out of 15000+600000
- 655868 words of font info for 108 fonts, out of 8000000 for 9000
+ 38941 strings out of 467525
+ 899949 string characters out of 5418982
+ 1679465 words of memory out of 5000000
+ 67082 multiletter control sequences out of 15000+600000
+ 656521 words of font info for 110 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,11n,107p,11270b,2223s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,13n,107p,11270b,2223s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1728.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on august.pdf (42 pages, 1002174 bytes).
+Output written on august.pdf (44 pages, 1027231 bytes).
 PDF statistics:
- 981 PDF objects out of 1000 (max. 8388607)
- 830 compressed objects within 9 object streams
- 170 named destinations out of 1000 (max. 500000)
- 513 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1072 PDF objects out of 1200 (max. 8388607)
+ 917 compressed objects within 10 object streams
+ 183 named destinations out of 1000 (max. 500000)
+ 529 words of extra memory for PDF output out of 10000 (max. 10000000)
 
