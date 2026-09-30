@@ -87,6 +87,13 @@
 \definecolor{uhh_red}{RGB}{226,0,26}
 \definecolor{uhh_blue}{RGB}{2,113,187}
 \definecolor{uhh_grey}{RGB}{59,81,91}
+\usepackage{listings}       % Python-Code im Anhang
+\lstset{language=Python, basicstyle=\ttfamily\footnotesize,
+        numbers=left, numberstyle=\tiny, breaklines=true,
+        frame=single, showstringspaces=false,
+        keywordstyle=\color{uhh_blue}, commentstyle=\color{uhh_grey},
+        literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {Ä}{{\"A}}1
+                 {Ö}{{\"O}}1 {Ü}{{\"U}}1 {ß}{{\ss}}1}
 
 \definecolor{change}{RGB}{2,113,187}
 
@@ -306,6 +313,7 @@ Rahmen, in dem die Wavelet-Transformation als unitäre Abbildung erscheint.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Der Hilbertraum \texorpdfstring{$L^2(\R)$}{L2(R)}}
+\label{sec:l2}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \anmerkung{Einführung von $L^2(\R)$ als vollständigem Raum mit Skalarprodukt — 
 dem Raum, in dem sämtliche Signale und Wavelets im Folgenden leben.}
@@ -340,6 +348,7 @@ Entwicklung jedes Elements sind für ein Orthonormalsystem äquivalent.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Unitäre Operatoren}
+\label{sec:unitaer}
 \anmerkung{Ein unitärer Operator ist eine surjektive Isometrie; er erhält Skalarprodukte 
 und damit Energie — der Grund, warum Rauschen unter der DWT seine Statistik behält.}
 \quellen{
@@ -354,6 +363,7 @@ und damit Energie — der Grund, warum Rauschen unter der DWT seine Statistik be
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fourier-Transformation und Satz von Plancherel}
+\label{sec:fourier-plancherel}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \anmerkung{Die Fourier-Transformation setzt sich von der Schwartz-Klasse eindeutig zu 
 einem unitären Isomorphismus auf $L^2(\R)$ fort.}
@@ -380,8 +390,8 @@ $\scal{f}{g} = \scal{\hat f}{\hat g}$.
 
 Die Literatur normiert uneinheitlich, und die Konstanten der folgenden Kapitel
 hängen von der Wahl ab: Der Faktor $2\pi$ in der Zulässigkeitsbedingung
-\eqref{eq:zulaessigkeit} und die rechte Seite $1/(2\pi)$ in
-Lemma~\ref{lem:onb-fourier} gelten nur für diese Normierung. Beim Vergleich mit
+\eqref{eq:zulaessigkeit} und der Wert $\lvert\hat\varphi(0)\rvert = (2\pi)^{-1/2}$ in
+Abschnitt~\ref{sec:skalierungsgleichung} gelten nur für diese Normierung. Beim Vergleich mit
 einer Quelle ist deshalb zuerst deren Konvention nachzusehen.
 \end{Bemerkung}
 
@@ -896,157 +906,56 @@ einem entsprechend langen.
 %\cite[S.~55]{blatter}.}
 
 % =====================================================================
-%  Beispiel am Ende von Abschnitt 3.1.2
-%  "Die Wavelet-Familie und die Transformation"
-%
-%  Benoetigte Labels aus anderen Abschnitten:
-%     bsp:haar                Haar-Wavelet (Abschnitt 3.1.1)
-%     bem:fourier-konvention  Fourier-Konvention (Abschnitt 2.4)
-%  Bilder: abbildungen/abb1_signal, abb2_fourier, abb3_cwt_haar
+%  Beispiel am Ende von Abschnitt 3.1.2 -- gekuerzte Fassung
+%  Die Rechnungen stehen in Anhang~\ref{anh:fourier-testsignal} und
+%  Anhang~\ref{anh:stammfunktion-testsignal}, der Code in
+%  Anhang~\ref{chapter:anhang-code}.
+%  Alle Labels der alten Fassung bleiben erhalten:
+%     bsp:testsignal, fig:signal, fig:fourier, fig:cwt,
+%     eq:ft-testsignal, eq:cwt-haar-exakt
 % =====================================================================
 
-\begin{Beispiel}\label{bsp:testsignal}
+\begin{Beispiel}[Ein Testsignal mit zwei Frequenzen]
+\label{bsp:testsignal}
 Betrachtet wird
 \[
   f(t)=
   \begin{cases}
-    1-\cos(2\pi t),                  & 0\le t\le 3,\\
+    1-\cos(2\pi t),                      & 0\le t\le 3,\\
     \tfrac12\bigl(1-\cos(10\pi t)\bigr), & 4\le t\le 5,\\
-    0,                               & \text{sonst.}
+    0,                                   & \text{sonst.}
   \end{cases}
 \]
-
 Auf $[0,3]$ schwingt $f$ mit der Frequenz $1$, auf $[4,5]$ mit der
-Frequenz $5$. 
-%; in beiden Fällen passt eine ganze Anzahl von Perioden
-%in den Träger, nämlich $3$ bzw.\ $5$. Diese Bedingung wird im Folgenden an
-%drei Stellen gebraucht und ist der einzige Grund für die konkrete Wahl der
-%Zahlen.
-
-%Zunächst ist $f\in L^1(\R)\cap\LZwei$: die Funktion ist messbar, durch $2$
-%beschränkt und ihr Träger $[0,3]\cup[4,5]$ hat endliches Ma\ss{}. Für eine
-%beschränkte Funktion mit kompaktem Träger sind alle $L^p$-Normen endlich;
-%hier etwa $\|f\|_{L^1}=\tfrac72$ und $\|f\|_{\LZwei}^2=\tfrac{39}{8}$.
-%Die Zugehörigkeit zu $L^1$ erlaubt es, die Fourier-Transformierte
-%punktweise als Integral zu berechnen, die zu $\LZwei$ macht $f$ zu einem
-%zulässigen Argument der Wavelet-Transformation.
-%
-%\anmerkung{vll bisscxhen zu viel?}
+Frequenz $5$; in beide Intervalle passt jeweils eine ganze Anzahl von
+Perioden (Abbildung~\ref{fig:signal}). Als beschränkte Funktion mit
+kompaktem Träger liegt $f$ in $L^1(\R)\cap\LZwei$.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.9\textwidth]{abb1_signal.png}
-  \caption{Das Signal $f$ aus Beispiel~\ref{bsp:testsignal}.} 
-    %Links die
-    %langsame Komponente auf $[0,3]$ mit Amplitude $2$, rechts die schnelle
-    %auf $[4,5]$ mit Amplitude $1$.}
+  \caption{Das Signal $f$ aus Beispiel~\ref{bsp:testsignal}.}
   \label{fig:signal}
 \end{figure}
 
-%An den vier Trägerrändern verschwinden $f$ und $f'$ gemeinsam, denn mit
-%$1-\cos x = 2\sin^2(x/2)$ liegen dort doppelte Nullstellen. Das Signal ist
-%also stetig differenzierbar; in Abbildung~\ref{fig:signal} sieht man, dass
-%die Kurve tangential in die Nulllinie einläuft und keine Ecke bildet.
-
-Zum Vergleich berechnen wir zuerst $\hat f$. In der Konvention aus
-Bemerkung~\ref{bem:fourier-konvention} ist
-\[
-  \hat f(\omega)
-  =\frac{1}{\sqrt{2\pi}}\int_{\R} f(t)e^{-i\omega t}\,dt
-  =\frac{1}{\sqrt{2\pi}}\left(
-      \int_0^3\bigl(1-\cos(2\pi t)\bigr)e^{-i\omega t}\,dt
-      +\frac12\int_4^5\bigl(1-\cos(10\pi t)\bigr)e^{-i\omega t}\,dt
-    \right).
-\]
-
-Wir behandeln beide Summanden getrennt und benutzen durchweg nur
-\begin{equation}\label{eq:stammfunktion-exp}
-  \int_\alpha^\beta e^{ct}\,dt=\frac{1}{c}\bigl(e^{c\beta}-e^{c\alpha}\bigr),
-  \qquad c\in\mathbb{C}\setminus\{0\},
-\end{equation}
-sowie $\cos x=\tfrac12\bigl(e^{ix}+e^{-ix}\bigr)$.
-
-\paragraph{Die langsame Komponente.}
-Wir schreiben $q_1:=1-e^{-3i\omega}$ und zerlegen
-\[
-  \int_0^3\bigl(1-\cos(2\pi t)\bigr)e^{-i\omega t}\,dt
-  =\underbrace{\int_0^3 e^{-i\omega t}\,dt}_{=:A_1}
-   -\underbrace{\int_0^3 \cos(2\pi t)\,e^{-i\omega t}\,dt}_{=:B_1}.
-\]
-Nach \eqref{eq:stammfunktion-exp} mit $c=-i\omega$ ist
-\[
-  A_1=\frac{e^{-3i\omega}-1}{-i\omega}=\frac{q_1}{i\omega}.
-\]
-Für $B_1$ ersetzen wir den Cosinus und fassen die Exponenten zusammen:
-\[
-  \cos(2\pi t)e^{-i\omega t}
-  =\tfrac12\Bigl(e^{i(2\pi-\omega)t}+e^{-i(2\pi+\omega)t}\Bigr),
-\]
-also nach \eqref{eq:stammfunktion-exp}
-\[
-  B_1=\frac{e^{i(2\pi-\omega)3}-1}{2i(2\pi-\omega)}
-     +\frac{e^{-i(2\pi+\omega)3}-1}{-2i(2\pi+\omega)}.
-\]
-Hier greift die Wahl der Zahlen -- auf $[0,3]$ liegen genau drei volle
-Perioden: wegen
-\[
-  e^{\pm i(2\pi\mp\omega)3}=e^{\pm 6\pi i}\,e^{-3i\omega}=e^{-3i\omega},
-  \qquad\text{da } e^{\pm 6\pi i}=1,
-\]
-werden beide Zähler zu $-q_1$, und $q_1$ lässt sich ausklammern:
-\[
-  B_1=\frac{q_1}{2i}\left(\frac{1}{2\pi+\omega}-\frac{1}{2\pi-\omega}\right)
-     =\frac{q_1}{2i}\cdot\frac{2\omega}{\omega^2-4\pi^2}
-     =\frac{q_1\,\omega}{i\,(\omega^2-4\pi^2)}.
-\]
-Damit
-\[
-  A_1-B_1
-  =\frac{q_1}{i}\left(\frac1\omega-\frac{\omega}{\omega^2-4\pi^2}\right)
-  =\frac{q_1}{i}\cdot\frac{-4\pi^2}{\omega(\omega^2-4\pi^2)}
-  =\frac{i\,4\pi^2\,q_1}{\omega\,(\omega^2-4\pi^2)} ,
-\]
-wobei im letzten Schritt $1/i=-i$ benutzt wurde.
-
-\paragraph{Die schnelle Komponente.}
-Dieselbe Rechnung mit $q_2:=e^{-4i\omega}-e^{-5i\omega}$ liefert
-\[
-  A_2=\int_4^5 e^{-i\omega t}\,dt=\frac{q_2}{i\omega},
-  \qquad
-  B_2=\frac{q_2\,\omega}{i\,(\omega^2-100\pi^2)} .
-\]
-Der entscheidende Schritt geht wieder auf, denn an beiden Integrations\-grenzen
-ist $e^{10\pi i\cdot 4}=e^{40\pi i}=1$ und $e^{10\pi i\cdot 5}=e^{50\pi i}=1$.
-Mit dem Amplitudenfaktor $\tfrac12$ folgt
-\[
-  \frac12\bigl(A_2-B_2\bigr)=\frac{i\,50\pi^2\,q_2}{\omega\,(\omega^2-100\pi^2)} .
-\]
-
-\paragraph{Ergebnis.}
-Zusammensetzen und den Vorfaktor zurückholen:
+\paragraph{Fourier-Transformierte.}
+Elementare Integration, bei der die ganzzahligen Periodenzahlen die
+Randterme vereinfachen, liefert in der Konvention aus
+Bemerkung~\ref{bem:fourier-konvention}
+(Rechnung in Anhang~\ref{anh:fourier-testsignal})
 \begin{equation}\label{eq:ft-testsignal}
   \hat f(\omega)
   =\frac{i}{\sqrt{2\pi}\,\omega}
    \left[
      \frac{4\pi^{2}\bigl(1-e^{-3i\omega}\bigr)}{\omega^{2}-4\pi^{2}}
      +\frac{50\pi^{2}\bigl(e^{-4i\omega}-e^{-5i\omega}\bigr)}{\omega^{2}-100\pi^{2}}
-   \right].
+   \right],
 \end{equation}
-
-%\anmerkung{In den Zählern stehen ausschlie\ss{}lich die Trägerränder: $0$ und
-%$3$ in $1-e^{-3i\omega}$, $4$ und $5$ in $e^{-4i\omega}-e^{-5i\omega}$.
-%Die Lageinformation steckt also vollständig in vier Phasenfaktoren, die
-%Frequenzinformation in den Nennern $\omega^2-(2\pi)^2$ und
-%$\omega^2-(10\pi)^2$.}
-
-Die Nullstellen der Nenner bei $\omega\in\{0,\pm2\pi,\pm10\pi\}$ sind
-hebbar, da dort auch die Zähler verschwinden: für $\omega=2\pi$ etwa ist
-$e^{-3i\cdot 2\pi}=1$, also $q_1=0$. Die Grenzwerte sind
-\[
-  |\hat f(0)|=\frac{7}{2\sqrt{2\pi}}\approx 1{,}396,\qquad
-  |\hat f(\pm2\pi)|=\frac{3}{2\sqrt{2\pi}}\approx 0{,}598,\qquad
-  |\hat f(\pm10\pi)|=\frac{1}{4\sqrt{2\pi}}\approx 0{,}0997 .
-\]
+wobei die Stellen $\omega\in\{0,\pm2\pi,\pm10\pi\}$ hebbar sind.
+Abbildung~\ref{fig:fourier} zeigt beide Frequenzen als Maxima nahe
+$\pm2\pi$ und $\pm10\pi$; durch Überlagerung mit den Nebenkeulen sind sie
+leicht verschoben, nach $\omega \approx \pm1{,}90\pi$ bzw.\
+$\omega \approx \pm9{,}73\pi$.
 
 \begin{figure}[htbp]
   \centering
@@ -1056,92 +965,44 @@ $e^{-3i\cdot 2\pi}=1$, also $q_1=0$. Die Grenzwerte sind
   \label{fig:fourier}
 \end{figure}
 
-Abbildung~\ref{fig:fourier} zeigt beide Frequenzen als Maxima in der Nähe von
-$\pm2\pi$ und $\pm10\pi$; durch Überlagerung mit den Nebenkeulen sind sie leicht
-verschoben, nach $\omega \approx 1{,}90\pi$ bzw.\ $\omega \approx 9{,}73\pi$. %Zwei Beobachtungen sind wesentlich.
+Wann die jeweilige Frequenz auftritt, ist $|\hat f|$ nicht zu entnehmen.
+Für die an $t=\tfrac52$ gespiegelte Funktion $g(t):=f(5-t)$, in der die
+beiden Komponenten ihre Plätze tauschen, gilt nämlich
+$\hat g(\omega)=e^{-5i\omega}\,\overline{\hat f(\omega)}$, da $f$ reell
+ist, also $\lvert\hat g\rvert=\lvert\hat f\rvert$. Die zeitliche
+Information ist in $\hat f$ zwar vorhanden, steckt aber vollständig in der
+Phase.
 
-%Erstens ist der Ausschlag bei $\pm10\pi$ mit $0{,}0997$ auf etwa sieben
-%Prozent des Maximums bei $\omega=0$ zusammengeschrumpft und von den
-%Nebenmaxima der langsamen Komponente kaum zu unterscheiden. Der Grund ist
-%die kurze Dauer: die schnelle Schwingung ist nur ein Viertel so lange
-%aktiv wie die langsame und trägt entsprechend wenig zum Integral bei.
-
-$|\hat f|$ enthält keine Auskunft darüber, wann die jeweilige Frequenz
-auftritt. Spiegelt man $f$ an $t=\tfrac52$, setzt also $g(t):=f(5-t)$, so
-tauschen die beiden Komponenten ihre Plätze; wegen
-$\hat g(\omega)=e^{-5i\omega}\,\overline{\hat f(\omega)}$ ist aber
-$\lvert\hat g\rvert=\lvert\hat f\rvert$, das Bild bliebe also dasselbe. Die zeitliche Information ist zwar in $\hat f$ vorhanden, aber
-im Betragsspektrum unzugänglich.
-
+\paragraph{Wavelet-Transformierte.}
 Wir transformieren nun mit dem Haar-Wavelet $\psi^{\mathrm H}$ aus
-Beispiel~\ref{bsp:haar} und beschränken uns auf $a>0$. Da
-$\psi^{\mathrm H}$ reellwertig ist, entfällt die Konjugation in der
-Definition:
-\[
-  W_{\psi^{\mathrm H}}f(a,b)
-  =\frac{1}{\sqrt a}\int_{\R} f(t)\,
-    \psi^{\mathrm H}\!\left(\frac{t-b}{a}\right)dt .
-\]
-
-Zunächst schreiben wir die verschobene und skalierte Version explizit hin.
-Auflösen der drei definierenden Ungleichungen nach $t$ ergibt
-\[
-  \psi^{\mathrm H}\!\left(\frac{t-b}{a}\right)=
-  \begin{cases}
-     1, & b\le t< b+\tfrac a2,\\
-    -1, & b+\tfrac a2\le t< b+a,\\
-     0, & \text{sonst}.
-  \end{cases}
-\]
-%etwa wird aus $0\le\frac{t-b}{a}<\tfrac12$ durch Multiplikation mit $a>0$
-%und Addition von $b$ die Bedingung $b\le t<b+\tfrac a2$. 
-Das Wavelet ist
-also ein Fenster über $[b,\,b+a]$: die Verschiebung $b$ legt fest,
-wo es sitzt, die Skala $a$, wie breit es ist, und die
-Sprungstelle liegt genau in der Mitte.
-
-Da der Integrand au\ss{}erhalb dieses Fensters verschwindet und dort nur die
-Werte $\pm1$ annimmt, ist
-\[
-  W_{\psi^{\mathrm H}}f(a,b)
-  =\frac{1}{\sqrt a}\left(\int_b^{b+a/2} f(t)\,dt-\int_{b+a/2}^{b+a} f(t)\,dt\right).
-\]
-Die Transformation vergleicht den Mittelwert von $f$ auf der linken
-Fensterhälfte mit dem auf der rechten; sie wirkt als Differenzenfilter.
-
-Mit der Stammfunktion $F(t):=\int_{-\infty}^{t}f(s)\,ds$ wird daraus
+Beispiel~\ref{bsp:haar} und beschränken uns auf $a>0$. Für $a>0$ nimmt
+$\psi^{\mathrm H}\bigl(\frac{t-b}{a}\bigr)$ auf $[b,\,b+\tfrac a2[$ den
+Wert $1$, auf $[b+\tfrac a2,\,b+a[$ den Wert $-1$ an und verschwindet
+sonst; das Wavelet ist also ein Fenster über $[b,b+a]$ mit Sprungstelle in
+der Mitte. Da $\psi^{\mathrm H}$ reellwertig ist, entfällt die Konjugation
+in \eqref{eq:cwt}, und mit der Stammfunktion
+$F(t):=\int_{-\infty}^{t}f(s)\,ds$ folgt
 \begin{equation}\label{eq:cwt-haar-exakt}
   W_{\psi^{\mathrm H}}f(a,b)
-  =\frac{\bigl(F(b+\tfrac a2)-F(b)\bigr)-\bigl(F(b+a)-F(b+\tfrac a2)\bigr)}{\sqrt a}
+  =\frac{1}{\sqrt a}\left(\int_b^{b+a/2} f(t)\,dt-\int_{b+a/2}^{b+a} f(t)\,dt\right)
   =\frac{2F\bigl(b+\tfrac a2\bigr)-F(b)-F(b+a)}{\sqrt a}.
 \end{equation}
-%Bemerkenswert daran ist, dass keine Fallunterscheidung nötig wird: hätte
-%man stattdessen nach dem Träger von $f$ zerlegt, wären über ein Dutzend
-%Lagen von $[b,b+a]$ relativ zu $[0,3]$ und $[4,5]$ zu behandeln.
-
-Die Stammfunktion lässt sich explizit angeben. Es gilt
+Die Transformation vergleicht also das Integral von $f$ über die linke
+Fensterhälfte mit dem über die rechte; sie wirkt als Differenzenfilter. Die
+Stammfunktion ist elementar (Anhang~\ref{anh:stammfunktion-testsignal}):
 \[
   F(t)=
   \begin{cases}
-    0, & t<0,\\
-    t-\dfrac{\sin(2\pi t)}{2\pi}, & 0\le t\le 3,\\
-    3, & 3\le t\le 4,\\
-    3+\dfrac{t-4}{2}-\dfrac{\sin(10\pi t)}{20\pi}, & 4\le t\le 5,\\
+    0, & t<0,\\[2pt]
+    t-\dfrac{\sin(2\pi t)}{2\pi}, & 0\le t\le 3,\\[4pt]
+    3, & 3\le t\le 4,\\[2pt]
+    3+\dfrac{t-4}{2}-\dfrac{\sin(10\pi t)}{20\pi}, & 4\le t\le 5,\\[4pt]
     \dfrac72, & t>5.
   \end{cases}
 \]
-
-Sie ist durch ihre Definition eindeutig bestimmt und, da $f$ stetig ist, sogar
-stetig differenzierbar; in \eqref{eq:cwt-haar-exakt} gehen ohnehin nur
-Differenzen von $F$ ein.
-%Die Konstanten auf den beiden Plateaus sind $F(3)=3$ und $F(5)=\tfrac72$,
-%denn $\sin(6\pi)=\sin(40\pi)=\sin(50\pi)=0$ -- zum zweiten und dritten Mal
-%geht hier die ganzzahlige Periodenzahl ein. Insbesondere ist
-%$F(t)=\int_\R f=\tfrac72$ für $t>5$, in Übereinstimmung mit
-%$|\hat f(0)|=\tfrac{7}{2\sqrt{2\pi}}$.
-
-Zeichnet man nun $W_{\psi^{\mathrm H}}f(a,b)$ als Funktion von $b$ und $a$, so ergibt sich Abbildung~\ref{fig:cwt}. Die Skalenachse ist logarithmisch,
-um die gro\ss{}e Spannweite von $a$ übersichtlich darzustellen.
+Damit ist $W_{\psi^{\mathrm H}}f$ für alle $(a,b)$ in geschlossener Form
+bekannt; Abbildung~\ref{fig:cwt} zeigt ihren Betrag, ausgewertet nach
+\eqref{eq:cwt-haar-exakt} (Code in Anhang~\ref{chapter:anhang-code}).
 
 \begin{figure}[htbp]
   \centering
@@ -1153,17 +1014,12 @@ um die gro\ss{}e Spannweite von $a$ übersichtlich darzustellen.
 
 Abbildung~\ref{fig:cwt} zerfällt in zwei Bereiche. In der Ortsvariablen
 $b$ liegen sie über den Trägern $[0,3]$ und $[4,5]$, in der Skala $a$
-unterscheiden sie sich um den Faktor fünf -- also um genau das Verhältnis
-der beiden Frequenzen. Beide Informationen, Zeitpunkt und Frequenz, sind
-gleichzeitig ablesbar. Das ist der Gewinn gegenüber
-Abbildung~\ref{fig:fourier}.
-
-Auch die schwache schnelle Komponente, die im Fourier-Bild fast
-verschwand, ist hier deutlich als eigenes Band zu erkennen. Der Grund ist,
-dass die Transformation bei kleinem $a$ nur ein kurzes Zeitfenster
-auswertet und die lange Dauer der langsamen Komponente dort nicht mehr ins
-Gewicht fällt.
-
+unterscheiden sie sich um den Faktor fünf -- genau das Verhältnis der
+beiden Frequenzen. Zeitpunkt und Frequenz sind also gleichzeitig ablesbar.
+Auch die schwache schnelle Komponente, die in Abbildung~\ref{fig:fourier}
+kaum hervortritt, bildet hier ein eigenes Band: Bei kleinem $a$ wertet die
+Transformation nur ein kurzes Zeitfenster aus, in dem die lange Dauer der
+langsamen Komponente nicht ins Gewicht fällt.
 \end{Beispiel}
 
 %\anmerkung{Die Bänder sind auffällig breit. Das liegt am
@@ -1178,8 +1034,7 @@ Gewicht fällt.
 %Folge der Lage des Trägers $[0,1]$ von $\psi^{\mathrm H}$ aus Beispiel~\ref{bsp:haar}.}
 
 Damit ist an einem Beispiel vorgeführt, was die Transformation leistet:
-sie trennt, was im Betragsspektrum vermengt bleibt. Offen ist bislang, ob
-sich $f$ aus $W_\psi f$ zurückgewinnen lässt.
+sie trennt, was im Betragsspektrum vermengt bleibt.
 
 \quellen{Haar-Wavelet und seine Fourier-Transformierte:
 \cite[Kap.~1.1]{lmr}, \cite[Kap.~1.6]{blatter}. Zur Darstellung von
@@ -1247,8 +1102,6 @@ vgl.\ \cite[Kap.~3.1]{blatter} sowie \cite[Kap.~1.1]{lmr}.}
 
 Offen ist, ob sich $f$ aus $W_\psi f$ zurückgewinnen lässt. Für die
 Fourier-Transformation beantwortet das der Satz von Plancherel
-\anmerkung{TODO: Das "??" im PDF hei\ss{}t, dass dieses Label in Abschnitt 2.4 fehlt oder}
-% anders hei\ss{}t. Dort muss \label{sec:fourier-plancherel} stehen.
 (Abschnitt~\ref{sec:fourier-plancherel}): Wegen $\norm{\hat f} = \norm{f}$ bleibt
 die Energie $\norm{f}^2 = \int_\R \lvert f(t)\rvert^2\,dt$ erhalten, und zwei
 verschiedene Signale können nicht dasselbe Spektrum besitzen. Für die CWT gilt
@@ -1264,9 +1117,8 @@ Auf der zersägten Ebene $\R^*_\square$ aus Definition~\ref{def:cwt} sei
   \qquad
   \scal{u}{v}_{\mathcal H} \;:=\; \int_{\R^*_\square} u(a,b)\,\overline{v(a,b)}\;\frac{da\,db}{a^2} .
 \]
-\anmerkung{TODO: "2.1" durch \ref auf das Label von Abschnitt 2.1 ersetzen}
 Dabei sind nur messbare Funktionen $u$ zugelassen, und wie bei $\LZwei$ in
-Abschnitt~2.1 werden Funktionen, die fast überall übereinstimmen, identifiziert.
+Abschnitt~\ref{sec:l2} werden Funktionen, die fast überall übereinstimmen, identifiziert.
 \end{Definition}
 
 \anmerkung{Hier noch Verweis auf Abschnitt~2.5 einfügen: Vergleich mit der
@@ -1309,9 +1161,8 @@ Norm erhalten:
   \norm{C_\psi^{-1/2}\,W_\psi f}_{\mathcal H} = \norm{f}
   \qquad\text{für alle } f \in \LZwei .
 \]
-\anmerkung{TODO: "2.3" durch \ref auf das Label von Abschnitt 2.3 ersetzen}
 $C_\psi^{-1/2}W_\psi$ ist also eine Isometrie; unitär im Sinne von
-Abschnitt~2.3 wäre sie erst, wenn sie zusätzlich surjektiv wäre
+Abschnitt~\ref{sec:unitaer} wäre sie erst, wenn sie zusätzlich surjektiv wäre
 -- das ist sie nicht, ihr Bild ist ein echter Teilraum von $\mathcal H$
 \cite[Kap.~3.4]{blatter}, vgl.\ Bemerkung~\ref{bem:redundanz}. Der Beweis beruht auf mehrfacher
 Anwendung des Satzes von Plancherel und des Satzes von Fubini; die
@@ -1667,7 +1518,7 @@ an und schreiben kurz $f = (4,2,5,7)$ für ihre Werte auf den vier Intervallen
       \node[above] at (3,1.5) {$1{,}5$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Die Treppenfunktion $f=(4,2,5,7)$ aus Beispiel~\ref{bsp:...} und ihre
+  \caption{Die Treppenfunktion $f=(4,2,5,7)$ aus Beispiel~\ref{bsp:haar-mittelung} und ihre
   Mittelungen $P_1 f$ und $P_2 f$ (oben). Darunter steht jeweils das Detail, das beim
   Übergang zu dieser Mittelung verloren geht (unten). Alle Panels haben denselben
   vertikalen Maßstab. Jedes Detail ist ein Vielfaches eines gestreckten und
@@ -2357,7 +2208,7 @@ gesamte Rauschen aufnimmt, während die gröberen Stufen den Signalverlauf trage
 
 Satz~\ref{satz:zerlegung} sagt noch nichts darüber, wie eine Basis von $W_j$
 aussieht. Da $V_{-1}$ zwei Basisfunktionen pro Zeiteinheit besitzt und $V_0$
-eine, liegt es nahe, $W_0$ ebenfalls durch die ganzzahligen Translate einer
+eine, liegt es nahe, $W_0$ ebenfalls durch die ganzzahligen Verschiebungen einer
 einzigen Funktion $\psi$ aufzuspannen \cite[Kap.~5.1]{blatter}. % S. 109, Blatter
 Dass es ein solches $\psi$ gibt, wird in Kapitel~\ref{chapter:dwt} gezeigt
 \cite[Satz~2.2.10]{lmr}; % S. 122, LMR
@@ -2551,272 +2402,968 @@ Abschnitt~\ref{sec:onb-invarianz} braucht: Die Wavelet-Koeffizienten sind
 Koordinaten bezüglich einer Orthonormalbasis.}
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Konstruktion der diskreten Wavelet-Transformation}
 \label{chapter:dwt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Kapitel~\ref{chapter:mra} endete mit einer bedingten Aussage: Gibt es eine
+Funktion $\psi$, deren um ganze Zahlen verschobene Kopien $\psi(\cdot-k)$,
+$k\in\Z$, eine Orthonormalbasis von $W_0$ bilden, so ist $\{\psi_{j,k}\}$ eine
+Orthonormalbasis von $\LZwei$ (Korollar~\ref{kor:wavelet-basis}). Dieses Kapitel
+konstruiert ein solches $\psi$ und beantwortet dabei drei Fragen: Wie erhält man
+$\psi$ aus $\varphi$? Wie berechnet man die Koeffizienten $a_{j,k}$ und
+$d_{j,k}$, ohne ein einziges Integral auszuwerten? Und welche Wavelets eignen
+sich für Signale wie das EKG? Alle drei Antworten stecken in einer einzigen
+Zahlenfolge $(h_k)_{k\in\Z}$. Begleitet wird das Kapitel von zwei Beispielen:
+dem Haar-Wavelet aus Kapitel~\ref{chapter:mra} und dem Daubechies-Wavelet mit
+vier Koeffizienten, das in Kapitel~\ref{chapter:anwendung} verwendet wird.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Die Skalierungsgleichung}
+\label{sec:skalierungsgleichung}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Da $\phi \in V_0 \subset V_{-1}$ liegt, lässt es sich in der Basis von $V_{-1}$ entwickeln -- daraus folgt die Zwei-Skalen-Gleichung mit den Koeffizienten $h_k$.}
-\quellen{
-  \begin{itemize}
-    \item Blatter, S. 111 [bestätigt] (Sachverz.: „Skalierungsgleichung 111"); S. 112 [bestätigt] („Konsistenzbedingungen 112")
-    \item LMR, Kap. 2.4.2 „Lösung von Skalierungsgleichungen", S. 145–164 [bestätigt] — der Existenzfrage eigens gewidmeter Abschnitt
-    \item LMR, Gl. (2.4.12), S. 165 [bestätigt] — Skalierungsgleichung in der Form $\phi(x) = \sqrt{2} \sum_{k=0}^M h_k \phi(2x-k)$
-    \item Blatter, Kap. 5.2, S. 110–116 [bestätigt]
-    \item HankeBourgeois, Gl. (56.8), S. 438 [bestätigt] — die Skalierungsgleichung im Haar-Fall vollständig explizit: $2 \chi_{k,j} = \chi_{k+1,2j} + \chi_{k+1,2j+1}$
-    \item HankeBourgeois, Gl. (56.2), S. 434–435 [bestätigt] — Stauchung und Translation als erzeugende Operationen
-  \end{itemize}
-}
+
+\quellen{LMR, Lemma~2.2.3, S.~113 [bestätigt]; LMR, Gl.~(2.2.23), (2.2.24)
+und Satz~2.2.9, S.~121 [bestätigt]; LMR, Anhang, S.~314 [bestätigt]; Serov,
+Satz~25.18, S.~257--258 [bestätigt]; Blatter, Kap.~5.2, Gl.~(1), S.~110
+[bestätigt], bewiesen in Satz~(5.8) [Seite nachtragen]; Blatter, Satz~(5.3),
+S.~111 [bestätigt].}
+
+In diesem Abschnitt wird die Skalierungsfunktion $\varphi$ durch eine
+Zahlenfolge $(h_k)$ beschrieben, und es werden zwei Bedingungen an diese Folge
+hergeleitet. Alles Weitere in diesem Kapitel wird nur noch mit den $h_k$
+rechnen; die Funktionen $\varphi$ und $\psi$ selbst werden dafür nicht mehr
+benötigt.
+
+Nach (M1) ist $\varphi \in V_0 \subset V_{-1}$, und nach
+Satz~\ref{satz:onb-vj} bilden die Funktionen
+$\varphi_{-1,k}(t) = \sqrt2\,\varphi(2t-k)$ eine Orthonormalbasis von $V_{-1}$.
+Also lässt sich $\varphi$ in dieser Basis darstellen:
+\[
+  \varphi = \sum_{k\in\Z} \langle \varphi, \varphi_{-1,k}\rangle\,
+  \varphi_{-1,k}.
+\]
+Rechts steht eine gewichtete Summe der Funktionen $\varphi(2t-k)$. Jede davon
+ist eine Kopie von $\varphi$, die um den Faktor $2$ zusammengedrückt und um
+$k/2$ verschoben ist, denn $\varphi(2t-k) = \varphi\bigl(2(t-k/2)\bigr)$. Die
+Skalierungsfunktion lässt sich also aus schmaleren Kopien ihrer selbst
+zusammensetzen.
+
+\begin{Satz}[Skalierungsgleichung, vgl.\ {\cite[Lemma~2.2.3]{lmr}}]
+\label{satz:skalierungsgleichung}
+Sei $(V_j)_{j\in\Z}$ eine MSA mit Skalierungsfunktion $\varphi$. Mit
+$h_k := \scal{\varphi}{\varphi_{-1,k}}$ gilt
+\begin{equation}
+\label{eq:skalierungsgleichung}
+  \varphi(t) \;=\; \sqrt2 \sum_{k\in\Z} h_k\,\varphi(2t-k)
+  \quad\text{für fast alle } t\in\R
+  \qquad\text{und}\qquad
+  \sum_{k\in\Z}\lvert h_k\rvert^2 \;=\; 1 ,
+\end{equation}
+wobei die Reihe in $\LZwei$ konvergiert.
+Die Folge $(h_k)$ hei\ss{}t Skalierungsfolge oder Tiefpassfilter der MSA.
+\end{Satz}
+
+\begin{proof}
+Nach (M1) liegt $\varphi$ in $V_{-1}$, und $\{\varphi_{-1,k}\}_k$ ist nach
+Satz~\ref{satz:onb-vj} eine Orthonormalbasis von $V_{-1}$. Die
+Fourier-Entwicklung in dieser Basis \cite[Satz~25.18\,(3)]{serov} lautet
+$\varphi = \sum_k h_k\,\varphi_{-1,k}$ mit
+$h_k\,\varphi_{-1,k}(t) = \sqrt2\,h_k\,\varphi(2t-k)$. Nach der
+Parseval-Gleichung \cite[Satz~25.18\,(5)]{serov} ist
+$\sum_k\lvert h_k\rvert^2 = \norm{\varphi}^2 = 1$, denn $\varphi$ ist nach (M5)
+selbst Element der Orthonormalbasis $\{\varphi(\,\cdot-k)\}_k$ von $V_0$.
+\end{proof}
+
+\begin{Beispiel}[Haar]
+\label{bsp:haar-skalierung}
+Für $\varphi = \mathbf 1_{[0,1[}$ aus Beispiel~\ref{bsp:haar-msa} ist
+$\varphi(2t) = \mathbf 1_{[0,1/2[}(t)$ und
+$\varphi(2t-1) = \mathbf 1_{[1/2,1[}(t)$. Eine Stufe der Breite $1$ besteht
+also aus zwei Stufen der Breite $\tfrac12$:
+\[
+  \varphi(t) \;=\; \varphi(2t) + \varphi(2t-1)
+  \;=\; \sqrt2\Bigl(\tfrac{1}{\sqrt2}\,\varphi(2t) + \tfrac{1}{\sqrt2}\,\varphi(2t-1)\Bigr).
+\]
+Der Vergleich mit \eqref{eq:skalierungsgleichung} liefert
+$h_0 = h_1 = \tfrac{1}{\sqrt2}$ und $h_k = 0$ sonst, in Übereinstimmung mit
+$h_0 = \scal{\varphi}{\varphi_{-1,0}} = \sqrt2\cdot\tfrac12$ und
+$\sum_k\lvert h_k\rvert^2 = 1$.
+\end{Beispiel}
+
+Aus der Skalierungsgleichung folgt eine zweite Bedingung an $(h_k)$, die man im
+Frequenzbereich sieht; dabei sei $\sum_k\lvert h_k\rvert<\infty$, was für
+endliche Filter stets gilt. Nach den Rechenregeln der Fourier-Transformation für
+Stauchung und Verschiebung \cite[Anhang]{lmr} ist
+$\widehat{\varphi_{-1,k}}(\omega) = \tfrac{1}{\sqrt2}\,e^{-ik\omega/2}\,
+\hat\varphi\bigl(\tfrac\omega2\bigr)$. Transformiert man
+$\varphi = \sum_k h_k\,\varphi_{-1,k}$ gliedweise und zieht den von $k$
+unabhängigen Faktor $\hat\varphi(\omega/2)$ vor die Summe, so wird die
+Skalierungsgleichung mit dem $2\pi$-periodischen Fourier-Filter
+\begin{equation}
+\label{eq:symbol-H}
+  H(\omega) \;:=\; \frac{1}{\sqrt2}\sum_{k\in\Z} h_k\,e^{-ik\omega}
+\end{equation}
+zu einem Produkt \cite[Gl.~(2.2.23)]{lmr}:
+\begin{equation}
+\label{eq:skalierung-fourier}
+  \hat\varphi(\omega) \;=\; H\bigl(\tfrac\omega2\bigr)\,\hat\varphi\bigl(\tfrac\omega2\bigr),
+  \qquad \omega\in\R .
+\end{equation}
+Für die hier betrachteten MSA ist $\lvert\hat\varphi(0)\rvert = (2\pi)^{-1/2}$,
+insbesondere $\hat\varphi(0)\neq 0$ \cite[Kap.~5.2]{blatter}. Da beide Seiten
+von \eqref{eq:skalierung-fourier} stetig sind, darf man $\omega = 0$ einsetzen;
+Division durch $\hat\varphi(0)$ ergibt
+\begin{equation}
+\label{eq:H0}
+  H(0) \;=\; 1, \qquad\text{das hei\ss{}t}\qquad \sum_{k\in\Z} h_k \;=\; \sqrt2 ,
+\end{equation}
+im Haar-Fall $\tfrac{1}{\sqrt2}+\tfrac{1}{\sqrt2} = \sqrt2$; vgl.\
+\cite[Satz~2.2.9]{lmr}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Filterkoeffizienten: Tiefpass und Hochpass}
+\label{sec:filter}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Die $h_k$ wirken als Tiefpass, die über $g_k = (-1)^k h_{1-k}$ gewonnenen Koeffizienten als Hochpass -- die DWT ist damit eine Filterbank.}
-\quellen{
-  \begin{itemize}
-    \item LMR, Gl. (2.4.13), S. 165 [bestätigt] — $\psi(x) = \sqrt{2} \sum_{k=1-M}^{M} (-1)^k h_{1-k} \phi(2x-k)$
-    \item LMR, Bemerkung 2.4.19, S. 165 [bestätigt] — Filter mit (2.4.14) hei\ss{}en in der Signalverarbeitung Conjugate Quadrature Filter (CQF); die Brücke zur ingenieurwissenschaftlichen Literatur
-    \item LMR, Tabelle der Daubechies-Skalierungskoeffizienten, S. 170 [bestätigt] — direkt für deine Implementierung verwendbar
-    \item Blatter, Kap. 5.3, S. 117–129 [bestätigt]
-    \item Aqil, Kap. 2, S. 55–56 [bestätigt] — Fig. 4/5, HPF/LPF
-    \item Rebstadt, Abb. 2.10 „Filterbank-Schema", S. 27 [bestätigt]
-    \item HankeBourgeois, Gl. (56.8), S. 438 [bestätigt] — Tiefpass 
-$2 \chi_{k,j} = \chi_{k+1,2j} + \chi_{k+1,2j+1}$ und Hochpass 
-$2 \psi_{k,j} = \chi_{k+1,2j} - \chi_{k+1,2j+1}$, also 
-$h = (1,1)/\sqrt{2}$ und $g = (1,-1)/\sqrt{2}$
-    \item HankeBourgeois, Gl. (56.9), S. 438 [bestätigt] — die Umkehrung, d. h. die Synthesefilter
-  \end{itemize}
-}
-\anmerkung{ERLEDIGT: Die Indexkonvention ist jetzt in
-Bemerkung~\ref{bem:indexkonvention} verbindlich festgelegt (Blatter und LMR:
-kleineres $j$ = feinere Skala). Der frühere Platzhalter an dieser Stelle hatte
-dasselbe \texttt{\textbackslash label} wie jene Bemerkung und erzeugte einen
-doppelten Verweis in \texttt{august.aux}; er ist entfernt. Beim Ausschreiben von
-Kapitel~\ref{chapter:dwt} nur noch prüfen, dass die Filterindizes $h_k$, $g_k$
-konsistent zu \eqref{eq:phi-jk} laufen.}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Bedingungen im Fourier-Bereich}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Übersetzung der Orthonormalität in Bedingungen an das trigonometrische Polynom $H: H(0) = 1$ und $|H(\omega)|^2$ + $|H(\omega+\pi )|^2 = 1$.}
-\quellen{
-  \begin{itemize}
-    \item LMR, Gl. (2.4.14), S. 165 [bestätigt] — beide Bedingungen in genau dieser Form
-    \item LMR, Satz 2.2.9, S. 121 [bestätigt] — Herleitung aus der Orthogonalität
-    \item LMR, Lemma 2.4.20, S. 166 [bestätigt] — Charakterisierung von 
-    $q(\omega)= |H(\omega)|^2$
-    \item LMR, Satz 2.4.3, S. 146–147 [geschätzt]; Satz 2.4.7, S. 149 [geschätzt] — hinreichende Bedingungen an ${h_k}$
-    \item Blatter, S. 119 [bestätigt] (Sachverz.: „erzeugende Funktion 119")
-    \item Blatter, Kap. 5.3, S. 117–129 [bestätigt]; Meyer-Wavelet S. 125 [bestätigt]
-  \end{itemize}
-} 
+\quellen{LMR, Lemma~2.2.8, Gl.~(2.2.22) [Seite nachtragen, vermutl.\
+S.~120--121]; LMR, Satz~2.2.10, S.~122, Beweis S.~122--123 [bestätigt]; LMR,
+Beispiel S.~169 und Tabelle~2.3, S.~170 [bestätigt], dort umgekehrte
+Reihenfolge wegen $e^{+ik\omega}$; Serov, Satz~25.18, S.~257--258 [bestätigt];
+Blatter, Kap.~5.2, S.~110--116 [bestätigt].}
 
-\subsection{Die Orthonormalität im Fourier-Bereich}
-\label{subsec:onb-fourier}
+Bisher wurde die Folge $(h_k)$ aus einer gegebenen Skalierungsfunktion
+gewonnen. Für die Konstruktion neuer Wavelets geht man umgekehrt vor: Man wählt
+die Zahlen $h_k$ und erhält $\varphi$ und $\psi$ daraus. Dafür muss man wissen,
+welche Bedingungen eine Folge erfüllen muss, um zu einer MSA zu gehören.
+Neben \eqref{eq:H0} übersetzt sich auch die Orthonormalität der Verschiebungen
+$\varphi(\,\cdot-k)$ aus (M5) in eine Bedingung an die Folge selbst.
 
-Die Skalierungsfunktion wird nicht im Zeitbereich, sondern über ihre
-Fourier-Transformierte konstruiert. Die Orthonormalität der Translate aus (M5)
-muss deshalb als Bedingung an $\hat\varphi$ formuliert werden. Es gilt die
-Fourier-Konvention aus Bemerkung~\ref{bem:fourier-konvention}.
-
-\begin{Lemma}[Orthonormalitätsbedingung, {\cite[Lemma~2.2.4]{lmr}}]
-\label{lem:onb-fourier}
-Sei $\varphi \in \LZwei$. Dann sind äquivalent:
-\begin{enumerate}
-\item[(i)] $\{\varphi(\,\cdot-k) : k \in \Z\}$ ist ein Orthonormalsystem in $\LZwei$,
-\item[(ii)] $\displaystyle\sum_{l\in\Z} \bigl\lvert \hat\varphi(\omega + 2\pi l)\bigr\rvert^{2}
-  \;=\; \frac{1}{2\pi} \qquad\text{für fast alle } \omega \in \R .$
-\end{enumerate}
+\begin{Lemma}[Orthogonalität der Filterkoeffizienten, vgl.\ {\cite[Lemma~2.2.8]{lmr}}]
+\label{lem:h-orthogonal}
+Die Skalierungsfolge einer MSA erfüllt
+\begin{equation}
+\label{eq:h-orthogonal}
+  \sum_{n\in\Z} h_n\,\overline{h_{n-2m}} \;=\; \delta_{m,0}
+  \qquad\text{für alle } m\in\Z .
+\end{equation}
 \end{Lemma}
 
 \begin{proof}
-\textbf{Schritt 1 (Reduktion auf ein Skalarprodukt).} Für $m,n \in \Z$ liefert die
-Substitution $t = s + m$
-\begin{align*}
-  \scal{\varphi(\,\cdot-m)}{\varphi(\,\cdot-n)}
-  &\;=\; \int_\R \varphi(t-m)\,\overline{\varphi(t-n)}\,dt
-  \;=\; \int_\R \varphi(s)\,\overline{\varphi\bigl(s-(n-m)\bigr)}\,ds \\
-  &\;=\; \scal{\varphi}{\varphi(\,\cdot-(n-m))} .
-\end{align*}
-Aussage (i) ist daher gleichbedeutend mit
-\begin{equation}
-\label{eq:onb-reduktion}
-  \scal{\varphi}{\varphi(\,\cdot-k)} \;=\; \delta_{k,0}
-  \qquad\text{für alle } k \in \Z .
-\end{equation}
-
-\textbf{Schritt 2 (Übergang in den Frequenzbereich).} Nach dem Satz von Plancherel
-\cite[Satz~17.5]{serov} und der Verschiebungsregel
-$\bigl(\varphi(\,\cdot-k)\bigr)^{\wedge}(\omega) = e^{-ik\omega}\hat\varphi(\omega)$
-\cite[Anhang]{lmr} ist
-\[
-  \scal{\varphi}{\varphi(\,\cdot-k)}
-  \;=\; \scal{\hat\varphi}{e^{-ik\,\cdot}\,\hat\varphi}
-  \;=\; \int_\R \lvert\hat\varphi(\omega)\rvert^{2}\, e^{ik\omega}\,d\omega .
-\]
-
-\textbf{Schritt 3 (Periodisierung).} Wir setzen
-\[
-  \Phi(\omega) \;:=\; \sum_{l\in\Z}\bigl\lvert\hat\varphi(\omega+2\pi l)\bigr\rvert^{2},
-  \qquad \omega \in \R .
-\]
-Da alle Summanden nichtnegativ sind, erlaubt der Satz von Beppo Levi die
-Vertauschung von Summe und Integral, und die Substitution
-$\omega \mapsto \omega + 2\pi l$ auf $[2\pi l, 2\pi(l+1)[$ ergibt
-\[
-  \int_0^{2\pi}\Phi(\omega)\,d\omega
-  \;=\; \sum_{l\in\Z}\int_{2\pi l}^{2\pi(l+1)} \lvert\hat\varphi(\omega)\rvert^{2}\,d\omega
-  \;=\; \norm{\hat\varphi}^2_{\LZwei} \;=\; \norm{\varphi}^2_{\LZwei} \;<\; \infty .
-\]
-Also ist $\Phi$ fast überall endlich, $2\pi$-periodisch und
-$\Phi \in L^1(0,2\pi)$. Für den Integranden aus Schritt~2, der nicht nichtnegativ
-ist, verwenden wir die Partialsummen
-$\Phi_L := \sum_{\lvert l\rvert \le L}\lvert\hat\varphi(\,\cdot+2\pi l)\rvert^{2}$.
-Wegen der $2\pi$-Periodizität von $e^{ik\omega}$ ist
-\[
-  \int_{-2\pi L}^{2\pi(L+1)} \lvert\hat\varphi(\omega)\rvert^{2}\,e^{ik\omega}\,d\omega
-  \;=\; \int_0^{2\pi} \Phi_L(\omega)\,e^{ik\omega}\,d\omega ,
-\]
-und wegen $\lvert\Phi_L\,e^{ik\omega}\rvert \le \Phi$ sowie
-$\lvert\hat\varphi\rvert^2 \in L^1(\R)$ darf auf beiden Seiten nach dem Satz von
-der majorisierten Konvergenz $L \to \infty$ gebildet werden. Zusammen mit
-Schritt~2 folgt
-\begin{equation}
-\label{eq:onb-periodisiert}
-  \scal{\varphi}{\varphi(\,\cdot-k)} \;=\; \int_0^{2\pi} \Phi(\omega)\,e^{ik\omega}\,d\omega
-  \qquad\text{für alle } k \in \Z .
-\end{equation}
-
-\textbf{Schritt 4 (Schluss).} Gilt (ii), so ist $\Phi = 1/(2\pi)$ fast überall, und
-\eqref{eq:onb-periodisiert} liefert
-$\scal{\varphi}{\varphi(\,\cdot-k)} = \frac{1}{2\pi}\int_0^{2\pi} e^{ik\omega}\,d\omega = \delta_{k,0}$,
-also (i) nach Schritt~1. Gilt umgekehrt (i), so haben nach
-\eqref{eq:onb-reduktion} und \eqref{eq:onb-periodisiert} die beiden Funktionen
-$\Phi$ und $1/(2\pi)$ aus $L^1(0,2\pi)$ dieselben Integrale gegen alle
-$e^{ik\omega}$, $k \in \Z$, also dieselben Fourier-Koeffizienten. Nach dem
-Eindeutigkeitssatz für Fourier-Koeffizienten integrierbarer Funktionen stimmen
-sie fast überall auf $[0,2\pi]$ überein, wegen der Periodizität also fast überall
-auf $\R$. Das ist (ii).
+Ersetzt man in \eqref{eq:skalierungsgleichung} $t$ durch $t-m$ und setzt
+$n = k+2m$, so wird
+$\varphi(t-m) = \sqrt2\sum_k h_k\,\varphi(2t-2m-k) = \sum_n h_{n-2m}\,\varphi_{-1,n}(t)$.
+Die Vollständigkeitsrelation in $V_{-1}$ \cite[Satz~25.18\,(4)]{serov} und (M5)
+liefern
+$\delta_{m,0} = \scal{\varphi}{\varphi(\,\cdot-m)} = \sum_n h_n\,\overline{h_{n-2m}}$.
 \end{proof}
 
-\anmerkung{Beleg für den Eindeutigkeitssatz (Fourier-Koeffizienten bestimmen eine
-$L^1(0,2\pi)$-Funktion fast überall) noch ergänzen -- Serov, Kapitel zu
-Fourier-Reihen, oder Stein/Shakarchi; Satznummer vor Ort prüfen.}
+Anschaulich: Die Basisfunktionen $\varphi_{-1,n}$ liegen im Abstand
+$\tfrac12$. Verschiebt man $\varphi$ um $1$, so rückt ihr Koeffizientenvektor
+$(h_n)$ deshalb um zwei Stellen weiter. Die Orthogonalität der verschobenen
+Funktionen wird so zur Orthogonalität des Vektors $(h_n)$ zu seinen um gerade
+Schrittweiten verschobenen Kopien. Für das Haar-Filter ist das trivial, denn
+für $m \neq 0$ überlappen $(h_n)$ und $(h_{n-2m})$ nicht.
 
-\begin{Bemerkung}[Orthonormalsystem und Orthonormalbasis]
-\label{bem:onb-onsystem}
-Lemma~\ref{lem:onb-fourier} sichert nur die Orthonormalität der Translate. Für die
-Konstruktion genügt das: Erfüllt ein $\varphi$ die
-Bedingung (ii), so definiert man $V_0$ als abgeschlossene lineare Hülle der
-$\varphi(\,\cdot-k)$. Ein Orthonormalsystem ist stets eine Orthonormalbasis
-seiner abgeschlossenen linearen Hülle \cite[Satz~25.18]{serov}, und (M5) ist dann
-nach Konstruktion erfüllt. Die eigentliche Arbeit besteht darin, (M1)--(M3) für
-die durch (M4) erzeugten Räume nachzuweisen.
-\end{Bemerkung}
+\begin{Beispiel}[Ein Filter der Länge vier]
+\label{bsp:db2-filter}
+Gesucht seien reelle $h_0,\dots,h_3$, alle übrigen null. Die Bedingungen
+\eqref{eq:H0} und \eqref{eq:h-orthogonal} lauten
+\[
+  h_0+h_1+h_2+h_3 = \sqrt2, \qquad
+  h_0^2+h_1^2+h_2^2+h_3^2 = 1, \qquad
+  h_0h_2+h_1h_3 = 0 ;
+\]
+für $\lvert m\rvert\ge2$ überlappen die Folgen nicht. Drei Gleichungen für vier
+Unbekannte lassen eine einparametrige Lösungsschar, zu der auch das Haar-Filter
+$(\tfrac{1}{\sqrt2},\tfrac1{\sqrt2},0,0)$ gehört. Eine weitere Lösung ist
+\begin{equation}
+\label{eq:db2-koeff}
+  h_0 = \tfrac{1+\sqrt3}{4\sqrt2},\qquad
+  h_1 = \tfrac{3+\sqrt3}{4\sqrt2},\qquad
+  h_2 = \tfrac{3-\sqrt3}{4\sqrt2},\qquad
+  h_3 = \tfrac{1-\sqrt3}{4\sqrt2}
+\end{equation}
+\cite[Tabelle~2.3]{lmr}, dort in umgekehrter Reihenfolge. Zur Probe: Die Zähler summieren sich zu $8$, also
+$\sum h_k = 8/(4\sqrt2) = \sqrt2$. Die quadrierten Zähler ergeben
+$(4+2\sqrt3)+(12+6\sqrt3)+(12-6\sqrt3)+(4-2\sqrt3) = 32 = (4\sqrt2)^2$, also
+$\sum h_k^2 = 1$. Schlie\ss{}lich ist
+$(1+\sqrt3)(3-\sqrt3)+(3+\sqrt3)(1-\sqrt3) = 2\sqrt3-2\sqrt3 = 0$. Warum gerade
+diese Lösung aus der Schar ausgewählt wird, klärt
+Abschnitt~\ref{sec:daubechies}.
+\end{Beispiel}
 
-\quellen{LMR, Lemma~2.2.4, S.~114 [geschätzt]; zweidimensionale Fassung mit
-Konstante $1/(4\pi^2)$: LMR, Lemma~2.5.1, S.~211 [bestätigt]; Blatter,
-Kap.~5.3, S.~117--119 [bestätigt]; Serov, Satz~17.5 (Plancherel), S.~145
-[bestätigt].}
+Im Haar-Fall haben die Zahlen $h_k$ eine einfache Bedeutung: Mit
+$h_0 = h_1 = \tfrac{1}{\sqrt2}$ bildet $(h_k)$ aus zwei benachbarten Werten
+deren (normierten) Mittelwert, wie in Beispiel~\ref{bsp:haar-mittelung}.
+Konstante Signale bleiben dabei erhalten, rasche Schwankungen werden
+geglättet; daher der Name Tiefpass. Das Gegenstück, das in
+Beispiel~\ref{bsp:haar-mittelung} die verlorenen Details liefert, ist die
+Differenz benachbarter Werte. Sie verschwindet für konstante Signale und
+hei\ss{}t Hochpass. Für allgemeine $(h_k)$ gewinnt man die Hochpassfolge
+durch Umkehren der Reihenfolge und alternierende Vorzeichen.
 
-\anmerkung{Beleg für den Eindeutigkeitssatz (Fourier-Koeffizienten bestimmen eine
-$L^1(0,2\pi)$-Funktion fast überall) noch ergänzen. Konventionswarnung: Ohne den
-Faktor $(2\pi)^{-1/2}$ steht in (ii) rechts eine $1$. VERSCHOBEN aus
-Abschnitt~\ref{sec:skalierungsfunktion}, weil erst hier gebraucht.}
+\begin{Satz}[Wavelet aus der Skalierungsfolge, vgl.\ {\cite[Satz~2.2.10]{lmr}}]
+\label{satz:wavelet-aus-h}
+Sei $(V_j)$ eine MSA mit Skalierungsfolge $(h_k)$. Setzt man
+\begin{equation}
+\label{eq:g-aus-h}
+  g_k \;:=\; (-1)^k\,\overline{h_{1-k}}, \qquad
+  \psi(t) \;:=\; \sqrt2\sum_{k\in\Z} g_k\,\varphi(2t-k),
+\end{equation}
+so ist $\{\psi(\,\cdot-k) : k\in\Z\}$ eine Orthonormalbasis von $W_0$. Nach
+Korollar~\ref{kor:wavelet-basis} ist dann $\{\psi_{j,k} : j,k\in\Z\}$ eine
+Orthonormalbasis von $\LZwei$.
+\end{Satz}
+
+Der vollständige Beweis steht bei \cite[Satz~2.2.10]{lmr}.
+
+\begin{Beispiel}[Haar, Fortsetzung]
+\label{bsp:haar-g}
+Aus $h_0=h_1=1/\sqrt2$ folgt $g_0 = h_1 = 1/\sqrt2$ und $g_1 = -h_0 = -1/\sqrt2$,
+also
+\[
+  \psi(t) \;=\; \varphi(2t) - \varphi(2t-1) \;=\; \mathbf 1_{[0,1/2[}(t) - \mathbf 1_{[1/2,1[}(t)
+  \;=\; \psi^{\mathrm H}(t).
+\]
+Damit ist $\psi^{\mathrm H}$ als Wavelet der Haar-MSA nachgewiesen, wie es
+Beispiel~\ref{bsp:haar-mittelung} nahegelegt hatte. Für die Folge
+\eqref{eq:db2-koeff} ist entsprechend
+$(g_{-2},g_{-1},g_0,g_1) = (h_3,-h_2,h_1,-h_0)$.
+\end{Beispiel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bedingungen im Fourier-Bereich}
+\label{sec:fourier-bedingungen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\quellen{LMR, Satz~2.2.9, S.~121 [bestätigt]; LMR, Korollar~2.2.12, S.~123
+[bestätigt]; LMR, Bem.~2.4.19, S.~165 [bestätigt]; LMR, Kap.~2.4.2,
+S.~145--164 [bestätigt].}
+
+In Abschnitt~\ref{sec:filter} wurden die Namen Tiefpass und Hochpass nur am
+Haar-Filter begründet. Für beliebige Filter liefert das Fourier-Filter $H$ aus
+\eqref{eq:symbol-H} die Begründung. Es gibt an, wie stark der Filter eine
+Schwingung der Frequenz $\omega$ durchlässt: Für $x_n = e^{i\omega n}$ ist
+$\sum_k h_k\,x_{n-k} = \sqrt2\,H(\omega)\,x_n$. Für $\omega = 0$ ist $x_n = 1$ konstant, für $\omega = \pi$ ist
+$x_n = (-1)^n$, die Folge wechselt also bei jedem Schritt das Vorzeichen.
+Schneller kann eine abgetastete Schwingung nicht oszillieren, da
+$e^{i(\omega+2\pi)n} = e^{i\omega n}$ gilt. Wie in Abschnitt~\ref{sec:skalierungsgleichung} sei
+$\sum_k\lvert h_k\rvert<\infty$.
+
+\begin{Satz}[Bedingungen an das Fourier-Filter, {\cite[Satz~2.2.9]{lmr}}]
+\label{satz:qmf}
+Das Fourier-Filter \eqref{eq:symbol-H} einer MSA erfüllt
+\begin{equation}
+\label{eq:qmf}
+  H(0) = 1 \qquad\text{und}\qquad
+  \lvert H(\omega)\rvert^2 + \lvert H(\omega+\pi)\rvert^2 = 1
+  \quad\text{für alle } \omega\in\R .
+\end{equation}
+\end{Satz}
+
+Die erste Gleichung ist \eqref{eq:H0}. Die zweite ist
+Lemma~\ref{lem:h-orthogonal}, in den Frequenzbereich übersetzt: Die unendlich
+vielen Gleichungen für die Zahlen $h_k$ werden zu einer einzigen Gleichung
+für die Funktion $H$. Umgekehrt liefert jede endliche Folge mit \eqref{eq:qmf},
+deren Fourier-Filter auf $[-\pi/2,\pi/2]$ keine Nullstelle hat, eine Lösung
+$\varphi$ der Skalierungsgleichung mit orthonormalen Verschiebungen
+$\varphi(\,\cdot-k)$ \cite[Satz~2.4.7]{lmr}.
+
+Für die Hochpassfolge $(g_k)$ aus \eqref{eq:g-aus-h} setzt man analog
+$G(\omega) := 2^{-1/2}\sum_k g_k e^{-ik\omega}$. Die Substitution $n = 1-k$
+ergibt
+\begin{equation}
+\label{eq:G-aus-H}
+  G(\omega) \;=\; -e^{-i\omega}\,\overline{H(\omega+\pi)},
+  \qquad
+  \hat\psi(\omega) \;=\; G\bigl(\tfrac\omega2\bigr)\,\hat\varphi\bigl(\tfrac\omega2\bigr)
+\end{equation}
+\cite[Korollar~2.2.12]{lmr}, also $\lvert G(\omega)\rvert = \lvert H(\omega+\pi)\rvert$.
+Aus \eqref{eq:qmf} und \eqref{eq:G-aus-H} folgen drei Aussagen:
+\begin{enumerate}
+\item[(a)] $H(0) = 1$ und $H(\pi) = 0$: $(h_k)$ lässt konstante Signale
+  vollständig durch und löscht die schnellste Schwingung aus. Das ist ein Tiefpass.
+\item[(b)] $G(0) = 0$ und $\lvert G(\pi)\rvert = 1$: $(g_k)$ verhält sich
+  genau umgekehrt. Das ist ein Hochpass. Wegen $\hat\psi(0) = G(0)\,\hat\varphi(0) = 0$
+  hat $\psi$ Mittelwert null, wie es Satz~\ref{satz:zulaessigkeit-mittelwert}
+  von einem zulässigen Wavelet verlangt; zulässig ist $\psi$ tatsächlich stets
+  \cite[Satz~2.2.10\,(iii)]{lmr}.
+\item[(c)] $\lvert H(\omega)\rvert^2 + \lvert G(\omega)\rvert^2 = 1$: Jede
+  Frequenz wird vollständig auf die beiden Filter aufgeteilt, es geht nichts
+  verloren. In der Signalverarbeitung hei\ss{}en solche Filterpaare
+  Conjugate Quadrature Filter \cite[Bem.~2.4.19]{lmr}.
+\end{enumerate}
+
+Abbildung~\ref{fig:tief-hochpass} zeigt beide Filter. Beim Haar-Filter ist
+$\lvert H(\omega)\rvert = \lvert\cos(\omega/2)\rvert$ und die Nullstelle bei
+$\omega=\pi$ einfach. Für \eqref{eq:db2-koeff} ist
+$\lvert H(\omega)\rvert^2 = \cos^4(\omega/2)\,\bigl(1+2\sin^2(\omega/2)\bigr)$,
+vgl.\ \cite[Kap.~2.4.3]{lmr}, die Nullstelle also doppelt, und die Kurven
+verlaufen an den Rändern flacher. Abschnitt~\ref{sec:daubechies} zeigt, dass
+genau diese Ordnung der Nullstelle bestimmt, wie gut sich ein Wavelet für
+glatte Signalabschnitte eignet.
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        width=0.62\textwidth, height=3.9cm,
+        domain=0:pi, samples=120, xmin=0, xmax=pi, ymin=0, ymax=1.08,
+        xtick={0,pi/2,pi}, xticklabels={$0$,$\pi/2$,$\pi$},
+        ytick={0,0.5,1}, tick label style={font=\footnotesize},
+        xlabel={$\omega$}, xlabel style={font=\footnotesize},
+        legend style={font=\footnotesize, at={(1.03,0.5)}, anchor=west, draw=none},
+        legend cell align=left]
+      \addplot[uhh_blue, line width=0.9pt, dashed] {abs(cos(deg(x/2)))};
+      \addplot[uhh_red, line width=0.9pt, dashed] {abs(sin(deg(x/2)))};
+      \addplot[uhh_blue, line width=1.1pt] {cos(deg(x/2))^2*sqrt(1+2*sin(deg(x/2))^2)};
+      \addplot[uhh_red, line width=1.1pt] {sin(deg(x/2))^2*sqrt(1+2*cos(deg(x/2))^2)};
+      \legend{$\lvert H\rvert$ Haar, $\lvert G\rvert$ Haar,
+              $\lvert H\rvert$ (4 Koeff.), $\lvert G\rvert$ (4 Koeff.)}
+    \end{axis}
+  \end{tikzpicture}
+  \caption[Tiefpass und Hochpass]{Betrag der Fourier-Filter $H$ (Tiefpass) und $G$
+  (Hochpass) für das Haar-Filter (gestrichelt) und das Filter
+  \eqref{eq:db2-koeff} (durchgezogen) auf $[0,\pi]$. In beiden Fällen ist
+  $\lvert H\rvert^2 + \lvert G\rvert^2 = 1$.}
+  \label{fig:tief-hochpass}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Der Mallat-Algorithmus}
 \label{sec:mallat}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{4.4.1 Zwei-Skalen-Relation zwischen den Stufen · 4.4.2 Analyse: Approximations- und Detailkoeffizienten · 4.4.3 Synthese: Rekonstruktionsformel Die Skalierungsgleichung, rekursiv über die Stufen angewandt, liefert Faltung mit anschlie\ss{}ender Dezimierung (Analyse) bzw. Aufweitung mit Filterung (Synthese) — ein Algorithmus in O(N).}
-\quellen{
-  \begin{itemize}
-    \item LMR, Kap. 2.3 „Schnelle Wavelet-Transformation", S. 132–141 [bestätigt]
-    \item LMR, S. 133 [bestätigt] — Zerlegungsoperatoren $H$ und $G$ in Gl. (2.3.1)/(2.3.2), Faltungssymbol $\ast_2$ = Faltung mit Sub-Sampling um Faktor 2; ausdrücklicher Verweis auf Mallats Originalarbeit
-    \item LMR, Abbildung 2.8, S. 133–134 [bestätigt] — Schema der Zerlegung über M Skalen
-    \item LMR, S. 133–135 [bestätigt] — Rekonstruktion aus $c_1$ und $d_1$ über die orthogonale Zerlegung $V_0 = V_1 \oplus W_1$
-    \item Blatter, Kap. 5.4 „Algorithmen", S. 130–136 [bestätigt]
-    \item Blatter, S. 15 [bestätigt] (Sachverz.: „Fast Wavelet Transform 15", „FWT 15")
-    \item HankeBourgeois, Gl. (56.10), S. 438 [bestätigt] — die Analyseformeln explizit: $\xi_{kj} = (\xi_{k+1,2j} + \xi_{k+1,2j+1})/2$, $\eta_{kj} = (\xi_{k+1,2j} - \xi_{k+1,2j+1})/2$
-    \item HankeBourgeois, Algorithmus 56.1 „Schnelle Haar-Wavelet-Transformation", S. 439 [bestätigt] — rekursiver Pseudocode fhwt und ifhwt, direkt implementierbar
-    \item HankeBourgeois, Aufwandsanalyse, S. 438 [bestätigt] — $2^{\dim} V_p$ Multiplikationen und Additionen, „noch billiger zu implementieren als die fft"
-    \item Aqil, Kap. 2, S. 54–56 [bestätigt]
-    \item Chatterjee, Kap. 3, S. 575–577 [bestätigt]  
-  \end{itemize}
-}
 
-\subsection{Zwei-Skalen-Relation zwischen den Stufen}
+\quellen{LMR, Kap.~2.3, S.~132--141 [bestätigt], insb.\ Gl.~(2.3.1)/(2.3.2)
+und Abb.~2.8, S.~133--134 [bestätigt]; Blatter, Kap.~5.4, S.~130--136
+[bestätigt]; Aufwand: Hanke-Bourgeois, §~56, S.~438 [bestätigt]; LMR,
+Kap.~3.1.1, S.~237--238 [bestätigt].}
 
-\subsection{Analyse: Approximations- und Detailkoeffizienten}
+Für die Approximationskoeffizienten $a_{j,k} = \scal{f}{\varphi_{j,k}}$ aus
+Definition~\ref{def:projektion-pj} und die Detailkoeffizienten
+$d_{j,k} = \scal{f}{\psi_{j,k}}$ aus Korollar~\ref{kor:wavelet-basis} muss man
+bisher jeweils ein Integral auswerten. Dieser Abschnitt zeigt, dass das nicht
+nötig ist: Kennt man die Koeffizienten auf einer Skala, so erhält man die der
+nächstgröberen Skala allein durch gewichtete Summen mit den Zahlen $h_k$ und
+$g_k$. Im Haar-Fall ist das genau das Mitteln und Differenzbilden aus
+Beispiel~\ref{bsp:haar-mittelung}.
 
-\subsection{Synthese: Rekonstruktionsformel}
+Grundlage ist die folgende Beziehung zwischen zwei benachbarten Skalen.
 
-\anmerkung{$a_{0,k} := X(k)$ als EKG-Abtastwerte interpretieren -- Brücke zu Kap.~6}
+\begin{Lemma}[Zwei-Skalen-Relation, {\cite[Kap.~2.3]{lmr}}]
+\label{lem:zwei-skalen}
+Für alle $j,k\in\Z$ gilt
+\begin{equation}
+\label{eq:zwei-skalen}
+  \varphi_{j,k} \;=\; \sum_{n\in\Z} h_{n-2k}\,\varphi_{j-1,n},
+  \qquad
+  \psi_{j,k} \;=\; \sum_{n\in\Z} g_{n-2k}\,\varphi_{j-1,n} .
+\end{equation}
+\end{Lemma}
+
+\begin{proof}
+Für $j=0$ wurde die erste Gleichung im Beweis von
+Lemma~\ref{lem:h-orthogonal} gezeigt; die zweite folgt ebenso aus
+\eqref{eq:g-aus-h}. Der unitäre Operator $D_{2^j}$ bildet $\varphi_{0,k}$ auf
+$\varphi_{j,k}$, $\psi_{0,k}$ auf $\psi_{j,k}$ und $\varphi_{-1,n}$ auf
+$\varphi_{j-1,n}$ ab, vgl.\ \eqref{eq:vj-d2j}.
+\end{proof}
+
+Jede Basisfunktion der Skala $j$ setzt sich also aus Basisfunktionen der
+feineren Skala $j-1$ zusammen, mit den Gewichten $h$ beziehungsweise $g$. Geht
+man von $k$ zu $k+1$, rücken die Gewichte um zwei Stellen weiter, wie in
+Lemma~\ref{lem:h-orthogonal}. Bildet man das Skalarprodukt mit $f$, so folgt
+für reelle Filter
+\begin{equation}
+\label{eq:analyse}
+  a_{j,k} \;=\; \sum_{n\in\Z} h_{n-2k}\,a_{j-1,n},
+  \qquad
+  d_{j,k} \;=\; \sum_{n\in\Z} g_{n-2k}\,a_{j-1,n}
+\end{equation}
+\cite[Gl.~(2.3.1), (2.3.2)]{lmr}. Jeder Koeffizient der Skala $j$ ist also
+eine gewichtete Summe der Approximationskoeffizienten der Skala $j-1$. Da die
+Gewichte bei jedem Schritt in $k$ um zwei Stellen weiterrücken, entstehen aus
+$N$ Werten $a_{j-1,\cdot}$ genau $N/2$ Werte $a_{j,\cdot}$ und $N/2$ Werte
+$d_{j,\cdot}$.
+
+\begin{Algorithmus}[Schnelle Wavelet-Transformation, {\cite[Kap.~2.3]{lmr}, \cite[Kap.~5.4]{blatter}}]
+\label{alg:mallat}
+Eingabe: Koeffizienten $(a_{0,k})_k$ der feinsten Skala und Tiefe $J\in\N$.
+Für $j = 1,\dots,J$ berechne $(a_{j,k})_k$ und $(d_{j,k})_k$ aus
+$(a_{j-1,k})_k$ nach \eqref{eq:analyse}.
+Ausgabe: $(d_{1,k})_k,\dots,(d_{J,k})_k$ und $(a_{J,k})_k$.
+\end{Algorithmus}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=2.3cm, y=1.1cm, font=\small,
+      pf/.style={-latex, line width=0.5pt}]
+    \node (a0) at (0,0) {$a_0$};
+    \node (a1) at (1,0) {$a_1$};
+    \node (a2) at (2,0) {$a_2$};
+    \node (a3) at (3,0) {$\cdots$};
+    \node (aJ) at (4,0) {$a_J$};
+    \node (d1) at (1,-1) {$d_1$};
+    \node (d2) at (2,-1) {$d_2$};
+    \node (dJ) at (4,-1) {$d_J$};
+    \draw[pf] (a0) -- node[above, font=\scriptsize] {$h$} (a1);
+    \draw[pf] (a1) -- node[above, font=\scriptsize] {$h$} (a2);
+    \draw[pf] (a2) -- (a3);
+    \draw[pf] (a3) -- node[above, font=\scriptsize] {$h$} (aJ);
+    \draw[pf] (a0) -- node[below left, font=\scriptsize] {$g$} (d1);
+    \draw[pf] (a1) -- node[below left, font=\scriptsize] {$g$} (d2);
+    \draw[pf] (a3) -- node[below left, font=\scriptsize] {$g$} (dJ);
+  \end{tikzpicture}
+  \caption[Schema des Mallat-Algorithmus]{Ablauf von
+  Algorithmus~\ref{alg:mallat}, in Anlehnung an \cite[Abb.~2.8]{lmr}. Jeder
+  Pfeil ist ein Rechenschritt nach \eqref{eq:analyse} mit dem Filter $h$ bzw.\
+  $g$ und halbiert die Anzahl der Werte. Nur die Approximationskoeffizienten
+  werden weiter zerlegt.}
+  \label{fig:mallat-schema}
+\end{figure}
+
+\begin{Beispiel}[Haar, Fortsetzung von Beispiel~\ref{bsp:haar-wavelet-koeff}]
+\label{bsp:mallat-haar}
+Für die Treppenfunktion $f=(4,2,5,7)$ der Haar-MSA ist $a_{0,k} = f(k)$, und
+\eqref{eq:analyse} lautet mit $h=(1,1)/\sqrt2$, $g=(1,-1)/\sqrt2$
+\[
+  a_{j,k} = \frac{a_{j-1,2k}+a_{j-1,2k+1}}{\sqrt2},
+  \qquad
+  d_{j,k} = \frac{a_{j-1,2k}-a_{j-1,2k+1}}{\sqrt2}.
+\]
+Die erste Stufe liefert
+$a_1 = (\tfrac{6}{\sqrt2},\tfrac{12}{\sqrt2}) = (3\sqrt2,6\sqrt2)$ und
+$d_1 = (\sqrt2,-\sqrt2)$, die zweite $a_{2,0} = 9$ und $d_{2,0} = -3$. Das sind
+genau die Koeffizienten aus Beispiel~\ref{bsp:haar-wavelet-koeff}, nun ohne ein
+einziges Integral berechnet.
+\end{Beispiel}
+
+Der Aufwand ist gering. Hat der Filter die Länge $L$, kostet eine Stufe mit $N$
+Eingangswerten etwa $LN$ Multiplikationen. Da sich die Anzahl der Werte von
+Stufe zu Stufe halbiert, sind es insgesamt höchstens
+$L\,(N + N/2 + N/4 + \cdots) < 2LN$, also $O(N)$ Operationen. Die schnelle
+Fourier-Transformation braucht dagegen $O(N\log N)$
+\cite[§~56]{hankebourgeois}.
+
+Jeder Schritt lässt sich exakt rückgängig machen.
+
+\begin{Satz}[Rekonstruktion, {\cite[Kap.~2.3]{lmr}}]
+\label{satz:rekonstruktion}
+Für alle $j,n\in\Z$ gilt
+\begin{equation}
+\label{eq:synthese}
+  a_{j-1,n} \;=\; \sum_{k\in\Z} h_{n-2k}\,a_{j,k} \;+\; \sum_{k\in\Z} g_{n-2k}\,d_{j,k} .
+\end{equation}
+\end{Satz}
+
+\begin{proof}
+Nach Definition~\ref{def:detailraeume} und Korollar~\ref{kor:wavelet-basis} ist
+$P_{j-1}f = P_jf + Q_jf = \sum_k a_{j,k}\varphi_{j,k} + \sum_k d_{j,k}\psi_{j,k}$.
+Skalarprodukt mit $\varphi_{j-1,n}$ und Lemma~\ref{lem:zwei-skalen} liefern
+\eqref{eq:synthese}.
+\end{proof}
+
+Im Haar-Fall wird daraus
+$a_{j-1,2k} = (a_{j,k}+d_{j,k})/\sqrt2$ und
+$a_{j-1,2k+1} = (a_{j,k}-d_{j,k})/\sqrt2$, im Beispiel
+$(3\sqrt2\pm\sqrt2)/\sqrt2 = 4$ bzw.\ $2$. Auch die Rekonstruktion kostet nur
+$O(N)$ Operationen.
+
+\begin{Bemerkung}[Ein Schritt erhält die Energie]
+\label{bem:mallat-orthogonal}
+Da $P_{j-1}f = P_jf + Q_jf$ eine orthogonale Zerlegung ist und alle beteiligten
+Familien orthonormal sind, gilt für jeden Schritt
+\[
+  \sum_n \lvert a_{j-1,n}\rvert^2
+  \;=\; \sum_k \lvert a_{j,k}\rvert^2 + \sum_k \lvert d_{j,k}\rvert^2 ;
+\]
+im Beispiel $4^2+2^2 = 20 = (3\sqrt2)^2 + (\sqrt2)^2$. Ein Schritt ist also
+eine orthogonale Abbildung der Koeffizientenfolgen, im Haar-Fall blockweise
+die Matrix
+$\tfrac{1}{\sqrt2}\bigl(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\bigr)$.
+Genau diese Eigenschaft wird in Abschnitt~\ref{sec:onb-invarianz} gebraucht.
+\end{Bemerkung}
+
+In der Anwendung ist $f$ nicht bekannt, sondern nur durch Abtastwerte gegeben.
+Diese werden als Koeffizienten $a_{0,k}$ der feinsten Skala verwendet; warum
+das zulässig ist, wird in Kapitel~\ref{chapter:anwendung} begründet
+\cite[Kap.~3.1.1]{lmr}.
+
+\anmerkung{Randbehandlung für endliche Signale (Periodisierung o.\,ä.) hier in
+einem Satz erwähnen? Quelle: Blatter Kap.~5.4 prüfen.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Daubechies-Wavelets}
+\label{sec:daubechies}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Kompakter Träger, Filterlänge und Regularität}
 \label{subsec:daubechies-traeger}
 
-\anmerkung{ZUSAMMENGELEGT aus den alten Unterabschnitten 4.5.1 und 4.5.3 und BEWUSST
-KURZ gehalten (ca.\ eine Seite, ohne eigene Beweise). Zwei Aussagen genügen:
-(i) Endlich viele nichtverschwindende $h_k$ $\Leftrightarrow$ kompakter Träger von
-$\phi$ und $\psi$ $\Leftrightarrow$ endliche Filterlänge -- das ist die Voraussetzung
-dafür, dass der Mallat-Algorithmus überhaupt implementierbar ist. (ii) Höhere
-Filterordnung erkauft mehr Glattheit, aber auch längeren Träger. Die
-Daubechies-Konstruktion selbst (Spektralfaktorisierung von $H_N$, LMR Lemma~2.4.24,
-S.~171) wird NICHT ausgeführt, sondern nur zitiert -- sie ist ein eigenes Kapitel
-Mathematik und trägt zum Argumentationsbogen nichts bei. Für die Implementierung
-genügt die Koeffiziententabelle bei LMR, S.~170.}
-\quellen{
-  \begin{itemize}
-    \item LMR, Satz 2.4.9, S.~153 [bestätigt] --- endliche Koeffizientenfolge $\{h_k\}$ $\Rightarrow$ kompakter Träger $[0,M]$ der Lösung der Skalierungsgleichung
-    \item LMR, S.~175 [bestätigt] --- die Träger explizit: $\supp\varphi_N = [0,\, 2N-1]$ und $\supp\psi_N = [1-N,\, N]$
-    \item LMR, S.~165 [bestätigt] --- Meyer- und Spline-Wavelets haben keinen kompakten Träger (die Motivation des ganzen Abschnitts)
-    \item LMR, Kap.~2.4.3, S.~165--169 [bestätigt] --- die vollständige Konstruktion; hier nur zitiert
-    \item LMR, Tabelle der Skalierungskoeffizienten, S.~170 [bestätigt] --- für die Implementierung in Kapitel~\ref{chapter:anwendung}
-    \item LMR, Satz 2.4.26, S.~173 [bestätigt] --- Abklingen von $\lvert\hat\varphi\rvert$ und Sobolev-Ordnung $\psi_N \in H^{s}$ mit $s < \ln N/(2\ln 2)$
-    \item LMR, S.~173 [bestätigt] --- Vergleich mit B-Splines: die Daubechies-Regularität wächst linear in $N$, aber deutlich langsamer
-    \item Blatter, Kap.~6.1--6.2, S.~137--153 [bestätigt]; S.~151 (Sachverz.: Daubechies-Wavelets)
-    \item Rebstadt, Abb.~2.9, S.~25 [bestätigt]
-  \end{itemize}
-}
+\quellen{LMR, Satz~2.4.9, S.~153 [bestätigt]; LMR, S.~165 und S.~175
+[bestätigt]; LMR, Kap.~2.4.3, S.~165--170 [bestätigt]; LMR, Lemma~2.4.24,
+S.~171; LMR, Satz~2.4.26, S.~173 [bestätigt]; Blatter, Kap.~6.1--6.2,
+S.~137--153 [bestätigt]; Rebstadt, Abb.~2.9, S.~25 [bestätigt].}
 
-\anmerkung{NOTATIONSFALLE, hier explizit klarstellen: Das bei LMR als
-\emph{Daubechies-Wavelet mit vier Koeffizienten} bezeichnete Wavelet ($N = 2$) hei\ss{}t in
-PyWavelets \texttt{db2}, NICHT \texttt{db4}. \texttt{db4} in PyWavelets hat acht
-Koeffizienten. Diese Umbenennung muss vor Kapitel~\ref{chapter:anwendung} einmal
-ausgesprochen werden, sonst ist der Ergebnisteil nicht nachvollziehbar.}
+Der Mallat-Algorithmus ist nur dann exakt ausführbar, wenn die Filter endlich
+lang sind. Endliche Filter hängen eng mit kompaktem Träger zusammen: Ist
+$h_k = 0$ au\ss{}erhalb von $\{0,\dots,L-1\}$, so hat die Lösung der
+Skalierungsgleichung ihren Träger in $[0,L-1]$ \cite[Satz~2.4.9]{lmr}. Die Länge
+lässt sich plausibel machen: Ist $\supp\varphi = [0,M]$, so hat die rechte Seite
+von \eqref{eq:skalierungsgleichung} den Träger
+$\bigcup_{k=0}^{L-1}[\tfrac k2,\tfrac{k+M}2] = [0,\tfrac{L-1+M}{2}]$, und
+Gleichheit erzwingt $M = L-1$. Das Haar-Filter ($L=2$) gibt $[0,1]$, das Filter
+\eqref{eq:db2-koeff} ($L=4$) gibt $[0,3]$. Meyer- und Spline-Wavelets besitzen
+dagegen keinen kompakten Träger \cite[Kap.~2.4.3]{lmr}.
+
+\begin{Satz}[Daubechies-Wavelets, {\cite[Kap.~2.4.3]{lmr}}]
+\label{satz:daubechies}
+Zu jedem $p\in\N$ gibt es eine reelle Skalierungsfolge $h_0,\dots,h_{2p-1}$
+einer MSA, deren Skalierungsfunktion $\varphi_p$ und Wavelet $\psi_p$ die Träger
+\[
+  \supp\varphi_p = [0,\,2p-1], \qquad \supp\psi_p = [1-p,\,p]
+\]
+haben und für die $\psi_p$ genau $p$ verschwindende Momente besitzt
+(Abschnitt~\ref{subsec:momente}).\footnote{Die Zahl der
+  verschwindenden Momente wird wie bei Mallat mit $p$ bezeichnet; der Buchstabe
+  $N$ bleibt der Signallänge vorbehalten.} Das Fourier-Filter hat die Form
+$H(\omega) = \bigl(\tfrac{1+e^{-i\omega}}{2}\bigr)^p \mathcal L(\omega)$ mit einem
+trigonometrischen Polynom $\mathcal L$.
+\end{Satz}
+
+Die Konstruktion von $\mathcal L$ durch Spektralfaktorisierung wird hier nicht
+ausgeführt; sie steht bei \cite[Kap.~2.4.3, Lemma~2.4.24]{lmr} und
+\cite[Kap.~6]{blatter}. Für $p=1$ entsteht das Haar-Wavelet, für $p=2$ die
+Folge \eqref{eq:db2-koeff} \cite[Kap.~2.4.3]{lmr}.
+Abbildung~\ref{fig:db2} zeigt $\varphi_2$ und $\psi_2$, berechnet allein aus
+den vier Zahlen $h_0,\dots,h_3$ durch wiederholtes Einsetzen in die
+Skalierungsgleichung.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{abb4_db2.pdf}
+  \caption[Das Daubechies-Wavelet mit vier Koeffizienten]{Skalierungsfunktion
+  $\varphi_2$ auf $[0,3]$ (a) und Wavelet $\psi_2$ auf $[-1,2]$ (b) zur Folge
+  \eqref{eq:db2-koeff}, berechnet durch Iteration der
+  Skalierungsgleichung \eqref{eq:skalierungsgleichung}.}
+  \label{fig:db2}
+\end{figure}
+
+Der Vergleich mit dem Haar-Wavelet zeigt den Zielkonflikt: $\psi_2$ ist stetig
+statt sprunghaft, dafür dreimal so breit. Allgemein wächst die Regularität von
+$\psi_p$ mit $p$, aber deutlich langsamer als der Träger
+\cite[Satz~2.4.26]{lmr}. Ein breiterer Träger hat eine konkrete Folge: Eine
+isolierte Spitze im Signal, etwa ein QRS-Komplex, liegt auf jeder Skala im
+Träger von etwa $2p-1$ Wavelets und erzeugt entsprechend viele gro\ss{}e
+Koeffizienten.
+
+\begin{Bemerkung}[Bezeichnung]
+\label{bem:db-bezeichnung}
+Das Wavelet $\psi_p$ mit $2p$ Filterkoeffizienten hei\ss{}t in der
+Software-Bibliothek PyWavelets \texttt{db}$p$. Das hier betrachtete Wavelet mit
+vier Koeffizienten ist also \texttt{db2}, nicht \texttt{db4}; \texttt{db4} hat
+acht Koeffizienten. Das Haar-Wavelet ist \texttt{db1}.
+\end{Bemerkung}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Verschwindende Momente}
+\label{subsec:momente}
 
-\anmerkung{Ein Wavelet der Ordnung N annulliert alle Polynome vom Grad < N — glatte Signalanteile erzeugen dann kleine Koeffizienten, was die Dünnbesetztheit erst herstellt.}
-\quellen{
-  \begin{itemize}
-    \item LMR, Satz 2.4.28, S. 174 [bestätigt] — $\int_{\R} x^m \psi_N(x) \, dx = 0$ für $m = 0, \ldots, N-1$, mit vollständigem Beweis
-    \item LMR, Lemma 2.4.27, S. 174 [bestätigt] — die diskrete Momentenbedingung $\sum_{k} k^m g_{k,N} = 0$, auf der der Beweis aufbaut
-    \item LMR, Lemma 2.4.29, S. 174–175 [bestätigt] — Polynomreproduktion: $\sum_{k} c_{k,m} \varphi_N(x-k) = x^m$, insbesondere $\sum_{k} \varphi_N(x-k) = 1$ (Gl. 2.4.17)
-    \item LMR, Lemma 2.4.30, S. 176 [bestätigt] — Approximationsordnung $\| P_j f - f \|$ als quantitative Folge der verschwindenden Momente
-    \item LMR, Lemma 2.4.32, S. 177 [geschätzt]; Bemerkung S. 176 [bestätigt] — die Momenteneigenschaft gilt nicht nur für Daubechies-Wavelets
-    \item LMR, Kap. 1.4.2 „Bemerkungen zur Ordnung von Wavelets", S. 45–47 [bestätigt]
-    \item LMR, Satz 1.4.2, S. 41 [bestätigt] — Wavelet der Ordnung N im Sobolev-Kontext
-    \item Blatter, Kap. 3.5 „Abklingverhalten", S. 73–78 [bestätigt]; S. 74 [bestätigt] (Sachverz.: „Moment 74", „Ordnung eines Wavelets 74")
-  \end{itemize}
-}
+\quellen{LMR, Lemma~2.4.27 und Satz~2.4.28, S.~174 [bestätigt]; LMR,
+Lemma~2.4.30, S.~176 [bestätigt]; LMR, Kap.~1.4.2, S.~45--47 [bestätigt];
+Blatter, Kap.~3.5, S.~73--78 [bestätigt]; Rebstadt, Kap.~2.3.1, S.~16--20
+[bestätigt].}
 
-\anmerkung{KERNSTÜCK VON KAPITEL~4 -- hier wird der Beweis ausgeschrieben. Begründung:
-Dieser Abschnitt ist der einzige im Daubechies-Teil, der in den Hauptsatz eingeht. Er
-liefert die Dünnbesetztheit (Abschnitt~\ref{sec:duennbesetztheit}) und damit die eine
-Hälfte der Asymmetrie, auf der das Thresholding beruht. Vorlage: LMR, Satz 2.4.28,
-S.~174, mit Lemma 2.4.27, S.~174.}
+Was gewinnt man mit wachsendem $p$? Die Antwort ist die Eigenschaft, die ein
+Wavelet für die Entrauschung brauchbar macht.
+
+\begin{Definition}[Verschwindende Momente, {\cite[Kap.~1.4.2]{lmr}, \cite[Kap.~3.5]{blatter}}]
+\label{def:momente}
+Ein Wavelet $\psi$ mit kompaktem Träger hat $p$ verschwindende Momente, falls
+\[
+  \int_\R t^m\,\psi(t)\,dt \;=\; 0 \qquad\text{für } m = 0,1,\dots,p-1 .
+\]
+\end{Definition}
+
+Das Moment $m=0$ ist die Zulässigkeitsbedingung aus
+Satz~\ref{satz:zulaessigkeit-mittelwert}. Hat $\psi$ $p$ verschwindende Momente,
+so ist $\scal{q}{\psi_{j,k}} = 0$ für jedes Polynom $q$ vom Grad kleiner $p$:
+Das Wavelet sieht Polynome niedrigen Grades nicht.
+
+\begin{Lemma}[Momente und Filter, {\cite[Lemma~2.4.27, Satz~2.4.28]{lmr}}]
+\label{lem:momente-filter}
+Sei $(h_k)$ endlich und $\psi$ wie in \eqref{eq:g-aus-h}. Dann sind äquivalent:
+\begin{enumerate}
+\item[(i)] $\psi$ hat $p$ verschwindende Momente,
+\item[(ii)] $\sum_{k\in\Z} k^m g_k = 0$ für $m = 0,\dots,p-1$,
+\item[(iii)] $H$ hat bei $\omega = \pi$ eine Nullstelle der Ordnung mindestens $p$.
+\end{enumerate}
+Insbesondere hat $\psi_p$ aus Satz~\ref{satz:daubechies} $p$ verschwindende Momente.
+\end{Lemma}
+
+\begin{proof}
+Da $\psi$ kompakten Träger hat, ist $\hat\psi$ beliebig oft differenzierbar, und
+\[
+  \hat\psi^{(m)}(0) = \frac{(-i)^m}{\sqrt{2\pi}}\int_\R t^m\psi(t)\,dt,
+  \qquad
+  G^{(m)}(0) = \frac{(-i)^m}{\sqrt2}\sum_k k^m g_k .
+\] Also besagt (i), dass $\hat\psi$,
+und (ii), dass $G$ bei $0$ eine Nullstelle der Ordnung $\ge p$ hat. Wegen
+$\hat\psi(\omega) = G(\omega/2)\hat\varphi(\omega/2)$ mit $\hat\varphi(0)\neq0$
+ist das nach der Leibniz-Regel dasselbe. Schlie\ss{}lich ist
+$\lvert G(\omega)\rvert = \lvert H(\omega+\pi)\rvert$ nach \eqref{eq:G-aus-H},
+also (ii)$\Leftrightarrow$(iii). Für $\psi_p$ liefert der Faktor
+$\bigl(\tfrac{1+e^{-i\omega}}{2}\bigr)^p$ in Satz~\ref{satz:daubechies} die
+Nullstelle der Ordnung $p$ bei $\pi$.
+\end{proof}
+
+\begin{Beispiel}[Momente nachgerechnet]
+\label{bsp:momente}
+Für das Haar-Filter ist $g=(g_0,g_1) = (1,-1)/\sqrt2$, also
+$\sum_k g_k = 0$, aber $\sum_k k\,g_k = -1/\sqrt2 \neq 0$: genau ein
+verschwindendes Moment. Für \eqref{eq:db2-koeff} ist
+$(g_{-2},g_{-1},g_0,g_1) = (h_3,-h_2,h_1,-h_0)$, und mit dem gemeinsamen Nenner
+$4\sqrt2$ gilt
+\begin{align*}
+  \textstyle\sum_k g_k &\;\propto\; (1-\sqrt3)-(3-\sqrt3)+(3+\sqrt3)-(1+\sqrt3) \;=\; 0,\\
+  \textstyle\sum_k k\,g_k &\;\propto\; -2(1-\sqrt3)+(3-\sqrt3)-(1+\sqrt3) \;=\; 0,\\
+  \textstyle\sum_k k^2 g_k &\;\propto\; 4(1-\sqrt3)-(3-\sqrt3)-(1+\sqrt3) \;=\; -4\sqrt3 \;\neq\; 0 .
+\end{align*}
+Das Wavelet hat also genau zwei verschwindende Momente. Das ist die vierte
+Bedingung, die in Beispiel~\ref{bsp:db2-filter} aus der einparametrigen Schar
+die Lösung \eqref{eq:db2-koeff} auswählt.
+\end{Beispiel}
+
+Die diskreten Momente wirken direkt im Mallat-Algorithmus, denn nach
+\eqref{eq:analyse} ist
+$d_{1,k} = \sum_m g_m\,a_{0,m+2k}$. Sind die
+Eingangswerte lokal ein Polynom vom Grad kleiner $p$, so verschwindet dieser
+Detailkoeffizient exakt.
+
+\begin{Beispiel}[Eine Rampe]
+\label{bsp:rampe}
+Für die Rampe $a_{0,n} = n$ liefert das Haar-Filter
+$d_{1,k} = (2k - (2k+1))/\sqrt2 = -1/\sqrt2$ für alle $k$: Jeder
+Detailkoeffizient ist von null verschieden, obwohl die Rampe keinerlei Details
+enthält. Das Filter \eqref{eq:db2-koeff} liefert dagegen
+\[
+  d_{1,k} \;=\; \sum_m g_m\,(m+2k) \;=\; \sum_m m\,g_m + 2k\sum_m g_m \;=\; 0
+\]
+nach Beispiel~\ref{bsp:momente}. Mit zwei verschwindenden Momenten werden
+lineare Signalabschnitte vollständig in den Approximationskoeffizienten erfasst.
+\end{Beispiel}
+
+Für glatte, aber nicht polynomiale Signale gilt dasselbe näherungsweise, und
+zwar umso besser, je feiner die Skala ist.
+
+\begin{Lemma}[Abklingen der Detailkoeffizienten, vgl.\ {\cite[Lemma~2.4.30]{lmr}, \cite[Kap.~3.5]{blatter}}]
+\label{lem:abklingen}
+Sei $\psi$ ein Wavelet mit $p$ verschwindenden Momenten und
+$\supp\psi \subset [\alpha,\beta]$, $\ell := \beta-\alpha$. Ist $f$ auf
+$I_{j,k} := \supp\psi_{j,k}$ $p$-mal stetig differenzierbar mit
+$\lvert f^{(p)}\rvert \le M_{j,k}$, so gilt
+\[
+  \lvert d_{j,k}\rvert \;\le\; \frac{\ell^p\,\norm{\psi}_{L^1}}{p!}\;M_{j,k}\;2^{j(p+1/2)} .
+\]
+\end{Lemma}
+
+\begin{proof}
+Sei $q$ das Taylor-Polynom von $f$ vom Grad $p-1$ im linken Randpunkt von
+$I_{j,k}$. Da $\psi$ Polynome vom Grad $<p$ nicht sieht, ist
+$d_{j,k} = \scal{f-q}{\psi_{j,k}}$. Das Intervall $I_{j,k}$ hat die Länge
+$2^j\ell$, also ist dort $\lvert f-q\rvert \le M_{j,k}(2^j\ell)^p/p!$. Mit
+$\norm{\psi_{j,k}}_{L^1} = 2^{j/2}\norm{\psi}_{L^1}$ (Substitution) folgt die
+Behauptung.
+\end{proof}
+
+Beim Übergang zur nächstfeineren Skala $j \to j-1$ schrumpft die Schranke um
+den Faktor $2^{p+1/2}$: beim Haar-Wavelet um $2^{3/2}\approx 2{,}8$, bei
+\texttt{db2} um $2^{5/2}\approx 5{,}7$. Anders an einer Sprungstelle: Ist
+$f = s\cdot\mathbf 1_{[t_0,\infty[}$ und liegt $t_0$ im Inneren von $I_{j,k}$,
+so ergibt die Substitution
+$d_{j,k} = s\,2^{j/2}\int_{t_0/2^j-k}^{\infty}\psi(u)\,du$, und dieser
+Koeffizient fällt nur wie $2^{j/2}$, unabhängig von $p$.
+
+Für das EKG bedeutet das: Die langsamen, glatten P- und T-Wellen
+\cite[Kap.~2.3.1]{rebstadt} erzeugen auf feinen Skalen nur winzige
+Detailkoeffizienten, der steile QRS-Komplex dagegen gro\ss{}e, aber nur nahe
+seiner Lage. Das Signal konzentriert sich auf wenige Koeffizienten; auf dieser
+Dünnbesetztheit baut Abschnitt~\ref{sec:duennbesetztheit} auf.
+
+Damit liegen die drei Eigenschaften vor, die Kapitel~\ref{chapter:denoising}
+voraussetzt: Die diskrete Wavelet-Transformation ist orthogonal
+(Bemerkung~\ref{bem:mallat-orthogonal}), sie ist in $O(N)$ Operationen
+berechenbar (Algorithmus~\ref{alg:mallat}), und sie stellt stückweise glatte
+Signale dünnbesetzt dar (Lemma~\ref{lem:abklingen}).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\chapter{Konstruktion der diskreten Wavelet-Transformation}
+%\label{chapter:dwt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Die Skalierungsgleichung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\anmerkung{Da $\phi \in V_0 \subset V_{-1}$ liegt, lässt es sich in der Basis von $V_{-1}$ entwickeln -- daraus folgt die Zwei-Skalen-Gleichung mit den Koeffizienten $h_k$.}
+%\quellen{
+%  \begin{itemize}
+%    \item Blatter, S. 111 [bestätigt] (Sachverz.: „Skalierungsgleichung 111"); S. 112 [bestätigt] („Konsistenzbedingungen 112")
+%    \item LMR, Kap. 2.4.2 „Lösung von Skalierungsgleichungen", S. 145–164 [bestätigt] — der Existenzfrage eigens gewidmeter Abschnitt
+%    \item LMR, Gl. (2.4.12), S. 165 [bestätigt] — Skalierungsgleichung in der Form $\phi(x) = \sqrt{2} \sum_{k=0}^M h_k \phi(2x-k)$
+%    \item Blatter, Kap. 5.2, S. 110–116 [bestätigt]
+%    \item HankeBourgeois, Gl. (56.8), S. 438 [bestätigt] — die Skalierungsgleichung im Haar-Fall vollständig explizit: $2 \chi_{k,j} = \chi_{k+1,2j} + \chi_{k+1,2j+1}$
+%    \item HankeBourgeois, Gl. (56.2), S. 434–435 [bestätigt] — Stauchung und Translation als erzeugende Operationen
+%  \end{itemize}
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Filterkoeffizienten: Tiefpass und Hochpass}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\anmerkung{Die $h_k$ wirken als Tiefpass, die über $g_k = (-1)^k h_{1-k}$ gewonnenen Koeffizienten als Hochpass -- die DWT ist damit eine Filterbank.}
+%\quellen{
+%  \begin{itemize}
+%    \item LMR, Gl. (2.4.13), S. 165 [bestätigt] — $\psi(x) = \sqrt{2} \sum_{k=1-M}^{M} (-1)^k h_{1-k} \phi(2x-k)$
+%    \item LMR, Bemerkung 2.4.19, S. 165 [bestätigt] — Filter mit (2.4.14) hei\ss{}en in der Signalverarbeitung Conjugate Quadrature Filter (CQF); die Brücke zur ingenieurwissenschaftlichen Literatur
+%    \item LMR, Tabelle der Daubechies-Skalierungskoeffizienten, S. 170 [bestätigt] — direkt für deine Implementierung verwendbar
+%    \item Blatter, Kap. 5.3, S. 117–129 [bestätigt]
+%    \item Aqil, Kap. 2, S. 55–56 [bestätigt] — Fig. 4/5, HPF/LPF
+%    \item Rebstadt, Abb. 2.10 „Filterbank-Schema", S. 27 [bestätigt]
+%    \item HankeBourgeois, Gl. (56.8), S. 438 [bestätigt] — Tiefpass 
+%$2 \chi_{k,j} = \chi_{k+1,2j} + \chi_{k+1,2j+1}$ und Hochpass 
+%$2 \psi_{k,j} = \chi_{k+1,2j} - \chi_{k+1,2j+1}$, also 
+%$h = (1,1)/\sqrt{2}$ und $g = (1,-1)/\sqrt{2}$
+%    \item HankeBourgeois, Gl. (56.9), S. 438 [bestätigt] — die Umkehrung, d. h. die Synthesefilter
+%  \end{itemize}
+%}
+%\anmerkung{ERLEDIGT: Die Indexkonvention ist jetzt in
+%Bemerkung~\ref{bem:indexkonvention} verbindlich festgelegt (Blatter und LMR:
+%kleineres $j$ = feinere Skala). Der frühere Platzhalter an dieser Stelle hatte
+%dasselbe \texttt{\textbackslash label} wie jene Bemerkung und erzeugte einen
+%doppelten Verweis in \texttt{august.aux}; er ist entfernt. Beim Ausschreiben von
+%Kapitel~\ref{chapter:dwt} nur noch prüfen, dass die Filterindizes $h_k$, $g_k$
+%konsistent zu \eqref{eq:phi-jk} laufen.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Bedingungen im Fourier-Bereich}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\anmerkung{Übersetzung der Orthonormalität in Bedingungen an das trigonometrische Polynom $H: H(0) = 1$ und $|H(\omega)|^2$ + $|H(\omega+\pi )|^2 = 1$.}
+%\quellen{
+%  \begin{itemize}
+%    \item LMR, Gl. (2.4.14), S. 165 [bestätigt] — beide Bedingungen in genau dieser Form
+%    \item LMR, Satz 2.2.9, S. 121 [bestätigt] — Herleitung aus der Orthogonalität
+%    \item LMR, Lemma 2.4.20, S. 166 [bestätigt] — Charakterisierung von 
+%    $q(\omega)= |H(\omega)|^2$
+%    \item LMR, Satz 2.4.3, S. 146–147 [geschätzt]; Satz 2.4.7, S. 149 [geschätzt] — hinreichende Bedingungen an ${h_k}$
+%    \item Blatter, S. 119 [bestätigt] (Sachverz.: „erzeugende Funktion 119")
+%    \item Blatter, Kap. 5.3, S. 117–129 [bestätigt]; Meyer-Wavelet S. 125 [bestätigt]
+%  \end{itemize}
+%} 
+%
+%\subsection{Die Orthonormalität im Fourier-Bereich}
+%\label{subsec:onb-fourier}
+%
+%Die Skalierungsfunktion wird nicht im Zeitbereich, sondern über ihre
+%Fourier-Transformierte konstruiert. Die Orthonormalität der Translate aus (M5)
+%muss deshalb als Bedingung an $\hat\varphi$ formuliert werden. Es gilt die
+%Fourier-Konvention aus Bemerkung~\ref{bem:fourier-konvention}.
+%
+%\begin{Lemma}[Orthonormalitätsbedingung, {\cite[Lemma~2.2.4]{lmr}}]
+%\label{lem:onb-fourier}
+%Sei $\varphi \in \LZwei$. Dann sind äquivalent:
+%\begin{enumerate}
+%\item[(i)] $\{\varphi(\,\cdot-k) : k \in \Z\}$ ist ein Orthonormalsystem in $\LZwei$,
+%\item[(ii)] $\displaystyle\sum_{l\in\Z} \bigl\lvert \hat\varphi(\omega + 2\pi l)\bigr\rvert^{2}
+%  \;=\; \frac{1}{2\pi} \qquad\text{für fast alle } \omega \in \R .$
+%\end{enumerate}
+%\end{Lemma}
+%
+%\begin{proof}
+%\textbf{Schritt 1 (Reduktion auf ein Skalarprodukt).} Für $m,n \in \Z$ liefert die
+%Substitution $t = s + m$
+%\begin{align*}
+%  \scal{\varphi(\,\cdot-m)}{\varphi(\,\cdot-n)}
+%  &\;=\; \int_\R \varphi(t-m)\,\overline{\varphi(t-n)}\,dt
+%  \;=\; \int_\R \varphi(s)\,\overline{\varphi\bigl(s-(n-m)\bigr)}\,ds \\
+%  &\;=\; \scal{\varphi}{\varphi(\,\cdot-(n-m))} .
+%\end{align*}
+%Aussage (i) ist daher gleichbedeutend mit
+%\begin{equation}
+%\label{eq:onb-reduktion}
+%  \scal{\varphi}{\varphi(\,\cdot-k)} \;=\; \delta_{k,0}
+%  \qquad\text{für alle } k \in \Z .
+%\end{equation}
+%
+%\textbf{Schritt 2 (Übergang in den Frequenzbereich).} Nach dem Satz von Plancherel
+%%\cite[Satz~17.5]{serov} und der Verschiebungsregel
+%$\bigl(\varphi(\,\cdot-k)\bigr)^{\wedge}(\omega) = e^{-ik\omega}\hat\varphi(\omega)$
+%\cite[Anhang]{lmr} ist
+%\[
+%  \scal{\varphi}{\varphi(\,\cdot-k)}
+%  \;=\; \scal{\hat\varphi}{e^{-ik\,\cdot}\,\hat\varphi}
+%  \;=\; \int_\R \lvert\hat\varphi(\omega)\rvert^{2}\, e^{ik\omega}\,d\omega .
+%\]
+%
+%\textbf{Schritt 3 (Periodisierung).} Wir setzen
+%\[
+%  \Phi(\omega) \;:=\; \sum_{l\in\Z}\bigl\lvert\hat\varphi(\omega+2\pi l)\bigr\rvert^{2},
+%  \qquad \omega \in \R .
+%\]
+%Da alle Summanden nichtnegativ sind, erlaubt der Satz von Beppo Levi die
+%Vertauschung von Summe und Integral, und die Substitution
+%$\omega \mapsto \omega + 2\pi l$ auf $[2\pi l, 2\pi(l+1)[$ ergibt
+%\[
+%  \int_0^{2\pi}\Phi(\omega)\,d\omega
+%  \;=\; \sum_{l\in\Z}\int_{2\pi l}^{2\pi(l+1)} \lvert\hat\varphi(\omega)\rvert^{2}\,d\omega
+%  \;=\; \norm{\hat\varphi}^2_{\LZwei} \;=\; \norm{\varphi}^2_{\LZwei} \;<\; \infty .
+%\]
+%Also ist $\Phi$ fast überall endlich, $2\pi$-periodisch und
+%$\Phi \in L^1(0,2\pi)$. Für den Integranden aus Schritt~2, der nicht nichtnegativ
+%ist, verwenden wir die Partialsummen
+%$\Phi_L := \sum_{\lvert l\rvert \le L}\lvert\hat\varphi(\,\cdot+2\pi l)\rvert^{2}$.
+%Wegen der $2\pi$-Periodizität von $e^{ik\omega}$ ist
+%\[
+%  \int_{-2\pi L}^{2\pi(L+1)} \lvert\hat\varphi(\omega)\rvert^{2}\,e^{ik\omega}\,d\omega
+%  \;=\; \int_0^{2\pi} \Phi_L(\omega)\,e^{ik\omega}\,d\omega ,
+%\]
+%und wegen $\lvert\Phi_L\,e^{ik\omega}\rvert \le \Phi$ sowie
+%$\lvert\hat\varphi\rvert^2 \in L^1(\R)$ darf auf beiden Seiten nach dem Satz von
+%der majorisierten Konvergenz $L \to \infty$ gebildet werden. Zusammen mit
+%Schritt~2 folgt
+%\begin{equation}
+%\label{eq:onb-periodisiert}
+%  \scal{\varphi}{\varphi(\,\cdot-k)} \;=\; \int_0^{2\pi} \Phi(\omega)\,e^{ik\omega}\,d\omega
+%  \qquad\text{für alle } k \in \Z .
+%\end{equation}
+%
+%\textbf{Schritt 4 (Schluss).} Gilt (ii), so ist $\Phi = 1/(2\pi)$ fast überall, und
+%\eqref{eq:onb-periodisiert} liefert
+%$\scal{\varphi}{\varphi(\,\cdot-k)} = \frac{1}{2\pi}\int_0^{2\pi} e^{ik\omega}\,d\omega = \delta_{k,0}$,
+%also (i) nach Schritt~1. Gilt umgekehrt (i), so haben nach
+%\eqref{eq:onb-reduktion} und \eqref{eq:onb-periodisiert} die beiden Funktionen
+%$\Phi$ und $1/(2\pi)$ aus $L^1(0,2\pi)$ dieselben Integrale gegen alle
+%$e^{ik\omega}$, $k \in \Z$, also dieselben Fourier-Koeffizienten. Nach dem
+%Eindeutigkeitssatz für Fourier-Koeffizienten integrierbarer Funktionen stimmen
+%sie fast überall auf $[0,2\pi]$ überein, wegen der Periodizität also fast überall
+%auf $\R$. Das ist (ii).
+%\end{proof}
+%
+%\anmerkung{Beleg für den Eindeutigkeitssatz (Fourier-Koeffizienten bestimmen eine
+%$L^1(0,2\pi)$-Funktion fast überall) noch ergänzen -- Serov, Kapitel zu
+%Fourier-Reihen, oder Stein/Shakarchi; Satznummer vor Ort prüfen.}
+%
+%\begin{Bemerkung}[Orthonormalsystem und Orthonormalbasis]
+%\label{bem:onb-onsystem}
+%Lemma~\ref{lem:onb-fourier} sichert nur die Orthonormalität der Translate. Für die
+%Konstruktion genügt das: Erfüllt ein $\varphi$ die
+%Bedingung (ii), so definiert man $V_0$ als abgeschlossene lineare Hülle der
+%$\varphi(\,\cdot-k)$. Ein Orthonormalsystem ist stets eine Orthonormalbasis
+%seiner abgeschlossenen linearen Hülle \cite[Satz~25.18]{serov}, und (M5) ist dann
+%nach Konstruktion erfüllt. Die eigentliche Arbeit besteht darin, (M1)--(M3) für
+%die durch (M4) erzeugten Räume nachzuweisen.
+%\end{Bemerkung}
+%
+%\quellen{LMR, Lemma~2.2.4, S.~114 [geschätzt]; zweidimensionale Fassung mit
+%Konstante $1/(4\pi^2)$: LMR, Lemma~2.5.1, S.~211 [bestätigt]; Blatter,
+%Kap.~5.3, S.~117--119 [bestätigt]; Serov, Satz~17.5 (Plancherel), S.~145
+%[bestätigt].}
+%
+%\anmerkung{Beleg für den Eindeutigkeitssatz (Fourier-Koeffizienten bestimmen eine
+%$L^1(0,2\pi)$-Funktion fast überall) noch ergänzen. Konventionswarnung: Ohne den
+%Faktor $(2\pi)^{-1/2}$ steht in (ii) rechts eine $1$. VERSCHOBEN aus
+%Abschnitt~\ref{sec:skalierungsfunktion}, weil erst hier gebraucht.}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Der Mallat-Algorithmus}
+%\label{sec:mallat}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\anmerkung{4.4.1 Zwei-Skalen-Relation zwischen den Stufen · 4.4.2 Analyse: Approximations- und Detailkoeffizienten · 4.4.3 Synthese: Rekonstruktionsformel Die Skalierungsgleichung, rekursiv über die Stufen angewandt, liefert Faltung mit anschlie\ss{}ender Dezimierung (Analyse) bzw. Aufweitung mit Filterung (Synthese) — ein Algorithmus in O(N).}
+%\quellen{
+%  \begin{itemize}
+%    \item LMR, Kap. 2.3 „Schnelle Wavelet-Transformation", S. 132–141 [bestätigt]
+%    \item LMR, S. 133 [bestätigt] — Zerlegungsoperatoren $H$ und $G$ in Gl. (2.3.1)/(2.3.2), Faltungssymbol $\ast_2$ = Faltung mit Sub-Sampling um Faktor 2; ausdrücklicher Verweis auf Mallats Originalarbeit
+%    \item LMR, Abbildung 2.8, S. 133–134 [bestätigt] — Schema der Zerlegung über M Skalen
+%    \item LMR, S. 133–135 [bestätigt] — Rekonstruktion aus $c_1$ und $d_1$ über die orthogonale Zerlegung $V_0 = V_1 \oplus W_1$
+%    \item Blatter, Kap. 5.4 „Algorithmen", S. 130–136 [bestätigt]
+%    \item Blatter, S. 15 [bestätigt] (Sachverz.: „Fast Wavelet Transform 15", „FWT 15")
+%    \item HankeBourgeois, Gl. (56.10), S. 438 [bestätigt] — die Analyseformeln explizit: $\xi_{kj} = (\xi_{k+1,2j} + \xi_{k+1,2j+1})/2$, $\eta_{kj} = (\xi_{k+1,2j} - \xi_{k+1,2j+1})/2$
+%    \item HankeBourgeois, Algorithmus 56.1 „Schnelle Haar-Wavelet-Transformation", S. 439 [bestätigt] — rekursiver Pseudocode fhwt und ifhwt, direkt implementierbar
+%    \item HankeBourgeois, Aufwandsanalyse, S. 438 [bestätigt] — $2^{\dim} V_p$ Multiplikationen und Additionen, „noch billiger zu implementieren als die fft"
+%    \item Aqil, Kap. 2, S. 54–56 [bestätigt]
+%    \item Chatterjee, Kap. 3, S. 575–577 [bestätigt]  
+%  \end{itemize}
+%}
+%
+%\subsection{Zwei-Skalen-Relation zwischen den Stufen}
+%
+%\subsection{Analyse: Approximations- und Detailkoeffizienten}
+%
+%\subsection{Synthese: Rekonstruktionsformel}
+%
+%\anmerkung{$a_{0,k} := X(k)$ als EKG-Abtastwerte interpretieren -- Brücke zu Kap.~6}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Daubechies-Wavelets}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\subsection{Kompakter Träger, Filterlänge und Regularität}
+%\label{subsec:daubechies-traeger}
+%
+%\anmerkung{ZUSAMMENGELEGT aus den alten Unterabschnitten 4.5.1 und 4.5.3 und BEWUSST
+%KURZ gehalten (ca.\ eine Seite, ohne eigene Beweise). Zwei Aussagen genügen:
+%(i) Endlich viele nichtverschwindende $h_k$ $\Leftrightarrow$ kompakter Träger von
+%$\phi$ und $\psi$ $\Leftrightarrow$ endliche Filterlänge -- das ist die Voraussetzung
+%dafür, dass der Mallat-Algorithmus überhaupt implementierbar ist. (ii) Höhere
+%Filterordnung erkauft mehr Glattheit, aber auch längeren Träger. Die
+%Daubechies-Konstruktion selbst (Spektralfaktorisierung von $H_N$, LMR Lemma~2.4.24,
+%S.~171) wird NICHT ausgeführt, sondern nur zitiert -- sie ist ein eigenes Kapitel
+%Mathematik und trägt zum Argumentationsbogen nichts bei. Für die Implementierung
+%genügt die Koeffiziententabelle bei LMR, S.~170.}
+%\quellen{
+%  \begin{itemize}
+%    \item LMR, Satz 2.4.9, S.~153 [bestätigt] --- endliche Koeffizientenfolge $\{h_k\}$ $\Rightarrow$ kompakter Träger $[0,M]$ der Lösung der Skalierungsgleichung
+%    \item LMR, S.~175 [bestätigt] --- die Träger explizit: $\supp\varphi_N = [0,\, 2N-1]$ und $\supp\psi_N = [1-N,\, N]$
+%    \item LMR, S.~165 [bestätigt] --- Meyer- und Spline-Wavelets haben keinen kompakten Träger (die Motivation des ganzen Abschnitts)
+%    \item LMR, Kap.~2.4.3, S.~165--169 [bestätigt] --- die vollständige Konstruktion; hier nur zitiert
+%    \item LMR, Tabelle der Skalierungskoeffizienten, S.~170 [bestätigt] --- für die Implementierung in Kapitel~\ref{chapter:anwendung}
+%    \item LMR, Satz 2.4.26, S.~173 [bestätigt] --- Abklingen von $\lvert\hat\varphi\rvert$ und Sobolev-Ordnung $\psi_N \in H^{s}$ mit $s < \ln N/(2\ln 2)$
+%    \item LMR, S.~173 [bestätigt] --- Vergleich mit B-Splines: die Daubechies-Regularität wächst linear in $N$, aber deutlich langsamer
+%    \item Blatter, Kap.~6.1--6.2, S.~137--153 [bestätigt]; S.~151 (Sachverz.: Daubechies-Wavelets)
+%    \item Rebstadt, Abb.~2.9, S.~25 [bestätigt]
+%  \end{itemize}
+%}
+%
+%\anmerkung{NOTATIONSFALLE, hier explizit klarstellen: Das bei LMR als
+%\emph{Daubechies-Wavelet mit vier Koeffizienten} bezeichnete Wavelet ($N = 2$) hei\ss{}t in
+%PyWavelets \texttt{db2}, NICHT \texttt{db4}. \texttt{db4} in PyWavelets hat acht
+%Koeffizienten. Diese Umbenennung muss vor Kapitel~\ref{chapter:anwendung} einmal
+%ausgesprochen werden, sonst ist der Ergebnisteil nicht nachvollziehbar.}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Verschwindende Momente}
+%
+%\anmerkung{Ein Wavelet der Ordnung N annulliert alle Polynome vom Grad < N — glatte Signalanteile erzeugen dann kleine Koeffizienten, was die Dünnbesetztheit erst herstellt.}
+%\quellen{
+%  \begin{itemize}
+%    \item LMR, Satz 2.4.28, S. 174 [bestätigt] — $\int_{\R} x^m \psi_N(x) \, dx = 0$ für $m = 0, \ldots, N-1$, mit vollständigem Beweis
+%    \item LMR, Lemma 2.4.27, S. 174 [bestätigt] — die diskrete Momentenbedingung $\sum_{k} k^m g_{k,N} = 0$, auf der der Beweis aufbaut
+%    \item LMR, Lemma 2.4.29, S. 174–175 [bestätigt] — Polynomreproduktion: $\sum_{k} c_{k,m} \varphi_N(x-k) = x^m$, insbesondere $\sum_{k} \varphi_N(x-k) = 1$ (Gl. 2.4.17)
+%    \item LMR, Lemma 2.4.30, S. 176 [bestätigt] — Approximationsordnung $\| P_j f - f \|$ als quantitative Folge der verschwindenden Momente
+%    \item LMR, Lemma 2.4.32, S. 177 [geschätzt]; Bemerkung S. 176 [bestätigt] — die Momenteneigenschaft gilt nicht nur für Daubechies-Wavelets
+%    \item LMR, Kap. 1.4.2 „Bemerkungen zur Ordnung von Wavelets", S. 45–47 [bestätigt]
+%    \item LMR, Satz 1.4.2, S. 41 [bestätigt] — Wavelet der Ordnung N im Sobolev-Kontext
+%    \item Blatter, Kap. 3.5 „Abklingverhalten", S. 73–78 [bestätigt]; S. 74 [bestätigt] (Sachverz.: „Moment 74", „Ordnung eines Wavelets 74")
+%  \end{itemize}
+%}
+%
+%\anmerkung{KERNSTÜCK VON KAPITEL~4 -- hier wird der Beweis ausgeschrieben. Begründung:
+%Dieser Abschnitt ist der einzige im Daubechies-Teil, der in den Hauptsatz eingeht. Er
+%liefert die Dünnbesetztheit (Abschnitt~\ref{sec:duennbesetztheit}) und damit die eine
+%Hälfte der Asymmetrie, auf der das Thresholding beruht. Vorlage: LMR, Satz 2.4.28,
+%S.~174, mit Lemma 2.4.27, S.~174.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3039,8 +3586,11 @@ Alternativen verletzen die Voraussetzungen des MAD-Schätzers!}
 
 \subsection{Wahl von Wavelet und Zerlegungstiefe}
 
-\anmerkung{Systematischer Vergleich: Haar vs. db4 vs. Symlet; Zerlegungstiefe
-$J = 1,\dots,6$. Erwartung aus den Vorexperimenten: db4 schlägt Haar, und die
+\anmerkung{Systematischer Vergleich: Haar (\texttt{db1}) vs.\ \texttt{db2} vs.\ Symlet;
+Zerlegungstiefe $J = 1,\dots,6$. PRÜFEN: In den Vorexperimenten stand hier
+\texttt{db4} (PyWavelets, acht Koeffizienten), Kapitel~\ref{chapter:dwt} führt
+aber \texttt{db2} vor (Bemerkung~\ref{bem:db-bezeichnung}) -- einheitlich
+entscheiden. Erwartung aus den Vorexperimenten: das Daubechies-Wavelet schlägt Haar, und die
 Zerlegungstiefe verhält sich NICHT monoton (Optimum um $J=3$). Genau dieses
 nichtmonotone Verhalten ist ein Ergebnis und sollte als solches dargestellt werden.}
 
@@ -3118,6 +3668,169 @@ Verschlechterung der Ergebnisse von Stufe~1 zu Stufe~3.}
     \item Chatterjee, Kap. 5, S. 585–587 [bestätigt]
   \end{itemize}
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ANHANG
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Ergänzende Rechnungen}
+\label{chapter:anhang-rechnungen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------------------
+\section{Fourier-Transformierte des Testsignals}
+\label{anh:fourier-testsignal}
+%-------------------------------------------------------------------------------
+
+Wir leiten \eqref{eq:ft-testsignal} aus Beispiel~\ref{bsp:testsignal} her.
+Wegen $f\in L^1(\R)$ ist $\hat f$ punktweise durch das Integral gegeben; in
+der Konvention aus Bemerkung~\ref{bem:fourier-konvention} ist
+\[
+  \hat f(\omega)
+  =\frac{1}{\sqrt{2\pi}}\left(
+      \int_0^3\bigl(1-\cos(2\pi t)\bigr)e^{-i\omega t}\,dt
+      +\frac12\int_4^5\bigl(1-\cos(10\pi t)\bigr)e^{-i\omega t}\,dt
+    \right).
+\]
+Sei zunächst $\omega\notin\{0,\pm2\pi,\pm10\pi\}$. Benutzt werden nur
+$\cos x=\tfrac12\bigl(e^{ix}+e^{-ix}\bigr)$ und
+\begin{equation}\label{eq:stammfunktion-exp}
+  \int_\alpha^\beta e^{ct}\,dt=\frac{1}{c}\bigl(e^{c\beta}-e^{c\alpha}\bigr),
+  \qquad c\in\C\setminus\{0\}.
+\end{equation}
+
+\paragraph{Die langsame Komponente.}
+Mit $q_1:=1-e^{-3i\omega}$ zerlegen wir
+\[
+  \int_0^3\bigl(1-\cos(2\pi t)\bigr)e^{-i\omega t}\,dt
+  =\underbrace{\int_0^3 e^{-i\omega t}\,dt}_{=:A_1}
+   -\underbrace{\int_0^3 \cos(2\pi t)\,e^{-i\omega t}\,dt}_{=:B_1}.
+\]
+Nach \eqref{eq:stammfunktion-exp} mit $c=-i\omega$ ist
+\[
+  A_1=\frac{e^{-3i\omega}-1}{-i\omega}=\frac{q_1}{i\omega}.
+\]
+Für $B_1$ schreiben wir
+$\cos(2\pi t)e^{-i\omega t}=\tfrac12\bigl(e^{i(2\pi-\omega)t}+e^{-i(2\pi+\omega)t}\bigr)$
+und erhalten nach \eqref{eq:stammfunktion-exp}
+\[
+  B_1=\frac{e^{3i(2\pi-\omega)}-1}{2i(2\pi-\omega)}
+     +\frac{e^{-3i(2\pi+\omega)}-1}{-2i(2\pi+\omega)}.
+\]
+Da auf $[0,3]$ genau drei volle Perioden liegen, ist
+$e^{\pm 6\pi i}=1$ und damit
+$e^{3i(2\pi-\omega)}=e^{-3i(2\pi+\omega)}=e^{-3i\omega}$. Beide Zähler
+werden zu $-q_1$, und
+\[
+  B_1=\frac{q_1}{2i}\left(\frac{1}{2\pi+\omega}-\frac{1}{2\pi-\omega}\right)
+     =\frac{q_1}{2i}\cdot\frac{2\omega}{\omega^2-4\pi^2}
+     =\frac{q_1\,\omega}{i\,(\omega^2-4\pi^2)}.
+\]
+Mit $1/i=-i$ folgt
+\[
+  A_1-B_1
+  =\frac{q_1}{i}\left(\frac1\omega-\frac{\omega}{\omega^2-4\pi^2}\right)
+  =\frac{q_1}{i}\cdot\frac{-4\pi^2}{\omega(\omega^2-4\pi^2)}
+  =\frac{i\,4\pi^2\,q_1}{\omega\,(\omega^2-4\pi^2)} .
+\]
+
+\paragraph{Die schnelle Komponente.}
+Mit $q_2:=e^{-4i\omega}-e^{-5i\omega}$ verläuft die Rechnung wörtlich
+gleich, nun mit $10\pi$ statt $2\pi$ und den Grenzen $4$ und $5$. An die
+Stelle von $e^{\pm6\pi i}=1$ treten $e^{\pm40\pi i}=e^{\pm50\pi i}=1$, und
+man erhält
+\[
+  A_2=\int_4^5 e^{-i\omega t}\,dt=\frac{q_2}{i\omega},
+  \qquad
+  B_2=\int_4^5 \cos(10\pi t)\,e^{-i\omega t}\,dt=\frac{q_2\,\omega}{i\,(\omega^2-100\pi^2)},
+\]
+also mit dem Amplitudenfaktor $\tfrac12$
+\[
+  \frac12\bigl(A_2-B_2\bigr)
+  =\frac{q_2}{2i}\cdot\frac{-100\pi^2}{\omega(\omega^2-100\pi^2)}
+  =\frac{i\,50\pi^2\,q_2}{\omega\,(\omega^2-100\pi^2)} .
+\]
+Addition beider Anteile und der Vorfaktor $(2\pi)^{-1/2}$ ergeben
+\eqref{eq:ft-testsignal}.
+
+\paragraph{Die Ausnahmestellen.}
+Da $\hat f$ als Fourier-Transformierte einer $L^1$-Funktion stetig ist
+\cite[Satz~12.1]{serov}, gilt \eqref{eq:ft-testsignal} an den Stellen
+$\omega\in\{0,\pm2\pi,\pm10\pi\}$ im Sinne des Grenzwerts; dort
+verschwinden jeweils auch die Zähler, etwa $q_1=1-e^{-6\pi i}=0$ für
+$\omega=2\pi$. Die Werte lassen sich einfacher direkt aus dem Integral
+bestimmen. Für $\omega=0$ ist
+$\hat f(0)=(2\pi)^{-1/2}\int_\R f=(2\pi)^{-1/2}\bigl(3+\tfrac12\bigr)$.
+Für $\omega=2\pi$ zerfällt der Integrand in Exponentialterme
+$e^{i\nu t}$; alle mit $\nu\neq0$ integrieren sich über $[0,3]$ bzw.\
+$[4,5]$ zu null, da $\nu$ jeweils ein ganzzahliges Vielfaches von $2\pi$
+ist. Übrig bleibt allein der konstante Term
+$-\tfrac12e^{2\pi it}e^{-2\pi it}=-\tfrac12$ im ersten Integral, also
+$\hat f(2\pi)=-\tfrac32(2\pi)^{-1/2}$. Ebenso ist
+$\hat f(10\pi)=\tfrac12\cdot\bigl(-\tfrac12\bigr)(2\pi)^{-1/2}$, und wegen
+$\hat f(-\omega)=\overline{\hat f(\omega)}$ folgt
+\[
+  |\hat f(0)|=\frac{7}{2\sqrt{2\pi}}\approx 1{,}396,\qquad
+  |\hat f(\pm2\pi)|=\frac{3}{2\sqrt{2\pi}}\approx 0{,}598,\qquad
+  |\hat f(\pm10\pi)|=\frac{1}{4\sqrt{2\pi}}\approx 0{,}0997 .
+\]
+Die in Beispiel~\ref{bsp:testsignal} angegebenen Lagen der Maxima,
+$\omega\approx1{,}90\pi$ mit $|\hat f|\approx0{,}629$ und
+$\omega\approx9{,}73\pi$ mit $|\hat f|\approx0{,}102$, wurden numerisch aus
+\eqref{eq:ft-testsignal} bestimmt; zur Kontrolle wurde
+\eqref{eq:ft-testsignal} an mehreren Stellen mit numerischer Quadratur des
+definierenden Integrals verglichen (Anhang~\ref{chapter:anhang-code}).
+
+%-------------------------------------------------------------------------------
+\section{Stammfunktion des Testsignals}
+\label{anh:stammfunktion-testsignal}
+%-------------------------------------------------------------------------------
+
+Für $0\le t\le3$ ist
+$F(t)=\int_0^t\bigl(1-\cos(2\pi s)\bigr)ds=t-\frac{\sin(2\pi t)}{2\pi}$,
+insbesondere $F(3)=3$ wegen $\sin(6\pi)=0$. Auf $[3,4]$ verschwindet $f$,
+also $F\equiv3$. Für $4\le t\le5$ ist
+\[
+  F(t)=3+\frac12\int_4^t\bigl(1-\cos(10\pi s)\bigr)ds
+      =3+\frac{t-4}{2}-\frac{\sin(10\pi t)-\sin(40\pi)}{20\pi}
+      =3+\frac{t-4}{2}-\frac{\sin(10\pi t)}{20\pi},
+\]
+und wegen $\sin(50\pi)=0$ ist $F(5)=\tfrac72=\int_\R f$, in
+Übereinstimmung mit $\hat f(0)=(2\pi)^{-1/2}\cdot\tfrac72$. Da $f$ stetig
+ist -- an allen vier Trägerrändern hat $1-\cos x=2\sin^2(x/2)$ eine
+doppelte Nullstelle --, ist $F$ stetig differenzierbar mit $F'=f$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Python-Code}
+\label{chapter:anhang-code}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Alle Abbildungen und numerischen Werte dieser Arbeit wurden mit Python
+(NumPy, SciPy, Matplotlib) erzeugt. \anmerkung{Versionen angeben
+(\texttt{python --version}, \texttt{pip show numpy scipy matplotlib pywavelets}).}
+
+\section{Testsignal: Fourier- und Wavelet-Transformierte}
+\label{anh:code-testsignal}
+
+Der folgende Code erzeugt die Abbildungen~\ref{fig:signal},
+\ref{fig:fourier} und \ref{fig:cwt}. Die Wavelet-Transformierte wird nicht
+durch numerische Quadratur, sondern exakt nach \eqref{eq:cwt-haar-exakt}
+aus der Stammfunktion $F$ berechnet.
+
+\IfFileExists{code/BeispielCWT.py}{%
+  \lstinputlisting[caption={Testsignal aus Beispiel~\ref{bsp:testsignal}},
+    label={lst:testsignal}]{code/BeispielCWT.py}}{%
+  \anmerkung{Datei \texttt{code/BeispielCWT.py} fehlt noch -- Skript in den
+  Ordner \texttt{code/} neben der Haupt-.tex-Datei legen.}}
+
+% weitere Abschnitte, z. B.:
+% \section{Numerische Kontrolle der Plancherel-Formel}
+% \lstinputlisting{code/plancherel.py}
+% \section{Entrauschung (Kapitel~\ref{chapter:anwendung})}
+% \lstinputlisting{code/denoising.py}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LITERATURVERZEICHNIS
