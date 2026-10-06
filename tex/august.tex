@@ -7,7 +7,7 @@
 \usepackage{xcolor}
 \usepackage{amsmath,amsthm,amssymb,amsfonts}
 \usepackage{graphicx}
-\graphicspath{{../abbildungen/}{./}}
+\graphicspath{{abbildungen/}{../abbildungen/}{./}}
 \usepackage{psfrag}
 \usepackage{tikz, pgfplots}
 
@@ -18,6 +18,17 @@
 \usepackage{mathtools}     
 \usepackage{booktabs}       
 \usepackage{subcaption}     
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\floatname{algorithm}{Algorithmus}
+\renewcommand{\listalgorithmname}{Algorithmenverzeichnis}
+\algrenewcommand\algorithmicrequire{\textbf{Eingabe:}}
+\algrenewcommand\algorithmicensure{\textbf{Ausgabe:}}
+\algrenewcommand\algorithmicfor{\textbf{für}}
+\algrenewcommand\algorithmicdo{\textbf{tue}}
+\algrenewcommand\algorithmicend{\textbf{Ende}}
+\algrenewcommand\algorithmicreturn{\textbf{Rückgabe}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ARBEITSHILFE: QUELLENBLOCK
@@ -85,7 +96,8 @@
 
 
 \definecolor{uhh_red}{RGB}{226,0,26}
-\definecolor{uhh_blue}{RGB}{2,113,187}
+%\definecolor{uhh_blue}{RGB}{2,113,187}
+\definecolor{uhh_blue}{RGB}{65,105,225}   % = royalblue in Matplotlib
 \definecolor{uhh_grey}{RGB}{59,81,91}
 \usepackage{listings}       % Python-Code im Anhang
 \lstset{language=Python, basicstyle=\ttfamily\footnotesize,
@@ -401,6 +413,57 @@ einer Quelle ist deshalb zuerst deren Konvention nachzusehen.
 \label{sec:wft}
 
 \anmerkung{Hierher gehört die quantitative Begründung der festen Fensterbreite: Heisenbergsche Unschärferelation, Zeit-Bandbreite-Produkt. Abschnitt~\ref{sec:cwt} verweist darauf. Belege: Blatter, Kap.~2.3, S.~43--46 [bestätigt]; LMR, Kap.~1.3.1, S.~30--35 [bestätigt].}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Grundbegriffe der Wahrscheinlichkeitsrechnung}
+\label{sec:wahrscheinlichkeit}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\quellen{
+%  \begin{itemize}
+%    \item Mallat, Anhang A.6, S. 761--762 -- Zufallsvektor, Erwartungswert, Varianz,
+%          Kovarianz (A.19), Kovarianzmatrix
+%    \item Mallat, Kap. 11.2.2, S. 554 -- Gaußdichte phi, nach Gl. (11.56)
+%    \item Mallat, Kap. 11.1.1, S. 538 -- gemeinsam normalverteilt und unkorreliert
+%          => unabhängig ("two jointly Gaussian random vectors are independent if
+%          they are noncorrelated [53]")
+%  \end{itemize}
+%}
+
+In Kapitel~\ref{chapter:denoising} wird das Rauschen in einem Messsignal als
+zufällig modelliert. Dafür genügen die folgenden Begriffe
+\cite[Anhang~A.6]{mallat}. % S. 761--762
+Ein Zufallsvektor $X = (X_0,\dots,X_{N-1})$ besteht aus $N$ Zufallsvariablen
+$X_n$. Hat eine Zufallsvariable $X$ die Wahrscheinlichkeitsdichte $p$, so hei\ss en
+\[
+  \mathbb E[X] \;=\; \int_\R x\,p(x)\,dx
+  \qquad\text{und}\qquad
+  \operatorname{Var}(X) \;=\; \mathbb E\bigl[\lvert X - \mathbb E[X]\rvert^2\bigr]
+\]
+ihr Erwartungswert und ihre Varianz; die Kovarianz zweier Zufallsvariablen ist
+\[
+  \operatorname{Cov}(X_1,X_2) \;=\; \mathbb E\bigl[(X_1-\mathbb E[X_1])\,(X_2-\mathbb E[X_2])\bigr].
+\]
+Ist $\operatorname{Cov}(X_1,X_2) = 0$, so hei\ss en $X_1$ und $X_2$ unkorreliert.
+Der Erwartungswert ist linear. Mit $\mathbb P$ bezeichnen wir
+Wahrscheinlichkeiten.
+
+\begin{Definition}[Normalverteilung, vgl.\ {\cite[Kap.~11.2.2]{mallat}}] % S. 554
+\label{def:normalverteilung}
+Sei $\phi(x) = (2\pi)^{-1/2}e^{-x^2/2}$ die Gau\ss'sche Dichte. Eine
+Zufallsvariable $X$ hei\ss t normalverteilt mit Erwartungswert $\mu$ und Varianz
+$\sigma^2>0$, kurz $X\sim\mathcal N(\mu,\sigma^2)$, wenn sie die Dichte
+$p(x) = \sigma^{-1}\phi\bigl((x-\mu)/\sigma\bigr)$ hat, und standardnormalverteilt
+im Fall $\mu = 0$, $\sigma = 1$.
+\end{Definition}
+
+Gemeinsam normalverteilt hei\ss en Zufallsvariablen, die zusammen einen
+Gau\ss'schen Zufallsvektor bilden. Für sie gilt:
+
+\begin{Satz}[{\cite[Kap.~11.1.1]{mallat}}] % S. 538
+\label{satz:unkorreliert-unabhaengig}
+Gemeinsam normalverteilte Zufallsvariablen, die paarweise unkorreliert sind,
+sind unabhängig.
+\end{Satz}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -933,7 +996,7 @@ kompaktem Träger liegt $f$ in $L^1(\R)\cap\LZwei$.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{abb1_signal.png}
+  \includegraphics[width=1\textwidth]{abb1_signal.png}
   \caption{Das Signal $f$ aus Beispiel~\ref{bsp:testsignal}.}
   \label{fig:signal}
 \end{figure}
@@ -959,7 +1022,7 @@ $\omega \approx \pm9{,}73\pi$.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{abb2_fourier.png}
+  \includegraphics[width=\textwidth]{abb2_fourier.png}
   \caption{Betragsspektrum $|\hat f(\omega)|$ nach \eqref{eq:ft-testsignal};
     gestrichelt die Stellen $\pm2\pi$ und $\pm10\pi$.}
   \label{fig:fourier}
@@ -1478,7 +1541,7 @@ an und schreiben kurz $f = (4,2,5,7)$ für ihre Werte auf den vier Intervallen
     \begin{scope}
       \ObenAchsen
       \node[anchor=south west] at (-0.3,9.4) {\small $f$ (Stufenbreite $1$)};
-      \draw[thick] (0,4) -- (1,4) -- (1,2) -- (2,2) -- (2,5) -- (3,5) -- (3,7) -- (4,7);
+      \draw[uhh_blue, line width=1.1pt] (0,4) -- (1,4) -- (1,2) -- (2,2) -- (2,5) -- (3,5) -- (3,7) -- (4,7);
       \node[above] at (0.5,4) {$4$};
       \node[above] at (1.5,2) {$2$};
       \node[above] at (2.5,5) {$5$};
@@ -1488,7 +1551,7 @@ an und schreiben kurz $f = (4,2,5,7)$ für ihre Werte auf den vier Intervallen
     \begin{scope}[xshift=4.4cm]
       \ObenAchsen
       \node[anchor=south west] at (-0.3,9.4) {\small $P_1 f$ (Stufenbreite $2$)};
-      \draw[thick] (0,3) -- (2,3) -- (2,6) -- (4,6);
+      \draw[uhh_blue, line width=1.1pt] (0,3) -- (2,3) -- (2,6) -- (4,6);
       \node[above] at (1,3) {$3$};
       \node[above] at (3,6) {$6$};
     \end{scope}
@@ -1496,25 +1559,25 @@ an und schreiben kurz $f = (4,2,5,7)$ für ihre Werte auf den vier Intervallen
     \begin{scope}[xshift=8.8cm]
       \ObenAchsen
       \node[anchor=south west] at (-0.3,9.4) {\small $P_2 f$ (Stufenbreite $4$)};
-      \draw[thick] (0,4.5) -- (4,4.5);
+      \draw[uhh_blue, line width=1.1pt] (0,4.5) -- (4,4.5);
       \node[above] at (2,4.5) {$4{,}5$};
     \end{scope}
 
     % ---------- untere Reihe: verlorene Details ----------
-    \begin{scope}[xshift=4.4cm,yshift=-2.1cm]
+    \begin{scope}[xshift=4.4cm,yshift=-2.5cm]
       \UntenAchsen
       \node[anchor=south west] at (-0.3,3.0) {\small $f-P_1 f$ (verlorenes Detail)};
-      \draw[thick] (0,1) -- (1,1) -- (1,-1) -- (3,-1) -- (3,1) -- (4,1);
+      \draw[uhh_blue, line width=1.1pt] (0,1) -- (1,1) -- (1,-1) -- (3,-1) -- (3,1) -- (4,1);
       \node[above] at (0.5,1) {$1$};
       \node[below] at (2,-1) {$-1$};
       \node[above] at (3.5,1) {$1$};
     \end{scope}
 
-    \begin{scope}[xshift=8.8cm,yshift=-2.1cm]
+    \begin{scope}[xshift=8.8cm,yshift=-2.5cm]
       \UntenAchsen
       \node[anchor=south west] at (-0.3,3.0) {\small $P_1 f-P_2 f$ (verlorenes Detail)};
-      \draw[thick] (0,-1.5) -- (2,-1.5) -- (2,1.5) -- (4,1.5);
-      \node[below] at (1,-1.5) {$-1{,}5$};
+      \draw[uhh_blue, line width=1.1pt] (0,-1.5) -- (2,-1.5) -- (2,1.5) -- (4,1.5);
+      \node[above] at (1,-1.5) {$-1{,}5$};
       \node[above] at (3,1.5) {$1{,}5$};
     \end{scope}
   \end{tikzpicture}
@@ -1765,9 +1828,9 @@ gegeneinander verschoben \cite[Kap.~5.1]{blatter}. % S. 107, Blatter
 % \]
 % \end{proof}
 
-\anmerkung{Der rote Faden: Die gesamte Konstruktion hängt an der Unitarität von
-$D_2$ -- derselben Eigenschaft, die in Abschnitt~\ref{sec:onb-invarianz} das
-Rauschen invariant lässt.}
+\anmerkung{Der rote Faden: Die gesamte Konstruktion liefert Orthonormalbasen.
+In Abschnitt~\ref{sec:onb-invarianz} ist es die Orthogonalität der DWT
+(Lemma~\ref{lem:dwt-orthogonal}), die das Rauschen invariant lässt.}
 
 %-------------------------------------------------------------------------------
 \subsection{Die Approximationsoperatoren}
@@ -2738,23 +2801,30 @@ glatte Signalabschnitte eignet.
 \label{sec:mallat}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\quellen{LMR, Kap.~2.3, S.~132--141 [bestätigt], insb.\ Gl.~(2.3.1)/(2.3.2)
-und Abb.~2.8, S.~133--134 [bestätigt]; Blatter, Kap.~5.4, S.~130--136
-[bestätigt]; Aufwand: Hanke-Bourgeois, §~56, S.~438 [bestätigt]; LMR,
-Kap.~3.1.1, S.~237--238 [bestätigt].}
+\quellen{Blatter, Kap.~5.4, S.~130--136 [bestätigt], insb.\ Skalierungs-
+gleichungen 5.4.(1)/(2), S.~130 [bestätigt], Zwei-Skalen-Relation
+5.4.(3)/(4) mit Herleitung, S.~131 [bestätigt], Analyseformeln
+(eingerahmt, unnummeriert), S.~132--133 [bestätigt]; LMR, Kap.~2.3,
+S.~132--141 [bestätigt], insb.\ Analyseformeln (unnummeriert, mit Verweis
+auf Skalierungsgl.~(2.2.8)/(2.2.27)), S.~133 [bestätigt],
+Gl.~(2.3.1)/(2.3.2), S.~133 [bestätigt], Abb.~2.8, S.~134 [bestätigt];
+Aufwand: Blatter, Kap.~5.4, S.~133--135 [bestätigt], Hanke-Bourgeois,
+§~56, S.~438 [bestätigt]; LMR, Kap.~3.1.1, S.~237--238 [bestätigt].}
 
-Für die Approximationskoeffizienten $a_{j,k} = \scal{f}{\varphi_{j,k}}$ aus
-Definition~\ref{def:projektion-pj} und die Detailkoeffizienten
-$d_{j,k} = \scal{f}{\psi_{j,k}}$ aus Korollar~\ref{kor:wavelet-basis} muss man
-bisher jeweils ein Integral auswerten. Dieser Abschnitt zeigt, dass das nicht
-nötig ist: Kennt man die Koeffizienten auf einer Skala, so erhält man die der
-nächstgröberen Skala allein durch gewichtete Summen mit den Zahlen $h_k$ und
-$g_k$. Im Haar-Fall ist das genau das Mitteln und Differenzbilden aus
-Beispiel~\ref{bsp:haar-mittelung}.
+Bisher erfordert jeder Koeffizient
+\[
+  a_{j,k} = \scal{f}{\varphi_{j,k}} = \int_{\R} f(t)\,\varphi_{j,k}(t)\,dt,
+  \qquad
+  d_{j,k} = \scal{f}{\psi_{j,k}} = \int_{\R} f(t)\,\psi_{j,k}(t)\,dt
+\]
+(Definition~\ref{def:projektion-pj}, Korollar~\ref{kor:wavelet-basis}) ein
+eigenes Integral. Nach \cite[Kap.~5.4]{blatter} und
+\cite[Kap.~2.3, Abb.~2.8]{lmr} lassen sich $a_{j,\cdot}$ und $d_{j,\cdot}$
+jedoch allein aus $a_{j-1,\cdot}$ und den Filtern $h$, $g$ berechnen.
+Grundlage dafür ist die folgende Darstellung der Basisfunktionen der Skala
+$j$ durch die der feineren Skala $j-1$.
 
-Grundlage ist die folgende Beziehung zwischen zwei benachbarten Skalen.
-
-\begin{Lemma}[Zwei-Skalen-Relation, {\cite[Kap.~2.3]{lmr}}]
+\begin{Lemma}[Zwei-Skalen-Relation, {\cite[Kap.~5.4, (3), (4)]{blatter}}]
 \label{lem:zwei-skalen}
 Für alle $j,k\in\Z$ gilt
 \begin{equation}
@@ -2765,38 +2835,68 @@ Für alle $j,k\in\Z$ gilt
 \end{equation}
 \end{Lemma}
 
-\begin{proof}
-Für $j=0$ wurde die erste Gleichung im Beweis von
-Lemma~\ref{lem:h-orthogonal} gezeigt; die zweite folgt ebenso aus
-\eqref{eq:g-aus-h}. Der unitäre Operator $D_{2^j}$ bildet $\varphi_{0,k}$ auf
-$\varphi_{j,k}$, $\psi_{0,k}$ auf $\psi_{j,k}$ und $\varphi_{-1,n}$ auf
-$\varphi_{j-1,n}$ ab, vgl.\ \eqref{eq:vj-d2j}.
-\end{proof}
+Für einen Beweis siehe \cite[Kap.~5.4]{blatter}. Bildet man in
+\eqref{eq:zwei-skalen} das Skalarprodukt mit $f$, so überträgt sich die
+Relation auf die Koeffizienten.
 
-Jede Basisfunktion der Skala $j$ setzt sich also aus Basisfunktionen der
-feineren Skala $j-1$ zusammen, mit den Gewichten $h$ beziehungsweise $g$. Geht
-man von $k$ zu $k+1$, rücken die Gewichte um zwei Stellen weiter, wie in
-Lemma~\ref{lem:h-orthogonal}. Bildet man das Skalarprodukt mit $f$, so folgt
-für reelle Filter
+\begin{Satz}[Analyseschritt, {\cite[Kap.~5.4]{blatter}}]
+\label{satz:analyse}
+Für reelle Filter $h,g$ und alle $j,k\in\Z$ gilt
 \begin{equation}
 \label{eq:analyse}
   a_{j,k} \;=\; \sum_{n\in\Z} h_{n-2k}\,a_{j-1,n},
   \qquad
-  d_{j,k} \;=\; \sum_{n\in\Z} g_{n-2k}\,a_{j-1,n}
+  d_{j,k} \;=\; \sum_{n\in\Z} g_{n-2k}\,a_{j-1,n}.
 \end{equation}
-\cite[Gl.~(2.3.1), (2.3.2)]{lmr}. Jeder Koeffizient der Skala $j$ ist also
-eine gewichtete Summe der Approximationskoeffizienten der Skala $j-1$. Da die
-Gewichte bei jedem Schritt in $k$ um zwei Stellen weiterrücken, entstehen aus
-$N$ Werten $a_{j-1,\cdot}$ genau $N/2$ Werte $a_{j,\cdot}$ und $N/2$ Werte
-$d_{j,\cdot}$.
+\end{Satz}
 
-\begin{Algorithmus}[Schnelle Wavelet-Transformation, {\cite[Kap.~2.3]{lmr}, \cite[Kap.~5.4]{blatter}}]
+\begin{proof}
+Vgl.\ \cite[Kap.~5.4]{blatter}. Die Reihe in \eqref{eq:zwei-skalen}
+konvergiert in $L^2(\R)$, da $(h_n)\in\ell^2(\Z)$ und
+$\{\varphi_{j-1,n}\}_{n\in\Z}$ orthonormal ist. Wegen der Stetigkeit des
+Skalarprodukts und $h_n\in\R$ folgt
+\[
+  a_{j,k}
+  = \Big\langle f,\, \sum_{n} h_{n-2k}\,\varphi_{j-1,n}\Big\rangle
+  = \sum_{n} h_{n-2k}\,\scal{f}{\varphi_{j-1,n}}
+  = \sum_{n} h_{n-2k}\,a_{j-1,n}.
+\]
+Analog für $d_{j,k}$ mit $g$.
+\end{proof}
+
+Die Koeffizienten der Skala $j$ sind also gewichtete Summen der
+Approximationskoeffizienten der Skala $j-1$; Integrale treten nur noch bei der
+Berechnung der Startwerte $a_{0,\cdot}$ auf.
+
+Haben $h$ und $g$ jeweils höchstens $L$ von Null verschiedene Einträge%
+%(für die Daubechies-Filter ist $L=2N$)
+, so sind die Summen in \eqref{eq:analyse}
+endlich: Jeder Koeffizient $a_{j,k}$ bzw.\ $d_{j,k}$ erfordert höchstens $L$
+Multiplikationen, vgl.\ \cite[Kap.~5.4]{blatter}. % S. 134
+Da die Gewichte mit
+$k\mapsto k+1$ um zwei Indizes weiterrücken, halbiert sich zudem die Anzahl
+der Koeffizienten von Skala zu Skala bis auf einen Randterm der Größe $L-2$,
+vgl.\ \cite[Kap.~5.4, (7)]{blatter}. % S. 133 (Gl. (7)), Längenschranke S. 134
+
+
+\begin{algorithm}[H]
+\caption[Schnelle Wavelet-Transformation]{Schnelle Wavelet-Transformation,
+vgl.\ \cite[Kap.~5.4]{blatter}, \cite[Kap.~2.3, Abb.~2.8]{lmr}}
+% Blatter S. 132--133; LMR S. 134
 \label{alg:mallat}
-Eingabe: Koeffizienten $(a_{0,k})_k$ der feinsten Skala und Tiefe $J\in\N$.
-Für $j = 1,\dots,J$ berechne $(a_{j,k})_k$ und $(d_{j,k})_k$ aus
-$(a_{j-1,k})_k$ nach \eqref{eq:analyse}.
-Ausgabe: $(d_{1,k})_k,\dots,(d_{J,k})_k$ und $(a_{J,k})_k$.
-\end{Algorithmus}
+\begin{algorithmic}[1]
+\Require Startfolge $a_{0,\cdot}$, Filter $h$, $g$, Tiefe $J\in\N$
+\Ensure Detailfolgen $d_{1,\cdot},\dots,d_{J,\cdot}$ und Approximation $a_{J,\cdot}$
+\For{$j = 1,\dots,J$}
+  \For{alle $k$}
+    \State $a_{j,k} \gets \sum_{n} h_{n-2k}\,a_{j-1,n}$
+    \State $d_{j,k} \gets \sum_{n} g_{n-2k}\,a_{j-1,n}$
+  \EndFor
+\EndFor
+\State \Return $d_{1,\cdot},\dots,d_{J,\cdot},\;a_{J,\cdot}$
+\end{algorithmic}
+\end{algorithm}
+
 
 \begin{figure}[htbp]
   \centering
@@ -2819,7 +2919,8 @@ Ausgabe: $(d_{1,k})_k,\dots,(d_{J,k})_k$ und $(a_{J,k})_k$.
     \draw[pf] (a3) -- node[below left, font=\scriptsize] {$g$} (dJ);
   \end{tikzpicture}
   \caption[Schema des Mallat-Algorithmus]{Ablauf von
-  Algorithmus~\ref{alg:mallat}, in Anlehnung an \cite[Abb.~2.8]{lmr}. Jeder
+  Algorithmus~\ref{alg:mallat}, in Anlehnung an \cite[Kap.~5.4, (6)]{blatter};
+  vgl.\ auch \cite[Abb.~2.8]{lmr}. Jeder
   Pfeil ist ein Rechenschritt nach \eqref{eq:analyse} mit dem Filter $h$ bzw.\
   $g$ und halbiert die Anzahl der Werte. Nur die Approximationskoeffizienten
   werden weiter zerlegt.}
@@ -2828,14 +2929,18 @@ Ausgabe: $(d_{1,k})_k,\dots,(d_{J,k})_k$ und $(a_{J,k})_k$.
 
 \begin{Beispiel}[Haar, Fortsetzung von Beispiel~\ref{bsp:haar-wavelet-koeff}]
 \label{bsp:mallat-haar}
-Für die Treppenfunktion $f=(4,2,5,7)$ der Haar-MSA ist $a_{0,k} = f(k)$, und
-\eqref{eq:analyse} lautet mit $h=(1,1)/\sqrt2$, $g=(1,-1)/\sqrt2$
+Für das Haar-Filter $h_0=h_1=\tfrac{1}{\sqrt2}$ liefert \eqref{eq:g-aus-h}
+$g_0=\tfrac{1}{\sqrt2}$, $g_1=-\tfrac{1}{\sqrt2}$; alle übrigen $h_k$, $g_k$
+verschwinden. In \eqref{eq:analyse} bleiben daher nur die Summanden
+$n=2k$ und $n=2k+1$:
 \[
-  a_{j,k} = \frac{a_{j-1,2k}+a_{j-1,2k+1}}{\sqrt2},
+  a_{j,k} = \frac{a_{j-1,2k} + a_{j-1,2k+1}}{\sqrt2},
   \qquad
-  d_{j,k} = \frac{a_{j-1,2k}-a_{j-1,2k+1}}{\sqrt2}.
+  d_{j,k} = \frac{a_{j-1,2k} - a_{j-1,2k+1}}{\sqrt2},
 \]
-Die erste Stufe liefert
+also genau Mitteln und Differenzbilden aus Beispiel~\ref{bsp:haar-mittelung}.
+Für die Treppenfunktion $f=(4,2,5,7)$ der Haar-MSA ist $a_{0,k} = f(k)$. Die
+erste Stufe liefert
 $a_1 = (\tfrac{6}{\sqrt2},\tfrac{12}{\sqrt2}) = (3\sqrt2,6\sqrt2)$ und
 $d_1 = (\sqrt2,-\sqrt2)$, die zweite $a_{2,0} = 9$ und $d_{2,0} = -3$. Das sind
 genau die Koeffizienten aus Beispiel~\ref{bsp:haar-wavelet-koeff}, nun ohne ein
@@ -2844,14 +2949,16 @@ einziges Integral berechnet.
 
 Der Aufwand ist gering. Hat der Filter die Länge $L$, kostet eine Stufe mit $N$
 Eingangswerten etwa $LN$ Multiplikationen. Da sich die Anzahl der Werte von
-Stufe zu Stufe halbiert, sind es insgesamt höchstens
-$L\,(N + N/2 + N/4 + \cdots) < 2LN$, also $O(N)$ Operationen. Die schnelle
-Fourier-Transformation braucht dagegen $O(N\log N)$
-\cite[§~56]{hankebourgeois}.
+Stufe zu Stufe ungefähr halbiert, sind es insgesamt etwa
+$L\,(N + N/2 + N/4 + \cdots) \approx 2LN$, also $O(N)$ Operationen
+\cite[Kap.~5.4]{blatter}. % S. 134--135
+Die schnelle Fourier-Transformation braucht dagegen $O(N\log N)$
+\cite[§~53]{hankebourgeois}. % S. 405
 
 Jeder Schritt lässt sich exakt rückgängig machen.
 
-\begin{Satz}[Rekonstruktion, {\cite[Kap.~2.3]{lmr}}]
+\begin{Satz}[Rekonstruktion, {\cite[Kap.~5.4]{blatter}}]
+% S. 134--135
 \label{satz:rekonstruktion}
 Für alle $j,n\in\Z$ gilt
 \begin{equation}
@@ -2864,88 +2971,160 @@ Für alle $j,n\in\Z$ gilt
 Nach Definition~\ref{def:detailraeume} und Korollar~\ref{kor:wavelet-basis} ist
 $P_{j-1}f = P_jf + Q_jf = \sum_k a_{j,k}\varphi_{j,k} + \sum_k d_{j,k}\psi_{j,k}$.
 Skalarprodukt mit $\varphi_{j-1,n}$ und Lemma~\ref{lem:zwei-skalen} liefern
-\eqref{eq:synthese}.
+\eqref{eq:synthese}, vgl.\ \cite[Kap.~5.4]{blatter}. % S. 134--135
 \end{proof}
 
 Im Haar-Fall wird daraus
 $a_{j-1,2k} = (a_{j,k}+d_{j,k})/\sqrt2$ und
 $a_{j-1,2k+1} = (a_{j,k}-d_{j,k})/\sqrt2$, im Beispiel
 $(3\sqrt2\pm\sqrt2)/\sqrt2 = 4$ bzw.\ $2$. Auch die Rekonstruktion kostet nur
-$O(N)$ Operationen.
+$O(N)$ Operationen, bleibt also weiterhin linear \cite[Kap.~5.4]{blatter}. % S. 135
 
-\begin{Bemerkung}[Ein Schritt erhält die Energie]
+\begin{Bemerkung}
 \label{bem:mallat-orthogonal}
-Da $P_{j-1}f = P_jf + Q_jf$ eine orthogonale Zerlegung ist und alle beteiligten
-Familien orthonormal sind, gilt für jeden Schritt
+Jeder Schritt $a_{j-1,\cdot}\mapsto(a_{j,\cdot},d_{j,\cdot})$ von
+Algorithmus~\ref{alg:mallat} ersetzt die Orthonormalbasis
+$\{\varphi_{j-1,n}\}_n$ von $V_{j-1}$ durch die Orthonormalbasis
+$\{\varphi_{j,k}\}_k\cup\{\psi_{j,k}\}_k$ \cite[Kap.~5.4]{blatter}. % S. 134
+Die Parseval-Gleichung \cite[Satz~25.18\,(5)]{serov}, angewandt auf
+$P_{j-1}f$ in beiden Basen, liefert
 \[
   \sum_n \lvert a_{j-1,n}\rvert^2
-  \;=\; \sum_k \lvert a_{j,k}\rvert^2 + \sum_k \lvert d_{j,k}\rvert^2 ;
+  \;=\; \norm{P_{j-1}f}^2
+  \;=\; \sum_k \lvert a_{j,k}\rvert^2 + \sum_k \lvert d_{j,k}\rvert^2 ,
 \]
-im Beispiel $4^2+2^2 = 20 = (3\sqrt2)^2 + (\sqrt2)^2$. Ein Schritt ist also
-eine orthogonale Abbildung der Koeffizientenfolgen, im Haar-Fall blockweise
-die Matrix
-$\tfrac{1}{\sqrt2}\bigl(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\bigr)$.
-Genau diese Eigenschaft wird in Abschnitt~\ref{sec:onb-invarianz} gebraucht.
+im Beispiel $4^2+2^2 = 20 = (3\sqrt2)^2 + (\sqrt2)^2$. Ein Schritt ist also eine
+orthogonale Abbildung der Koeffizientenfolgen; genau diese Eigenschaft wird in
+Abschnitt~\ref{sec:onb-invarianz} gebraucht.
 \end{Bemerkung}
 
 In der Anwendung ist $f$ nicht bekannt, sondern nur durch Abtastwerte gegeben.
-Diese werden als Koeffizienten $a_{0,k}$ der feinsten Skala verwendet; warum
-das zulässig ist, wird in Kapitel~\ref{chapter:anwendung} begründet
-\cite[Kap.~3.1.1]{lmr}.
-
-\anmerkung{Randbehandlung für endliche Signale (Periodisierung o.\,ä.) hier in
-einem Satz erwähnen? Quelle: Blatter Kap.~5.4 prüfen.}
+Diese werden als Koeffizienten $a_{0,k}$ der feinsten Skala verwendet
+\cite[Kap.~5.4]{blatter}; % S. 131
+wie ein endliches Signal dabei am Rand fortgesetzt wird, beschreibt
+Abschnitt~\ref{sec:onb-invarianz}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Daubechies-Wavelets}
 \label{sec:daubechies}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Kompakter Träger, Filterlänge und Regularität}
-\label{subsec:daubechies-traeger}
+\quellen{Blatter, Kap.~3.5, S.~74 [bestätigt]; LMR, Lemma~2.4.30, S.~176
+[bestätigt]; LMR, Satz~2.4.9, S.~153 [bestätigt]; LMR, Kap.~2.4.4,
+S.~173--175 [bestätigt], insb.\ Satz~2.4.28 (Momente), S.~174, Träger von
+$\psi_N$, S.~175, Regularität $H^{\alpha N}$, $\alpha>0{,}2$, S.~173;
+Blatter, Kap.~6.2, S.~146--151 [bestätigt]; Blatter, Kap.~6.3, S.~158
+[bestätigt]; Rebstadt, Kap.~2.3.1, S.~16--20 [bestätigt].}
 
-\quellen{LMR, Satz~2.4.9, S.~153 [bestätigt]; LMR, S.~165 und S.~175
-[bestätigt]; LMR, Kap.~2.4.3, S.~165--170 [bestätigt]; LMR, Lemma~2.4.24,
-S.~171; LMR, Satz~2.4.26, S.~173 [bestätigt]; Blatter, Kap.~6.1--6.2,
-S.~137--153 [bestätigt]; Rebstadt, Abb.~2.9, S.~25 [bestätigt].}
+Die Formeln des Mallat-Algorithmus gelten für die Skalierungsfolge jeder MSA;
+offen ist aber, welche man wählen soll. Das Haar-Filter erzeugt selbst auf glatten Signalabschnitten von null
+verschiedene Detailkoeffizienten. Gesucht
+sind daher kurze Filter, deren Wavelet glatte Abschnitte möglichst nicht
+sieht. Die dafür entscheidende Eigenschaft ist die folgende.
 
-Der Mallat-Algorithmus ist nur dann exakt ausführbar, wenn die Filter endlich
-lang sind. Endliche Filter hängen eng mit kompaktem Träger zusammen: Ist
-$h_k = 0$ au\ss{}erhalb von $\{0,\dots,L-1\}$, so hat die Lösung der
-Skalierungsgleichung ihren Träger in $[0,L-1]$ \cite[Satz~2.4.9]{lmr}. Die Länge
-lässt sich plausibel machen: Ist $\supp\varphi = [0,M]$, so hat die rechte Seite
-von \eqref{eq:skalierungsgleichung} den Träger
-$\bigcup_{k=0}^{L-1}[\tfrac k2,\tfrac{k+M}2] = [0,\tfrac{L-1+M}{2}]$, und
-Gleichheit erzwingt $M = L-1$. Das Haar-Filter ($L=2$) gibt $[0,1]$, das Filter
-\eqref{eq:db2-koeff} ($L=4$) gibt $[0,3]$. Meyer- und Spline-Wavelets besitzen
-dagegen keinen kompakten Träger \cite[Kap.~2.4.3]{lmr}.
-
-\begin{Satz}[Daubechies-Wavelets, {\cite[Kap.~2.4.3]{lmr}}]
-\label{satz:daubechies}
-Zu jedem $p\in\N$ gibt es eine reelle Skalierungsfolge $h_0,\dots,h_{2p-1}$
-einer MSA, deren Skalierungsfunktion $\varphi_p$ und Wavelet $\psi_p$ die Träger
+\begin{Definition}[Verschwindende Momente, vgl.\ {\cite[Kap.~3.5]{blatter}}]
+\label{def:momente}
+% Blatter S. 74 (dort "Ordnung N" mit M_N != 0)
+Ein Wavelet $\psi$ mit kompaktem Träger hat $p$ verschwindende
+Momente,\footnote{Wie bei Mallat bezeichnet $p$ die Zahl der Momente; $N$
+  bleibt der Signallänge vorbehalten.} falls
 \[
-  \supp\varphi_p = [0,\,2p-1], \qquad \supp\psi_p = [1-p,\,p]
+  \int_\R t^m\,\psi(t)\,dt \;=\; 0 \qquad\text{für } m = 0,1,\dots,p-1 .
 \]
-haben und für die $\psi_p$ genau $p$ verschwindende Momente besitzt
-(Abschnitt~\ref{subsec:momente}).\footnote{Die Zahl der
-  verschwindenden Momente wird wie bei Mallat mit $p$ bezeichnet; der Buchstabe
-  $N$ bleibt der Signallänge vorbehalten.} Das Fourier-Filter hat die Form
-$H(\omega) = \bigl(\tfrac{1+e^{-i\omega}}{2}\bigr)^p \mathcal L(\omega)$ mit einem
-trigonometrischen Polynom $\mathcal L$.
+\end{Definition}
+
+Das Moment $m=0$ ist die Zulässigkeitsbedingung aus
+Satz~\ref{satz:zulaessigkeit-mittelwert}. Allgemein ist
+$\int_\R q(t)\,\psi_{j,k}(t)\,dt = 0$ für jedes Polynom $q$ vom Grad $<p$: Das
+Wavelet sieht Polynome niedrigen Grades nicht. Wie sich das im
+Mallat-Algorithmus auswirkt, zeigt das folgende Beispiel.
+
+\begin{Beispiel}[Ein lineares Signal]
+\label{bsp:momente}
+Nach \eqref{eq:analyse} liefert die linear ansteigende Folge $a_{0,n} = n$ die
+Detailkoeffizienten
+\[
+  d_{1,k} \;=\; \sum_m g_m\,(m+2k) \;=\; \sum_m m\,g_m + 2k\sum_m g_m .
+\]
+Für Haar ist $g_0 = -g_1 = 1/\sqrt2$ (Beispiel~\ref{bsp:haar-g}), also
+$\sum_m g_m = 0$, aber $\sum_m m\,g_m = g_1 = -1/\sqrt2$. Damit ist
+$d_{1,k} = -1/\sqrt2$ für jedes $k$, obwohl das Signal überall gleichmä\ss{}ig
+ansteigt und weder Spitzen noch Knicke besitzt.
+Für die Koeffizienten $h_0,\dots,h_3$ aus \eqref{eq:db2-koeff} ist
+$(g_{-2},g_{-1},g_0,g_1) = (h_3,-h_2,h_1,-h_0)$, und es gilt
+\begin{align*}
+  4\sqrt2\,\sum_m g_m &\;=\; (1-\sqrt3)-(3-\sqrt3)+(3+\sqrt3)-(1+\sqrt3) \;=\; 0,\\
+  4\sqrt2\,\sum_m m\,g_m &\;=\; -2(1-\sqrt3)+(3-\sqrt3)-(1+\sqrt3) \;=\; 0,
+\end{align*}
+also $d_{1,k} = 0$: Lineare Abschnitte landen vollständig in den
+Approximationskoeffizienten, vgl.\ \cite[Lemma~2.4.29]{lmr}. % S. 174--175: Polynome vom Grad < N liegen in V_0; im Beweis (S. 175 unten): d_k^j = 0
+Damit ist auch die Frage aus Beispiel~\ref{bsp:db2-filter} beantwortet: Die
+Folge \eqref{eq:db2-koeff} ist das Daubechies-Filter mit zwei verschwindenden
+Momenten \cite[Kap.~6.3]{blatter}, % S. 158
+das Haar-Filter aus derselben Schar hat nur eines.
+\end{Beispiel}
+\label{bsp:rampe}
+
+Für glatte, nicht polynomiale Signale gilt das näherungsweise, umso besser,
+je feiner die Skala ist.
+
+\begin{Lemma}[Abklingen der Detailkoeffizienten, vgl.\ {\cite[Beweis von Lemma~2.4.30]{lmr}}]
+\label{lem:abklingen}
+% LMR S. 176 unten (dort mit k statt p, l statt j)
+Sei $\psi$ ein Wavelet mit $p$ verschwindenden Momenten und
+$\supp\psi = [\alpha,\beta] \ni 0$. Ist $f$ auf $I_{j,k} := \supp\psi_{j,k}$ $p$-mal stetig
+differenzierbar mit $\lvert f^{(p)}\rvert \le M_{j,k}$, so gilt
+\[
+  \lvert d_{j,k}\rvert \;\le\; 2^{j(p+1/2)}\,\frac{M_{j,k}}{p!}\int_\R \lvert t^p\,\psi(t)\rvert\,dt .
+\]
+\end{Lemma}
+
+\begin{proof}
+Die Substitution $x = 2^j(t+k)$ ergibt
+$d_{j,k} = 2^{j/2}\int_\R f(2^jk + 2^jt)\,\psi(t)\,dt$. Nach Taylor
+\cite[(2.4.20)]{lmr} ist $f(2^jk + 2^jt) = q(t) + R(t)$ mit einem Polynom $q$
+vom Grad $<p$ und dem Rest
+$R(t) = \tfrac{1}{p!}f^{(p)}(\eta_t)\,(2^jt)^p$, $\eta_t \in I_{j,k}$. Wegen
+der verschwindenden Momente ist $\int_\R q\,\psi\,dt = 0$, also
+$d_{j,k} = 2^{j/2}\int_\R R(t)\,\psi(t)\,dt$, und
+$\lvert R(t)\rvert \le \tfrac{M_{j,k}}{p!}\,2^{jp}\,\lvert t\rvert^p$ liefert
+die Behauptung.
+\end{proof}
+
+Nach Lemma~\ref{lem:abklingen} werden die Detailkoeffizienten glatter
+Abschnitte auf feinen Skalen ($j \to -\infty$) also schnell klein, umso
+schneller, je grö\ss{}er $p$ ist. An Sprüngen oder steilen Spitzen ist die
+Voraussetzung des Lemmas verletzt, und die Koeffizienten bleiben dort gro\ss{}.
+
+Für den Mallat-Algorithmus braucht man zugleich kurze Filter, denn er ist nur
+mit endlichen Filtern exakt ausführbar. Viele verschwindende Momente und kurze
+Filter verbinden die Daubechies-Wavelets.
+
+\begin{Satz}[Daubechies-Wavelets, {\cite[Kap.~6.2]{blatter}}, {\cite[Kap.~2.4.4]{lmr}}]
+\label{satz:daubechies}
+% Blatter S. 146--151; LMR S. 174--175 (Momente: Satz 2.4.28, S. 174)
+Zu jedem $p\in\N$ gibt es eine reelle Skalierungsfolge $h_0,\dots,h_{2p-1}$
+einer MSA mit
+\[
+  \supp\varphi_p = [0,\,2p-1], \qquad \supp\psi_p = [1-p,\,p],
+\]
+und das zugehörige Wavelet $\psi_p$ besitzt $p$ verschwindende Momente.
 \end{Satz}
 
-Die Konstruktion von $\mathcal L$ durch Spektralfaktorisierung wird hier nicht
-ausgeführt; sie steht bei \cite[Kap.~2.4.3, Lemma~2.4.24]{lmr} und
-\cite[Kap.~6]{blatter}. Für $p=1$ entsteht das Haar-Wavelet, für $p=2$ die
-Folge \eqref{eq:db2-koeff} \cite[Kap.~2.4.3]{lmr}.
-Abbildung~\ref{fig:db2} zeigt $\varphi_2$ und $\psi_2$, berechnet allein aus
-den vier Zahlen $h_0,\dots,h_3$ durch wiederholtes Einsetzen in die
-Skalierungsgleichung.
+\anmerkung{bruach ich dafür nen beweis??}
+
+Der Träger von $\psi_p$ folgt aus \eqref{eq:g-aus-h}, da dort nur
+$g_{2-2p},\dots,g_1$ von null verschieden sind, vgl.\ \cite[Kap.~2.4.4]{lmr}. % S. 175
+Für $p=1$ entsteht das Haar-Wavelet, für $p=2$ die Folge \eqref{eq:db2-koeff}
+\cite[Kap.~6.3]{blatter} % S. 158
+mit $\varphi_2$ und $\psi_2$ aus Abbildung~\ref{fig:db2}. In PyWavelets
+\cite{pywavelets} hei\ss{}t $\psi_p$ \texttt{db}$p$; das Wavelet mit vier
+Koeffizienten ist also \texttt{db2}, nicht \texttt{db4}.
+\anmerkung{Bib-Eintrag pywavelets anlegen und über DOI prüfen.}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{abb4_db2.pdf}
+  \includegraphics[width=0.9\textwidth]{abb4_db2.pdf}
   \caption[Das Daubechies-Wavelet mit vier Koeffizienten]{Skalierungsfunktion
   $\varphi_2$ auf $[0,3]$ (a) und Wavelet $\psi_2$ auf $[-1,2]$ (b) zur Folge
   \eqref{eq:db2-koeff}, berechnet durch Iteration der
@@ -2953,417 +3132,29 @@ Skalierungsgleichung.
   \label{fig:db2}
 \end{figure}
 
-Der Vergleich mit dem Haar-Wavelet zeigt den Zielkonflikt: $\psi_2$ ist stetig
-statt sprunghaft, dafür dreimal so breit. Allgemein wächst die Regularität von
-$\psi_p$ mit $p$, aber deutlich langsamer als der Träger
-\cite[Satz~2.4.26]{lmr}. Ein breiterer Träger hat eine konkrete Folge: Eine
-isolierte Spitze im Signal, etwa ein QRS-Komplex, liegt auf jeder Skala im
-Träger von etwa $2p-1$ Wavelets und erzeugt entsprechend viele gro\ss{}e
-Koeffizienten.
+\anmerkung{Python-Datei zur Abbildung richtig ablegen.}
 
-\begin{Bemerkung}[Bezeichnung]
-\label{bem:db-bezeichnung}
-Das Wavelet $\psi_p$ mit $2p$ Filterkoeffizienten hei\ss{}t in der
-Software-Bibliothek PyWavelets \texttt{db}$p$. Das hier betrachtete Wavelet mit
-vier Koeffizienten ist also \texttt{db2}, nicht \texttt{db4}; \texttt{db4} hat
-acht Koeffizienten. Das Haar-Wavelet ist \texttt{db1}.
-\end{Bemerkung}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Verschwindende Momente}
-\label{subsec:momente}
-
-\quellen{LMR, Lemma~2.4.27 und Satz~2.4.28, S.~174 [bestätigt]; LMR,
-Lemma~2.4.30, S.~176 [bestätigt]; LMR, Kap.~1.4.2, S.~45--47 [bestätigt];
-Blatter, Kap.~3.5, S.~73--78 [bestätigt]; Rebstadt, Kap.~2.3.1, S.~16--20
-[bestätigt].}
-
-Was gewinnt man mit wachsendem $p$? Die Antwort ist die Eigenschaft, die ein
-Wavelet für die Entrauschung brauchbar macht.
-
-\begin{Definition}[Verschwindende Momente, {\cite[Kap.~1.4.2]{lmr}, \cite[Kap.~3.5]{blatter}}]
-\label{def:momente}
-Ein Wavelet $\psi$ mit kompaktem Träger hat $p$ verschwindende Momente, falls
-\[
-  \int_\R t^m\,\psi(t)\,dt \;=\; 0 \qquad\text{für } m = 0,1,\dots,p-1 .
-\]
-\end{Definition}
-
-Das Moment $m=0$ ist die Zulässigkeitsbedingung aus
-Satz~\ref{satz:zulaessigkeit-mittelwert}. Hat $\psi$ $p$ verschwindende Momente,
-so ist $\scal{q}{\psi_{j,k}} = 0$ für jedes Polynom $q$ vom Grad kleiner $p$:
-Das Wavelet sieht Polynome niedrigen Grades nicht.
-
-\begin{Lemma}[Momente und Filter, {\cite[Lemma~2.4.27, Satz~2.4.28]{lmr}}]
-\label{lem:momente-filter}
-Sei $(h_k)$ endlich und $\psi$ wie in \eqref{eq:g-aus-h}. Dann sind äquivalent:
-\begin{enumerate}
-\item[(i)] $\psi$ hat $p$ verschwindende Momente,
-\item[(ii)] $\sum_{k\in\Z} k^m g_k = 0$ für $m = 0,\dots,p-1$,
-\item[(iii)] $H$ hat bei $\omega = \pi$ eine Nullstelle der Ordnung mindestens $p$.
-\end{enumerate}
-Insbesondere hat $\psi_p$ aus Satz~\ref{satz:daubechies} $p$ verschwindende Momente.
-\end{Lemma}
-
-\begin{proof}
-Da $\psi$ kompakten Träger hat, ist $\hat\psi$ beliebig oft differenzierbar, und
-\[
-  \hat\psi^{(m)}(0) = \frac{(-i)^m}{\sqrt{2\pi}}\int_\R t^m\psi(t)\,dt,
-  \qquad
-  G^{(m)}(0) = \frac{(-i)^m}{\sqrt2}\sum_k k^m g_k .
-\] Also besagt (i), dass $\hat\psi$,
-und (ii), dass $G$ bei $0$ eine Nullstelle der Ordnung $\ge p$ hat. Wegen
-$\hat\psi(\omega) = G(\omega/2)\hat\varphi(\omega/2)$ mit $\hat\varphi(0)\neq0$
-ist das nach der Leibniz-Regel dasselbe. Schlie\ss{}lich ist
-$\lvert G(\omega)\rvert = \lvert H(\omega+\pi)\rvert$ nach \eqref{eq:G-aus-H},
-also (ii)$\Leftrightarrow$(iii). Für $\psi_p$ liefert der Faktor
-$\bigl(\tfrac{1+e^{-i\omega}}{2}\bigr)^p$ in Satz~\ref{satz:daubechies} die
-Nullstelle der Ordnung $p$ bei $\pi$.
-\end{proof}
-
-\begin{Beispiel}[Momente nachgerechnet]
-\label{bsp:momente}
-Für das Haar-Filter ist $g=(g_0,g_1) = (1,-1)/\sqrt2$, also
-$\sum_k g_k = 0$, aber $\sum_k k\,g_k = -1/\sqrt2 \neq 0$: genau ein
-verschwindendes Moment. Für \eqref{eq:db2-koeff} ist
-$(g_{-2},g_{-1},g_0,g_1) = (h_3,-h_2,h_1,-h_0)$, und mit dem gemeinsamen Nenner
-$4\sqrt2$ gilt
-\begin{align*}
-  \textstyle\sum_k g_k &\;\propto\; (1-\sqrt3)-(3-\sqrt3)+(3+\sqrt3)-(1+\sqrt3) \;=\; 0,\\
-  \textstyle\sum_k k\,g_k &\;\propto\; -2(1-\sqrt3)+(3-\sqrt3)-(1+\sqrt3) \;=\; 0,\\
-  \textstyle\sum_k k^2 g_k &\;\propto\; 4(1-\sqrt3)-(3-\sqrt3)-(1+\sqrt3) \;=\; -4\sqrt3 \;\neq\; 0 .
-\end{align*}
-Das Wavelet hat also genau zwei verschwindende Momente. Das ist die vierte
-Bedingung, die in Beispiel~\ref{bsp:db2-filter} aus der einparametrigen Schar
-die Lösung \eqref{eq:db2-koeff} auswählt.
-\end{Beispiel}
-
-Die diskreten Momente wirken direkt im Mallat-Algorithmus, denn nach
-\eqref{eq:analyse} ist
-$d_{1,k} = \sum_m g_m\,a_{0,m+2k}$. Sind die
-Eingangswerte lokal ein Polynom vom Grad kleiner $p$, so verschwindet dieser
-Detailkoeffizient exakt.
-
-\begin{Beispiel}[Eine Rampe]
-\label{bsp:rampe}
-Für die Rampe $a_{0,n} = n$ liefert das Haar-Filter
-$d_{1,k} = (2k - (2k+1))/\sqrt2 = -1/\sqrt2$ für alle $k$: Jeder
-Detailkoeffizient ist von null verschieden, obwohl die Rampe keinerlei Details
-enthält. Das Filter \eqref{eq:db2-koeff} liefert dagegen
-\[
-  d_{1,k} \;=\; \sum_m g_m\,(m+2k) \;=\; \sum_m m\,g_m + 2k\sum_m g_m \;=\; 0
-\]
-nach Beispiel~\ref{bsp:momente}. Mit zwei verschwindenden Momenten werden
-lineare Signalabschnitte vollständig in den Approximationskoeffizienten erfasst.
-\end{Beispiel}
-
-Für glatte, aber nicht polynomiale Signale gilt dasselbe näherungsweise, und
-zwar umso besser, je feiner die Skala ist.
-
-\begin{Lemma}[Abklingen der Detailkoeffizienten, vgl.\ {\cite[Lemma~2.4.30]{lmr}, \cite[Kap.~3.5]{blatter}}]
-\label{lem:abklingen}
-Sei $\psi$ ein Wavelet mit $p$ verschwindenden Momenten und
-$\supp\psi \subset [\alpha,\beta]$, $\ell := \beta-\alpha$. Ist $f$ auf
-$I_{j,k} := \supp\psi_{j,k}$ $p$-mal stetig differenzierbar mit
-$\lvert f^{(p)}\rvert \le M_{j,k}$, so gilt
-\[
-  \lvert d_{j,k}\rvert \;\le\; \frac{\ell^p\,\norm{\psi}_{L^1}}{p!}\;M_{j,k}\;2^{j(p+1/2)} .
-\]
-\end{Lemma}
-
-\begin{proof}
-Sei $q$ das Taylor-Polynom von $f$ vom Grad $p-1$ im linken Randpunkt von
-$I_{j,k}$. Da $\psi$ Polynome vom Grad $<p$ nicht sieht, ist
-$d_{j,k} = \scal{f-q}{\psi_{j,k}}$. Das Intervall $I_{j,k}$ hat die Länge
-$2^j\ell$, also ist dort $\lvert f-q\rvert \le M_{j,k}(2^j\ell)^p/p!$. Mit
-$\norm{\psi_{j,k}}_{L^1} = 2^{j/2}\norm{\psi}_{L^1}$ (Substitution) folgt die
-Behauptung.
-\end{proof}
-
-Beim Übergang zur nächstfeineren Skala $j \to j-1$ schrumpft die Schranke um
-den Faktor $2^{p+1/2}$: beim Haar-Wavelet um $2^{3/2}\approx 2{,}8$, bei
-\texttt{db2} um $2^{5/2}\approx 5{,}7$. Anders an einer Sprungstelle: Ist
-$f = s\cdot\mathbf 1_{[t_0,\infty[}$ und liegt $t_0$ im Inneren von $I_{j,k}$,
-so ergibt die Substitution
-$d_{j,k} = s\,2^{j/2}\int_{t_0/2^j-k}^{\infty}\psi(u)\,du$, und dieser
-Koeffizient fällt nur wie $2^{j/2}$, unabhängig von $p$.
-
-Für das EKG bedeutet das: Die langsamen, glatten P- und T-Wellen
-\cite[Kap.~2.3.1]{rebstadt} erzeugen auf feinen Skalen nur winzige
-Detailkoeffizienten, der steile QRS-Komplex dagegen gro\ss{}e, aber nur nahe
-seiner Lage. Das Signal konzentriert sich auf wenige Koeffizienten; auf dieser
-Dünnbesetztheit baut Abschnitt~\ref{sec:duennbesetztheit} auf.
+Gegenüber Haar ist $\psi_2$ stetig \cite[Satz~(6.11)]{blatter}, % S. 158, dort für \varphi_2; \psi_2 folgt mit (4.7)
+aber dreimal so breit. Allgemein wird $\psi_p$ mit wachsendem $p$ glatter,
+nämlich $\psi_p \in H^{\alpha p}(\R)$ mit $\alpha > 0{,}2$
+\cite[Kap.~2.4.4]{lmr}, % S. 173, Text nach Satz 2.4.26
+zugleich wächst aber die Trägerlänge $2p-1$.
+Bei der Wahl von $p$ muss man daher abwägen. Viele Momente sind gut für die
+ruhigen, langsam verlaufenden Teile des EKG wie P- und T-Welle: Dort werden die
+Detailkoeffizienten fast null (Lemma~\ref{lem:abklingen}). Ein breiter Träger
+ist dagegen schlecht für den steilen QRS-Komplex
+\cite[Kap.~2.3.1]{rebstadt}, % S. 16--17
+denn dessen Spitze wird dann von mehreren Wavelets gleichzeitig erfasst und
+verteilt sich auf mehrere Koeffizienten. Insgesamt bleibt das Bild aber
+dasselbe: Wenige gro\ss{}e Koeffizienten tragen die Spitzen, fast alle übrigen
+sind klein \cite[Beispiel~56.3]{hankebourgeois}. % S. 440, dort mit Haar
+Auf dieser Dünnbesetztheit baut Abschnitt~\ref{sec:duennbesetztheit} auf.
 
 Damit liegen die drei Eigenschaften vor, die Kapitel~\ref{chapter:denoising}
 voraussetzt: Die diskrete Wavelet-Transformation ist orthogonal
-(Bemerkung~\ref{bem:mallat-orthogonal}), sie ist in $O(N)$ Operationen
-berechenbar (Algorithmus~\ref{alg:mallat}), und sie stellt stückweise glatte
-Signale dünnbesetzt dar (Lemma~\ref{lem:abklingen}).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\chapter{Konstruktion der diskreten Wavelet-Transformation}
-%\label{chapter:dwt}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section{Die Skalierungsgleichung}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\anmerkung{Da $\phi \in V_0 \subset V_{-1}$ liegt, lässt es sich in der Basis von $V_{-1}$ entwickeln -- daraus folgt die Zwei-Skalen-Gleichung mit den Koeffizienten $h_k$.}
-%\quellen{
-%  \begin{itemize}
-%    \item Blatter, S. 111 [bestätigt] (Sachverz.: „Skalierungsgleichung 111"); S. 112 [bestätigt] („Konsistenzbedingungen 112")
-%    \item LMR, Kap. 2.4.2 „Lösung von Skalierungsgleichungen", S. 145–164 [bestätigt] — der Existenzfrage eigens gewidmeter Abschnitt
-%    \item LMR, Gl. (2.4.12), S. 165 [bestätigt] — Skalierungsgleichung in der Form $\phi(x) = \sqrt{2} \sum_{k=0}^M h_k \phi(2x-k)$
-%    \item Blatter, Kap. 5.2, S. 110–116 [bestätigt]
-%    \item HankeBourgeois, Gl. (56.8), S. 438 [bestätigt] — die Skalierungsgleichung im Haar-Fall vollständig explizit: $2 \chi_{k,j} = \chi_{k+1,2j} + \chi_{k+1,2j+1}$
-%    \item HankeBourgeois, Gl. (56.2), S. 434–435 [bestätigt] — Stauchung und Translation als erzeugende Operationen
-%  \end{itemize}
-%}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section{Filterkoeffizienten: Tiefpass und Hochpass}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\anmerkung{Die $h_k$ wirken als Tiefpass, die über $g_k = (-1)^k h_{1-k}$ gewonnenen Koeffizienten als Hochpass -- die DWT ist damit eine Filterbank.}
-%\quellen{
-%  \begin{itemize}
-%    \item LMR, Gl. (2.4.13), S. 165 [bestätigt] — $\psi(x) = \sqrt{2} \sum_{k=1-M}^{M} (-1)^k h_{1-k} \phi(2x-k)$
-%    \item LMR, Bemerkung 2.4.19, S. 165 [bestätigt] — Filter mit (2.4.14) hei\ss{}en in der Signalverarbeitung Conjugate Quadrature Filter (CQF); die Brücke zur ingenieurwissenschaftlichen Literatur
-%    \item LMR, Tabelle der Daubechies-Skalierungskoeffizienten, S. 170 [bestätigt] — direkt für deine Implementierung verwendbar
-%    \item Blatter, Kap. 5.3, S. 117–129 [bestätigt]
-%    \item Aqil, Kap. 2, S. 55–56 [bestätigt] — Fig. 4/5, HPF/LPF
-%    \item Rebstadt, Abb. 2.10 „Filterbank-Schema", S. 27 [bestätigt]
-%    \item HankeBourgeois, Gl. (56.8), S. 438 [bestätigt] — Tiefpass 
-%$2 \chi_{k,j} = \chi_{k+1,2j} + \chi_{k+1,2j+1}$ und Hochpass 
-%$2 \psi_{k,j} = \chi_{k+1,2j} - \chi_{k+1,2j+1}$, also 
-%$h = (1,1)/\sqrt{2}$ und $g = (1,-1)/\sqrt{2}$
-%    \item HankeBourgeois, Gl. (56.9), S. 438 [bestätigt] — die Umkehrung, d. h. die Synthesefilter
-%  \end{itemize}
-%}
-%\anmerkung{ERLEDIGT: Die Indexkonvention ist jetzt in
-%Bemerkung~\ref{bem:indexkonvention} verbindlich festgelegt (Blatter und LMR:
-%kleineres $j$ = feinere Skala). Der frühere Platzhalter an dieser Stelle hatte
-%dasselbe \texttt{\textbackslash label} wie jene Bemerkung und erzeugte einen
-%doppelten Verweis in \texttt{august.aux}; er ist entfernt. Beim Ausschreiben von
-%Kapitel~\ref{chapter:dwt} nur noch prüfen, dass die Filterindizes $h_k$, $g_k$
-%konsistent zu \eqref{eq:phi-jk} laufen.}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section{Bedingungen im Fourier-Bereich}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\anmerkung{Übersetzung der Orthonormalität in Bedingungen an das trigonometrische Polynom $H: H(0) = 1$ und $|H(\omega)|^2$ + $|H(\omega+\pi )|^2 = 1$.}
-%\quellen{
-%  \begin{itemize}
-%    \item LMR, Gl. (2.4.14), S. 165 [bestätigt] — beide Bedingungen in genau dieser Form
-%    \item LMR, Satz 2.2.9, S. 121 [bestätigt] — Herleitung aus der Orthogonalität
-%    \item LMR, Lemma 2.4.20, S. 166 [bestätigt] — Charakterisierung von 
-%    $q(\omega)= |H(\omega)|^2$
-%    \item LMR, Satz 2.4.3, S. 146–147 [geschätzt]; Satz 2.4.7, S. 149 [geschätzt] — hinreichende Bedingungen an ${h_k}$
-%    \item Blatter, S. 119 [bestätigt] (Sachverz.: „erzeugende Funktion 119")
-%    \item Blatter, Kap. 5.3, S. 117–129 [bestätigt]; Meyer-Wavelet S. 125 [bestätigt]
-%  \end{itemize}
-%} 
-%
-%\subsection{Die Orthonormalität im Fourier-Bereich}
-%\label{subsec:onb-fourier}
-%
-%Die Skalierungsfunktion wird nicht im Zeitbereich, sondern über ihre
-%Fourier-Transformierte konstruiert. Die Orthonormalität der Translate aus (M5)
-%muss deshalb als Bedingung an $\hat\varphi$ formuliert werden. Es gilt die
-%Fourier-Konvention aus Bemerkung~\ref{bem:fourier-konvention}.
-%
-%\begin{Lemma}[Orthonormalitätsbedingung, {\cite[Lemma~2.2.4]{lmr}}]
-%\label{lem:onb-fourier}
-%Sei $\varphi \in \LZwei$. Dann sind äquivalent:
-%\begin{enumerate}
-%\item[(i)] $\{\varphi(\,\cdot-k) : k \in \Z\}$ ist ein Orthonormalsystem in $\LZwei$,
-%\item[(ii)] $\displaystyle\sum_{l\in\Z} \bigl\lvert \hat\varphi(\omega + 2\pi l)\bigr\rvert^{2}
-%  \;=\; \frac{1}{2\pi} \qquad\text{für fast alle } \omega \in \R .$
-%\end{enumerate}
-%\end{Lemma}
-%
-%\begin{proof}
-%\textbf{Schritt 1 (Reduktion auf ein Skalarprodukt).} Für $m,n \in \Z$ liefert die
-%Substitution $t = s + m$
-%\begin{align*}
-%  \scal{\varphi(\,\cdot-m)}{\varphi(\,\cdot-n)}
-%  &\;=\; \int_\R \varphi(t-m)\,\overline{\varphi(t-n)}\,dt
-%  \;=\; \int_\R \varphi(s)\,\overline{\varphi\bigl(s-(n-m)\bigr)}\,ds \\
-%  &\;=\; \scal{\varphi}{\varphi(\,\cdot-(n-m))} .
-%\end{align*}
-%Aussage (i) ist daher gleichbedeutend mit
-%\begin{equation}
-%\label{eq:onb-reduktion}
-%  \scal{\varphi}{\varphi(\,\cdot-k)} \;=\; \delta_{k,0}
-%  \qquad\text{für alle } k \in \Z .
-%\end{equation}
-%
-%\textbf{Schritt 2 (Übergang in den Frequenzbereich).} Nach dem Satz von Plancherel
-%%\cite[Satz~17.5]{serov} und der Verschiebungsregel
-%$\bigl(\varphi(\,\cdot-k)\bigr)^{\wedge}(\omega) = e^{-ik\omega}\hat\varphi(\omega)$
-%\cite[Anhang]{lmr} ist
-%\[
-%  \scal{\varphi}{\varphi(\,\cdot-k)}
-%  \;=\; \scal{\hat\varphi}{e^{-ik\,\cdot}\,\hat\varphi}
-%  \;=\; \int_\R \lvert\hat\varphi(\omega)\rvert^{2}\, e^{ik\omega}\,d\omega .
-%\]
-%
-%\textbf{Schritt 3 (Periodisierung).} Wir setzen
-%\[
-%  \Phi(\omega) \;:=\; \sum_{l\in\Z}\bigl\lvert\hat\varphi(\omega+2\pi l)\bigr\rvert^{2},
-%  \qquad \omega \in \R .
-%\]
-%Da alle Summanden nichtnegativ sind, erlaubt der Satz von Beppo Levi die
-%Vertauschung von Summe und Integral, und die Substitution
-%$\omega \mapsto \omega + 2\pi l$ auf $[2\pi l, 2\pi(l+1)[$ ergibt
-%\[
-%  \int_0^{2\pi}\Phi(\omega)\,d\omega
-%  \;=\; \sum_{l\in\Z}\int_{2\pi l}^{2\pi(l+1)} \lvert\hat\varphi(\omega)\rvert^{2}\,d\omega
-%  \;=\; \norm{\hat\varphi}^2_{\LZwei} \;=\; \norm{\varphi}^2_{\LZwei} \;<\; \infty .
-%\]
-%Also ist $\Phi$ fast überall endlich, $2\pi$-periodisch und
-%$\Phi \in L^1(0,2\pi)$. Für den Integranden aus Schritt~2, der nicht nichtnegativ
-%ist, verwenden wir die Partialsummen
-%$\Phi_L := \sum_{\lvert l\rvert \le L}\lvert\hat\varphi(\,\cdot+2\pi l)\rvert^{2}$.
-%Wegen der $2\pi$-Periodizität von $e^{ik\omega}$ ist
-%\[
-%  \int_{-2\pi L}^{2\pi(L+1)} \lvert\hat\varphi(\omega)\rvert^{2}\,e^{ik\omega}\,d\omega
-%  \;=\; \int_0^{2\pi} \Phi_L(\omega)\,e^{ik\omega}\,d\omega ,
-%\]
-%und wegen $\lvert\Phi_L\,e^{ik\omega}\rvert \le \Phi$ sowie
-%$\lvert\hat\varphi\rvert^2 \in L^1(\R)$ darf auf beiden Seiten nach dem Satz von
-%der majorisierten Konvergenz $L \to \infty$ gebildet werden. Zusammen mit
-%Schritt~2 folgt
-%\begin{equation}
-%\label{eq:onb-periodisiert}
-%  \scal{\varphi}{\varphi(\,\cdot-k)} \;=\; \int_0^{2\pi} \Phi(\omega)\,e^{ik\omega}\,d\omega
-%  \qquad\text{für alle } k \in \Z .
-%\end{equation}
-%
-%\textbf{Schritt 4 (Schluss).} Gilt (ii), so ist $\Phi = 1/(2\pi)$ fast überall, und
-%\eqref{eq:onb-periodisiert} liefert
-%$\scal{\varphi}{\varphi(\,\cdot-k)} = \frac{1}{2\pi}\int_0^{2\pi} e^{ik\omega}\,d\omega = \delta_{k,0}$,
-%also (i) nach Schritt~1. Gilt umgekehrt (i), so haben nach
-%\eqref{eq:onb-reduktion} und \eqref{eq:onb-periodisiert} die beiden Funktionen
-%$\Phi$ und $1/(2\pi)$ aus $L^1(0,2\pi)$ dieselben Integrale gegen alle
-%$e^{ik\omega}$, $k \in \Z$, also dieselben Fourier-Koeffizienten. Nach dem
-%Eindeutigkeitssatz für Fourier-Koeffizienten integrierbarer Funktionen stimmen
-%sie fast überall auf $[0,2\pi]$ überein, wegen der Periodizität also fast überall
-%auf $\R$. Das ist (ii).
-%\end{proof}
-%
-%\anmerkung{Beleg für den Eindeutigkeitssatz (Fourier-Koeffizienten bestimmen eine
-%$L^1(0,2\pi)$-Funktion fast überall) noch ergänzen -- Serov, Kapitel zu
-%Fourier-Reihen, oder Stein/Shakarchi; Satznummer vor Ort prüfen.}
-%
-%\begin{Bemerkung}[Orthonormalsystem und Orthonormalbasis]
-%\label{bem:onb-onsystem}
-%Lemma~\ref{lem:onb-fourier} sichert nur die Orthonormalität der Translate. Für die
-%Konstruktion genügt das: Erfüllt ein $\varphi$ die
-%Bedingung (ii), so definiert man $V_0$ als abgeschlossene lineare Hülle der
-%$\varphi(\,\cdot-k)$. Ein Orthonormalsystem ist stets eine Orthonormalbasis
-%seiner abgeschlossenen linearen Hülle \cite[Satz~25.18]{serov}, und (M5) ist dann
-%nach Konstruktion erfüllt. Die eigentliche Arbeit besteht darin, (M1)--(M3) für
-%die durch (M4) erzeugten Räume nachzuweisen.
-%\end{Bemerkung}
-%
-%\quellen{LMR, Lemma~2.2.4, S.~114 [geschätzt]; zweidimensionale Fassung mit
-%Konstante $1/(4\pi^2)$: LMR, Lemma~2.5.1, S.~211 [bestätigt]; Blatter,
-%Kap.~5.3, S.~117--119 [bestätigt]; Serov, Satz~17.5 (Plancherel), S.~145
-%[bestätigt].}
-%
-%\anmerkung{Beleg für den Eindeutigkeitssatz (Fourier-Koeffizienten bestimmen eine
-%$L^1(0,2\pi)$-Funktion fast überall) noch ergänzen. Konventionswarnung: Ohne den
-%Faktor $(2\pi)^{-1/2}$ steht in (ii) rechts eine $1$. VERSCHOBEN aus
-%Abschnitt~\ref{sec:skalierungsfunktion}, weil erst hier gebraucht.}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section{Der Mallat-Algorithmus}
-%\label{sec:mallat}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\anmerkung{4.4.1 Zwei-Skalen-Relation zwischen den Stufen · 4.4.2 Analyse: Approximations- und Detailkoeffizienten · 4.4.3 Synthese: Rekonstruktionsformel Die Skalierungsgleichung, rekursiv über die Stufen angewandt, liefert Faltung mit anschlie\ss{}ender Dezimierung (Analyse) bzw. Aufweitung mit Filterung (Synthese) — ein Algorithmus in O(N).}
-%\quellen{
-%  \begin{itemize}
-%    \item LMR, Kap. 2.3 „Schnelle Wavelet-Transformation", S. 132–141 [bestätigt]
-%    \item LMR, S. 133 [bestätigt] — Zerlegungsoperatoren $H$ und $G$ in Gl. (2.3.1)/(2.3.2), Faltungssymbol $\ast_2$ = Faltung mit Sub-Sampling um Faktor 2; ausdrücklicher Verweis auf Mallats Originalarbeit
-%    \item LMR, Abbildung 2.8, S. 133–134 [bestätigt] — Schema der Zerlegung über M Skalen
-%    \item LMR, S. 133–135 [bestätigt] — Rekonstruktion aus $c_1$ und $d_1$ über die orthogonale Zerlegung $V_0 = V_1 \oplus W_1$
-%    \item Blatter, Kap. 5.4 „Algorithmen", S. 130–136 [bestätigt]
-%    \item Blatter, S. 15 [bestätigt] (Sachverz.: „Fast Wavelet Transform 15", „FWT 15")
-%    \item HankeBourgeois, Gl. (56.10), S. 438 [bestätigt] — die Analyseformeln explizit: $\xi_{kj} = (\xi_{k+1,2j} + \xi_{k+1,2j+1})/2$, $\eta_{kj} = (\xi_{k+1,2j} - \xi_{k+1,2j+1})/2$
-%    \item HankeBourgeois, Algorithmus 56.1 „Schnelle Haar-Wavelet-Transformation", S. 439 [bestätigt] — rekursiver Pseudocode fhwt und ifhwt, direkt implementierbar
-%    \item HankeBourgeois, Aufwandsanalyse, S. 438 [bestätigt] — $2^{\dim} V_p$ Multiplikationen und Additionen, „noch billiger zu implementieren als die fft"
-%    \item Aqil, Kap. 2, S. 54–56 [bestätigt]
-%    \item Chatterjee, Kap. 3, S. 575–577 [bestätigt]  
-%  \end{itemize}
-%}
-%
-%\subsection{Zwei-Skalen-Relation zwischen den Stufen}
-%
-%\subsection{Analyse: Approximations- und Detailkoeffizienten}
-%
-%\subsection{Synthese: Rekonstruktionsformel}
-%
-%\anmerkung{$a_{0,k} := X(k)$ als EKG-Abtastwerte interpretieren -- Brücke zu Kap.~6}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section{Daubechies-Wavelets}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%\subsection{Kompakter Träger, Filterlänge und Regularität}
-%\label{subsec:daubechies-traeger}
-%
-%\anmerkung{ZUSAMMENGELEGT aus den alten Unterabschnitten 4.5.1 und 4.5.3 und BEWUSST
-%KURZ gehalten (ca.\ eine Seite, ohne eigene Beweise). Zwei Aussagen genügen:
-%(i) Endlich viele nichtverschwindende $h_k$ $\Leftrightarrow$ kompakter Träger von
-%$\phi$ und $\psi$ $\Leftrightarrow$ endliche Filterlänge -- das ist die Voraussetzung
-%dafür, dass der Mallat-Algorithmus überhaupt implementierbar ist. (ii) Höhere
-%Filterordnung erkauft mehr Glattheit, aber auch längeren Träger. Die
-%Daubechies-Konstruktion selbst (Spektralfaktorisierung von $H_N$, LMR Lemma~2.4.24,
-%S.~171) wird NICHT ausgeführt, sondern nur zitiert -- sie ist ein eigenes Kapitel
-%Mathematik und trägt zum Argumentationsbogen nichts bei. Für die Implementierung
-%genügt die Koeffiziententabelle bei LMR, S.~170.}
-%\quellen{
-%  \begin{itemize}
-%    \item LMR, Satz 2.4.9, S.~153 [bestätigt] --- endliche Koeffizientenfolge $\{h_k\}$ $\Rightarrow$ kompakter Träger $[0,M]$ der Lösung der Skalierungsgleichung
-%    \item LMR, S.~175 [bestätigt] --- die Träger explizit: $\supp\varphi_N = [0,\, 2N-1]$ und $\supp\psi_N = [1-N,\, N]$
-%    \item LMR, S.~165 [bestätigt] --- Meyer- und Spline-Wavelets haben keinen kompakten Träger (die Motivation des ganzen Abschnitts)
-%    \item LMR, Kap.~2.4.3, S.~165--169 [bestätigt] --- die vollständige Konstruktion; hier nur zitiert
-%    \item LMR, Tabelle der Skalierungskoeffizienten, S.~170 [bestätigt] --- für die Implementierung in Kapitel~\ref{chapter:anwendung}
-%    \item LMR, Satz 2.4.26, S.~173 [bestätigt] --- Abklingen von $\lvert\hat\varphi\rvert$ und Sobolev-Ordnung $\psi_N \in H^{s}$ mit $s < \ln N/(2\ln 2)$
-%    \item LMR, S.~173 [bestätigt] --- Vergleich mit B-Splines: die Daubechies-Regularität wächst linear in $N$, aber deutlich langsamer
-%    \item Blatter, Kap.~6.1--6.2, S.~137--153 [bestätigt]; S.~151 (Sachverz.: Daubechies-Wavelets)
-%    \item Rebstadt, Abb.~2.9, S.~25 [bestätigt]
-%  \end{itemize}
-%}
-%
-%\anmerkung{NOTATIONSFALLE, hier explizit klarstellen: Das bei LMR als
-%\emph{Daubechies-Wavelet mit vier Koeffizienten} bezeichnete Wavelet ($N = 2$) hei\ss{}t in
-%PyWavelets \texttt{db2}, NICHT \texttt{db4}. \texttt{db4} in PyWavelets hat acht
-%Koeffizienten. Diese Umbenennung muss vor Kapitel~\ref{chapter:anwendung} einmal
-%ausgesprochen werden, sonst ist der Ergebnisteil nicht nachvollziehbar.}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\subsection{Verschwindende Momente}
-%
-%\anmerkung{Ein Wavelet der Ordnung N annulliert alle Polynome vom Grad < N — glatte Signalanteile erzeugen dann kleine Koeffizienten, was die Dünnbesetztheit erst herstellt.}
-%\quellen{
-%  \begin{itemize}
-%    \item LMR, Satz 2.4.28, S. 174 [bestätigt] — $\int_{\R} x^m \psi_N(x) \, dx = 0$ für $m = 0, \ldots, N-1$, mit vollständigem Beweis
-%    \item LMR, Lemma 2.4.27, S. 174 [bestätigt] — die diskrete Momentenbedingung $\sum_{k} k^m g_{k,N} = 0$, auf der der Beweis aufbaut
-%    \item LMR, Lemma 2.4.29, S. 174–175 [bestätigt] — Polynomreproduktion: $\sum_{k} c_{k,m} \varphi_N(x-k) = x^m$, insbesondere $\sum_{k} \varphi_N(x-k) = 1$ (Gl. 2.4.17)
-%    \item LMR, Lemma 2.4.30, S. 176 [bestätigt] — Approximationsordnung $\| P_j f - f \|$ als quantitative Folge der verschwindenden Momente
-%    \item LMR, Lemma 2.4.32, S. 177 [geschätzt]; Bemerkung S. 176 [bestätigt] — die Momenteneigenschaft gilt nicht nur für Daubechies-Wavelets
-%    \item LMR, Kap. 1.4.2 „Bemerkungen zur Ordnung von Wavelets", S. 45–47 [bestätigt]
-%    \item LMR, Satz 1.4.2, S. 41 [bestätigt] — Wavelet der Ordnung N im Sobolev-Kontext
-%    \item Blatter, Kap. 3.5 „Abklingverhalten", S. 73–78 [bestätigt]; S. 74 [bestätigt] (Sachverz.: „Moment 74", „Ordnung eines Wavelets 74")
-%  \end{itemize}
-%}
-%
-%\anmerkung{KERNSTÜCK VON KAPITEL~4 -- hier wird der Beweis ausgeschrieben. Begründung:
-%Dieser Abschnitt ist der einzige im Daubechies-Teil, der in den Hauptsatz eingeht. Er
-%liefert die Dünnbesetztheit (Abschnitt~\ref{sec:duennbesetztheit}) und damit die eine
-%Hälfte der Asymmetrie, auf der das Thresholding beruht. Vorlage: LMR, Satz 2.4.28,
-%S.~174, mit Lemma 2.4.27, S.~174.}
+(Bemerkung~\ref{bem:mallat-orthogonal}), in $O(N)$ Operationen berechenbar
+(Algorithmus~\ref{alg:mallat}) und stellt stückweise glatte Signale
+dünnbesetzt dar (Lemma~\ref{lem:abklingen}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3371,111 +3162,788 @@ Signale dünnbesetzt dar (Lemma~\ref{lem:abklingen}).
 \label{chapter:denoising}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Block G. Bewusst eigenes Kapitel: Kapitel~\ref{chapter:dwt}
-KONSTRUIERT die Transformation (Approximationstheorie), Kapitel~\ref{chapter:denoising}
-WENDET SIE STATISTISCH AN (Schätztheorie). Zwei verschiedene Arten von Mathematik.}
+%\quellen{  (Mallat: gedruckte 3. Aufl. 2009; alle Stellen am Text geprüft, 04.10.2026)
+%  \begin{itemize}
+%    \item Mallat, Kap. 1.2.4, S. 11--14 -- Donoho--Johnstone, Schätzer F = DX, Risiko,
+%          Kanten bleiben erhalten
+%    \item Mallat, Kap. 11.1.1, S. 538 -- gemeinsam normalverteilt + unkorreliert => unabhängig;
+%          S. 544 -- Rauschenergie E||W||^2 = N sigma^2
+%    \item Mallat, Kap. 11.2, S. 548 -- (11.26), weißes Rauschen; S. 549 -- bleibt weiß,
+%          diagonaler Operator (11.27), Risiko (11.28)
+%    \item Mallat, S. 550 -- (11.32)--(11.34) "oracle projector"; S. 556 "ideal coefficient selection"
+%    \item Mallat, Kap. 11.2.2, S. 552--553 -- Gauß-Annahme, (11.46), (11.47), (11.49), (11.50),
+%          r_th >= r_pr; Satz 11.7, (11.51), (11.52); S. 554 Gaußdichte; S. 554--555 Lemma 11.1
+%    \item Mallat, S. 555--557 -- Wahl der Schwelle, (11.64), Unabhängigkeit der W_B,
+%          T nicht optimal, hart vs. weich, Deutung des Faktors, farbiges Rauschen
+%    \item Mallat, Kap. 11.3, S. 562 -- Basis mit wenigen Koeffizienten
+%    \item Mallat, Kap. 11.3.1, S. 563 -- (11.84), "Adaptive Smoothing"; S. 565 -- Median,
+%          (11.85), stückweise glatt => wenige große Koeffizienten; S. 568 "universal threshold"
+%    \item Mallat, Kap. 3.3.2, S. 76--77 -- Satz 3.8, diskrete Fourier-Basis
+%    \item Mallat, Kap. 7.3.1, S. 301 -- "Initialization", "Finite Signals"
+%    \item Mallat, Kap. 7.5, S. 318 -- (7.173) diskrete Wavelets ONB; Kap. 7.5.1, S. 319 -- Rand
+%    \item LMR, Kap. 2.4.7.2, S. 206; Kap. 3.1.1, S. 238; Kap. 3.1.2, S. 239;
+%          Kap. 3.6.2, S. 289, (3.6.18)--(3.6.20)
+%    \item Hanke-Bourgeois, Beispiel 56.3, S. 440 (Haar-Basis)
+%    \item Rebstadt, Abb. 2.10, S. 27
+%  \end{itemize}
+%}
+
+Ziel dieses Kapitels ist, aus verrauschten Messwerten das ursprüngliche Signal
+möglichst genau zurückzugewinnen. Dafür verwenden wir die diskrete
+Wavelet-Transformation aus Kapitel~\ref{chapter:dwt}. Die Idee: Eine geeignet gewählte Orthonormalbasis stellt das Signal mit
+wenigen Koeffizienten dar \cite[Kap.~11.3]{mallat}, % S. 562
+während sich das Rauschen gleichmä\ss ig auf alle Koeffizienten verteilt
+\cite[Kap.~11.2.1]{mallat}. % S. 548--549
+Setzt man die kleinen Koeffizienten auf null, verschwindet vor allem Rauschen,
+während gro\ss e Waveletkoeffizienten und damit scharfe Kanten erhalten bleiben
+\cite[Kap.~11.3.1]{mallat}. % S. 563
+Donoho und Johnstone haben gezeigt, dass dieses einfache Thresholding fast
+optimale Schätzer liefert \cite[Kap.~11.2]{mallat}. % S. 548, Satz 11.7 S. 553
+Das Verfahren hat drei Schritte (Abbildung~\ref{fig:dreischritt}).
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[font=\small, box/.style={draw, rounded corners=2pt,
+      minimum height=7mm, inner sep=4pt}, >=stealth]
+    \node[align=center] (Y) at (0,0) {Messwerte\\$Y$};
+    \node[box] (A) at (2.2,0) {DWT};
+    \node[box] (R) at (5.4,0) {Schwelle};
+    \node[box] (AT) at (8.6,0) {inverse DWT};
+    \node[align=center] (F) at (11.2,0) {Schätzung\\$\hat f$};
+    \draw[->] (Y) -- (A);
+    \draw[->] (A) -- node[above, align=center, font=\footnotesize] {Koeffizienten\\$\tilde Y$} (R);
+    \draw[->] (R) -- node[above, align=center, font=\footnotesize] {geschwellt\\$\hat\theta$} (AT);
+    \draw[->] (AT) -- (F);
+  \end{tikzpicture}
+  \caption[Ablauf des Entrauschens]{Ablauf des Entrauschens: Die Messwerte $Y$
+  werden mit Algorithmus~\ref{alg:mallat} in Koeffizienten $\tilde Y$
+  zerlegt, jeder Koeffizient wird mit einer Schwelle bearbeitet, und die inverse
+  DWT (Satz~\ref{satz:rekonstruktion}) liefert die Schätzung $\hat f$ des
+  Signals. Die Bezeichnungen werden in den Abschnitten~\ref{sec:onb-invarianz}
+  bis~\ref{sec:mad} eingeführt. Vgl.\ \cite[Gl.~(11.84)]{mallat},
+  \cite[Abb.~2.10]{rebstadt}.} % Mallat S. 563; Rebstadt S. 27
+  \label{fig:dreischritt}
+\end{figure}
+
+Daraus ergeben sich die Fragen der folgenden Abschnitte: Was macht die
+Transformation mit dem Rauschen, was mit dem Signal? Wie setzt man kleine
+Koeffizienten auf null, wo liegt die Grenze, und wie bestimmt man sie aus den
+Daten? Ein Testsignal begleitet alle Abschnitte. Die Darstellung folgt
+\cite[Kap.~11.2--11.3.1]{mallat}. % S. 548--566
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Das additive Rauschmodell}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{$X = f + W$ mit wei\ss{}em Gau\ss{}schen Rauschen der Varianz $\sigma^2$ — das Modell, unter dem alle folgenden Optimalitätsaussagen gelten.}
-\quellen{
-  \begin{itemize}
-   \item Mallat, Kap. 11.1, S. 601–603 [bestätigt] (Gl. 11.1–11.3)
-   \item Mallat, S. 608 [bestätigt] — Kovarianzmatrix $\sigma^2·Id$
-   \item Rebstadt, Abb. 2.3, S. 10 [bestätigt]
-  \end{itemize}
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Invarianz wei\ss{}en Rauschens unter Orthonormaltransformation}
+\section{Rauschmodell und diskrete Wavelet-Transformation}
 \label{sec:onb-invarianz}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Wei\ss{}es Rauschen bleibt in jeder Orthonormalbasis wei\ss{} mit derselben Varianz — deshalb beeinflusst die Basiswahl nur das Signal, nicht das Rauschen.}
-\quellen{
-  \begin{itemize}
-    \item Mallat, Kap. 11.2, S. 617 [bestätigt]
-    \item Serov, Def. 27.7, S. 282 [bestätigt] — unitäre Invarianz als funktionalanalytische Grundlage
-    \item LMR, Lemma 1.2.1, S. 27 [bestätigt] — Isometrieeigenschaft der beteiligten Operatoren
-  \end{itemize}
-}
-\anmerkung{Schlüsselresultat der ganzen Arbeit: Das Rauschen bleibt im
-Waveletbereich wei\ss{}, das Signal wird dünn besetzt. Genau diese Asymmetrie macht
-Thresholding überhaupt erst möglich. Vollständiger Beweis über das innere Produkt.}
+
+Das Rauschen wird als zufällig modelliert; die dafür benötigten Begriffe
+stehen in Abschnitt~\ref{sec:wahrscheinlichkeit}.
+
+\begin{Definition}[Gau\ss'sches wei\ss es Rauschen, {\cite[Kap.~11.2.1--11.2.2]{mallat}}] % S. 548, 552
+\label{def:weisses-rauschen}
+Ein Zufallsvektor $W = (W_0,\dots,W_{N-1})$ hei\ss t wei\ss es Rauschen der
+Varianz $\sigma^2$, wenn $\mathbb E[W_n] = 0$ und
+$\mathbb E[W_nW_k] = \sigma^2\,\delta_{n,k}$ für alle $n,k$ gilt. Sind die
+$W_n$ zudem gemeinsam normalverteilt, hei\ss t $W$ Gau\ss'sches wei\ss es
+Rauschen.
+\end{Definition}
+
+Nach Satz~\ref{satz:unkorreliert-unabhaengig} sind die Komponenten eines
+Gau\ss'schen wei\ss en Rauschens der Varianz $1$ unabhängig und
+standardnormalverteilt.
+
+\paragraph{Das Modell.}
+Beobachtet werden $N$ Messwerte
+\begin{equation}
+\label{eq:rauschmodell}
+  Y_n \;=\; f_n + \sigma Z_n, \qquad n = 0,\dots,N-1,
+\end{equation}
+mit Gau\ss'schem wei\ss em Rauschen $Z$ der Varianz $1$ und Rauschstärke
+$\sigma>0$ \cite[Gl.~(11.26)]{mallat}. % S. 548 (dort X = f + W mit W = sigma Z)
+Anders als in den Kapiteln~\ref{chapter:mra} und~\ref{chapter:dwt} ist $f$
+hier keine Funktion, sondern der unbekannte Vektor $f\in\R^N$ der Abtastwerte
+des Signals. Die Messwerte dienen direkt als Startkoeffizienten $a_{0,n}$ von
+Algorithmus~\ref{alg:mallat} \cite[Kap.~3.1.1]{lmr}, \cite[Kap.~7.3.1]{mallat}. % LMR S. 238 "Wir fassen zusammen"; Mallat S. 301 "Initialization", "A simpler and faster approach"
+Das Rauschen wird mit $Z$ bezeichnet, da $W$ bereits für die Detailräume
+vergeben ist.
+
+\begin{Definition}[Schätzer und Risiko, {\cite[Kap.~1.2.4]{mallat}}] % S. 12
+\label{def:risiko}
+Ein Schätzer ordnet den Messwerten $Y$ einen Vektor $\hat f\in\R^N$ zu, der $f$
+annähern soll. Sein Risiko ist der erwartete quadratische Fehler
+\[
+  r(f) \;:=\; \mathbb E\,\norm{\hat f - f}^2 .
+\]
+Für eine einzelne Realisierung des Rauschens hei\ss t $\norm{\hat f - f}^2$ die
+Fehlerenergie.
+\end{Definition}
+
+Ohne jede Bearbeitung, also mit $\hat f = Y$, ist die Fehlerenergie die
+Energie des Rauschens $\norm{\sigma Z}^2$, und ihr Erwartungswert ist
+$r(f) = N\sigma^2$ \cite[Kap.~11.1.1]{mallat}. % S. 544: "total noise energy E{||W||^2} = N sigma^2"
+
+\paragraph{Die DWT eines endlichen Signals.}
+In Algorithmus~\ref{alg:mallat} ist
+\[
+  a_{1,k} \;=\; \sum_{n\in\Z} h_{n-2k}\,a_{0,n},
+\]
+die Summe läuft also formal über alle ganzen Zahlen $n$. Beim Filter
+\eqref{eq:db2-koeff} sind nur $h_0,\dots,h_3$ von null verschieden; für jedes
+$k$ bleiben daher nur die vier Summanden mit $n = 2k,\dots,2k+3$. Ein
+Messsignal hat aber nur die $N$ Werte $a_{0,0},\dots,a_{0,N-1}$. Für $N=8$ ist
+etwa
+\[
+  a_{1,3} \;=\; h_0a_{0,6} + h_1a_{0,7} + h_2a_{0,8} + h_3a_{0,9},
+\]
+und $a_{0,8}$, $a_{0,9}$ gibt es nicht. Man setzt das Signal daher periodisch
+fort, $a_{0,8} := a_{0,0}$, $a_{0,9} := a_{0,1}$ \cite[Kap.~2.4.7.2]{lmr}. % S. 206
+Das ist der einfachste von drei Wegen, die Mallat beschreibt; die anderen
+spiegeln das Signal am Rand oder verwenden eigene Randwavelets
+\cite[Kap.~7.3.1, 7.5]{mallat}. % S. 301--302 ("Finite Signals"), Kap. 7.5 ab S. 317
+
+Schreibt man die vier Gleichungen für $a_{1,0},\dots,a_{1,3}$ untereinander,
+entsteht eine Matrix $H\in\R^{4\times8}$ mit $(a_{1,k})_k = H\,(a_{0,n})_n$:
+\[
+  H \;=\; \begin{pmatrix}
+    h_0 & h_1 & h_2 & h_3 & 0 & 0 & 0 & 0\\
+    0 & 0 & h_0 & h_1 & h_2 & h_3 & 0 & 0\\
+    0 & 0 & 0 & 0 & h_0 & h_1 & h_2 & h_3\\
+    h_2 & h_3 & 0 & 0 & 0 & 0 & h_0 & h_1
+  \end{pmatrix}.
+\]
+Jede Zeile ist die vorige, um zwei Stellen verschoben; was rechts herausfällt,
+kommt links wieder hinein. Ebenso liefert eine Matrix $G\in\R^{4\times8}$ aus
+den $g_k$ die Details $d_{1,0},\dots,d_{1,3}$.
+
+Allgemein sei $M$ gerade und $w\in\R^M$ periodisch fortgesetzt,
+$w_{n+M} := w_n$. Die periodischen Mallat-Transformationen
+$H_M, G_M\colon\R^M\to\R^{M/2}$ sind
+\[
+  (H_Mw)_k \;:=\; \sum_{n\in\Z} h_{n-2k}\,w_n, \qquad
+  (G_Mw)_k \;:=\; \sum_{n\in\Z} g_{n-2k}\,w_n, \qquad 0\le k<\tfrac M2
+\]
+\cite[Kap.~3.6.2]{lmr}; % S. 289, dort mit l = n - 2k geschrieben
+das sind die Formeln aus Algorithmus~\ref{alg:mallat} mit periodisch gelesenen
+Indizes. Wir setzen $S_M := \binom{H_M}{G_M}\in\R^{M\times M}$; das Beispiel
+oben ist $H = H_8$.
+
+\begin{Lemma}[{\cite[Kap.~3.6.2, Gl.~(3.6.18)--(3.6.20)]{lmr}}] % S. 289
+\label{lem:dwt-orthogonal}
+% PRÜFEN: setzt LMR M >= Filterlänge voraus? Für db2 und M = 2 (S_2 im Beispiel
+% N = 8, J = 3) gilt die Aussage trotzdem, da h_0+h_2 = h_1+h_3 = 1/sqrt(2).
+Für die Filter $h$, $g$ aus Kapitel~\ref{chapter:dwt} gilt $H_MH_M^\top = G_MG_M^\top = I$, $H_MG_M^\top = 0$ und
+$H_M^\top H_M + G_M^\top G_M = I$. Die Matrix $S_M$ ist also orthogonal, das
+hei\ss t $S_M^\top S_M = S_MS_M^\top = I$.
+\end{Lemma}
+
+Der Preis des Periodisierens: Sind Anfang und Ende des Signals verschieden, so
+verhalten sich die Koeffizienten am Rand, als hätte das Signal dort einen
+Sprung, und werden gro\ss{} \cite[Kap.~7.5.1]{mallat}. % S. 319
+
+\paragraph{Die DWT als orthogonale Matrix.}
+Die DWT der Tiefe $J$ wendet $S_N$ auf alle $N$ Werte an und danach jeweils
+nur auf die zuletzt berechneten Approximationskoeffizienten; die Details bleiben
+stehen. Da jeder Schritt die Anzahl der Approximationskoeffizienten halbiert,
+sei $N$ durch $2^J$ teilbar. Als Matrix ist das
+\[
+  A \;:=\; \begin{pmatrix} S_{N/2^{J-1}} & 0\\ 0 & I\end{pmatrix}\cdots
+           \begin{pmatrix} S_{N/2} & 0\\ 0 & I\end{pmatrix} S_N
+  \;\in\;\R^{N\times N},
+  \qquad AY = (a_J, d_J, \dots, d_1),
+\]
+für $N = 8$, $J = 3$ etwa
+\[
+  A = \begin{pmatrix} S_2 & 0\\ 0 & I_6\end{pmatrix}
+      \begin{pmatrix} S_4 & 0\\ 0 & I_4\end{pmatrix} S_8,
+  \qquad AY = (a_3, d_3, d_2, d_1)
+\]
+mit $1, 1, 2$ und $4$ Einträgen.
+Jeder Faktor ist nach Lemma~\ref{lem:dwt-orthogonal} orthogonal, also auch $A$.
+Wir bezeichnen die Zeilen von $A$ mit $v_0,\dots,v_{N-1}$. Sie bilden eine
+Orthonormalbasis des $\R^N$, und jeder Koeffizient ist ein Skalarprodukt mit
+einer von ihnen; Mallat nennt sie diskrete Wavelets und Skalierungsfunktionen
+\cite[Kap.~7.5, Gl.~(7.173)]{mallat}. % S. 318 (dort g_m statt v_m)
+Aus \eqref{eq:rauschmodell} wird damit
+\begin{equation}
+\label{eq:rauschmodell-koeff}
+  \tilde Y_m \;=\; \theta_m + \sigma\tilde Z_m \qquad\text{mit }
+  \tilde Y_m = \scal{Y}{v_m},\ \theta_m = \scal{f}{v_m},\ \tilde Z_m = \scal{Z}{v_m},
+\end{equation}
+kurz $\tilde Y = AY$, $\theta = Af$, $\tilde Z = AZ$.
+
+\paragraph{Was mit dem Rauschen geschieht.}
+
+\begin{Lemma}[{\cite[Kap.~11.2.1--11.2.2]{mallat}}] % S. 549, 553, 556
+\label{lem:rauschen-invariant}
+$\tilde Z$ ist wieder Gau\ss'sches wei\ss es Rauschen der Varianz $1$; die
+$\tilde Z_0,\dots,\tilde Z_{N-1}$ sind also unabhängig und standardnormalverteilt.
+\end{Lemma}
+
+\begin{proof}
+Wegen der Linearität des Erwartungswerts ist
+$\mathbb E[\tilde Z_m] = \sum_n v_m[n]\,\mathbb E[Z_n] = 0$ und
+\[
+  \mathbb E\bigl[\tilde Z_m\tilde Z_p\bigr]
+  = \sum_{n=0}^{N-1}\sum_{k=0}^{N-1} v_m[n]\,v_p[k]\,\mathbb E[Z_nZ_k]
+  = \sum_{n=0}^{N-1} v_m[n]\,v_p[n]
+  = \scal{v_m}{v_p} = \delta_{m,p}
+\]
+\cite[Kap.~11.2.1]{mallat}, % S. 549
+da die $v_m$ eine Orthonormalbasis bilden. Die $\tilde Z_m$ sind
+Linearkombinationen der gemeinsam normalverteilten $Z_n$ und damit selbst
+gemeinsam normalverteilt \cite[Kap.~11.2.2]{mallat}; % S. 553/556
+nach Satz~\ref{satz:unkorreliert-unabhaengig} sind sie also unabhängig.
+\end{proof}
+
+Die Transformation verändert also das Signal, das Rauschen aber nicht: Jeder
+Koeffizient trägt Rauschen derselben Stärke $\sigma$, und das Rauschen
+beeinflusst die Wahl der Basis nicht \cite[Kap.~11.2.1]{mallat}. % S. 549
+
+\begin{Beispiel}[Ein verrauschter Sinus]
+\label{bsp:sinus}
+Als Testsignal dient ein Sinus mit Amplitude $1$ und Periode $1$, abgetastet an
+den $N = 2048$ Zeitpunkten $t_n = 8n/N = n/256$ im Intervall $[0,8)$:
+\[
+  u_n := \sin(2\pi t_n), \qquad n = 0,\dots,2047 .
+\]
+Jede Periode umfasst also $256$ Abtastwerte, insgesamt sind es acht volle
+Perioden. Dazu kommt Rauschen der Stärke $\sigma = 0{,}3$: Die $Z_n$ werden als
+Pseudozufallszahlen erzeugt, und nach \eqref{eq:rauschmodell} sind die
+Messwerte $Y_n = u_n + 0{,}3\,Z_n$ (Abbildung~\ref{fig:bsp-sinus}). Zerlegt wird
+mit dem Filter \eqref{eq:db2-koeff}, periodisiert, in $J = 5$ Stufen; gerechnet
+ist mit PyWavelets \cite{pywavelets} (Code in Anhang~\ref{anh:code-sinus}).
+
+
+Ohne jede Bearbeitung, also mit $\hat f = Y$, ist die Fehlerenergie gleich der
+Energie des Rauschens, $\norm{Y-u}^2 = 181{,}3$, nahe am Erwartungswert
+$N\sigma^2 = 2048\cdot0{,}09 = 184{,}3$; dieser Wert dient später als Vergleich.
+Für die $2048$ Werte $\tilde Z_m$ sind der empirische Mittelwert
+$\bar z = \frac1N\sum_m\tilde Z_m = 0{,}01$ und die empirische Varianz
+$\frac1N\sum_m(\tilde Z_m-\bar z)^2 = 0{,}98$, wie nach
+Lemma~\ref{lem:rauschen-invariant} zu erwarten.
+\end{Beispiel}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{bsp_5.5.pdf}
+  \caption[Verrauschter Sinus]{Der Sinus $u$ aus Beispiel~\ref{bsp:sinus}
+  (oben) und die Messwerte $Y = u + 0{,}3\,Z$ (unten), $N = 2048$.}
+  \label{fig:bsp-sinus}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Dünnbesetztheit von EKG-Signalen im Waveletbereich}
+\section{Diagonale Schätzer und Thresholding}
 \label{sec:duennbesetztheit}
+\label{sec:thresholding}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Stückweise reguläre Signale mit isolierten Singularitäten konzentrieren ihre Energie auf wenige gro\ss{}e Koeffizienten — beim EKG ist der QRS-Komplex genau eine solche Singularität.}
-\quellen{
-  \begin{itemize}
-    \item Mallat, Kap. 11.2.3, S. 634–636 [bestätigt]
-    \item Mallat, S. 619–621 [bestätigt] — Oracle-Projektor, M-Term-Approximation
-    \item LMR, Lemma 2.4.30, S. 176 [bestätigt] — die Approximationsordnung, die der Dünnbesetztheit mathematisch zugrunde liegt
-    \item LMR, Kap. 3.1.2, S. 239–240 [bestätigt] — am realen EKG: $d_1$ fängt praktisch das gesamte Rauschen auf, das Nutzsignal sitzt in wenigen Koeffizienten gröberer Skalen
-    \item HankeBourgeois, Beispiel S. 437–438 [bestätigt] — für $\chi_[a,b]$ genügen in der Haar-Multiskalenbasis $O(log n)$ Koeffizienten für dieselbe Genauigkeit $O(n^{-1/2})$, für die trigonometrische Basis sind es $n$; Beweis über Satz 31.6 (c) und den kompakten Träger
-    \item HankeBourgeois, Beispiel 56.3, S. 440 [bestätigt] — am EKG-Signal quantifiziert: über ein Viertel der 2048 Waveletkoeffizienten liegt betragsmä\ss{}ig unter $10^{-4}$, aber nur 24 Fourierkoeffizienten (< 1,2 prozent)
-    \item Rebstadt, Kap. 2.3.1, S. 15–20 [bestätigt]
-  \end{itemize}
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Hard- und Soft-Thresholding}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Hard-Thresholding setzt kleine Koeffizienten auf null und lässt gro\ss{}e unverändert; Soft-Thresholding schrumpft zusätzlich alle Amplituden um T und erkauft Stetigkeit mit systematischer Verzerrung.}
-\quellen{
-  \begin{itemize}
-    \item Mallat, S. 621–622 [bestätigt] (Gl. 11.47 hard, 11.49 soft)
-    \item Mallat, S. 629 [bestätigt] — Bias durch Amplitudenreduktion
-    \item Aqil, Kap. 2, S. 57 [bestätigt] — Fig. 6; S. 61–63 [bestätigt] — Fig. 11, empirischer SNR-Vergleich 
-  \end{itemize}
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Der Satz von Donoho--Johnstone}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Für $T = \sigma \cdot \sqrt{2 \log N}$ bleibt das Risiko des Thresholding-Schätzers bis auf den Faktor $(2 \log N + 1)$ am Oracle-Risiko — und dieser Faktor ist asymptotisch nicht verbesserbar.}
-\quellen{
-  \begin{itemize}
-    \item Mallat, Satz 11.7, S. 623 [bestätigt]
-    \item Mallat, Lemma 11.1 und Beweis, S. 624–625 [bestätigt]
-  \end{itemize}
-}
-\anmerkung{ZITIEREN, NICHT BEWEISEN. Satz 11.7 bei Mallat (S.~623) wird als Aussage
-aufgenommen; erklärt werden das Oracle-Risiko, die Rolle von
-$T = \sigma\sqrt{2\log N}$ und die Interpretation des Faktors $2\log N + 1$. Der
-Beweis über Lemma 11.1 und die asymptotische Minimax-Optimalität bleiben drau\ss{}en --
-das ist Schätztheorie in einer Tiefe, die eine mathematische BA nicht mehr trägt, und
-sie kostet mehrere Seiten. Der EIGENE Beweis in diesem Kapitel gehört stattdessen zur
-Risikoabschätzung für einen einzelnen Koeffizienten:
-$\mathbb{E}\lvert\rho_T(X)-f\rvert^{2} \le C\,\bigl(\sigma^{2} + \min(f^{2},\sigma^{2})\bigr)$.
-Der ist kurz, elementar und trägt die Aussage.}
 
+Nach Abschnitt~\ref{sec:onb-invarianz} bilden die Zeilen $v_0,\dots,v_{N-1}$
+von $A$ eine Orthonormalbasis des $\R^N$, und die Koeffizienten der Messwerte
+in dieser Basis sind $\tilde Y_m = \scal{Y}{v_m} = \theta_m + \sigma\tilde Z_m$
+nach \eqref{eq:rauschmodell-koeff}. Im mittleren Schritt von
+Abbildung~\ref{fig:dreischritt} wird jeder dieser Koeffizienten für sich mit
+einem Faktor $\lambda_m$ multipliziert, der angibt, wie viel von ihm übrig
+bleibt: $\lambda_m = 1$ behält ihn, $\lambda_m = 0$ löscht ihn, ein Wert
+dazwischen verkleinert ihn.
+
+\begin{Definition}[Diagonaler Schätzer, {\cite[Gl.~(11.27)]{mallat}}] % S. 549
+\label{def:diagonal}
+Ein Schätzer hei\ss t diagonal in der Basis $\{v_m\}$, wenn er jeden
+Koeffizienten mit einem Faktor $\lambda_m$ multipliziert,
+\[
+  \hat\theta_m \;=\; \lambda_m\,\tilde Y_m \qquad (m = 0,\dots,N-1),
+\]
+und das Ergebnis mit $A^{-1} = A^\top$ zurücktransformiert:
+$\hat f = A^\top\hat\theta$. Dabei darf $\lambda_m$ von den Messwerten nur über
+$\tilde Y_m$ abhängen, nicht über die übrigen Koeffizienten $\tilde Y_k$,
+$k\neq m$. Hängt kein $\lambda_m$ von den Messwerten ab, hei\ss t der Schätzer
+linear.
+\end{Definition}
+
+Bei einem linearen diagonalen Schätzer sind die $\lambda_m$ feste Zahlen; sie
+dürfen von $f$ und $\sigma$ abhängen, aber nicht vom Zufall. In den
+Koeffizienten wirkt er als Multiplikation mit einer Diagonalmatrix,
+\[
+  \hat\theta \;=\;
+  \begin{pmatrix}
+    \lambda_0 & 0 & \cdots & 0 \\
+    0 & \lambda_1 & \ddots & \vdots \\
+    \vdots & \ddots & \ddots & 0 \\
+    0 & \cdots & 0 & \lambda_{N-1}
+  \end{pmatrix}
+  \tilde Y ,
+\]
+daher der Name. Die beiden wichtigsten diagonalen Schätzer sind dagegen nicht
+linear: Sie vergleichen den Betrag jedes Koeffizienten mit einer Schwelle $T>0$,
+und ob ein Koeffizient bleibt, hängt damit von $\tilde Y_m$ selbst ab
+\cite[Kap.~11.2.2]{mallat}. % S. 552
+
+\begin{Definition}[Hard- und Soft-Thresholding, {\cite[Gl.~(11.47), (11.49)]{mallat}}] % S. 552--553
+\label{def:thresholding}
+Für $T>0$ hei\ss en
+\[
+  \rho^{\mathrm H}_T(x) :=
+  \begin{cases} x, & \lvert x\rvert > T,\\ 0, & \lvert x\rvert\le T,\end{cases}
+  \qquad
+  \rho^{\mathrm S}_T(x) :=
+  \begin{cases} x - T, & x > T,\\ x + T, & x < -T,\\ 0, & \lvert x\rvert\le T\end{cases}
+\]
+Hard- bzw.\ Soft-Thresholding. Der zugehörige Schätzer berechnet mit $\rho_T$
+für eine der beiden Funktionen die Koeffizienten
+$\hat\theta_m = \rho_T(\tilde Y_m)$ und transformiert zurück:
+$\hat f = A^\top\hat\theta$.
+\end{Definition}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=0.55cm,y=0.55cm,font=\footnotesize]
+    \foreach \sx/\lab in {0/{(a) Hard-Thresholding}, 8/{(b) Soft-Thresholding}}{
+      \begin{scope}[xshift=\sx cm]
+        \draw[->] (-3.4,0) -- (3.6,0) node[right] {$x$};
+        \draw[->] (0,-3.4) -- (0,3.6);
+        \draw[gray, dashed] (-3.2,-3.2) -- (3.2,3.2);
+        \draw (1,0.1) -- (1,-0.1) node[below] {$T$};
+        \draw (-1,0.1) -- (-1,-0.1) node[below] {$-T$};
+        \node[anchor=north] at (0,-3.7) {\small\lab};
+      \end{scope}
+    }
+    \draw[uhh_blue, line width=1.1pt] (-3.2,-3.2) -- (-1,-1);
+    \draw[uhh_blue, line width=1.1pt] (-1,0) -- (1,0);
+    \draw[uhh_blue, line width=1.1pt] (1,1) -- (3.2,3.2);
+    \begin{scope}[xshift=8cm]
+      \draw[uhh_blue, line width=1.1pt] (-3.2,-2.2) -- (-1,0) -- (1,0) -- (3.2,2.2);
+    \end{scope}
+  \end{tikzpicture}
+  \caption[Hard- und Soft-Thresholding]{Die Funktionen $\rho^{\mathrm H}_T$ (a)
+  und $\rho^{\mathrm S}_T$ (b); gestrichelt die Identität.}
+  \label{fig:thresholding}
+\end{figure}
+
+\begin{Beispiel}[Fortsetzung von Beispiel~\ref{bsp:mallat-haar}]
+\label{bsp:diagonal}
+Wir gehen alle drei Schritte für die Messwerte $Y = (4,\ 2,\ 5,\ 7)$ durch,
+mit dem Haar-Filter, $N = 4$ und $J = 2$.
+
+Schritt~1, Transformieren: Nach Beispiel~\ref{bsp:mallat-haar} ist
+$\tilde Y = AY = (a_{2,0};\ d_{2,0};\ d_{1,0};\ d_{1,1}) = (9;\ -3;\ \sqrt2;\ -\sqrt2)$.
+
+Schritt~2, Thresholding: Mit $T = 2$ vergleicht Hard-Thresholding den Betrag
+jedes Koeffizienten mit $T$:
+\[
+  \lvert 9\rvert > 2, \qquad \lvert -3\rvert > 2, \qquad
+  \lvert \sqrt2\rvert \le 2, \qquad \lvert -\sqrt2\rvert \le 2 .
+\]
+Die Koeffizienten $9$ und $-3$ liegen über der Schwelle und bleiben
+unverändert, $\lambda_0 = \lambda_1 = 1$. Die beiden feinen Details
+$\pm\sqrt2\approx\pm1{,}41$ liegen nicht darüber und werden auf null gesetzt,
+$\lambda_2 = \lambda_3 = 0$. Also ist $\hat\theta = (9;\ -3;\ 0;\ 0)$.
+
+Schritt~3, Zurücktransformieren: Mit der Rekonstruktion aus
+Satz~\ref{satz:rekonstruktion} ist zunächst
+$a_1 = \bigl(\tfrac{9-3}{\sqrt2},\ \tfrac{9+3}{\sqrt2}\bigr) = (3\sqrt2,\ 6\sqrt2)$
+und, da beide $d_{1,k}$ null sind,
+\[
+  \hat f \;=\; A^\top\hat\theta \;=\; (3,\ 3,\ 6,\ 6).
+\]
+Jedes Paar benachbarter Werte ist durch seinen Mittelwert ersetzt; das
+Nullsetzen der feinen Details wirkt also wie ein lokales Mitteln.
+
+Soft-Thresholding setzt dieselben Koeffizienten auf null, verkleinert die
+übrigen aber zusätzlich um $T$: $\hat\theta = (7;\ -1;\ 0;\ 0)$ und damit
+$\hat f = (3,\ 3,\ 4,\ 4)$ (Abbildung~\ref{fig:hard-soft}). Dabei verkleinert
+es auch den Approximationskoeffizienten von $9$ auf $7$ und senkt so den
+Mittelwert von $4{,}5$ auf $3{,}5$; darauf kommt Abschnitt~\ref{sec:mad}
+zurück. In beiden Fällen wird jeder Koeffizient allein
+anhand seines eigenen Betrags behandelt (Abbildung~\ref{fig:thresholding}).
+Nicht diagonal wäre dagegen etwa $\hat\theta_1 = \tfrac12(\tilde Y_0 + \tilde Y_1)$,
+da hier $\hat\theta_1$ auch von $\tilde Y_0$ abhängt.
+\end{Beispiel}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[x=0.4cm,y=0.4cm,font=\footnotesize]
+    \foreach \sx/\lab in {0/{(a) Messwerte $Y$}, 12/{(b) Hard-Thresholding}, 24/{(c) Soft-Thresholding}}{
+      \begin{scope}[xshift=\sx*0.4cm]
+        \draw[->] (0,0) -- (8.6,0) node[right] {$n$};
+        \draw[->] (0,0) -- (0,8);
+        \foreach \y in {2,4,6} \draw (0.1,\y) -- (-0.1,\y) node[left] {$\y$};
+        \foreach \n in {0,1,2,3} \node[below] at (2*\n+1,0) {$\n$};
+        \node[anchor=north] at (4,-1.1) {\small\lab};
+      \end{scope}
+    }
+    \draw[uhh_blue, line width=1.1pt] (0,4) -- (2,4) -- (2,2) -- (4,2) -- (4,5) -- (6,5) -- (6,7) -- (8,7);
+    \begin{scope}[xshift=4.8cm]
+      \draw[gray, dashed] (0,4) -- (2,4) -- (2,2) -- (4,2) -- (4,5) -- (6,5) -- (6,7) -- (8,7);
+      \draw[uhh_blue, line width=1.1pt] (0,3) -- (2,3) -- (2,3) -- (4,3) -- (4,6) -- (6,6) -- (6,6) -- (8,6);
+    \end{scope}
+    \begin{scope}[xshift=9.6cm]
+      \draw[gray, dashed] (0,4) -- (2,4) -- (2,2) -- (4,2) -- (4,5) -- (6,5) -- (6,7) -- (8,7);
+      \draw[uhh_blue, line width=1.1pt] (0,3) -- (2,3) -- (2,3) -- (4,3) -- (4,4) -- (6,4) -- (6,4) -- (8,4);
+    \end{scope}
+  \end{tikzpicture}
+  \caption[Hard- und Soft-Thresholding im Beispiel]{Die Messwerte
+  $Y = (4,2,5,7)$ aus Beispiel~\ref{bsp:diagonal} (a) und die Schätzungen
+  $\hat f = (3,3,6,6)$ nach Hard-Thresholding (b) und $\hat f = (3,3,4,4)$ nach
+  Soft-Thresholding (c), jeweils mit $T = 2$; gestrichelt $Y$.}
+  \label{fig:hard-soft}
+\end{figure}
+
+Wie gut kann ein solcher Schätzer bestenfalls sein? Dazu zerlegt man den Fehler
+in die Beiträge der einzelnen Koeffizienten.
+
+\begin{Lemma}[{\cite[Gl.~(11.28)]{mallat}}] % S. 549
+\label{lem:risiko-summe}
+Für jeden Schätzer der Form $\hat f = A^\top\hat\theta$ gilt
+\begin{equation}
+\label{eq:risiko-summe}
+  \mathbb E\,\norm{\hat f - f}^2 \;=\; \sum_{m=0}^{N-1}\mathbb E\,\lvert\hat\theta_m - \theta_m\rvert^2 .
+\end{equation}
+\end{Lemma}
+
+\begin{proof}
+Hier ist $\norm{x}^2 = \sum_{n=0}^{N-1} x_n^2$ die euklidische Norm des $\R^N$.
+Wegen $\hat f = A^\top\hat\theta$ und $A A^\top = I$ ist $A\hat f = \hat\theta$,
+und nach \eqref{eq:rauschmodell-koeff} ist $Af = \theta$. Da $A$ nach
+Lemma~\ref{lem:dwt-orthogonal} orthogonal ist und daher die Länge erhält, folgt
+\[
+  \norm{\hat f - f}^2 \;=\; \norm{A(\hat f - f)}^2 \;=\; \norm{\hat\theta - \theta}^2
+  \;=\; \sum_{m=0}^{N-1}\lvert\hat\theta_m - \theta_m\rvert^2 .
+\]
+Bilden des Erwartungswerts, der linear ist, liefert \eqref{eq:risiko-summe}.
+\end{proof}
+
+Bei einem diagonalen Schätzer hängt der $m$-te Summand nur vom $m$-ten
+Koeffizienten ab; man kann also für jeden Koeffizienten einzeln entscheiden,
+was mit ihm geschieht. Jeder Koeffizient
+$\tilde Y_m = \theta_m + \sigma\tilde Z_m$ besteht aus einem Signalanteil
+$\theta_m$ und einem Rauschanteil $\sigma\tilde Z_m$; bekannt ist nur die Summe.
+Wir betrachten feste Faktoren $\lambda_m \in \{0,1\}$, also lineare diagonale
+Schätzer, die jeden Koeffizienten entweder behalten oder löschen
+\cite[Kap.~11.2.1]{mallat}: % S. 550
+\begin{itemize}
+\item Behalten, $\lambda_m = 1$: Das Signal bleibt, aber auch das Rauschen; die
+  Abweichung ist $\hat\theta_m - \theta_m = \sigma\tilde Z_m$. Da $\tilde Z_m$
+  nach Lemma~\ref{lem:rauschen-invariant} Mittelwert $0$ und Varianz $1$ hat,
+  ist $\mathbb E\lvert\hat\theta_m - \theta_m\rvert^2 = \sigma^2\,\mathbb E[\tilde Z_m^2] = \sigma^2$.
+\item Löschen, $\lambda_m = 0$: Dann ist $\hat\theta_m = 0$. Das Rauschen ist
+  weg, aber ebenso das Signal; die Abweichung ist $-\theta_m$, der Fehler
+  $\theta_m^2$.
+\end{itemize}
+Behalten kostet also stets $\sigma^2$, Löschen $\theta_m^2$. Behalten ist
+daher genau dann mindestens so gut wie Löschen, wenn $\lvert\theta_m\rvert$
+mindestens so gro\ss{} wie $\sigma$ ist: Für
+$\sigma = 0{,}3$ ist etwa bei $\theta_m = 2$ Behalten besser ($0{,}09$ statt $4$),
+bei $\theta_m = 0{,}1$ Löschen ($0{,}01$ statt $0{,}09$).
+
+\begin{Definition}[Ideale Auswahl, {\cite[Gl.~(11.32)--(11.34)]{mallat}}] % S. 550 "oracle projector"; S. 556 "ideal coefficient selection"
+\label{def:ideale-auswahl}
+Die ideale Auswahl ist der lineare diagonale Schätzer mit $\lambda_m = 1$ für
+$\lvert\theta_m\rvert \ge \sigma$ und $\lambda_m = 0$ sonst. Nach
+Lemma~\ref{lem:risiko-summe} ist ihr Risiko
+\begin{equation}
+\label{eq:orakel}
+  r_{\mathrm{id}}(f) \;=\; \sum_{m=0}^{N-1}\min\bigl(\theta_m^2,\,\sigma^2\bigr),
+\end{equation}
+und kein linearer diagonaler Schätzer mit Faktoren $\lambda_m \in \{0,1\}$ hat
+ein kleineres Risiko.
+\end{Definition}
+
+Die Einschränkung auf feste Faktoren ist wesentlich. Dürfte $\lambda_m$ zugleich
+von $\theta_m$ und $\tilde Y_m$ abhängen, so könnte man etwa genau dann
+behalten, wenn der Rauschanteil kleiner ist als der Signalanteil,
+$\sigma^2\tilde Z_m^2 < \theta_m^2$, und erhielte den Fehler
+$\mathbb E\bigl[\min(\sigma^2\tilde Z_m^2,\theta_m^2)\bigr]
+< \min(\sigma^2,\theta_m^2)$.
+
+Da die $\lambda_m$ der idealen Auswahl vom unbekannten $\theta_m$ abhängen, lässt
+sie sich nicht berechnen; Mallat spricht von einem Orakel
+\cite[Kap.~11.2.1]{mallat}. % S. 550
+Hard-Thresholding ist ihr praktischer Ersatz: Es behält oder löscht ebenfalls
+jeden Koeffizienten, entscheidet aber nach dem bekannten $\lvert\tilde Y_m\rvert$
+und der Schwelle $T$ statt nach $\lvert\theta_m\rvert$ und $\sigma$. Sein Risiko
+ist mindestens $r_{\mathrm{id}}(f)$ \cite[Kap.~11.2.2]{mallat}; % S. 552, unnummerierte Ungleichung nach (11.47)
+die ideale Auswahl ist also eine untere Schranke für das, was
+Hard-Thresholding erreichen kann.
+
+Anschaulich glättet das Verfahren nur dort, wo das Signal glatt ist: Gro\ss e
+Koeffizienten an scharfen Übergängen bleiben erhalten, und wo alle Koeffizienten
+unter $T$ liegen, wirkt das Nullsetzen wie ein lokales Mitteln der Messwerte
+\cite[Kap.~11.3.1]{mallat}. % S. 563, "Adaptive Smoothing"
+Soft-Thresholding verkleinert zusätzlich jeden verbleibenden Koeffizienten um
+$T$. Ist $T$ grö\ss er als alle Rauschwerte $\lvert\sigma\tilde Z_m\rvert$, so
+ist deshalb $\lvert\rho^{\mathrm S}_T(\tilde Y_m)\rvert\le\lvert\theta_m\rvert$
+für alle $m$: Kein Koeffizient der Schätzung ist betragsmä\ss ig grö\ss er als der
+entsprechende Koeffizient von $f$ \cite[Gl.~(11.50)]{mallat}. % S. 553, vgl. S. 565
+Hard-Thresholding lässt die Koeffizienten über $T$ unverändert; sie können durch
+das Rauschen grö\ss er sein als die von $f$ \cite[Kap.~11.3.1]{mallat}. % S. 565
+Beides zeigt Beispiel~\ref{bsp:diagonal} (Abbildung~\ref{fig:hard-soft}): Jedes
+Wertepaar wird gemittelt, der Sprung zwischen den Paaren bleibt beim
+Hard-Thresholding erhalten und wird beim Soft-Thresholding verkleinert.
+
+Wann ist $r_{\mathrm{id}}(f)$ klein? Sind $M$ Koeffizienten mindestens so
+gro\ss{} wie $\sigma$, so ist
+\[
+  r_{\mathrm{id}}(f) \;=\; \sum_{\lvert\theta_m\rvert<\sigma}\theta_m^2 \;+\; M\sigma^2
+\]
+\cite[Gl.~(11.36), (11.37)]{mallat}: % S. 550
+der Fehler, wenn man $f$ nur durch die $M$ grö\ss ten Koeffizienten darstellt,
+plus das Rauschen auf diesen $M$ Koeffizienten. Klein ist $r_{\mathrm{id}}(f)$
+also nur dann, wenn wenige Koeffizienten gro\ss{} und alle übrigen klein sind,
+das hei\ss t wenn $f$ sich durch wenige Basisvektoren gut darstellen lässt
+\cite[Kap.~11.2.2]{mallat}. % S. 556: "f must be well approximated by a few vectors in B"
+In diesem Fall nennen wir $f$ in der Basis $\{v_m\}$ dünnbesetzt: Nur wenige
+Koeffizienten, $M\ll N$, sind mindestens so gro\ss{} wie $\sigma$, und die
+übrigen tragen zusammen nur wenig Energie $\sum_{\lvert\theta_m\rvert<\sigma}\theta_m^2$.
+Dünnbesetzt zu sein hei\ss t also gerade, dass $r_{\mathrm{id}}(f)$ klein ist
+gegenüber dem Risiko $N\sigma^2$ ohne Bearbeitung.
+Darauf kommt es bei der Wahl der Basis an. Für Wavelets ist das Kriterium bei
+stückweise glatten Signalen erfüllt: Gro\ss e Koeffizienten entstehen nur dort,
+wo das Signal auf dem Träger des Wavelets einen scharfen Übergang hat, und davon
+gibt es nur wenige \cite[Kap.~11.3.1]{mallat}. % S. 565
+
+\begin{Beispiel}[Fortsetzung: Sinus mit Spitzen]
+\label{bsp:spitzen}
+Wir gehen vom Sinus $u$ aus Beispiel~\ref{bsp:sinus} aus und setzen drei
+schmale Spitzen hinzu:
+\[
+  s_n := \sum_{c\in\{1{,}3;\ 3{,}7;\ 6{,}2\}} 3\max\Bigl(0,\ 1-\frac{\lvert t_n-c\rvert}{0{,}03}\Bigr),
+  \qquad f := u + s ,
+\]
+also drei Dreiecke der Höhe $3$ und halben Breite $0{,}03$
+(Abbildung~\ref{fig:bsp-signal}). Der Sinus ist glatt, die Spitzen sind scharfe
+Übergänge an drei Stellen.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{abb5_1_signal.pdf}
+  \caption[Testsignal des Kapitels]{Das Testsignal $f = u + s$ aus
+  Beispiel~\ref{bsp:spitzen} (oben) und die Beobachtung $Y = f + 0{,}3\,Z$
+  (unten), $N = 2048$ (Code in Anhang~\ref{code:kap5-signal}).}
+  \label{fig:bsp-signal}
+\end{figure}
+
+Beide Signale transformieren wir wie in Beispiel~\ref{bsp:sinus}: mit dem
+Filter \eqref{eq:db2-koeff}, periodisiert, in $J = 5$ Stufen. Das liefert die
+$N = 2048$ Koeffizienten $\theta = Af = (a_5, d_5, \dots, d_1)$; jede Stufe
+halbiert die Anzahl, sodass $d_1$ aus $1024$, $d_2$ aus $512$, \dots, $d_5$ aus
+$64$ Koeffizienten besteht und die übrigen $64$ die Approximation $a_5$ bilden.
+Für jede Stufe zeigt die Tabelle (Code in Anhang~\ref{code:kap5-signal}):
+\begin{itemize}
+\item Anzahl: wie viele Koeffizienten die Stufe hat;
+\item grö\ss ter Betrag ($u$): den betragsgrö\ss ten Koeffizienten des Sinus auf
+  dieser Stufe;
+\item $\ge\sigma$ ($u$) und $\ge\sigma$ ($f$): wie viele Koeffizienten von $u$
+  bzw.\ $f$ betragsmä\ss ig mindestens $\sigma = 0{,}3$ sind. Genau diese
+  behält die ideale Auswahl (Definition~\ref{def:ideale-auswahl}); ihre Summe
+  ist die Zahl $M$ aus dem vorigen Absatz.
+\end{itemize}
+\anmerkung{phython code für tabelle nach unten...}
+\begin{center}
+\begin{tabular}{lrrrr}
+  \hline
+  Stufe & Anzahl & grö\ss ter Betrag ($u$) & $\ge\sigma$ ($u$) & $\ge\sigma$ ($f$)\\
+  \hline
+  $a_5$          &   $64$ & $5{,}4$    & $64$ & $64$\\
+  $d_5$ (grob)   &   $64$ & $0{,}36$    & $32$ & $33$\\
+  $d_4$          &  $128$ & $0{,}066$   &  $0$ &  $8$\\
+  $d_3$          &  $256$ & $0{,}012$   &  $0$ &  $9$\\
+  $d_2$          &  $512$ & $0{,}0021$  &  $0$ &  $4$\\
+  $d_1$ (fein)   & $1024$ & $0{,}00037$ &  $0$ &  $3$\\
+  \hline
+  Summe          & $2048$ &             & $96$ & $121$\\
+  \hline
+\end{tabular}
+\end{center}
+Für den Sinus sind nur die $64$ Approximationskoeffizienten und $32$
+Detailkoeffizienten auf Stufe $5$ mindestens so gro\ss{} wie $\sigma$, also
+$M = 96$ von $2048$; ab Stufe $4$ liegen alle Detailkoeffizienten weit
+darunter. Der Sinus ist in der Waveletbasis also dünnbesetzt. Dass der
+grö\ss te Detailkoeffizient von Stufe zu Stufe um den Faktor $5{,}5$ bis $5{,}7$
+kleiner wird, passt zu Lemma~\ref{lem:abklingen}: Die Schranke für
+$\lvert d_{j,k}\rvert$ ändert sich pro Stufe um
+$2^{p+1/2} = 2^{5/2}\approx5{,}66$ für $p=2$. Die Spitzen fügen $25$ gro\ss e
+Koeffizienten hinzu, $M = 121$, fast alle auf den feinen Stufen $d_4$ bis
+$d_1$ und nur in der Nähe der drei Spitzen; in
+Abbildung~\ref{fig:bsp-koeffizienten} heben sie sich deutlich von den
+kleinen Koeffizienten des Sinus ab.
+
+Daraus ergibt sich das Risiko \eqref{eq:orakel} der idealen Auswahl. Jeder
+behaltene Koeffizient kostet $\sigma^2 = 0{,}09$, jeder gelöschte sein Quadrat
+$\theta_m^2$. Für den Sinus ist $M\sigma^2 = 96\cdot0{,}09 = 8{,}6$, die
+gelöschten Koeffizienten tragen $1{,}1$ bei, zusammen
+$r_{\mathrm{id}}(u) = 9{,}7$. Für das Signal mit Spitzen ist
+$M\sigma^2 = 121\cdot0{,}09 = 10{,}9$, mit den gelöschten Koeffizienten
+$r_{\mathrm{id}}(f) = 12{,}6$. Ohne Bearbeitung wäre das Risiko
+$N\sigma^2 = 184{,}3$; selbst mit Spitzen ist der Fehler der idealen Auswahl
+also rund fünfzehnmal kleiner.
+\end{Beispiel}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\textwidth]{abb5_2a_koeffizienten_f.pdf}
+  \caption[Detailkoeffizienten des Testsignals]{Detailkoeffizienten
+  $d_5$ (oben, grob) bis $d_1$ (unten, fein) des Testsignals $f = u + s$ aus
+  Beispiel~\ref{bsp:spitzen}, aufgetragen über der Zeit $t$; sehr gro\ss e Werte
+  abgeschnitten.}
+  \label{fig:bsp-koeffizienten}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Wahl des Schwellenwerts}
+\section{Die Wahl der Schwelle}
+\label{sec:universelle-schwelle}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{VisuShrink}
 
-\anmerkung{Die universelle Schwelle folgt daraus, dass das Maximum von N unabhängigen Gau\ss{}variablen mit hoher Wahrscheinlichkeit unter $\sigma\sqrt{2 \log N}$ bleibt.}
-\quellen{
-  \begin{itemize}
-    \item Mallat, S. 625–626 [bestätigt]
-    \item Aqil, „Threshold selection", S. 57–58 [bestätigt]
-    \item SureShrink zur Einordnung: Mallat, S. 630–631 [bestätigt]; Multiscale-SURE, S. 637 [bestätigt]
-  \end{itemize}
-}
+Die Schwelle $T$ soll das Rauschen entfernen, aber möglichst wenig vom Signal.
+Ist $f = 0$, so besteht jeder Koeffizient nur aus Rauschen,
+$\tilde Y_m = \sigma\tilde Z_m$; damit alle gelöscht werden, muss $T$ grö\ss er
+sein als der grö\ss te Rauschanteil $\max_m\lvert\sigma\tilde Z_m\rvert$. Ist
+$f\neq0$, darf $T$ nicht viel grö\ss er sein, sonst gehen auch Koeffizienten mit
+gro\ss em Signalanteil verloren. $T$ soll also knapp über dem grö\ss ten
+Rauschanteil liegen \cite[Kap.~11.2.2]{mallat}. % S. 555--556, "Choice of Threshold"
+Dieses Maximum ist unbekannt. Für $N$ unabhängige Rauschanteile liegt es aber
+mit hoher Wahrscheinlichkeit knapp unter $\sigma\sqrt{2\ln N}$
+\cite[Gl.~(11.64)]{mallat}. % S. 556
+Das begründet die universelle Schwelle \cite[Kap.~11.3.2]{mallat} % S. 568: "the universal threshold of Theorem 11.7"
+\begin{equation}
+\label{eq:universelle-schwelle}
+  T \;=\; \sigma\sqrt{2\ln N}.
+\end{equation}
+Dass $T$ mit $N$ wächst, liegt an den Ausläufern der Normalverteilung: Unter
+mehr Werten kommen auch grö\ss ere vor \cite[Kap.~11.2.2]{mallat}. % S. 556
 
-\subsection{Schätzung der Rauschstärke: der MAD-Schätzer}
+\begin{Satz}[Donoho--Johnstone, {\cite[Satz~11.7]{mallat}}] % S. 553
+\label{satz:donoho-johnstone}
+Für $N\ge4$ und $T = \sigma\sqrt{2\ln N}$ erfüllt das Risiko des Hard- und des
+Soft-Thresholding-Schätzers
+\begin{equation}
+\label{eq:donoho-johnstone}
+  r(f) \;\le\; (2\ln N + 1)\bigl(\sigma^2 + r_{\mathrm{id}}(f)\bigr).
+\end{equation}
+\end{Satz}
 
-\anmerkung{$\sigma$ ist in der Praxis unbekannt und wird robust aus dem Median der Betragswerte der feinsten Detailkoeffizienten geschätzt, geteilt durch 0.6745.}
-\quellen{
-  \begin{itemize}
-    \item Mallat, Gl. (11.85), S. 636 [bestätigt]
-    \item Mallat, S. 635, 637 [bestätigt] — Robustheit, skalenweise Anwendung
-    \item LMR, Kap. 3.1.2, S. 239 [bestätigt] — Begründung, warum gerade 
-    \item $d_1$ die richtige Skala für die Schätzung ist
-  \end{itemize}
-}
+Für den Beweis siehe \cite[Satz~11.7, Lemma~11.1]{mallat}. % S. 553--555
+Bis auf den Faktor $2\ln N + 1$ ist Thresholding also so gut wie die ideale
+Auswahl: Ist $f$ dünnbesetzt und damit $r_{\mathrm{id}}(f)$ klein, so ist auch
+$r(f)$ klein. Mit diagonalen Schätzern lässt sich dieser Faktor für gro\ss e $N$
+nicht verbessern \cite[Gl.~(11.52)]{mallat}. % S. 553
+
+Woher der Faktor $2\ln N$ kommt, erklärt Mallat anschaulich
+\cite[Kap.~11.2.2]{mallat}: % S. 556, "Upper-Bound Interpretation"
+Ist $\lvert\theta_m\rvert\le\sigma$, so löscht Hard-Thresholding den
+Koeffizienten sehr wahrscheinlich, ist $\lvert\theta_m\rvert\ge2T$, so behält es
+ihn sehr wahrscheinlich, beides wie die ideale Auswahl. Nur wenn
+$\lvert\theta_m\rvert$ in der Grö\ss enordnung von $T$ liegt, kann es irrtümlich
+löschen; das kostet $\theta_m^2\approx T^2 = 2\ln N\,\sigma^2$ statt $\sigma^2$.
+Da solche Koeffizienten meist selten sind, ist das Verhältnis zum Risiko der
+idealen Auswahl meist deutlich kleiner als $2\ln N$. Die Schwelle \eqref{eq:universelle-schwelle} ist
+allerdings nicht optimal: Eine kleinere Schwelle senkt das Risiko oft, und
+Soft-Thresholding braucht für ähnliche Ergebnisse wie Hard-Thresholding etwa die
+halbe Schwelle \cite[Kap.~11.2.2]{mallat}. % S. 556
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Schätzung der Rauschstärke}
+\label{sec:mad}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Die Schwelle enthält das unbekannte $\sigma$. Mallat schätzt es aus den $N/2$
+Detailkoeffizienten $d_{1,k}$ der feinsten Stufe \cite[Kap.~11.3.1]{mallat}: % S. 565
+Wo das Signal auf dem Träger des Wavelets glatt ist, ist sein Koeffizient
+klein, und $d_{1,k}$ besteht praktisch nur aus Rauschen. Nur an den wenigen
+scharfen Übergängen ist er gro\ss; diese Werte nennt Mallat Ausrei\ss er. Auch
+beim gemessenen EKG enthält $d_1$ fast das gesamte Rauschen
+\cite[Kap.~3.1.2]{lmr}. % S. 239
+
+Der Median von $P$ Zahlen ist der mittlere Wert, wenn man sie der Grö\ss e nach
+ordnet, also der Wert vom Rang $P/2$ \cite[Kap.~11.3.1]{mallat}. % S. 565
+Anders als der Mittelwert hängt er nicht davon ab, wie gro\ss{} die Werte über ihm
+sind, und wird von wenigen Ausrei\ss ern daher kaum verändert. Ist $M$ der
+Median der Beträge von $P$ unabhängigen normalverteilten Zufallsvariablen mit
+Erwartungswert $0$ und Varianz $\sigma^2$, so ist
+$\mathbb E[M]\approx0{,}6745\,\sigma$ \cite[Kap.~11.3.1]{mallat}. % S. 565
+Daraus ergibt sich der Schätzer
+\begin{equation}
+\label{eq:mad}
+  \hat\sigma \;=\; \frac{\operatorname{Median}\bigl(\lvert d_{1,k}\rvert : 0\le k<N/2\bigr)}{0{,}6745}
+\end{equation}
+\cite[Gl.~(11.85)]{mallat}. % S. 565
+Er setzt voraus, dass das Rauschen in allen Koeffizienten dieselbe Stärke hat,
+was nach Lemma~\ref{lem:rauschen-invariant} für wei\ss es Rauschen zutrifft. Ist
+das Rauschen nicht wei\ss, hängt seine Varianz vom Basisvektor ab, und die
+Schwelle muss mit dem Koeffizienten variieren
+\cite[Kap.~11.2.2]{mallat}; % S. 557, "Colored Noise"
+darauf kommt Kapitel~\ref{chapter:anwendung} zurück.
+
+\paragraph{Das vollständige Verfahren.}
+Mallat schwellt alle Koeffizienten der Waveletbasis, auch die der gröbsten
+Approximation \cite[Gl.~(11.84)]{mallat}, % S. 563
+und bestimmt $\sigma$ mit \eqref{eq:mad} \cite[Kap.~11.3.1]{mallat}. % S. 565
+Zusammen ergibt sich:
+
+\begin{algorithm}[H]
+\caption[Entrauschen mit universeller Schwelle]{Entrauschen mit universeller
+Schwelle nach \cite[Kap.~11.2--11.3]{mallat}}
+\label{alg:visushrink}
+\begin{algorithmic}[1]
+\Require Messwerte $Y\in\R^N$, Filter $h$, $g$, Tiefe $J$ mit $2^{J}\mid N$
+\State $(a_J,d_J,\dots,d_1) \gets AY$ \Comment{Algorithmus~\ref{alg:mallat}, periodisiert}
+\State $T \gets \hat\sigma\sqrt{2\ln N}$ mit $\hat\sigma$ aus \eqref{eq:mad}
+\State ersetze jeden Koeffizienten $c$ von $a_J,d_J,\dots,d_1$ durch $\rho_T(c)$
+\State \Return $\hat f \gets A^\top(\text{geschwellte Koeffizienten})$ \Comment{Satz~\ref{satz:rekonstruktion}}
+\end{algorithmic}
+\end{algorithm}
+
+Satz~\ref{satz:donoho-johnstone} setzt das wahre $\sigma$ voraus; mit dem
+geschätzten $\hat\sigma$ ist die Schranke \eqref{eq:donoho-johnstone} nur ein
+Anhaltspunkt. Ferner werden in Zeile~3 auch die Approximationskoeffizienten $a_J$
+geschwellt. Sie tragen den glatten, groben Anteil des Signals und sind meist
+gro\ss; Soft-Thresholding verkleinert jeden von ihnen um $T$ und verschiebt so den
+glatten Anteil, wie schon in Beispiel~\ref{bsp:diagonal} den Mittelwert. In
+seinem Beispiel zur Bildentrauschung schwellt Mallat die
+Skalierungskoeffizienten deshalb nicht \cite[Kap.~11.3.2]{mallat}. % S. 568: "low-frequency scaling coefficients are not thresholded"
+
+\begin{Beispiel}[Fortsetzung: Entrauschen des Testsignals]
+\label{bsp:mad-testsignal}
+Wir entrauschen jetzt die Messwerte $Y = f + 0{,}3\,Z$ aus
+Beispiel~\ref{bsp:spitzen}.
+
+Zuerst wird die Schwelle bestimmt. Der Schätzer \eqref{eq:mad} liefert
+$\hat\sigma = 0{,}300$, trifft das wahre $\sigma = 0{,}3$ also sehr genau.
+Damit ist $T = \hat\sigma\sqrt{2\ln N} = 1{,}17$.
+
+Abbildung~\ref{fig:bsp-koeffizienten-Y} zeigt, was diese Schwelle trennt. Das
+Rauschen bleibt auf allen Stufen zwischen den gestrichelten Linien: Kein
+einziger Rauschkoeffizient erreicht $T$, der grö\ss te hat den Betrag $1{,}02$.
+Darüber ragen nur die Koeffizienten an den drei Spitzen hinaus. 
+Hard-Thresholding behält deshalb nur $75$ der $2048$ Koeffizienten.
+
+Das Ergebnis zeigt Abbildung~\ref{fig:bsp-entrauscht}. Mit Hard-Thresholding
+sinkt die Fehlerenergie von $181{,}3$ auf $27{,}6$, also auf etwa ein Siebtel,
+und die Spitzen bleiben weitgehend erhalten. Soft-Thresholding mit derselben
+Schwelle erreicht nur $127{,}1$ und macht die Spitzen deutlich niedriger. Der
+Grund ist, dass Soft-Thresholding auch jeden behaltenen Koeffizienten um $T$
+verkleinert. Das betrifft vor allem die $64$ Approximationskoeffizienten, die
+alle grö\ss er als $T$ sind und den glatten Sinus tragen.
+\end{Beispiel}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{abb5_2b_koeffizienten_Y.pdf}
+  \caption[Detailkoeffizienten der Messwerte]{Detailkoeffizienten
+  $d_5$ (oben) bis $d_1$ (unten) der Messwerte $Y = f + 0{,}3\,Z$ aus
+  Beispiel~\ref{bsp:mad-testsignal}, im selben Ma\ss stab wie
+  Abbildung~\ref{fig:bsp-koeffizienten}; gestrichelt die Schwelle
+  $\pm T = \pm1{,}17$.}
+  \label{fig:bsp-koeffizienten-Y}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{abb5_3_entrauscht.pdf}
+  \caption[Entrauschtes Testsignal]{Schätzungen aus $Y$ mit
+  Algorithmus~\ref{alg:visushrink}, $T = 1{,}17$ (links), und Ausschnitt um die
+  mittlere Spitze mit dem wahren Signal $f$ (rechts)(Code in Anhang~\ref{anh:code-entrauscht}).}
+  \label{fig:bsp-entrauscht}
+\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Anwendung: Entrauschung von EKG-Signalen}
@@ -3808,10 +4276,16 @@ doppelte Nullstelle --, ist $F$ stetig differenzierbar mit $F'=f$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Alle Abbildungen und numerischen Werte dieser Arbeit wurden mit Python
-(NumPy, SciPy, Matplotlib) erzeugt. \anmerkung{Versionen angeben
-(\texttt{python --version}, \texttt{pip show numpy scipy matplotlib pywavelets}).}
+(NumPy, PyWavelets \cite{pywavelets}, Matplotlib) erzeugt.
+\anmerkung{Versionen angeben (\texttt{python --version},
+\texttt{pip show numpy matplotlib pywavelets}).}
+Die Skripte zu Kapitel~\ref{chapter:denoising} verwenden durchgehend den
+Filter \eqref{eq:db2-koeff}, die periodisierte Transformation
+(Abschnitt~\ref{sec:onb-invarianz}) mit $J = 5$ Stufen und $N = 2048$
+Abtastwerte. Der feste Startwert $93$ des Zufallsgenerators sorgt dafür, dass
+alle Abbildungen dieses Kapitels dieselbe Realisierung des Rauschens zeigen.
 
-\section{Testsignal: Fourier- und Wavelet-Transformierte}
+\section{Beispiel zur kontinuierlichen Wavelet-Transformation}
 \label{anh:code-testsignal}
 
 Der folgende Code erzeugt die Abbildungen~\ref{fig:signal},
@@ -3822,14 +4296,92 @@ aus der Stammfunktion $F$ berechnet.
 \IfFileExists{code/BeispielCWT.py}{%
   \lstinputlisting[caption={Testsignal aus Beispiel~\ref{bsp:testsignal}},
     label={lst:testsignal}]{code/BeispielCWT.py}}{%
-  \anmerkung{Datei \texttt{code/BeispielCWT.py} fehlt noch -- Skript in den
-  Ordner \texttt{code/} neben der Haupt-.tex-Datei legen.}}
+  \anmerkung{Datei \texttt{code/BeispielCWT.py} fehlt noch.}}
 
-% weitere Abschnitte, z. B.:
-% \section{Numerische Kontrolle der Plancherel-Formel}
-% \lstinputlisting{code/plancherel.py}
-% \section{Entrauschung (Kapitel~\ref{chapter:anwendung})}
-% \lstinputlisting{code/denoising.py}
+\section{Daubechies-Wavelet}
+\label{anh:code-db2}
+
+Der folgende Code erzeugt Abbildung~\ref{fig:db2}. PyWavelets berechnet
+$\varphi_2$ und $\psi_2$ durch Iteration der Skalierungsgleichung
+\eqref{eq:skalierungsgleichung} und legt $\psi_2$ auf $[0,3]$. Die
+Verschiebung um $1$ ergibt den Träger $[-1,2]$, der nach
+Satz~\ref{satz:daubechies} zur Wahl \eqref{eq:g-aus-h} gehört.
+
+\IfFileExists{code/kap4_db2.py}{%
+  \lstinputlisting[caption={Skalierungsfunktion $\varphi_2$ und Wavelet $\psi_2$ aus Satz~\ref{satz:daubechies}},
+    label={lst:db2}]{code/kap4_db2.py}}{%
+  \anmerkung{Datei \texttt{code/kap4\_db2.py} fehlt noch.}}
+
+\section{Verrauschter Sinus}
+\label{anh:code-sinus}
+
+Der folgende Code erzeugt Abbildung~\ref{fig:bsp-sinus} und die Zahlen aus
+Beispiel~\ref{bsp:sinus}: die Fehlerenergie $\norm{Y-u}^2$, ihren
+Erwartungswert $N\sigma^2$ sowie empirischen Mittelwert und empirische
+Varianz von $\tilde Z = AZ$. Als Kontrolle von
+Lemma~\ref{lem:dwt-orthogonal} gibt das Skript zusätzlich
+$\norm{AZ} - \norm{Z}$ aus; der Wert verschwindet im Rahmen der
+Rundungsgenauigkeit.
+
+\IfFileExists{code/kap5_sinus.py}{%
+  \lstinputlisting[caption={Verrauschter Sinus aus Beispiel~\ref{bsp:sinus}},
+    label={lst:sinus}]{code/kap5_sinus.py}}{%
+  \anmerkung{Datei \texttt{code/kap5\_sinus.py} fehlt noch.}}
+
+\section{Sinus mit Spitzen}
+\label{code:kap5-signal}
+
+Der folgende Code erzeugt Abbildung~\ref{fig:bsp-signal} und die Zahlen aus
+Beispiel~\ref{bsp:spitzen}: für jede Stufe die Anzahl der Koeffizienten, den
+grö\ss ten Betrag beim Sinus und die Anzahl der Koeffizienten von $u$ und $f$
+mit Betrag mindestens $\sigma$, au\ss erdem $M$ und das Risiko
+$r_{\mathrm{id}}$ der idealen Auswahl \eqref{eq:orakel}.
+
+\IfFileExists{code/kap5_signal.py}{%
+  \lstinputlisting[caption={Sinus mit Spitzen aus Beispiel~\ref{bsp:spitzen}},
+    label={lst:kap5-signal}]{code/kap5_signal.py}}{%
+  \anmerkung{Datei \texttt{code/kap5\_signal.py} fehlt noch.}}
+
+\section{Detailkoeffizienten des Testsignals}
+\label{anh:code-koeffizienten}
+
+Der folgende Code erzeugt Abbildung~\ref{fig:bsp-koeffizienten}. Der
+$k$-te Koeffizient der Stufe $j$ wird in der Mitte des Zeitabschnitts
+$\bigl[k\,2^j/256,\ (k+1)\,2^j/256\bigr)$ eingezeichnet, für den er steht.
+Beträge über $2{,}5$ werden abgeschnitten.
+
+\IfFileExists{code/kap5_koeffizienten.py}{%
+  \lstinputlisting[caption={Detailkoeffizienten des Testsignals aus Beispiel~\ref{bsp:spitzen}},
+    label={lst:koeffizienten}]{code/kap5_koeffizienten.py}}{%
+  \anmerkung{Datei \texttt{code/kap5\_koeffizienten.py} fehlt noch.}}
+
+\section{Detailkoeffizienten der Messwerte}
+\label{anh:code-koeffizienten-Y}
+
+Der folgende Code erzeugt Abbildung~\ref{fig:bsp-koeffizienten-Y} und die
+Zahlen aus dem ersten Absatz von Beispiel~\ref{bsp:mad-testsignal}: den
+Schätzwert $\hat\sigma$ nach \eqref{eq:mad}, die Schwelle $T$, den grö\ss ten
+Rauschkoeffizienten $\max_m\lvert0{,}3\,\tilde Z_m\rvert$ und die Anzahl der
+Koeffizienten, die Hard-Thresholding behält.
+
+\IfFileExists{code/kap5_koeffizienten_Y.py}{%
+  \lstinputlisting[caption={Detailkoeffizienten der Messwerte aus Beispiel~\ref{bsp:mad-testsignal}},
+    label={lst:koeffizienten-Y}]{code/kap5_koeffizienten_Y.py}}{%
+  \anmerkung{Datei \texttt{code/kap5\_koeffizienten\_Y.py} fehlt noch.}} 
+  
+  
+\section{Entrauschtes Testsignal}
+\label{anh:code-entrauscht}
+
+Der folgende Code erzeugt Abbildung~\ref{fig:bsp-entrauscht} und die
+Fehlerenergien aus Beispiel~\ref{bsp:mad-testsignal}. Wie in
+Algorithmus~\ref{alg:visushrink} werden alle Koeffizienten mit der Schwelle
+$T$ bearbeitet, einschlie\ss lich der Approximation $a_5$.
+
+\IfFileExists{code/kap5_entrauscht.py}{%
+  \lstinputlisting[caption={Entrauschen des Testsignals aus Beispiel~\ref{bsp:mad-testsignal}},
+    label={lst:entrauscht}]{code/kap5_entrauscht.py}}{%
+  \anmerkung{Datei \texttt{code/kap5\_entrauscht.py} fehlt noch.}}  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

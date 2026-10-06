@@ -3,9 +3,10 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: august.aux
 The style file: alpha.bst
 Database file #1: literature.bib
+Warning--I didn't find a database entry for "pywavelets"
 You've used 11 entries,
             2543 wiz_defined-function locations,
-            638 strings with 6314 characters,
+            639 strings with 6324 characters,
 and the built_in function-call counts, 4098 in all, are:
 = -- 400
 > -- 179
@@ -44,3 +45,4 @@ warning$ -- 0
 while$ -- 38
 width$ -- 16
 write$ -- 157
+(There was 1 warning)
