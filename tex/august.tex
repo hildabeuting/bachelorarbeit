@@ -458,7 +458,7 @@ im Fall $\mu = 0$, $\sigma = 1$.
 Gemeinsam normalverteilt hei\ss en Zufallsvariablen, die zusammen einen
 Gau\ss'schen Zufallsvektor bilden. Für sie gilt:
 
-\begin{Satz}[{\cite[Kap.~11.1.1]{mallat}}] % S. 538
+\begin{Satz}[vgl.\ {\cite[Kap.~11.1.1]{mallat}}] % S. 538, dort für zwei Zufallsvektoren
 \label{satz:unkorreliert-unabhaengig}
 Gemeinsam normalverteilte Zufallsvariablen, die paarweise unkorreliert sind,
 sind unabhängig.
@@ -3263,7 +3263,7 @@ $\sigma>0$ \cite[Gl.~(11.26)]{mallat}. % S. 548 (dort X = f + W mit W = sigma Z)
 Anders als in den Kapiteln~\ref{chapter:mra} und~\ref{chapter:dwt} ist $f$
 hier keine Funktion, sondern der unbekannte Vektor $f\in\R^N$ der Abtastwerte
 des Signals. Die Messwerte dienen direkt als Startkoeffizienten $a_{0,n}$ von
-Algorithmus~\ref{alg:mallat} \cite[Kap.~3.1.1]{lmr}, \cite[Kap.~7.3.1]{mallat}. % LMR S. 238 "Wir fassen zusammen"; Mallat S. 301 "Initialization", "A simpler and faster approach"
+Algorithmus~\ref{alg:mallat} \cite[Kap.~3.1.1]{lmr}. % S. 237--238 "Wir fassen zusammen"
 Das Rauschen wird mit $Z$ bezeichnet, da $W$ bereits für die Detailräume
 vergeben ist.
 
@@ -3362,18 +3362,18 @@ Jeder Faktor ist nach Lemma~\ref{lem:dwt-orthogonal} orthogonal, also auch $A$.
 Wir bezeichnen die Zeilen von $A$ mit $v_0,\dots,v_{N-1}$. Sie bilden eine
 Orthonormalbasis des $\R^N$, und jeder Koeffizient ist ein Skalarprodukt mit
 einer von ihnen; Mallat nennt sie diskrete Wavelets und Skalierungsfunktionen
-\cite[Kap.~7.5, Gl.~(7.173)]{mallat}. % S. 318 (dort g_m statt v_m)
+\cite[Kap.~7.5, Gl.~(7.173)]{mallat}. % S. 318 (dort phi^int_{j,n}, psi^int_{j,n} statt v_m); in Kap. 11 g_m
 Aus \eqref{eq:rauschmodell} wird damit
 \begin{equation}
 \label{eq:rauschmodell-koeff}
   \tilde Y_m \;=\; \theta_m + \sigma\tilde Z_m \qquad\text{mit }
   \tilde Y_m = \scal{Y}{v_m},\ \theta_m = \scal{f}{v_m},\ \tilde Z_m = \scal{Z}{v_m},
 \end{equation}
-kurz $\tilde Y = AY$, $\theta = Af$, $\tilde Z = AZ$.
+kurz $\tilde Y = AY$, $\theta = Af$, $\tilde Z = AZ$ \cite[Kap.~11.2.1]{mallat}. % S. 548, dort X_B = f_B + W_B mit g_m statt v_m
 
 \paragraph{Was mit dem Rauschen geschieht.}
 
-\begin{Lemma}[{\cite[Kap.~11.2.1--11.2.2]{mallat}}] % S. 549, 553, 556
+\begin{Lemma}[{\cite[Kap.~11.2.1--11.2.2]{mallat}}] % S. 549, 554, 556
 \label{lem:rauschen-invariant}
 $\tilde Z$ ist wieder Gau\ss'sches wei\ss es Rauschen der Varianz $1$; die
 $\tilde Z_0,\dots,\tilde Z_{N-1}$ sind also unabhängig und standardnormalverteilt.
@@ -3391,13 +3391,13 @@ $\mathbb E[\tilde Z_m] = \sum_n v_m[n]\,\mathbb E[Z_n] = 0$ und
 \cite[Kap.~11.2.1]{mallat}, % S. 549
 da die $v_m$ eine Orthonormalbasis bilden. Die $\tilde Z_m$ sind
 Linearkombinationen der gemeinsam normalverteilten $Z_n$ und damit selbst
-gemeinsam normalverteilt \cite[Kap.~11.2.2]{mallat}; % S. 553/556
+gemeinsam normalverteilt, vgl.\ \cite[Kap.~11.2.2]{mallat}; % S. 554, 556: dort nur das Ergebnis
 nach Satz~\ref{satz:unkorreliert-unabhaengig} sind sie also unabhängig.
 \end{proof}
 
-Die Transformation verändert also das Signal, das Rauschen aber nicht: Jeder
-Koeffizient trägt Rauschen derselben Stärke $\sigma$, und das Rauschen
-beeinflusst die Wahl der Basis nicht \cite[Kap.~11.2.1]{mallat}. % S. 549
+Die Transformation verändert also das Signal, die Verteilung des Rauschens
+aber nicht: Jeder Koeffizient trägt Rauschen derselben Stärke $\sigma$, und das
+Rauschen beeinflusst die Wahl der Basis nicht \cite[Kap.~11.2.1]{mallat}. % S. 549
 
 \begin{Beispiel}[Ein verrauschter Sinus]
 \label{bsp:sinus}
@@ -3446,7 +3446,7 @@ einem Faktor $\lambda_m$ multipliziert, der angibt, wie viel von ihm übrig
 bleibt: $\lambda_m = 1$ behält ihn, $\lambda_m = 0$ löscht ihn, ein Wert
 dazwischen verkleinert ihn.
 
-\begin{Definition}[Diagonaler Schätzer, {\cite[Gl.~(11.27)]{mallat}}] % S. 549
+\begin{Definition}[Diagonaler Schätzer, {\cite[Kap.~11.2.1, Gl.~(11.27)]{mallat}}] % S. 549; dort a_m(X_B[m]) statt lambda_m, g_m statt v_m
 \label{def:diagonal}
 Ein Schätzer hei\ss t diagonal in der Basis $\{v_m\}$, wenn er jeden
 Koeffizienten mit einem Faktor $\lambda_m$ multipliziert,
@@ -3458,11 +3458,10 @@ $\hat f = A^\top\hat\theta$. Dabei darf $\lambda_m$ von den Messwerten nur über
 $\tilde Y_m$ abhängen, nicht über die übrigen Koeffizienten $\tilde Y_k$,
 $k\neq m$. Hängt kein $\lambda_m$ von den Messwerten ab, hei\ss t der Schätzer
 linear.
-\end{Definition}
+\end{Definition} 
 
-Bei einem linearen diagonalen Schätzer sind die $\lambda_m$ feste Zahlen; sie
-dürfen von $f$ und $\sigma$ abhängen, aber nicht vom Zufall. In den
-Koeffizienten wirkt er als Multiplikation mit einer Diagonalmatrix,
+In den Koeffizienten ist ein diagonaler Schätzer die Multiplikation mit einer
+Diagonalmatrix,
 \[
   \hat\theta \;=\;
   \begin{pmatrix}
@@ -3471,12 +3470,11 @@ Koeffizienten wirkt er als Multiplikation mit einer Diagonalmatrix,
     \vdots & \ddots & \ddots & 0 \\
     0 & \cdots & 0 & \lambda_{N-1}
   \end{pmatrix}
-  \tilde Y ,
+  \tilde Y .
 \]
-daher der Name. Die beiden wichtigsten diagonalen Schätzer sind dagegen nicht
-linear: Sie vergleichen den Betrag jedes Koeffizienten mit einer Schwelle $T>0$,
-und ob ein Koeffizient bleibt, hängt damit von $\tilde Y_m$ selbst ab
-\cite[Kap.~11.2.2]{mallat}. % S. 552
+Die beiden wichtigsten diagonalen Schätzer sind nicht linear: Sie vergleichen
+$\lvert\tilde Y_m\rvert$ mit einer Schwelle $T>0$, die Faktoren hängen also von
+$\tilde Y_m$ selbst ab \cite[Kap.~11.2.2]{mallat}. % S. 552 (11.45); S. 553 "nonlinear projector"
 
 \begin{Definition}[Hard- und Soft-Thresholding, {\cite[Gl.~(11.47), (11.49)]{mallat}}] % S. 552--553
 \label{def:thresholding}
@@ -3555,8 +3553,6 @@ es auch den Approximationskoeffizienten von $9$ auf $7$ und senkt so den
 Mittelwert von $4{,}5$ auf $3{,}5$; darauf kommt Abschnitt~\ref{sec:mad}
 zurück. In beiden Fällen wird jeder Koeffizient allein
 anhand seines eigenen Betrags behandelt (Abbildung~\ref{fig:thresholding}).
-Nicht diagonal wäre dagegen etwa $\hat\theta_1 = \tfrac12(\tilde Y_0 + \tilde Y_1)$,
-da hier $\hat\theta_1$ auch von $\tilde Y_0$ abhängt.
 \end{Beispiel}
 
 \begin{figure}[htbp]
@@ -3588,8 +3584,9 @@ da hier $\hat\theta_1$ auch von $\tilde Y_0$ abhängt.
   \label{fig:hard-soft}
 \end{figure}
 
-Wie gut kann ein solcher Schätzer bestenfalls sein? Dazu zerlegt man den Fehler
-in die Beiträge der einzelnen Koeffizienten.
+Welches Risiko ein diagonaler Schätzer bestenfalls erreicht, lässt sich
+koeffizientenweise untersuchen: Das Risiko zerfällt in eine Summe von
+Einzelbeiträgen.
 
 \begin{Lemma}[{\cite[Gl.~(11.28)]{mallat}}] % S. 549
 \label{lem:risiko-summe}
@@ -3600,26 +3597,26 @@ Für jeden Schätzer der Form $\hat f = A^\top\hat\theta$ gilt
 \end{equation}
 \end{Lemma}
 
-\begin{proof}
-Hier ist $\norm{x}^2 = \sum_{n=0}^{N-1} x_n^2$ die euklidische Norm des $\R^N$.
-Wegen $\hat f = A^\top\hat\theta$ und $A A^\top = I$ ist $A\hat f = \hat\theta$,
-und nach \eqref{eq:rauschmodell-koeff} ist $Af = \theta$. Da $A$ nach
-Lemma~\ref{lem:dwt-orthogonal} orthogonal ist und daher die Länge erhält, folgt
-\[
-  \norm{\hat f - f}^2 \;=\; \norm{A(\hat f - f)}^2 \;=\; \norm{\hat\theta - \theta}^2
-  \;=\; \sum_{m=0}^{N-1}\lvert\hat\theta_m - \theta_m\rvert^2 .
-\]
-Bilden des Erwartungswerts, der linear ist, liefert \eqref{eq:risiko-summe}.
-\end{proof}
+%\begin{proof}
+%Hier ist $\norm{x}^2 = \sum_{n=0}^{N-1} x_n^2$ die euklidische Norm des $\R^N$.
+%Wegen $\hat f = A^\top\hat\theta$ und $A A^\top = I$ ist $A\hat f = \hat\theta$,
+%und nach \eqref{eq:rauschmodell-koeff} ist $Af = \theta$. Da $A$ nach
+%Lemma~\ref{lem:dwt-orthogonal} orthogonal ist und daher die Länge erhält, folgt
+%\[
+%  \norm{\hat f - f}^2 \;=\; \norm{A(\hat f - f)}^2 \;=\; \norm{\hat\theta - \theta}^2
+%  \;=\; \sum_{m=0}^{N-1}\lvert\hat\theta_m - \theta_m\rvert^2 .
+%\]
+%Bilden des Erwartungswerts, der linear ist, liefert \eqref{eq:risiko-summe}.
+%\end{proof}
 
-Bei einem diagonalen Schätzer hängt der $m$-te Summand nur vom $m$-ten
-Koeffizienten ab; man kann also für jeden Koeffizienten einzeln entscheiden,
-was mit ihm geschieht. Jeder Koeffizient
-$\tilde Y_m = \theta_m + \sigma\tilde Z_m$ besteht aus einem Signalanteil
-$\theta_m$ und einem Rauschanteil $\sigma\tilde Z_m$; bekannt ist nur die Summe.
-Wir betrachten feste Faktoren $\lambda_m \in \{0,1\}$, also lineare diagonale
-Schätzer, die jeden Koeffizienten entweder behalten oder löschen
-\cite[Kap.~11.2.1]{mallat}: % S. 550
+Bei einem diagonalen Schätzer ist $\hat\theta_m = \lambda_m\tilde Y_m$; der
+$m$-te Summand in \eqref{eq:risiko-summe} hängt also nur von $\lambda_m$ ab, und
+das Risiko wird minimiert, indem man jeden Summanden einzeln minimiert. Bekannt
+ist dabei nur die Summe $\tilde Y_m = \theta_m + \sigma\tilde Z_m$, nicht ihre
+beiden Anteile. Wir betrachten zunächst feste Faktoren $\lambda_m \in \{0,1\}$,
+also diagonale Schätzer, die jeden Koeffizienten entweder behalten oder
+löschen \cite[Kap.~11.2.1]{mallat}: % S. 550
+
 \begin{itemize}
 \item Behalten, $\lambda_m = 1$: Das Signal bleibt, aber auch das Rauschen; die
   Abweichung ist $\hat\theta_m - \theta_m = \sigma\tilde Z_m$. Da $\tilde Z_m$
@@ -3629,31 +3626,25 @@ Schätzer, die jeden Koeffizienten entweder behalten oder löschen
   weg, aber ebenso das Signal; die Abweichung ist $-\theta_m$, der Fehler
   $\theta_m^2$.
 \end{itemize}
-Behalten kostet also stets $\sigma^2$, Löschen $\theta_m^2$. Behalten ist
+Behalten kostet also im Mittel $\sigma^2$, Löschen $\theta_m^2$. Behalten ist
 daher genau dann mindestens so gut wie Löschen, wenn $\lvert\theta_m\rvert$
 mindestens so gro\ss{} wie $\sigma$ ist: Für
 $\sigma = 0{,}3$ ist etwa bei $\theta_m = 2$ Behalten besser ($0{,}09$ statt $4$),
 bei $\theta_m = 0{,}1$ Löschen ($0{,}01$ statt $0{,}09$).
 
-\begin{Definition}[Ideale Auswahl, {\cite[Gl.~(11.32)--(11.34)]{mallat}}] % S. 550 "oracle projector"; S. 556 "ideal coefficient selection"
+\begin{Definition}[Ideale Auswahl, {\cite[Gl.~(11.32)--(11.34)]{mallat}}] % S. 550 "oracle projector", dort r_pr statt r_id; S. 556 "ideal coefficient selection"
 \label{def:ideale-auswahl}
-Die ideale Auswahl ist der lineare diagonale Schätzer mit $\lambda_m = 1$ für
-$\lvert\theta_m\rvert \ge \sigma$ und $\lambda_m = 0$ sonst. Nach
-Lemma~\ref{lem:risiko-summe} ist ihr Risiko
+Die ideale Auswahl ist der diagonale Schätzer mit den festen Faktoren
+$\lambda_m = 1$ für $\lvert\theta_m\rvert \ge \sigma$ und $\lambda_m = 0$ sonst.
+\end{Definition}
+
+Nach Lemma~\ref{lem:risiko-summe} ist ihr Risiko
 \begin{equation}
 \label{eq:orakel}
   r_{\mathrm{id}}(f) \;=\; \sum_{m=0}^{N-1}\min\bigl(\theta_m^2,\,\sigma^2\bigr),
 \end{equation}
-und kein linearer diagonaler Schätzer mit Faktoren $\lambda_m \in \{0,1\}$ hat
-ein kleineres Risiko.
-\end{Definition}
-
-Die Einschränkung auf feste Faktoren ist wesentlich. Dürfte $\lambda_m$ zugleich
-von $\theta_m$ und $\tilde Y_m$ abhängen, so könnte man etwa genau dann
-behalten, wenn der Rauschanteil kleiner ist als der Signalanteil,
-$\sigma^2\tilde Z_m^2 < \theta_m^2$, und erhielte den Fehler
-$\mathbb E\bigl[\min(\sigma^2\tilde Z_m^2,\theta_m^2)\bigr]
-< \min(\sigma^2,\theta_m^2)$.
+und kein diagonaler Schätzer mit festen Faktoren $\lambda_m \in \{0,1\}$ hat
+ein kleineres Risiko. % Mallat S. 550 "The nonlinear projector that minimizes the risk (11.29)"
 
 Da die $\lambda_m$ der idealen Auswahl vom unbekannten $\theta_m$ abhängen, lässt
 sie sich nicht berechnen; Mallat spricht von einem Orakel
@@ -3661,45 +3652,26 @@ sie sich nicht berechnen; Mallat spricht von einem Orakel
 Hard-Thresholding ist ihr praktischer Ersatz: Es behält oder löscht ebenfalls
 jeden Koeffizienten, entscheidet aber nach dem bekannten $\lvert\tilde Y_m\rvert$
 und der Schwelle $T$ statt nach $\lvert\theta_m\rvert$ und $\sigma$. Sein Risiko
-ist mindestens $r_{\mathrm{id}}(f)$ \cite[Kap.~11.2.2]{mallat}; % S. 552, unnummerierte Ungleichung nach (11.47)
+ist mindestens $r_{\mathrm{id}}(f)$ \cite[Kap.~11.2.2]{mallat}; % S. 553 oben, unnummerierte Ungleichung
 die ideale Auswahl ist also eine untere Schranke für das, was
 Hard-Thresholding erreichen kann.
 
-Anschaulich glättet das Verfahren nur dort, wo das Signal glatt ist: Gro\ss e
-Koeffizienten an scharfen Übergängen bleiben erhalten, und wo alle Koeffizienten
-unter $T$ liegen, wirkt das Nullsetzen wie ein lokales Mitteln der Messwerte
-\cite[Kap.~11.3.1]{mallat}. % S. 563, "Adaptive Smoothing"
-Soft-Thresholding verkleinert zusätzlich jeden verbleibenden Koeffizienten um
-$T$. Ist $T$ grö\ss er als alle Rauschwerte $\lvert\sigma\tilde Z_m\rvert$, so
-ist deshalb $\lvert\rho^{\mathrm S}_T(\tilde Y_m)\rvert\le\lvert\theta_m\rvert$
-für alle $m$: Kein Koeffizient der Schätzung ist betragsmä\ss ig grö\ss er als der
-entsprechende Koeffizient von $f$ \cite[Gl.~(11.50)]{mallat}. % S. 553, vgl. S. 565
-Hard-Thresholding lässt die Koeffizienten über $T$ unverändert; sie können durch
-das Rauschen grö\ss er sein als die von $f$ \cite[Kap.~11.3.1]{mallat}. % S. 565
-Beides zeigt Beispiel~\ref{bsp:diagonal} (Abbildung~\ref{fig:hard-soft}): Jedes
-Wertepaar wird gemittelt, der Sprung zwischen den Paaren bleibt beim
-Hard-Thresholding erhalten und wird beim Soft-Thresholding verkleinert.
-
-Wann ist $r_{\mathrm{id}}(f)$ klein? Sind $M$ Koeffizienten mindestens so
-gro\ss{} wie $\sigma$, so ist
+Sind $M$ Koeffizienten mindestens so gro\ss{} wie $\sigma$, so lässt sich das
+Risiko der idealen Auswahl schreiben als
 \[
   r_{\mathrm{id}}(f) \;=\; \sum_{\lvert\theta_m\rvert<\sigma}\theta_m^2 \;+\; M\sigma^2
 \]
-\cite[Gl.~(11.36), (11.37)]{mallat}: % S. 550
-der Fehler, wenn man $f$ nur durch die $M$ grö\ss ten Koeffizienten darstellt,
-plus das Rauschen auf diesen $M$ Koeffizienten. Klein ist $r_{\mathrm{id}}(f)$
-also nur dann, wenn wenige Koeffizienten gro\ss{} und alle übrigen klein sind,
-das hei\ss t wenn $f$ sich durch wenige Basisvektoren gut darstellen lässt
-\cite[Kap.~11.2.2]{mallat}. % S. 556: "f must be well approximated by a few vectors in B"
-In diesem Fall nennen wir $f$ in der Basis $\{v_m\}$ dünnbesetzt: Nur wenige
-Koeffizienten, $M\ll N$, sind mindestens so gro\ss{} wie $\sigma$, und die
-übrigen tragen zusammen nur wenig Energie $\sum_{\lvert\theta_m\rvert<\sigma}\theta_m^2$.
-Dünnbesetzt zu sein hei\ss t also gerade, dass $r_{\mathrm{id}}(f)$ klein ist
-gegenüber dem Risiko $N\sigma^2$ ohne Bearbeitung.
-Darauf kommt es bei der Wahl der Basis an. Für Wavelets ist das Kriterium bei
-stückweise glatten Signalen erfüllt: Gro\ss e Koeffizienten entstehen nur dort,
-wo das Signal auf dem Träger des Wavelets einen scharfen Übergang hat, und davon
-gibt es nur wenige \cite[Kap.~11.3.1]{mallat}. % S. 565
+\cite[Gl.~(11.36), (11.37)]{mallat}. % S. 550--551; dort r_pr statt r_id, f_B[m] statt theta_m
+Der erste Term ist der Fehler, wenn man $f$ nur durch diese $M$ Koeffizienten
+darstellt, der zweite das Rauschen auf ihnen. Das Risiko ist also klein, wenn
+sich $f$ durch wenige Basisvektoren gut darstellen lässt
+\cite[Kap.~11.2.2]{mallat}. % S. 555--556: "f must be well approximated by a few vectors in B"
+Wir nennen $f$ dann dünnbesetzt in der Basis $\{v_m\}$
+\cite[Kap.~11.2.1]{mallat}. % S. 552 oben: "sparse ... representation with only a few vectors in B"; vgl. S. 548, S. 562
+
+Für Wavelets gilt das bei stückweise glatten Signalen: Gro\ss e Koeffizienten
+entstehen nur an scharfen Übergängen, und davon gibt es wenige
+\cite[Kap.~11.3.1]{mallat}. % S. 565
 
 \begin{Beispiel}[Fortsetzung: Sinus mit Spitzen]
 \label{bsp:spitzen}
@@ -3737,7 +3709,6 @@ Für jede Stufe zeigt die Tabelle (Code in Anhang~\ref{code:kap5-signal}):
   behält die ideale Auswahl (Definition~\ref{def:ideale-auswahl}); ihre Summe
   ist die Zahl $M$ aus dem vorigen Absatz.
 \end{itemize}
-\anmerkung{phython code für tabelle nach unten...}
 \begin{center}
 \begin{tabular}{lrrrr}
   \hline
@@ -3757,25 +3728,23 @@ Für jede Stufe zeigt die Tabelle (Code in Anhang~\ref{code:kap5-signal}):
 Für den Sinus sind nur die $64$ Approximationskoeffizienten und $32$
 Detailkoeffizienten auf Stufe $5$ mindestens so gro\ss{} wie $\sigma$, also
 $M = 96$ von $2048$; ab Stufe $4$ liegen alle Detailkoeffizienten weit
-darunter. Der Sinus ist in der Waveletbasis also dünnbesetzt. Dass der
-grö\ss te Detailkoeffizient von Stufe zu Stufe um den Faktor $5{,}5$ bis $5{,}7$
-kleiner wird, passt zu Lemma~\ref{lem:abklingen}: Die Schranke für
-$\lvert d_{j,k}\rvert$ ändert sich pro Stufe um
-$2^{p+1/2} = 2^{5/2}\approx5{,}66$ für $p=2$. Die Spitzen fügen $25$ gro\ss e
+darunter. Der Sinus ist in der Waveletbasis also dünnbesetzt. Zu feineren Stufen hin werden die Detailkoeffizienten des Sinus schnell kleiner,
+wie nach Lemma~\ref{lem:abklingen} zu erwarten. Die Spitzen fügen $25$ gro\ss e
 Koeffizienten hinzu, $M = 121$, fast alle auf den feinen Stufen $d_4$ bis
 $d_1$ und nur in der Nähe der drei Spitzen; in
 Abbildung~\ref{fig:bsp-koeffizienten} heben sie sich deutlich von den
 kleinen Koeffizienten des Sinus ab.
 
-Daraus ergibt sich das Risiko \eqref{eq:orakel} der idealen Auswahl. Jeder
-behaltene Koeffizient kostet $\sigma^2 = 0{,}09$, jeder gelöschte sein Quadrat
-$\theta_m^2$. Für den Sinus ist $M\sigma^2 = 96\cdot0{,}09 = 8{,}6$, die
-gelöschten Koeffizienten tragen $1{,}1$ bei, zusammen
-$r_{\mathrm{id}}(u) = 9{,}7$. Für das Signal mit Spitzen ist
-$M\sigma^2 = 121\cdot0{,}09 = 10{,}9$, mit den gelöschten Koeffizienten
+Damit lässt sich das Risiko \eqref{eq:orakel} der idealen Auswahl konkret
+ausrechnen. Beim Sinus behält sie die $M = 96$ Koeffizienten mit
+$\lvert\theta_m\rvert \ge 0{,}3$; jeder davon kostet $\sigma^2 = 0{,}09$, zusammen
+$96\cdot0{,}09 = 8{,}6$. Die übrigen $1952$ Koeffizienten löscht sie; jeder
+kostet sein Quadrat $\theta_m^2$, und da sie fast alle nahe null liegen, ergibt
+das zusammen nur $1{,}1$. Insgesamt ist also $r_{\mathrm{id}}(u) = 8{,}6 + 1{,}1 = 9{,}7$.
+Beim Signal mit Spitzen behält sie $M = 121$ Koeffizienten, das kostet
+$121\cdot0{,}09 = 10{,}9$, und die gelöschten kosten $1{,}7$, also
 $r_{\mathrm{id}}(f) = 12{,}6$. Ohne Bearbeitung wäre das Risiko
-$N\sigma^2 = 184{,}3$; selbst mit Spitzen ist der Fehler der idealen Auswahl
-also rund fünfzehnmal kleiner.
+$N\sigma^2 = 184{,}3$, also rund fünfzehnmal so gro\ss.
 \end{Beispiel}
 
 \begin{figure}[htbp]
@@ -3801,13 +3770,13 @@ $f\neq0$, darf $T$ nicht viel grö\ss er sein, sonst gehen auch Koeffizienten mi
 gro\ss em Signalanteil verloren. $T$ soll also knapp über dem grö\ss ten
 Rauschanteil liegen \cite[Kap.~11.2.2]{mallat}. % S. 555--556, "Choice of Threshold"
 Dieses Maximum ist unbekannt. Für $N$ unabhängige Rauschanteile liegt es aber
-mit hoher Wahrscheinlichkeit knapp unter $\sigma\sqrt{2\ln N}$
-\cite[Gl.~(11.64)]{mallat}. % S. 556
-Das begründet die universelle Schwelle \cite[Kap.~11.3.2]{mallat} % S. 568: "the universal threshold of Theorem 11.7"
+mit hoher Wahrscheinlichkeit knapp unter
 \begin{equation}
 \label{eq:universelle-schwelle}
-  T \;=\; \sigma\sqrt{2\ln N}.
+  T \;=\; \sigma\sqrt{2\ln N}
 \end{equation}
+\cite[Gl.~(11.64)]{mallat}. % S. 556
+Diese Wahl hei\ss t universelle Schwelle \cite[Kap.~11.3.2]{mallat}. % S. 568: "the universal threshold of Theorem 11.7"
 Dass $T$ mit $N$ wächst, liegt an den Ausläufern der Normalverteilung: Unter
 mehr Werten kommen auch grö\ss ere vor \cite[Kap.~11.2.2]{mallat}. % S. 556
 
@@ -3822,23 +3791,35 @@ Soft-Thresholding-Schätzers
 \end{Satz}
 
 Für den Beweis siehe \cite[Satz~11.7, Lemma~11.1]{mallat}. % S. 553--555
-Bis auf den Faktor $2\ln N + 1$ ist Thresholding also so gut wie die ideale
-Auswahl: Ist $f$ dünnbesetzt und damit $r_{\mathrm{id}}(f)$ klein, so ist auch
-$r(f)$ klein. Mit diagonalen Schätzern lässt sich dieser Faktor für gro\ss e $N$
-nicht verbessern \cite[Gl.~(11.52)]{mallat}. % S. 553
+Zusammen mit der unteren Schranke aus Abschnitt~\ref{sec:thresholding}, die
+Mallat für Hard-Thresholding zeigt, ergibt sich dafür
+\[
+  r_{\mathrm{id}}(f) \;\le\; r(f) \;\le\; (2\ln N + 1)\bigl(\sigma^2 + r_{\mathrm{id}}(f)\bigr)
+\]
+\cite[Kap.~11.2.2]{mallat}. % S. 553: r_th >= r_pr (unnummeriert) und (11.51)
+Bis auf den Faktor $2\ln N + 1$ ist Hard-Thresholding also so gut wie die ideale
+Auswahl. Die obere Schranke gilt für beide Varianten: Ist $f$ dünnbesetzt und
+damit $r_{\mathrm{id}}(f)$ klein, so ist auch $r(f)$ klein. Mit diagonalen
+Schätzern lässt sich dieser Faktor für gro\ss e $N$ nicht verbessern
+\cite[Gl.~(11.52)]{mallat}. % S. 554
 
-Woher der Faktor $2\ln N$ kommt, erklärt Mallat anschaulich
-\cite[Kap.~11.2.2]{mallat}: % S. 556, "Upper-Bound Interpretation"
-Ist $\lvert\theta_m\rvert\le\sigma$, so löscht Hard-Thresholding den
-Koeffizienten sehr wahrscheinlich, ist $\lvert\theta_m\rvert\ge2T$, so behält es
-ihn sehr wahrscheinlich, beides wie die ideale Auswahl. Nur wenn
-$\lvert\theta_m\rvert$ in der Grö\ss enordnung von $T$ liegt, kann es irrtümlich
-löschen; das kostet $\theta_m^2\approx T^2 = 2\ln N\,\sigma^2$ statt $\sigma^2$.
-Da solche Koeffizienten meist selten sind, ist das Verhältnis zum Risiko der
-idealen Auswahl meist deutlich kleiner als $2\ln N$. Die Schwelle \eqref{eq:universelle-schwelle} ist
-allerdings nicht optimal: Eine kleinere Schwelle senkt das Risiko oft, und
-Soft-Thresholding braucht für ähnliche Ergebnisse wie Hard-Thresholding etwa die
-halbe Schwelle \cite[Kap.~11.2.2]{mallat}. % S. 556
+%Woher der Faktor $2\ln N$ kommt, erklärt Mallat anschaulich
+%\cite[Kap.~11.2.2]{mallat}: % S. 556, "Upper-Bound Interpretation"
+%Ist $\lvert\theta_m\rvert\le\sigma$, so löscht Hard-Thresholding den
+%Koeffizienten sehr wahrscheinlich, ist $\lvert\theta_m\rvert\ge2T$, so behält es
+%ihn sehr wahrscheinlich, beides wie die ideale Auswahl. Nur wenn
+%$\lvert\theta_m\rvert$ in der Grö\ss enordnung von $T$ liegt, kann es irrtümlich
+%löschen; das kostet $\theta_m^2\approx T^2 = 2\ln N\,\sigma^2$ statt $\sigma^2$.
+%Da solche Koeffizienten meist selten sind, ist das Verhältnis zum Risiko der
+%idealen Auswahl meist deutlich kleiner als $2\ln N$. Die Schwelle \eqref{eq:universelle-schwelle} ist
+%allerdings nicht optimal: Eine kleinere Schwelle senkt das Risiko oft, und
+%Soft-Thresholding braucht für ähnliche Ergebnisse wie Hard-Thresholding etwa die
+%halbe Schwelle \cite[Kap.~11.2.2]{mallat}. % S. 556
+
+Die Schwelle \eqref{eq:universelle-schwelle} ist allerdings nicht optimal: Eine
+kleinere Schwelle senkt das Risiko oft, und Soft-Thresholding braucht für
+ähnliche Ergebnisse wie Hard-Thresholding etwa die halbe Schwelle
+\cite[Kap.~11.2.2]{mallat}. % S. 556
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Schätzung der Rauschstärke}
@@ -3850,7 +3831,7 @@ Detailkoeffizienten $d_{1,k}$ der feinsten Stufe \cite[Kap.~11.3.1]{mallat}: % S
 Wo das Signal auf dem Träger des Wavelets glatt ist, ist sein Koeffizient
 klein, und $d_{1,k}$ besteht praktisch nur aus Rauschen. Nur an den wenigen
 scharfen Übergängen ist er gro\ss; diese Werte nennt Mallat Ausrei\ss er. Auch
-beim gemessenen EKG enthält $d_1$ fast das gesamte Rauschen
+beim gemessenen EKG, das in Kapitel \ref{chapter:anwendung} relevant wird, enthält $d_1$ fast das gesamte Rauschen
 \cite[Kap.~3.1.2]{lmr}. % S. 239
 
 Der Median von $P$ Zahlen ist der mittlere Wert, wenn man sie der Grö\ss e nach
@@ -3872,6 +3853,8 @@ das Rauschen nicht wei\ss, hängt seine Varianz vom Basisvektor ab, und die
 Schwelle muss mit dem Koeffizienten variieren
 \cite[Kap.~11.2.2]{mallat}; % S. 557, "Colored Noise"
 darauf kommt Kapitel~\ref{chapter:anwendung} zurück.
+
+\anmerkung{Kap.~6 greift farbiges Rauschen bisher nicht auf -- ergänzen oder Verweis streichen.}
 
 \paragraph{Das vollständige Verfahren.}
 Mallat schwellt alle Koeffizienten der Waveletbasis, auch die der gröbsten
@@ -3944,6 +3927,8 @@ alle grö\ss er als $T$ sind und den glatten Sinus tragen.
   mittlere Spitze mit dem wahren Signal $f$ (rechts)(Code in Anhang~\ref{anh:code-entrauscht}).}
   \label{fig:bsp-entrauscht}
 \end{figure}
+
+\anmerkung{vll wäre es noch schön das alte verrauschte signal einzubauen...}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Anwendung: Entrauschung von EKG-Signalen}
@@ -4334,8 +4319,9 @@ Rundungsgenauigkeit.
 Der folgende Code erzeugt Abbildung~\ref{fig:bsp-signal} und die Zahlen aus
 Beispiel~\ref{bsp:spitzen}: für jede Stufe die Anzahl der Koeffizienten, den
 grö\ss ten Betrag beim Sinus und die Anzahl der Koeffizienten von $u$ und $f$
-mit Betrag mindestens $\sigma$, au\ss erdem $M$ und das Risiko
-$r_{\mathrm{id}}$ der idealen Auswahl \eqref{eq:orakel}.
+mit Betrag mindestens $\sigma$, au\ss erdem $M$, die Summe
+$\sum_{\lvert\theta_m\rvert<\sigma}\theta_m^2$ der gelöschten Koeffizienten und
+das Risiko $r_{\mathrm{id}}$ der idealen Auswahl \eqref{eq:orakel}.
 
 \IfFileExists{code/kap5_signal.py}{%
   \lstinputlisting[caption={Sinus mit Spitzen aus Beispiel~\ref{bsp:spitzen}},

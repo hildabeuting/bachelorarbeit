@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex august"] 1791294900.05792 "august.aux" "august.bbl" "august" 1791294928.68873 0
+["bibtex august"] 1791383007.55422 "august.aux" "august.bbl" "august" 1791383011.15997 0
   "./literature.bib" 1786538192.84014 4491 5bf55c5f88ac07f4a1576e911eb849ef ""
   "/usr/local/texlive/2026/texmf-dist/bibtex/bst/base/alpha.bst" 1292289607 23907 a5f93555796fb564b924339521f10a7c ""
-  "august.aux" 1791294928.29841 65806 1da22163abea27470f17154e1d7eeaa3 "pdflatex"
+  "august.aux" 1791383010.82289 65773 3959a1d8bb053026a2f4bd354dc0b765 "pdflatex"
   (generated)
   "august.bbl"
   "august.blg"
   (rewritten before read)
-["pdflatex"] 1791294924.67749 "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" "august.pdf" "august" 1791294928.68898 0
-  "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" 1791294924.47249 217841 cc9ccd127b3773bc4cb4b2b490e0b090 ""
+["pdflatex"] 1791383007.6625 "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" "august.pdf" "august" 1791383011.1602 0
+  "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" 1791383003.52285 216963 bf817778e67055a3193e5e0db9c7dee4 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -318,17 +318,17 @@
   "abbildungen/abb5_2b_koeffizienten_Y.pdf" 1791291385.89354 42421 6a3cc82a0c0890b131660d06ca692ef2 ""
   "abbildungen/abb5_3_entrauscht.pdf" 1791292149.5103 27543 4d10275883e9e9644e2f2e63b2c5d32b ""
   "abbildungen/bsp_5.5.pdf" 1791281505.014 28138 ca4b9aa0a14cb627d8a578e8685e7389 ""
-  "august.aux" 1791294928.29841 65806 1da22163abea27470f17154e1d7eeaa3 "pdflatex"
-  "august.bbl" 1791294900.13928 2607 f114c3415ccfb60fe6ff12409c89c7bb "bibtex august"
-  "august.tex" 1791294924.47249 217841 cc9ccd127b3773bc4cb4b2b490e0b090 ""
-  "august.toc" 1791294928.30672 7159 387c12cf7c73b559ae390825a0be2acb "pdflatex"
+  "august.aux" 1791383010.82289 65773 3959a1d8bb053026a2f4bd354dc0b765 "pdflatex"
+  "august.bbl" 1791383007.65911 2607 f114c3415ccfb60fe6ff12409c89c7bb "bibtex august"
+  "august.tex" 1791383003.52285 216963 bf817778e67055a3193e5e0db9c7dee4 ""
+  "august.toc" 1791383010.83207 7159 0075d328a2dc12d86e8221ed3547b63d "pdflatex"
   "code/BeispielCWT.py" 1791282387.20013 2475 21aecf9df72b888e838f56d1b3cd2c8b ""
   "code/kap4_db2.py" 1791289382.93161 612 f24d56d1df8ebe2f13f67d9bc4e5feed ""
   "code/kap5_entrauscht.py" 1791292301.98985 1712 68e837b0237bc2b04b72d51736413fef ""
   "code/kap5_koeffizienten.py" 1791290847.63534 1008 aae5301d088e20695a1e99988038cda6 ""
   "code/kap5_koeffizienten_Y.py" 1791291233.5214 1602 5709be1641a0df121f088c97d584979c ""
-  "code/kap5_signal.py" 1791280649.76633 799 b43a07317acf3fc2952b6af118bee538 ""
-  "code/kap5_sinus.py" 1791290346.88967 1502 9942c4fe15dae2542cc13b5545578828 ""
+  "code/kap5_signal.py" 1791379075.07852 1589 a214d443b6d8d737c4cda6023573c7b6 ""
+  "code/kap5_sinus.py" 1791379096.62856 1082 6e6d28b920324ed96e01bfc1a4e3dcda ""
   "uhh-logo.png" 1730735493 166378 baeba9eac46e611cf8b926c484438ddd ""
   (generated)
   "august.aux"

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  6 OCT 2026 15:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  7 OCT 2026 16:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1059,67 +1059,67 @@ File: abbildungen/bsp_5.5.pdf Graphic file (type pdf)
 <use abbildungen/bsp_5.5.pdf>
 Package pdftex.def Info: abbildungen/bsp_5.5.pdf  used on input line 3428.
 (pdftex.def)             Requested size: 387.95074pt x 181.05345pt.
- [37 <./abbildungen/bsp_5.5.pdf>] [38] [39] [40]
-<abbildungen/abb5_1_signal.pdf, id=982, 505.89pt x 260.17201pt>
+ [37 <./abbildungen/bsp_5.5.pdf>] [38] [39]
+<abbildungen/abb5_1_signal.pdf, id=969, 505.89pt x 260.17201pt>
 File: abbildungen/abb5_1_signal.pdf Graphic file (type pdf)
 <use abbildungen/abb5_1_signal.pdf>
-Package pdftex.def Info: abbildungen/abb5_1_signal.pdf  used on input line 3718.
+Package pdftex.def Info: abbildungen/abb5_1_signal.pdf  used on input line 3690.
 (pdftex.def)             Requested size: 387.95074pt x 199.51923pt.
- [41 <./abbildungen/abb5_1_signal.pdf>]
-<abbildungen/abb5_2a_koeffizienten_f.pdf, id=1022, 583.21887pt x 433.62pt>
+ [40]
+<abbildungen/abb5_2a_koeffizienten_f.pdf, id=990, 583.21887pt x 433.62pt>
 File: abbildungen/abb5_2a_koeffizienten_f.pdf Graphic file (type pdf)
 <use abbildungen/abb5_2a_koeffizienten_f.pdf>
-Package pdftex.def Info: abbildungen/abb5_2a_koeffizienten_f.pdf  used on input line 3783.
+Package pdftex.def Info: abbildungen/abb5_2a_koeffizienten_f.pdf  used on input line 3752.
 (pdftex.def)             Requested size: 409.50502pt x 304.47809pt.
- [42] [43 <./abbildungen/abb5_2a_koeffizienten_f.pdf>] [44]
-<abbildungen/abb5_2b_koeffizienten_Y.pdf, id=1108, 648.9846pt x 433.62pt>
+ [41 <./abbildungen/abb5_1_signal.pdf>] [42 <./abbildungen/abb5_2a_koeffizienten_f.pdf>] [43]
+<abbildungen/abb5_2b_koeffizienten_Y.pdf, id=1101, 648.9846pt x 433.62pt>
 File: abbildungen/abb5_2b_koeffizienten_Y.pdf Graphic file (type pdf)
 <use abbildungen/abb5_2b_koeffizienten_Y.pdf>
-Package pdftex.def Info: abbildungen/abb5_2b_koeffizienten_Y.pdf  used on input line 3930.
+Package pdftex.def Info: abbildungen/abb5_2b_koeffizienten_Y.pdf  used on input line 3913.
 (pdftex.def)             Requested size: 431.05931pt x 288.01624pt.
-<abbildungen/abb5_3_entrauscht.pdf, id=1113, 613.57233pt x 215.3646pt>
+<abbildungen/abb5_3_entrauscht.pdf, id=1106, 613.57233pt x 215.3646pt>
 File: abbildungen/abb5_3_entrauscht.pdf Graphic file (type pdf)
 <use abbildungen/abb5_3_entrauscht.pdf>
-Package pdftex.def Info: abbildungen/abb5_3_entrauscht.pdf  used on input line 3941.
+Package pdftex.def Info: abbildungen/abb5_3_entrauscht.pdf  used on input line 3924.
 (pdftex.def)             Requested size: 431.05931pt x 151.30298pt.
- [45] [46 <./abbildungen/abb5_2b_koeffizienten_Y.pdf> <./abbildungen/abb5_3_entrauscht.pdf>]
+ [44] [45 <./abbildungen/abb5_2b_koeffizienten_Y.pdf> <./abbildungen/abb5_3_entrauscht.pdf>]
 chapter 6.
-[47
+[46
 
 
 ]
 
-LaTeX Warning: Command \O invalid in math mode on input line 4024.
+LaTeX Warning: Command \O invalid in math mode on input line 4009.
 
 Missing character: There is no Ø in font cmr10!
 
-Overfull \hbox (18.6703pt too wide) in paragraph at lines 4024--4024
+Overfull \hbox (18.6703pt too wide) in paragraph at lines 4009--4009
 []\T1/cmss/m/n/10 LMR, Lem-ma 2.4.29 / Gl. (2.4.17), S. 175 [be-stä-tigt] ^^V die da-bei be-nö-tig-te Be-din-gung $[][] [] \OT1/cmr/m/n/10 =
  []
 
-[48]
+[47]
 
-LaTeX Warning: Reference `bem:db-bezeichnung' on page 49 undefined on input line 4063.
+LaTeX Warning: Reference `bem:db-bezeichnung' on page 48 undefined on input line 4048.
 
-[49] [50] [51]
+[48] [49] [50]
 chapter 7.
-[52
+[51
 
 
 ]
 chapter A.
-[53
+[52
 
 
-] [54]
+] [53]
 chapter B.
 
-LaTeX Warning: Citation `pywavelets' on page 55 undefined on input line 4279.
+LaTeX Warning: Citation `pywavelets' on page 54 undefined on input line 4264.
 
-(./code/BeispielCWT.py [55
+(./code/BeispielCWT.py [54
 
 
-]) [56] (./code/kap4_db2.py) (./code/kap5_sinus.py [57]) (./code/kap5_signal.py [58]) (./code/kap5_koeffizienten.py [59]) (./code/kap5_koeffizienten_Y.py [60]) (./code/kap5_entrauscht.py [61]) (./august.bbl [62]
+]) [55] (./code/kap4_db2.py) (./code/kap5_sinus.py [56]) (./code/kap5_signal.py [57]) (./code/kap5_koeffizienten.py [58]) (./code/kap5_koeffizienten_Y.py [59]) (./code/kap5_entrauscht.py [60]) [61] (./august.bbl [62]
 chapter without number
 ) [63
 
@@ -1135,18 +1135,18 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 42241 strings out of 467525
- 948785 string characters out of 5418982
- 2270432 words of memory out of 5000000
- 69908 multiletter control sequences out of 15000+600000
+ 42250 strings out of 467525
+ 948923 string characters out of 5418982
+ 2270439 words of memory out of 5000000
+ 69910 multiletter control sequences out of 15000+600000
  657148 words of font info for 112 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,19n,107p,11270b,2251s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1728.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on august.pdf (66 pages, 2378394 bytes).
+Output written on august.pdf (66 pages, 2376821 bytes).
 PDF statistics:
- 2169 PDF objects out of 2487 (max. 8388607)
- 1836 compressed objects within 19 object streams
- 602 named destinations out of 1000 (max. 500000)
+ 2173 PDF objects out of 2487 (max. 8388607)
+ 1840 compressed objects within 19 object streams
+ 609 named destinations out of 1000 (max. 500000)
  575 words of extra memory for PDF output out of 10000 (max. 10000000)
 

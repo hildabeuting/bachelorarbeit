@@ -41,39 +41,39 @@
 \contentsline {paragraph}{\nonumberline Was mit dem Rauschen geschieht.}{36}{paragraph*.19}%
 \contentsline {section}{\numberline {5.2}Diagonale Schätzer und Thresholding}{37}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Die Wahl der Schwelle}{42}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Schätzung der Rauschstärke}{44}{section.5.4}%
-\contentsline {paragraph}{\nonumberline Das vollständige Verfahren.}{44}{paragraph*.25}%
-\contentsline {chapter}{\numberline {6}Anwendung: Entrauschung von EKG-Signalen}{47}{chapter.6}%
-\contentsline {section}{\numberline {6.1}EKG-Signale: Morphologie und Störquellen}{47}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Der Herzzyklus: P-Welle, QRS-Komplex, T-Welle}{47}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Typische Störquellen}{47}{subsection.6.1.2}%
-\contentsline {section}{\numberline {6.2}Bewertungsma\ss {}e und das Problem der fehlenden Referenz}{48}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Stufe 1: Synthetisch konstruiertes EKG-Signal}{49}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Konstruktion des Modellsignals}{49}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Rauschmodell und Wahl der Parameter}{49}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {6.3.3}Wahl von Wavelet und Zerlegungstiefe}{49}{subsection.6.3.3}%
-\contentsline {subsection}{\numberline {6.3.4}Vergleich von Hard- und Soft-Thresholding}{49}{subsection.6.3.4}%
-\contentsline {subsection}{\numberline {6.3.5}Ergebnisse}{49}{subsection.6.3.5}%
-\contentsline {section}{\numberline {6.4}Stufe 2: Reale Signale aus der MIT-BIH-Datenbank}{50}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Beschreibung des Datensatzes}{50}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Validierung ohne sauberes Referenzsignal}{50}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Ergebnisse}{50}{subsection.6.4.3}%
-\contentsline {section}{\numberline {6.5}Diskussion}{50}{section.6.5}%
-\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{52}{chapter.7}%
+\contentsline {section}{\numberline {5.4}Schätzung der Rauschstärke}{43}{section.5.4}%
+\contentsline {paragraph}{\nonumberline Das vollständige Verfahren.}{43}{paragraph*.25}%
+\contentsline {chapter}{\numberline {6}Anwendung: Entrauschung von EKG-Signalen}{46}{chapter.6}%
+\contentsline {section}{\numberline {6.1}EKG-Signale: Morphologie und Störquellen}{46}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Der Herzzyklus: P-Welle, QRS-Komplex, T-Welle}{46}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Typische Störquellen}{46}{subsection.6.1.2}%
+\contentsline {section}{\numberline {6.2}Bewertungsma\ss {}e und das Problem der fehlenden Referenz}{47}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Stufe 1: Synthetisch konstruiertes EKG-Signal}{48}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Konstruktion des Modellsignals}{48}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Rauschmodell und Wahl der Parameter}{48}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Wahl von Wavelet und Zerlegungstiefe}{48}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}Vergleich von Hard- und Soft-Thresholding}{48}{subsection.6.3.4}%
+\contentsline {subsection}{\numberline {6.3.5}Ergebnisse}{48}{subsection.6.3.5}%
+\contentsline {section}{\numberline {6.4}Stufe 2: Reale Signale aus der MIT-BIH-Datenbank}{49}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Beschreibung des Datensatzes}{49}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Validierung ohne sauberes Referenzsignal}{49}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Ergebnisse}{49}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}Diskussion}{49}{section.6.5}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{51}{chapter.7}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{53}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Fourier-Transformierte des Testsignals}{53}{section.A.1}%
-\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{53}{paragraph*.28}%
-\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{54}{paragraph*.29}%
-\contentsline {paragraph}{\nonumberline Die Ausnahmestellen.}{54}{paragraph*.30}%
-\contentsline {section}{\numberline {A.2}Stammfunktion des Testsignals}{54}{section.A.2}%
-\contentsline {chapter}{\numberline {B}Python-Code}{55}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{55}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{57}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Verrauschter Sinus}{57}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Sinus mit Spitzen}{58}{section.B.4}%
-\contentsline {section}{\numberline {B.5}Detailkoeffizienten des Testsignals}{59}{section.B.5}%
-\contentsline {section}{\numberline {B.6}Detailkoeffizienten der Messwerte}{60}{section.B.6}%
-\contentsline {section}{\numberline {B.7}Entrauschtes Testsignal}{61}{section.B.7}%
+\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{52}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Fourier-Transformierte des Testsignals}{52}{section.A.1}%
+\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{52}{paragraph*.28}%
+\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{53}{paragraph*.29}%
+\contentsline {paragraph}{\nonumberline Die Ausnahmestellen.}{53}{paragraph*.30}%
+\contentsline {section}{\numberline {A.2}Stammfunktion des Testsignals}{53}{section.A.2}%
+\contentsline {chapter}{\numberline {B}Python-Code}{54}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{54}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{56}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Verrauschter Sinus}{56}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Sinus mit Spitzen}{57}{section.B.4}%
+\contentsline {section}{\numberline {B.5}Detailkoeffizienten des Testsignals}{58}{section.B.5}%
+\contentsline {section}{\numberline {B.6}Detailkoeffizienten der Messwerte}{59}{section.B.6}%
+\contentsline {section}{\numberline {B.7}Entrauschtes Testsignal}{60}{section.B.7}%
 \contentsline {chapter}{\nonumberline Literaturverzeichnis}{63}{chapter*.31}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
