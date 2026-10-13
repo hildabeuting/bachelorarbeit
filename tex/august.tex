@@ -3150,6 +3150,51 @@ dasselbe: Wenige gro\ss{}e Koeffizienten tragen die Spitzen, fast alle übrigen
 sind klein \cite[Beispiel~56.3]{hankebourgeois}. % S. 440, dort mit Haar
 Auf dieser Dünnbesetztheit baut Abschnitt~\ref{sec:duennbesetztheit} auf.
 
+\begin{Beispiel}[Das Daubechies-Wavelet mit $p = 6$]
+\label{bsp:db6}
+Für $p = 6$ liefert Satz~\ref{satz:daubechies} die zwölf Filterkoeffizienten
+$h_0,\dots,h_{11}$, gerundet auf sechs Stellen
+\begin{equation}
+\label{eq:db6-koeff}
+\begin{aligned}
+  (h_0, \dots, h_5) &= (0{,}111541,\; 0{,}494624,\; 0{,}751134,\;
+                        0{,}315250,\; -0{,}226265,\; -0{,}129767),\\
+  (h_6, \dots, h_{11}) &= (0{,}097502,\; 0{,}027523,\; -0{,}031582,\;
+                        0{,}000554,\; 0{,}004777,\; -0{,}001077),
+\end{aligned}
+\end{equation}
+mit $\supp\varphi_6 = [0, 11]$ und $\supp\psi_6 = [-5, 6]$. Blatter verweist
+für die Werte bis $p = 10$ auf die Tabelle bei Daubechies
+\cite[Kap.~6.2]{blatter}; % S. 151
+die Werte oben stammen aus PyWavelets \cite{pywavelets}, wo $\psi_6$
+\texttt{db6} hei\ss t. Sie erfüllen \eqref{eq:H0} und \eqref{eq:h-orthogonal}
+bis auf Rundungsfehler, und für die Hochpassfolge
+$g_k = (-1)^k h_{1-k}$, $k = -10,\dots,1$, aus \eqref{eq:g-aus-h} gilt wie in
+Beispiel~\ref{bsp:momente}
+\[
+  \sum_k k^m\,g_k = 0 \qquad\text{für } m = 0,\dots,5 ;
+\]
+das sind die sechs verschwindenden Momente von $\psi_6$ in der Form, in der sie
+im Mallat-Algorithmus wirken. Abbildung~\ref{fig:db6} zeigt $\varphi_6$ und
+$\psi_6$. Gegenüber $\psi_2$ ist der Träger fast viermal so lang, und $\psi_6$
+ist glatter, $\psi_6 \in H^{6\alpha}(\R)$ mit $\alpha > 0{,}2$
+\cite[Kap.~2.4.4]{lmr}. % S. 173
+Castillo et al.\ verwenden $\psi_6$ für EKG-Signale, weil es einem echten EKG
+ähnelt \cite[Abschn.~3.1.1]{castillo}; % S. 4
+wir übernehmen es in Kapitel~\ref{chapter:anwendung}.
+\end{Beispiel}
+ 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\textwidth]{abb4_db6.pdf}
+  \caption[Das Daubechies-Wavelet mit zwölf Koeffizienten]{Skalierungsfunktion
+  $\varphi_6$ auf $[0,11]$ (a) und Wavelet $\psi_6$ auf $[-5,6]$ (b) zur Folge
+  \eqref{eq:db6-koeff}, berechnet durch Iteration der Skalierungsgleichung
+  \eqref{eq:skalierungsgleichung} (Code in Anhang~\ref{anh:code-db6}).}
+  \label{fig:db6}
+\end{figure}
+ 
+
 Damit liegen die drei Eigenschaften vor, die Kapitel~\ref{chapter:denoising}
 voraussetzt: Die diskrete Wavelet-Transformation ist orthogonal
 (Bemerkung~\ref{bem:mallat-orthogonal}), in $O(N)$ Operationen berechenbar
@@ -3929,180 +3974,759 @@ alle grö\ss er als $T$ sind und den glatten Sinus tragen.
 \end{figure}
 
 \anmerkung{vll wäre es noch schön das alte verrauschte signal einzubauen...}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Anwendung: Entrauschung von EKG-Signalen}
 \label{chapter:anwendung}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\anmerkung{Block H. Aufbau in drei Stufen mit ABNEHMENDER Referenzinformation:
-(1) synthetisch: sauberes Signal exakt bekannt -> SNR/MSE quantitativ messbar;
-(2) MIT-BIH: kein sauberes Signal, aber Experten-Annotationen -> indirekte Validierung;
-(3) Herzzentrum: weder Referenz noch Annotationen -> nur qualitative Beurteilung.
-Diese Abstufung ist der rote Faden des Kapitels.}
-
+ 
+\anmerkung{Neue Bib-Einträge: \texttt{sornmo}, \texttt{alessio},
+\texttt{castillo}, \texttt{mitbih}, \texttt{mitdbseite}, \texttt{mitdbdir},
+\texttt{physionet} (in \texttt{bib\_kap6.bib}). \texttt{chatterjee} wird in
+diesem Kapitel nicht mehr zitiert. \texttt{eq:db6-koeff} kommt aus dem db6-Baustein für Kapitel~\ref{chapter:dwt}.}
+ 
+In diesem Kapitel wird das Thresholding aus Kapitel~\ref{chapter:denoising}
+auf reale EKG-Aufzeichnungen der MIT-BIH Arrhythmia Database angewandt. Ziel
+ist, die Störungen zu entfernen, die in diesen Aufzeichnungen bereits enthalten
+sind. Wir folgen dabei dem Ein-Schritt-Verfahren von Castillo et al.\
+\cite{castillo}, das Alessio als Beispiel für das Entrauschen von EKG-Signalen
+mit der DWT darstellt \cite[Kap.~15.2.4]{alessio}. % S. 728--734
+Ein ungestörtes Vergleichssignal gibt es für reale Aufzeichnungen nicht; die
+Bewertung stützt sich deshalb auf Grö\ss en, die sich ohne ein solches Signal
+messen lassen.
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{EKG-Signale: Morphologie und Störquellen}
+\section{EKG-Signale und ihre Störquellen}
+\label{sec:ekg}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Der Herzzyklus: P-Welle, QRS-Komplex, T-Welle}
-\anmerkung{Die P-Welle entspricht der Vorhoferregung, der QRS-Komplex der Kammerdepolarisation, die T-Welle der Repolarisation.}
-\quellen{
-  \begin{itemize}
-    \item Gacek, Abb. 2.2, S. 28 [bestätigt]
-    \item Gacek, Kap. 2.2, S. 24–25 [bestätigt]
-    \item Aqil, Abb. 2 und Tab. 1, S. 52 [bestätigt]
-    \item Rebstadt, Kap. 2.1, S. 7–10 [bestätigt] — Abb. 2.1 (S. 8), Abb. 2.2 (S. 10)
-    \item LMR, S. 239 [bestätigt] — knappe mathematiknahe Beschreibung: Hauptmuskelkontraktion als ausgeprägtes Maximum, Herzklappenausschläge „fast im Rauschen versteckt"
-  \end{itemize}
-}
-\subsection{Typische Störquellen}
-\anmerkung{Baseline Wander, Muskelartefakte, Netzbrummen (50/60 Hz) und additives wei\ss{}es Rauschen.}
-\quellen{
-  \begin{itemize}
-    \item Gacek, S. 31–33 [bestätigt] — Abb. 2.5, 2.6, 2.7
-    \item Chatterjee, Kap. 1.1, S. 570 [bestätigt]
-    \item Aqil, Abb. 3, S. 54 [bestätigt]
-    \item Rebstadt, Abb. 2.3, S. 10 [bestätigt]
-  \end{itemize}
-}
-\anmerkung{Aus ausgelagertem Abschnitt 3.1.x übernommen: Wavelets haben
-Mittelwert null, daher erzeugt ein konstanter Signalanteil auf keiner
-Skala Koeffizienten; Basisliniendrift ist langsam veränderlich und
-konzentriert sich deshalb auf die gröbsten Skalen. Das ist der Grund,
-warum Baseline Wander durch Nullsetzen der gröbsten Approximation
-entfernt werden kann.}
-\anmerkung{Basislinienwanderung (Atmung, tieffrequent), Netzbrummen (50\,Hz),
-Muskelartefakte (EMG, breitbandig), Bewegungsartefakte.
-Wichtig: nur ein Teil davon ist wei\ss{}es Rauschen im Sinne von
-Kapitel~\ref{chapter:denoising}. Diese Diskrepanz zwischen Modellannahme und
-Realität hier offen benennen -- sie wird in Abschnitt~\ref{sec:diskussion} wieder
-aufgegriffen. Quelle: "`An Introduction to ECG Signal Processing and Analysis"'.}
-
+ 
+Ein EKG-Signal ist die Differenz elektrischer Potentiale an zwei Punkten des
+Körpers, die durch die Erregung des Herzmuskels entsteht
+\cite[Kap.~2.2]{gacek}. % S. 24--25
+Jeder Herzschlag beginnt im Sinusknoten; die Erregung breitet sich über die
+Vorhöfe, den AV-Knoten und das His-Bündel in die Kammern aus
+\cite[Kap.~6]{sornmo}. % S. 414
+Jeder Herzschlag erzeugt so dieselbe Folge von Ausschlägen
+(Abbildung~\ref{fig:muster}): die P-Welle bei der Erregung der Vorhöfe, den
+QRS-Komplex bei der Erregung der Kammern und die T-Welle bei deren
+Repolarisation. Zwischen P-Welle und QRS-Komplex liegt die PQ-Strecke
+\cite[Kap.~2.1]{rebstadt}. % S. 9
+Der QRS-Komplex dauert etwa $80$ bis $120$\,ms, die P-Welle etwa $80$\,ms und
+das PR-Intervall $120$ bis $200$\,ms \cite[Tab.~1]{aqil}. % S. 52
+Im Sinne von Kapitel~\ref{chapter:dwt} ist das EKG also stückweise glatt, mit
+einer scharfen Spitze pro Herzschlag.
+ 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{abb6_1_muster.pdf}
+  \caption[Schematischer Herzschlag]{Schematischer Herzschlag aus fünf
+  Gau\ss-Kurven für P-, Q-, R-, S- und T-Welle, mit Dauern im Bereich der
+  Angaben oben. Grau hinterlegt das Fenster $80$ bis $60$\,ms vor der
+  R-Zacke, in dem in Abschnitt~\ref{sec:bewertung} die Basislinie gemessen
+  wird (Code in Anhang~\ref{anh:code-kap6}).}
+  \label{fig:muster}
+\end{figure}
+ 
+Sörnmo und Laguna nennen vier häufige Störquellen, die nicht vom Herzen
+stammen \cite[Kap.~6.5]{sornmo}; % S. 440--442
+die Abbildungen~\ref{fig:drift} bis \ref{fig:muskel} zeigen sie schematisch:
+\begin{itemize}
+\item Basisliniendrift: eine langsame Verschiebung der Nulllinie durch Atmung,
+  Schwitzen, Bewegung und schlechten Elektrodenkontakt. Ihr Spektrum liegt
+  meist deutlich unter $1$\,Hz, ihre Grö\ss e kann die des QRS-Komplexes um ein
+  Mehrfaches übersteigen. Solange sie vorhanden ist, ist die isoelektrische
+  Linie nicht eindeutig bestimmt.
+  % S. 441
+  Die von der Atmung verursachte Drift liegt bei $0{,}15$ bis $0{,}3$\,Hz
+  \cite[Abschn.~2.2.1]{castillo}. % S. 3
+  \begin{center}
+    \includegraphics[width=\linewidth]{abb6_1b_drift.pdf}
+    \captionof{figure}[Schematische Basisliniendrift]{Schematische Basisliniendrift: zwei überlagerte Schwingungen mit $0{,}15$ und $0{,}27$\,Hz über $10$\,s (Code in
+    Anhang~\ref{anh:code-kap6}).}
+    \label{fig:drift}
+  \end{center}
+\item Elektrodenbewegung: Dehnung der Haut ändert die Impedanz an der
+  Elektrode. Diese Artefakte liegen hauptsächlich zwischen $1$ und $10$\,Hz
+  und überlappen damit stark mit dem PQRST-Komplex.
+  % S. 441
+  \begin{center}
+    \includegraphics[width=\linewidth]{abb6_1c_elektrode.pdf}
+    \captionof{figure}[Schematische Elektrodenbewegung]{Schematische Elektrodenbewegung: kurzer Ausbruch mit Frequenzen zwischen $1$ und $10$\,Hz (Code in
+    Anhang~\ref{anh:code-kap6}).}
+    \label{fig:elektrode}
+  \end{center}
+\item Netzbrummen bei $50$ oder $60$\,Hz durch mangelhafte Erdung und Geräte in
+  der Nähe. % S. 441
+  \begin{center}
+    \includegraphics[width=\linewidth]{abb6_1d_netz.pdf}
+    \captionof{figure}[Schematisches Netzbrummen]{Schematisches Netzbrummen: Schwingung mit $60$\,Hz über $200$\,ms (Code in
+    Anhang~\ref{anh:code-kap6}).}
+    \label{fig:netz}
+  \end{center}
+\item Muskelrauschen: elektrische Aktivität der Skelettmuskulatur. Seine
+  Frequenzen überlappen mit denen des QRS-Komplexes und reichen darüber hinaus;
+  % S. 441--442
+  Gacek gibt etwa $20$ bis $80$\,Hz an \cite[Kap.~2.4.3.2]{gacek}. % S. 33
+  \begin{center}
+    \includegraphics[width=\linewidth]{abb6_1e_muskel.pdf}
+    \captionof{figure}[Schematisches Muskelrauschen]{Schematisches Muskelrauschen: Rauschen mit Frequenzen zwischen $20$ und $80$\,Hz mit einem Ausbruch bei etwa $6$\,s (Code in
+    Anhang~\ref{anh:code-kap6}).}
+    \label{fig:muskel}
+  \end{center}
+\end{itemize}
+Hinzu kommt die Atmung, die die Höhe der QRS-Komplexe von Schlag zu Schlag
+verändert \cite[Kap.~6.5]{sornmo}. % S. 442
+Für die MIT-BIH-Aufzeichnungen nennt das zugehörige Directory zwei weitere,
+technische Quellen. Die Bandgeräte, mit denen die Langzeit-EKG aufgezeichnet
+und später abgespielt wurden, erzeugen durch ihre Mechanik langsame Störungen
+mit Frequenzen zwischen $0{,}042$ und $0{,}54$\,Hz
+\cite[Introduction, Analog recording and playback]{mitdbdir}. % Tabelle "Frequency (Hz) / Source"
+Das Netzbrummen bei $60$\,Hz entstand grö\ss tenteils erst beim Abspielen
+\cite[Introduction, Digitization]{mitdbdir}.
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Bewertungsma\ss{}e und das Problem der fehlenden Referenz}
+\section{Die Datensätze}
+\label{sec:daten}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+Die MIT-BIH Arrhythmia Database ist die meistgenutzte Datenbank zur Bewertung
+von Verfahren für Herzrhythmusstörungen \cite[Kap.~1.4.1]{sornmo}, % S. 18
+\cite{mitbih}. Sie enthält $48$ halbstündige Ausschnitte zweikanaliger
+Langzeit-EKG von $47$ Personen, aufgezeichnet zwischen 1975 und 1979 am Beth
+Israel Hospital in Boston \cite{mitdbseite}. % "Data Description"
+Die Aufzeichnungen entstanden im Alltag, etwa beim Arbeiten und Essen
+\cite[Kap.~1.4.1]{sornmo}. % S. 18
+Abgetastet wurde mit $f_s = 360$\,Hz und einer Auflösung von $11$\,bit über
+einen Bereich von $10$\,mV \cite{mitdbseite}; % "Data Description"
+eine Stufe des Wandlers entspricht also
+\begin{equation}
+\label{eq:wandlerstufe}
+  \Delta = \frac{10\,\mathrm{mV}}{2^{11}} \approx 4{,}9\,\text{\textmu V}.
+\end{equation}
+Vor der Digitalisierung wurden die Signale auf $0{,}1$ bis $100$\,Hz
+bandbegrenzt \cite[Introduction, Digitization]{mitdbdir}. Jeder Herzschlag
+wurde von mindestens zwei Kardiologen unabhängig annotiert \cite{mitdbseite};
+die Annotationen liegen im Allgemeinen auf dem Maximum der R-Zacke
+\cite[Introduction, Annotations]{mitdbdir}. Neben den Schlägen markieren sie
+auch Abschnitte mit Rauschen \cite[Kap.~1.4.1]{sornmo}. % S. 18
+Die Daten sind über PhysioNet frei zugänglich \cite{physionet}.
+ 
+Wir verwenden die Datensätze $100$ und $103$, jeweils das obere Signal, die
+modifizierte Extremitätenableitung~II (MLII)
+\cite[Introduction, ECG lead configuration; Records]{mitdbdir}. % Record 100: MLII, V5; Record 103: MLII, V2
+Beide zeigen über die gesamte Dauer einen normalen Sinusrhythmus
+\cite[Introduction, Selection criteria; Tables]{mitdbdir}. Die Herzfrequenz
+liegt nach den Annotationen im Mittel bei $75$ bzw.\ $70$ Schlägen pro Minute
+und für keinen einzelnen Schlag unter $54$ pro Minute, also über $0{,}90$\,Hz.
+Das obere Signal ist bei Datensatz~$100$ durchgehend als sauber markiert, bei
+Datensatz~$103$ bis auf $9$\,s \cite[Records]{mitdbdir}; % Record 103: "Upper noisy 1 0:09"
+in der Annotationsdatei liegt dieser Abschnitt zwischen $1089{,}8$ und
+$1098{,}4$\,s.
+ 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{abb6_2_datensaetze.pdf}
+  \caption[Ausschnitte aus den Datensätzen 100 und 103]{Je ein Ausschnitt von
+  $8$\,s aus den Datensätzen $100$ (oben, ab $393$\,s) und $103$ (unten, ab
+  $1088$\,s), oberes Signal MLII. Grau hinterlegt der Abschnitt, in dem das
+  obere Signal von Datensatz~$103$ als verrauscht annotiert ist (Code in
+  Anhang~\ref{anh:code-kap6}).}
+  \label{fig:datensaetze}
+\end{figure}
+ 
+Abbildung~\ref{fig:datensaetze} zeigt je einen Ausschnitt von $8$\,s. In
+beiden Datensätzen ist die Basisliniendrift die auffälligste Störung. Bei
+Datensatz~$100$ schwankt die Nulllinie innerhalb weniger Sekunden um etwa
+$0{,}4$\,mV. Bei Datensatz~$103$ fällt sie am Beginn des als verrauscht
+markierten Abschnitts innerhalb von etwa einer Sekunde um rund $2$\,mV und
+steigt danach langsam wieder an. Das Netzbrummen ist im Zeitverlauf nicht zu
+sehen; seine Amplitude liegt unter $2\Delta$ (Tabelle~\ref{tab:ergebnisse}).
+ 
+Langzeit-EKG werden erst ausgewertet, nachdem die Aufzeichnung abgeschlossen
+ist \cite[Kap.~6.6.3]{sornmo}. % S. 445
+Wir dürfen daher jede Aufzeichnung als Ganzes transformieren. Damit die
+periodisierte Transformation der Tiefe $J$ definiert ist, muss $2^J$ die
+Länge $N$ teilen (Abschnitt~\ref{sec:onb-invarianz}); wir verwenden die ersten $N = 2^{19} = 524\,288$ Abtastwerte,
+also $24$\,min $16$\,s.
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Skalen als Frequenzbänder}
+\label{sec:frequenzbaender}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+Wird ein Signal mit der Abtastrate $f_s$ gemessen, so entspricht die
+Frequenz $\omega = \pi$ der höchsten darstellbaren Frequenz
+$F_{\max} = f_s/2$. Der Tiefpass $h$ lässt nach
+Abbildung~\ref{fig:tief-hochpass} vor allem die untere Hälfte $[0,f_s/4]$
+durch, der Hochpass $g$ vor allem die obere Hälfte $[f_s/4,f_s/2]$. Jede Stufe
+von Algorithmus~\ref{alg:mallat} wendet beide Filter auf das Ergebnis des
+vorigen Tiefpasses an und halbiert so das Band \cite[Abschn.~3.1.2]{castillo}.
+% S. 4--5
+Den Koeffizienten lassen sich daher näherungsweise die Bänder
+\begin{equation}
+\label{eq:frequenzbaender}
+  d_j \;\leftrightarrow\; \Bigl[\frac{f_s}{2^{j+1}},\,\frac{f_s}{2^{j}}\Bigr],
+  \qquad
+  a_J \;\leftrightarrow\; \Bigl[0,\,\frac{f_s}{2^{J+1}}\Bigr]
+\end{equation}
+zuordnen \cite[Kap.~2.3.2, Tab.~2.4]{rebstadt}, % S. 27--28
+\cite[Kap.~3.2, Tab.~2]{aqil}. % S. 59
+Die Zuordnung ist nicht scharf, denn $\lvert H\rvert$ und $\lvert G\rvert$
+fallen nicht sprunghaft von $1$ auf $0$ (Abbildung~\ref{fig:tief-hochpass});
+Frequenzen nahe einer Bandgrenze verteilen sich auf beide benachbarten Stufen.
+ 
+Für $f_s = 360$\,Hz und $J = 8$ ergibt \eqref{eq:frequenzbaender}
+Tabelle~\ref{tab:baender}. Dort ist auch eingetragen, wo die Störungen aus
+Abschnitt~\ref{sec:ekg}, die Grundfrequenz des Herzschlags und die
+Hauptanteile von P- und T-Welle liegen; letztere liegen je nach Quelle
+zwischen $1$ und $6$ oder zwischen $1$ und $20$\,Hz
+\cite[Kap.~2.3.1]{rebstadt}. % S. 17
+ 
+\begin{table}[htbp]
+  \centering
+  \small
+  \begin{tabular}{@{}lccccccccc@{}}
+    \toprule
+     & $d_1$ & $d_2$ & $d_3$ & $d_4$ & $d_5$ & $d_6$ & $d_7$ & $d_8$ & $a_8$ \\
+    \midrule
+    von (Hz) & $90$ & $45$ & $22{,}5$ & $11{,}3$ & $5{,}6$ & $2{,}8$ & $1{,}4$ & $0{,}70$ & $0$ \\
+    bis (Hz) & $180$ & $90$ & $45$ & $22{,}5$ & $11{,}3$ & $5{,}6$ & $2{,}8$ & $1{,}4$ & $0{,}70$ \\
+    \midrule
+    P- und T-Welle         &   &   &   & ($\bullet$) & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ &  \\
+    Herzfrequenz           &   &   &   &   &   &   &   & $\bullet$ &  \\
+    Basisliniendrift       &   &   &   &   &   &   &   & ($\bullet$) & $\bullet$ \\
+    Bandmechanik           &   &   &   &   &   &   &   &   & $\bullet$ \\
+    Elektrodenbewegung     &   &   &   &   & ($\bullet$) & $\bullet$ & $\bullet$ & ($\bullet$) &  \\
+    Netzbrummen ($60$\,Hz) &   & $\bullet$ &   &   &   &   &   &   &  \\
+    Muskelrauschen         &   & $\bullet$ & $\bullet$ & ($\bullet$) &   &   &   &   &  \\
+    \bottomrule
+  \end{tabular}
+  \caption[Frequenzbänder der DWT bei 360 Hz]{Näherungsweise Frequenzbänder
+  der Koeffizienten nach \eqref{eq:frequenzbaender} für $f_s = 360$\,Hz und
+  $J = 8$ und die Bänder, in denen nach Abschnitt~\ref{sec:ekg} und
+  \ref{sec:daten} die Wellen des EKG, die Herzfrequenz und die Störungen
+  liegen; in Klammern Bänder, die nur am Rand getroffen werden.}
+  \label{tab:baender}
+\end{table}
+ 
+Die Tabelle zeigt drei Bereiche. In $d_1$ bis $d_3$, oberhalb von
+$22{,}5$\,Hz, liegen Netzbrummen und Muskelrauschen. Wegen der Bandbegrenzung
+auf $100$\,Hz enthält $d_1$ kaum noch Signalanteile; nach Alessio sind die
+Koeffizienten der Stufe~$1$ im Wesentlichen Rauschen
+\cite[Kap.~15.2.2]{alessio}. % S. 720--721
+ In $a_8$, unterhalb von
+$0{,}70$\,Hz, liegen die Drift und die Störungen der Bandmechanik. Dazwischen
+liegen P- und T-Welle, die Herzfrequenz, aber auch die Elektrodenbewegung,
+die sich nach den Bändern allein nicht vom EKG trennen lässt.
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Das Verfahren}
+\label{sec:verfahren}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\subsection{Modell und Ein-Schritt-Verfahren}
+\label{sec:ein-schritt}
+ 
+Alessio und Castillo et al.\ gehen vom Modell \eqref{eq:rauschmodell} aus,
+$Y_n = f_n + \sigma Z_n$ mit Gau\ss'schem wei\ss em Rauschen $Z$ der
+Varianz~$1$ \cite[Kap.~15.2.1]{alessio}, % S. 717
+\cite[Abschn.~2.2.2, Gl.~(8)]{castillo}. % S. 3
+Für EKG-Aufzeichnungen kommt die Drift $b\in\R^N$ hinzu:
+\begin{equation}
+\label{eq:modell-ekg}
+  Y_n = f_n + b_n + \sigma Z_n, \qquad n = 0,\dots,N-1,
+\end{equation}
+wobei $b$ nach Tabelle~\ref{tab:baender} im Band von $a_J$ liegt. Es
+bezeichne $A$ die periodisierte DWT der Tiefe $J$ aus
+Abschnitt~\ref{sec:onb-invarianz} mit dem Filter \eqref{eq:db6-koeff},
+\[
+  AY = (a_J, d_J, d_{J-1}, \dots, d_1), \qquad
+  a_J, d_J \in \R^{N/2^J},\; d_j \in \R^{N/2^j}.
+\]
+$A$ ist orthogonal (Lemma~\ref{lem:dwt-orthogonal}), also $A^{-1} = A^\top$.
+ 
+\begin{Definition}[Ein-Schritt-Verfahren]
+\label{def:ein-schritt}
+Zu Tiefen $1 \le J_S < J$ und einer Schwelle $T > 0$ sei
+\begin{equation}
+\label{eq:ein-schritt}
+  \hat f = A^\top\bigl(0,\; d_J, \dots, d_{J_S+1},\;
+  \rho^{\mathrm S}_T(d_{J_S}), \dots, \rho^{\mathrm S}_T(d_1)\bigr),
+\end{equation}
+wobei das Soft-Thresholding $\rho^{\mathrm S}_T$ aus
+Definition~\ref{def:thresholding} komponentenweise angewandt wird.
+\end{Definition}
+ 
+Das ist genau das Vorgehen von Castillo et al.: zerlegen bis zur Tiefe $J$,
+die Approximation $a_J$ durch den Nullvektor ersetzen, die Details der
+Stufen $1$ bis $J_S$ schwellen, die Details der Stufen $J_S+1$ bis $J$
+unverändert lassen und rekonstruieren \cite[Abschn.~3]{castillo}. % S. 4, Schritte (1)--(4)
+Alessio und Castillo et al.\ verwenden dieselbe Funktion $\rho^{\mathrm S}_T$
+\cite[Kap.~15.2.1]{alessio}, % S. 719
+\cite[Abschn.~3.1.6, Gl.~(24)]{castillo}. % S. 8
+Gegenüber Algorithmus~\ref{alg:visushrink} ändern sich zwei Dinge: $a_J$ wird
+nicht geschwellt, sondern gelöscht, und die gröberen Details bleiben
+unverändert. Alessio beschreibt das Verfahren in zwei Schritten: Zuerst wird
+die Drift entfernt, indem man aus den Details allein rekonstruiert, danach
+wird das so bereinigte Signal neu zerlegt und geschwellt
+\cite[Kap.~15.2.4]{alessio}. % S. 729, 732
+Castillo et al.\ begründen das Ein-Schritt-Verfahren mit dem geringeren
+Rechenaufwand \cite[Abschn.~3]{castillo}; % S. 4
+der folgende Satz zeigt, dass beide Wege dasselbe liefern.
+ 
+\begin{Satz}
+\label{satz:ein-zwei-schritt}
+Es sei $AY = (a_J, d_J, \dots, d_1)$ und $Y' = A^\top(0, d_J, \dots, d_1)$ das
+von der Drift bereinigte Signal. Zerlegt man $Y'$ mit der DWT $A'$ der
+Tiefe $J_S$, $A'Y' = (a'_{J_S}, d'_{J_S}, \dots, d'_1)$, so gilt $d'_j = d_j$
+für $j = 1,\dots,J_S$. Insbesondere ist der Schätzer \eqref{eq:mad} für $Y'$
+derselbe wie für $Y$, und für jede Schwelle $T$ gilt
+\[
+  A'^\top\bigl(a'_{J_S}, \rho^{\mathrm S}_T(d'_{J_S}), \dots,
+  \rho^{\mathrm S}_T(d'_1)\bigr) = \hat f .
+\]
+\end{Satz}
+ 
+\begin{proof}
+Ein Schritt von Algorithmus~\ref{alg:mallat} ist die Matrix $S_K$ aus
+Abschnitt~\ref{sec:onb-invarianz}, $S_K a_{j-1} = (a_j, d_j)$ mit
+$K = N/2^{j-1}$; nach Lemma~\ref{lem:dwt-orthogonal} ist
+$S_KS_K^\top = S_K^\top S_K = I$. Für $Y'$ setzen wir $u_J = 0$ und
+$u_{j-1} = S_K^\top(u_j, d_j)$ für $j = J,\dots,1$; dann ist $Y' = u_0$. Wegen
+$S_KS_K^\top = I$ folgt $S_Ku_{j-1} = (u_j, d_j)$. Die Zerlegung von $Y'$ bis
+zur Tiefe $J_S$ liefert daher nacheinander
+\[
+  (u_1, d_1),\; (u_2, d_2),\; \dots,\; (u_{J_S}, d_{J_S}),
+\]
+also $a'_{J_S} = u_{J_S}$ und $d'_j = d_j$ für $j \le J_S$. Da \eqref{eq:mad} nur von $d_1$ abhängt und
+$N$ gleich bleibt, stimmen $\hat\sigma$ und $T$ überein.
+ 
+Für die Rekonstruktion sei $v_{J_S} = u_{J_S}$ und
+$v_{j-1} = S_K^\top\bigl(v_j, \rho^{\mathrm S}_T(d_j)\bigr)$ für
+$j = J_S,\dots,1$; das Ergebnis ist $v_0$. Andererseits ist nach Definition
+\[
+  u_{J_S} = S^\top\bigl(\cdots S^\top\bigl(S^\top(0, d_J), d_{J-1}\bigr)
+  \cdots, d_{J_S+1}\bigr)
+\]
+mit den jeweils passenden Matrizen $S = S_K$. Setzt man das ein, so durchläuft
+$v_0$ genau die Rekonstruktion (Satz~\ref{satz:rekonstruktion}) von
+\[
+  \bigl(0, d_J, \dots, d_{J_S+1}, \rho^{\mathrm S}_T(d_{J_S}), \dots,
+  \rho^{\mathrm S}_T(d_1)\bigr),
+\]
+und nach \eqref{eq:ein-schritt} ist $v_0 = \hat f$.
+\end{proof}
+ 
+Für das Verfahren sind vier Grö\ss en zu wählen: das Wavelet, die Tiefe $J$,
+die Tiefe $J_S$ und die Schwelle $T$.
+ 
+\subsection{Wavelet}
+ 
+Castillo et al.\ wählen das Wavelet nach seiner Ähnlichkeit mit dem
+QRS-Komplex und nehmen \texttt{db6}, also $\psi_6$ aus
+Satz~\ref{satz:daubechies} mit $p = 6$ verschwindenden Momenten, weil es
+einem echten EKG ähnelt \cite[Abschn.~3.1.1]{castillo}; % S. 4
+ebenso Alessio \cite[Kap.~15.2.4]{alessio}. % S. 729
+Allgemein soll das Wavelet die Form der Merkmale haben, die erhalten bleiben
+sollen \cite[Kap.~15.2.1]{alessio}. % S. 719
+In ihrem Vergleich von zwölf Wavelets an synthetischen EKG finden Castillo
+et al.\ zwischen den Wavelets keine gro\ss en Unterschiede
+\cite[Abschn.~4, Tab.~2]{castillo}. % S. 8, 12
+ 
+\subsection{Tiefe $J$ für die Drift}
+ 
+Die Tiefe $J$ ist so zu wählen, dass $a_J$ die Frequenzen unter einer Grenze
+$f_c$ erfasst, unter der die wichtigen Anteile der Drift liegen. Castillo et
+al.\ und Alessio geben dafür
+\begin{equation}
+\label{eq:lbw}
+  J_{BW} = \operatorname{int}\Bigl[\log_2\Bigl(\frac{F_{\max}}{f_c}\Bigr)\Bigr]
+\end{equation}
+an, wobei $\operatorname{int}$ auf die nächste ganze Zahl rundet
+\cite[Abschn.~3.1.2, Gl.~(9)]{castillo}, % S. 5; dort L_BW
+\cite[Kap.~15.2.4]{alessio}. % S. 730
+Mit $F_{\max} = 125$\,Hz und $f_c = 1$\,Hz erhalten sie $J_{BW} = 7$, und
+$a_7$ erfasst $0$ bis $0{,}977$\,Hz. % Castillo S. 5
+ 
+Bei uns ist $F_{\max} = 180$\,Hz, und $f_c = 1$\,Hz ergäbe
+$\log_2 180 \approx 7{,}49$, also $J = 7$ mit der Grenze $1{,}41$\,Hz. Diese
+Grenze liegt über der Herzfrequenz einzelner Schläge in beiden Datensätzen
+(Abschnitt~\ref{sec:daten}). Die tiefste Frequenz des EKG ist aber durch die
+langsamste Herzfrequenz gegeben; Sörnmo und Laguna empfehlen deshalb eine
+Grenze etwas darunter, etwa $f_c = 0{,}5$\,Hz, und warnen, dass bei zu hoher
+Grenze eine mit der Herzfrequenz schwingende Störung entsteht
+\cite[Kap.~7.1]{sornmo}. % S. 458--459
+Mit $f_c = 0{,}5$\,Hz liefert \eqref{eq:lbw}
+\[
+  J = \operatorname{int}\bigl[\log_2 360\bigr] = \operatorname{int}[8{,}49] = 8,
+\]
+und $a_8$ erfasst $0$ bis $0{,}70$\,Hz. Dasselbe $J$ ergibt sich für jedes
+$f_c$ zwischen $180/2^{8{,}5} \approx 0{,}50$\,Hz und
+$180/2^{7{,}5} \approx 0{,}99$\,Hz. Die Grenze $0{,}70$\,Hz liegt unter der
+Herzfrequenz aller Schläge von Datensatz $100$ und $103$ und mehr als
+doppelt so hoch wie die Frequenz der Atmungsdrift. Wie weit die Grenze über
+der Drift liegen muss, zeigt Tabelle~1 bei Castillo et al.: Bei allen drei
+Abtastraten ist die Stufe mit der Grenze nahe $0{,}98$\,Hz am besten, die
+nächsttiefere mit $0{,}49$\,Hz entfernt Drift um $0{,}3$\,Hz deutlich
+schlechter \cite[Abschn.~4, Tab.~1]{castillo}. % S. 8
+In Abschnitt~\ref{sec:ergebnisse} vergleichen wir $J = 7, 8, 9$ an den Daten.
+ 
+\subsection{Tiefe $J_S$ für das Rauschen}
+ 
+Nur die feinen Details sollen geschwellt werden, damit die klinisch wichtige
+Form der PQRST-Komplexe erhalten bleibt. Alessio schwellt nur die Details,
+deren Frequenzen über etwa $10$\,Hz liegen \cite[Kap.~15.2.4]{alessio}; % S. 731
+Castillo et al.\ wählen die Tiefe nach einer gewünschten Grenzfrequenz und
+zeigen, dass der QRS-Komplex mit wachsender Tiefe seine Form verliert
+\cite[Abschn.~3.1.3, 4]{castillo}. % S. 5--6, 12 (Abb. 9); dort M
+Nach \eqref{eq:frequenzbaender} ist die untere Grenze der geschwellten Stufen
+$f_s/2^{J_S+1}$, für $J_S = 3$ also $22{,}5$\,Hz und für $J_S = 4$ dann
+$11{,}3$\,Hz; beide erfüllen Alessios Bedingung. Wir wählen das kleinere
+$J_S = 3$, das auch Castillo et al.\ für ihre realen Aufzeichnungen
+verwenden, dort allerdings bei anderen Abtastraten
+\cite[Abschn.~4]{castillo}. % S. 12
+Damit werden genau die Stufen $d_1$ bis $d_3$ geschwellt, in denen nach
+Tabelle~\ref{tab:baender} Netzbrummen und Muskelrauschen liegen.
+ 
+\subsection{Schwelle}
+ 
+Als Schwelle verwenden wir die universelle Schwelle
+\eqref{eq:universelle-schwelle} mit dem Schätzer \eqref{eq:mad},
+$T = \hat\sigma\sqrt{2\ln N}$, wie Castillo et al.\ und Alessio
+\cite[Abschn.~3.1.4, Gl.~(10); 3.1.5, Gl.~(19), (23)]{castillo}, % S. 6--7; dort 1,4826 = 1/0,6745
+\cite[Kap.~15.2.2, 15.2.3]{alessio}. % S. 721--723
+Für $N$ zwischen $2^6$ und $2^{19}$ überschreitet reines Rauschen diese
+Schwelle nur in etwa einem Zehntel der Realisierungen
+\cite[Kap.~15.2.3]{alessio}. % S. 723
+Da die gröberen Stufen ungeschwellt bleiben, bleibt dort auch das Rauschen;
+wie viel, lässt sich mit Lemma~\ref{lem:rauschen-invariant} genau angeben.
+ 
+\begin{Lemma}
+\label{lem:restrauschen}
+Ist $Y = \sigma Z$ reines Rauschen wie in \eqref{eq:rauschmodell}, so hat der
+Anteil von $Y$ in den unveränderten Stufen $d_{J_S+1}, \dots, d_J$ die
+erwartete Energie
+\[
+  \mathbb{E}\,\bigl\lVert A^\top(0, d_J, \dots, d_{J_S+1}, 0, \dots, 0)\bigr\rVert^2
+  = \sigma^2 N \bigl(2^{-J_S} - 2^{-J}\bigr).
+\]
+\end{Lemma}
+ 
+\begin{proof}
+Nach Lemma~\ref{lem:rauschen-invariant} sind alle Koeffizienten von $AY$
+unabhängig mit Varianz $\sigma^2$. Die Stufe $d_j$ hat $N/2^j$ Koeffizienten.
+Da $A^\top$ orthogonal ist, ist die Energie gleich der Summe der quadrierten
+Koeffizienten, mit Erwartungswert
+$\sigma^2 \sum_{j=J_S+1}^{J} N 2^{-j} = \sigma^2 N (2^{-J_S} - 2^{-J})$.
+\end{proof}
+ 
+Für $J_S = 3$ und $J = 8$ ist $2^{-3} - 2^{-8} = 31/256 \approx 12{,}1\,\%$;
+der Effektivwert des verbleibenden Rauschens ist also
+$\sigma\sqrt{31/256} \approx 0{,}35\,\sigma$. Mit den Werten von $\hat\sigma$
+aus Abschnitt~\ref{sec:ergebnisse} sind das etwa $2$\,\textmu V, weniger als
+eine halbe Wandlerstufe \eqref{eq:wandlerstufe}.
+ 
+Gerechnet wurde mit PyWavelets \cite{pywavelets} (Code in
+Anhang~\ref{anh:code-kap6}).
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Bewertung ohne Referenz}
 \label{sec:bewertung}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{SNR, MSE und PRD setzen ein rauschfreies Referenzsignal voraus, das bei realen Messungen prinzipiell nicht existiert.}
-\quellen{
-  \begin{itemize}
-    \item Chatterjee, Gl. (56) ff., S. 582 [bestätigt]
-    \item Aqil, Kap. 3, S. 59 [bestätigt]
-    \item Rebstadt, Kap. 4.3, S. 54–55 [bestätigt]
-  \end{itemize}
-}
-\anmerkung{Zentraler methodischer Abschnitt. SNR und MSE setzen ein BEKANNTES
-sauberes Signal voraus. Auf realen Daten existiert dieses nicht -- sonst bräuchte
-man kein Denoising. Daraus folgt die Dreistufigkeit der folgenden Abschnitte.
-Hier definieren: $\SNR$, $\MSE$; und benennen, welche Ersatzkriterien auf realen
-Daten zur Verfügung stehen.}
-
-\anmerkung{6.2a Vorverarbeitung: warum $a_{0,k} := X(k)$ zulässig ist (neu einzufügen) Die Abtastwerte $s_k$ dürfen als Skalierungskoeffizienten der Stufe 0 gelesen werden, weil für hölderstetige Signale und eine Skalierungsfunktion mit kompaktem Träger und $sum_{k}{\varphi(x-k)} = 1$ der Fehler nur $O(h^{\alpha})$ beträgt.}
-
-\quellen{
-  \begin{itemize}
-    \item LMR, Kap. 3.1.1 „Vorbereitungen", S. 237–238 [bestätigt] — die beiden Vorverarbeitungsschritte, Gl. (3.1.1): $fwelle(kh) = s_k + \O(h^\alpha)$
-    \item LMR, Bemerkung 3.1.1, S. 238 [bestätigt] — Quadraturformeln höherer Ordnung, falls die Fehlerordnung nicht genügt
-    \item LMR, Lemma 2.4.29 / Gl. (2.4.17), S. 175 [bestätigt] — die dabei benötigte Bedingung $\sum_{k}{\varphi(x-k)} = 1$
-    \item LMR, Aufgabe 3.1, S. 311 [geschätzt] — der Beweis von (3.1.1) ist dort als Übung gestellt
-  \end{itemize}
-}
-
+ 
+Die mittlere quadratische Abweichung zwischen $f$ und $\hat f$ lässt sich in
+der Praxis nicht berechnen, weil $f$ unbekannt ist
+\cite[Kap.~15.2.1]{alessio}. % S. 717
+Bei bioelektrischen Signalen ist das wahre Signal grundsätzlich unbekannt und
+lässt sich aus der Messung nicht zurückgewinnen \cite[Kap.~1.4]{sornmo}; % S. 16
+auch Castillo et al.\ schreiben, dass sich für reale verrauschte EKG nur schwer
+ein quantitatives Gütema\ss{} angeben lässt \cite[Abschn.~4]{castillo}. % S. 10
+Wir messen deshalb Grö\ss en, die sich aus einem Signal $x\in\R^N$ allein bestimmen
+lassen. Es seien $r_1, \dots, r_K$ die annotierten Stellen der R-Zacken
+aller Normalschläge, die mindestens $10$\,s vom Anfang und Ende entfernt
+liegen; das sind $K = 1780$ Schläge bei Datensatz~$100$ und $K = 1666$ bei
+Datensatz~$103$.
+ 
+\begin{enumerate}
+\item Basislinie. Die isoelektrische Linie wird in den meisten Rhythmen am
+  besten durch die PQ-Strecke dargestellt \cite[Kap.~7.1.3]{sornmo}. % S. 470
+  Nach den Dauern aus Abschnitt~\ref{sec:ekg} liegt das Fenster
+  $I_k = \{r_k - 28, \dots, r_k - 22\}$, also $80$ bis $60$\,ms vor der
+  R-Zacke, in der Regel in dieser Strecke (Abbildung~\ref{fig:muster}); das
+  Fenster ist unsere eigene Wahl. Wir
+  setzen
+  \[
+    B_k(x) = \frac{1}{\lvert I_k\rvert}\sum_{n \in I_k} x_n
+  \]
+  und messen die Schwankung der Basislinie durch die Standardabweichung
+  $s_B(x)$ der Werte $B_1(x), \dots, B_K(x)$.
+\item Netzbrummen. Für Teilstücke der Länge $n = 2^{13}$ sei
+  \[
+    \mathcal A_m(x) = 2\,\Bigl\lvert \frac1n \sum_{i=0}^{n-1} x_{mn+i}\,
+    e^{-2\pi \mathrm{i}\, 60\, i/f_s} \Bigr\rvert ,
+  \]
+  und $\mathcal A_{60}(x)$ der Mittelwert über alle $m$; das ist die Amplitude der
+  Schwingung mit $60$\,Hz.
+\item R-Zacken. Die mittlere Höhe
+  $\bar R(x) = \frac1K \sum_{k} \bigl(x_{r_k} - B_k(x)\bigr)$ sollte sich durch
+  das Entrauschen nicht ändern. Wir vergleichen den Mittelwert, weil die
+  Atmung die Höhe der einzelnen Schläge verändert (Abschnitt~\ref{sec:ekg}).
+\item Energiespektrum. Für acht Teilstücke $x_1,\dots,x_8$ der Länge $2^{16}$
+  mit diskreten Fourier-Transformierten $\hat x_m$
+  \cite[Kap.~53]{hankebourgeois} % S. 411
+  sei $E_x(\nu) = \frac18\sum_m \lvert \hat x_m(\nu)\rvert^2$. Verglichen wird
+  der Anteil
+  $\sum_{\nu \in [a,b)} E_{\hat f}(\nu) \big/ \sum_{\nu\in[a,b)} E_Y(\nu)$
+  der Energie eines Bandes $[a,b)$, der nach dem Entrauschen übrig bleibt.
+  Die Bänder $[0;\,0{,}7)$, $[0{,}7;\,1{,}5)$, $[1{,}5;\,40)$ und
+  $[59;\,61)$\,Hz legen wir selbst nach Tabelle~\ref{tab:baender} fest:
+  unter $a_8$, um die Herzfrequenz, oberhalb davon bis über die P- und T-Welle
+  hinaus und um das Netzbrummen.
+\end{enumerate}
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Stufe 1: Synthetisch konstruiertes EKG-Signal}
-\label{sec:stufe1}
+\section{Ergebnisse}
+\label{sec:ergebnisse}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\anmerkung{Kontrollierte Umgebung mit bekanntem f: erlaubt exakte SNR-Messung und damit die numerische Überprüfung der Theorie aus Kapitel 5.}
-\quellen{
-  \begin{itemize}
-    \item LMR, Kap. 3.1.2, S. 238–240 [bestätigt] — methodisches Vorbild: ein einzelner Herzschlag, MSA über vier Stufen, Histogramme der Koeffizienten (Abb. 3.2, S. 240)
-    \item LMR, Tabelle der Skalierungskoeffizienten, S. 170 [bestätigt] — Filterkoeffizienten für die Implementierung
-    \item Aqil, Kap. 4, S. 61–65 [bestätigt] — Fig. 9, 11, 14, Tab. 4
-    \item Rebstadt, Kap. 4.1–4.2, S. 49–53 [bestätigt] — Abb. 4.1 (S. 50)
-    \item Mallat, Abb. 11.4–11.5, S. 635, 638 [bestätigt]
-    \item Eigene Implementierung (NumPy) — keine Fremdquelle
-  \end{itemize}
-}
-
-\subsection{Konstruktion des Modellsignals}
-
-\anmerkung{Ansatz überlegen: Summe von Gau\ss{}-Glocken für P/T-Wellen plus
-schmale, hohe Komponente für den QRS-Komplex. Vorteil gegenüber einem
-Testsignal aus der Literatur: die Parameter (Amplituden, Breiten, Herzfrequenz)
-sind frei wählbar und damit systematisch variierbar.}
-
-\subsection{Rauschmodell und Wahl der Parameter}
-
-\anmerkung{Pseudo-zufälliges Gau\ss{}sches Rauschen verwenden -- deterministische
-Alternativen verletzen die Voraussetzungen des MAD-Schätzers!}
-
-\subsection{Wahl von Wavelet und Zerlegungstiefe}
-
-\anmerkung{Systematischer Vergleich: Haar (\texttt{db1}) vs.\ \texttt{db2} vs.\ Symlet;
-Zerlegungstiefe $J = 1,\dots,6$. PRÜFEN: In den Vorexperimenten stand hier
-\texttt{db4} (PyWavelets, acht Koeffizienten), Kapitel~\ref{chapter:dwt} führt
-aber \texttt{db2} vor (Bemerkung~\ref{bem:db-bezeichnung}) -- einheitlich
-entscheiden. Erwartung aus den Vorexperimenten: das Daubechies-Wavelet schlägt Haar, und die
-Zerlegungstiefe verhält sich NICHT monoton (Optimum um $J=3$). Genau dieses
-nichtmonotone Verhalten ist ein Ergebnis und sollte als solches dargestellt werden.}
-
-\subsection{Vergleich von Hard- und Soft-Thresholding}
-
-\subsection{Ergebnisse}
-
-\anmerkung{Tabelle mit SNR/MSE (booktabs) + Abbildung Original/verrauscht/entrauscht}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Stufe 2: Reale Signale aus der MIT-BIH-Datenbank}
-\label{sec:stufe2}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Standardisierte, annotierte EKG-Aufzeichnungen; da kein rauschfreies Original existiert, wird künstliches Rauschen additiv aufgeprägt.}
-\quellen{
-  \begin{itemize}
-    \item Rebstadt, Kap. 5.1.1, S. 61–62 [bestätigt] — Abb. 5.1, Datensatz 205
-    \item Chatterjee, Tab. 9, S. 586 [bestätigt]
-    \item Aqil, Kap. 3–4, S. 60–66 [bestätigt]
-  \end{itemize}
-}
-\subsection{Beschreibung des Datensatzes}
-
-\anmerkung{MIT-BIH Arrhythmia Database (PhysioNet): Abtastrate, Auflösung,
-Ableitungen, Annotationen. Auswahl der verwendeten Datensätze begründen.}
-
-\subsection{Validierung ohne sauberes Referenzsignal}
-
-\anmerkung{Hier greift Abschnitt~\ref{sec:bewertung}. Mögliche Wege:
-(a) künstliches Rauschen ZUSÄTZLICH aufaddieren und das Originalsignal als
-Pseudo-Referenz behandeln -- methodisch sauber, aber das Original ist selbst
-schon verrauscht; (b) Erhalt der annotierten R-Zacken-Positionen prüfen;
-(c) Amplitudentreue des QRS-Komplexes vor/nach Entrauschung.
-Die gewählte Strategie muss klar begründet werden.}
-
-\subsection{Ergebnisse}
-
-\anmerkung{Stufe~3 (klinische Daten des Herzzentrums).!!}
-
+ 
+\paragraph{Die Koeffizienten.}
+Abbildung~\ref{fig:koeffizienten} zeigt die Koeffizienten der beiden
+Datensätze in den Ausschnitten aus Abbildung~\ref{fig:datensaetze}, wie
+Abbildung~\ref{fig:bsp-koeffizienten-Y} für das Testsignal. Der Schätzer
+\eqref{eq:mad} liefert $\hat\sigma = 5{,}9$\,\textmu V für
+Datensatz~$100$ und $6{,}1$\,\textmu V für Datensatz~$103$, also etwa
+$1{,}2\,\Delta$. Mit $\sqrt{2\ln N} \approx 5{,}1$ ist $T = 30{,}2$ bzw.\
+$31{,}2$\,\textmu V.
+ 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{abb6_3_koeffizienten.pdf}
+  \caption[Koeffizienten der Datensätze 100 und 103]{Koeffizienten $a_8$
+  (oben) und $d_8$ bis $d_1$ (unten) der Datensätze $100$ (links) und $103$
+  (rechts) mit \texttt{db6} in den Ausschnitten aus
+  Abbildung~\ref{fig:datensaetze}, jeweils an der Stelle $k\,2^j/f_s$
+  aufgetragen; gestrichelt bei $d_1$ bis $d_3$ die Schwelle $\pm T$ (Code in
+  Anhang~\ref{anh:code-kap6}).}
+  \label{fig:koeffizienten}
+\end{figure}
+ 
+Die Darstellung ist dünn besetzt, wie Alessio es für reale Signale beschreibt:
+Nur wenige Detailkoeffizienten sind gro\ss, und sie häufen sich an den
+abrupten Änderungen des Signals \cite[Kap.~15.2.1]{alessio}. % S. 718
+Über die ganze Aufzeichnung liegen auf $d_1$ nur $0{,}3$ bzw.\ $0{,}2$\,\%
+der Koeffizienten über der Schwelle, auf $d_2$ etwa $10$\,\%, auf $d_3$ etwa
+$20$\,\%. Von den behaltenen Koeffizienten liegen auf $d_1$ und $d_2$ $81$
+bis $100$\,\%, auf $d_3$ $74$ bzw.\ $82$\,\% höchstens $100$\,ms von einer
+R-Zacke entfernt. Bei Datensatz~$103$ sind die Koeffizienten von $a_8$ im
+verrauschten Abschnitt um ein Vielfaches grö\ss er als davor.
+ 
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{abb6_4_schritte.pdf}
+  \caption[Die Schritte an den Ausschnitten]{Wirkung der Schritte auf die
+  Ausschnitte aus Abbildung~\ref{fig:datensaetze}. Oben die Messwerte $Y$
+  (grau) und der mit $a_8$ entfernte Anteil (blau), in der Mitte der durch
+  Soft-Thresholding von $d_1$ bis $d_3$ entfernte Anteil in \textmu V, unten
+  die Schätzung $\hat f$ (Code in Anhang~\ref{anh:code-kap6}).}
+  \label{fig:schritte}
+\end{figure}
+ 
+\paragraph{Nullsetzen von $a_8$.}
+Abbildung~\ref{fig:schritte} zeigt oben den mit $a_8$ entfernten Anteil, eine
+langsame Kurve, die der Basislinie folgt. Ihr Effektivwert beträgt über die
+ganze Aufzeichnung $50$\,\textmu V bei Datensatz~$100$ und $128$\,\textmu V
+bei Datensatz~$103$; sie ist der weitaus grö\ss te entfernte Anteil. Die
+Schwankung $s_B$ der Basislinie sinkt von $49$ auf $11$\,\textmu V bzw.\ von
+$135$ auf $32$\,\textmu V, und im Band unter $0{,}7$\,Hz bleiben $0{,}5$ bzw.\
+$0{,}6$\,\% der Energie übrig (Tabelle~\ref{tab:ergebnisse}). Die Spitze der
+Herzfrequenz bei etwa $1{,}15$\,Hz bleibt erhalten
+(Abbildung~\ref{fig:spektrum}, links).
+ 
+\paragraph{Schwellen von $d_1$ bis $d_3$.}
+Das Schwellen entfernt Schwankungen mit einem Effektivwert von $5$ bis
+$8$\,\textmu V je Stufe (Abbildung~\ref{fig:schritte}, Mitte). Darin steckt
+das Netzbrummen: $\mathcal A_{60}$ sinkt von $7{,}8$ auf $0{,}8$\,\textmu V
+(Datensatz~$100$) bzw.\ von $8{,}6$ auf $0{,}9$\,\textmu V
+(Datensatz~$103$), also auf etwa ein Zehntel. Im Energiespektrum von
+Datensatz~$103$ ragt die Spitze bei $60$\,Hz vorher um das $480$-Fache über
+ihre Umgebung hinaus, danach um das $7$-Fache; bei Datensatz~$100$ verschwindet
+sie. Oberhalb von $22{,}5$\,Hz sinkt das Spektrum insgesamt
+(Abbildung~\ref{fig:spektrum}, rechts).
+ 
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{abb6_5_spektrum.pdf}
+  \caption[Energiespektrum vor und nach dem Entrauschen]{Energiespektrum
+  $E_x$ von Datensatz~$103$ (MLII) vor (grau) und nach dem Entrauschen
+  (blau), links bis $2$\,Hz, rechts bis $180$\,Hz, logarithmisch und in
+  willkürlichen Einheiten; gestrichelt die Grenzen $0{,}70$\,Hz von $a_8$
+  (links) und $22{,}5$\,Hz von $d_3$ (rechts), gepunktet die Grenze
+  $1{,}41$\,Hz, die $J = 7$ ergäbe (Code in Anhang~\ref{anh:code-kap6}).}
+  \label{fig:spektrum}
+\end{figure}
+ 
+\paragraph{Gesamtergebnis.}
+Tabelle~\ref{tab:ergebnisse} fasst die Kennzahlen zusammen. Die R-Zacken
+werden um $1{,}2$ bzw.\ $0{,}2$\,\% niedriger, und im Band $1{,}5$ bis
+$40$\,Hz, das oberhalb der Herzfrequenz liegt und die Bänder von P- und
+T-Welle aus Tabelle~\ref{tab:baender} umfasst, bleiben $98{,}4$ bzw.\
+$99{,}1$\,\% der Energie erhalten. Zum Vergleich ist Hard-Thresholding mit
+derselben Schwelle eingetragen. Es lässt die R-Zacken unverändert, entfernt
+aber weniger Netzbrummen; zudem erzeugt es Unstetigkeiten,
+Soft-Thresholding nicht \cite[Abschn.~3.1.6, 4]{castillo}, % S. 8, 12 (Abb. 11)
+und beim Entrauschen ist Soft-Thresholding die übliche Wahl
+\cite[Kap.~15.2.1]{alessio}. % S. 720
+ 
+\begin{table}[htbp]
+  \centering
+  \small
+  \begin{tabular}{@{}lrrrrrr@{}}
+    \toprule
+     & \multicolumn{3}{c}{Datensatz $100$} & \multicolumn{3}{c}{Datensatz $103$} \\
+    \cmidrule(lr){2-4}\cmidrule(l){5-7}
+     & vorher & Soft & Hard & vorher & Soft & Hard \\
+    \midrule
+    $s_B$ in \textmu V       & $49$ & $11$ & $11$ & $135$ & $32$ & $32$ \\
+    $\mathcal A_{60}$ in \textmu V    & $7{,}8$ & $0{,}8$ & $1{,}5$ & $8{,}6$ & $0{,}9$ & $1{,}5$ \\
+    $\bar R$ in mV           & $1{,}293$ & $1{,}278$ & $1{,}297$ & $2{,}138$ & $2{,}133$ & $2{,}140$ \\
+    \midrule
+    \multicolumn{7}{@{}l}{Verbleibender Anteil der Energie im Band, in \%} \\
+    \quad $0$ bis $0{,}7$\,Hz       & & $0{,}5$   & $0{,}5$   & & $0{,}6$   & $0{,}6$ \\
+    \quad $0{,}7$ bis $1{,}5$\,Hz   & & $100{,}1$ & $100{,}1$ & & $100{,}8$ & $100{,}8$ \\
+    \quad $1{,}5$ bis $40$\,Hz      & & $98{,}4$  & $100{,}0$ & & $99{,}1$  & $99{,}9$ \\
+    \quad $59$ bis $61$\,Hz         & & $13{,}4$  & $17{,}6$  & & $12{,}8$  & $18{,}7$ \\
+    \bottomrule
+  \end{tabular}
+  \caption[Kennzahlen vor und nach dem Entrauschen]{Kennzahlen aus
+  Abschnitt~\ref{sec:bewertung} für die ersten $24$\,min $16$\,s der
+  Datensätze $100$ und $103$ (MLII) vor und nach dem Entrauschen mit
+  \texttt{db6}, $J = 8$, $J_S = 3$, Soft- und zum Vergleich Hard-Thresholding.}
+  \label{tab:ergebnisse}
+\end{table}
+ 
+\paragraph{Wahl von $J$ und $J_S$.}
+Tabelle~\ref{tab:varianten} vergleicht die Tiefen aus
+Abschnitt~\ref{sec:verfahren} mit ihren Nachbarn. Mit $J = 7$ gehen im Band
+$0{,}7$ bis $1{,}5$\,Hz, in dem die Herzfrequenz liegt, $88$ bzw.\ $96$\,\%
+der Energie verloren, und bei Datensatz~$100$ schwankt die Basislinie mehr
+als doppelt so stark wie mit $J = 8$. Das passt zu der mit der Herzfrequenz
+schwingenden Störung, vor der Sörnmo und Laguna bei zu hoher Grenze warnen
+\cite[Kap.~7.1]{sornmo}. % S. 459
+Bei Datensatz~$103$ ist $s_B$ mit $J = 7$ dagegen etwas kleiner. Mit $J = 9$
+bleiben unter $0{,}7$\,Hz $14$ bzw.\ $9$\,\% der Energie, und die Basislinie
+schwankt stärker; das entspricht Tabelle~1 bei Castillo et al. Bei $J_S$ zeigt
+sich der Preis des Soft-Thresholding: $J_S = 2$ lässt mehr Netzbrummen übrig,
+$J_S = 4$ entfernt nicht mehr davon, macht aber die R-Zacken um $2{,}0$ bzw.\
+$0{,}8$\,\% niedriger und nimmt dem Band $1{,}5$ bis $40$\,Hz bis zu
+$3{,}8$\,\% seiner Energie.
+ 
+\begin{table}[htbp]
+  \centering
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}lrrrrr@{}}
+    \toprule
+     & $J=7, J_S=3$ & $J=9, J_S=3$ & $J=8, J_S=2$ & $J=8, J_S=3$ & $J=8, J_S=4$ \\
+    \midrule
+    $s_B$ in \textmu V              & $25$ / $25$ & $20$ / $45$ & $11$ / $32$ & $11$ / $32$ & $11$ / $32$ \\
+    $\mathcal A_{60}$ in \textmu V           & $0{,}8$ / $0{,}9$ & $0{,}8$ / $0{,}9$ & $1{,}0$ / $1{,}1$ & $0{,}8$ / $0{,}9$ & $0{,}8$ / $0{,}9$ \\
+    $\bar R$ in mV                  & $1{,}296$ / $2{,}111$ & $1{,}278$ / $2{,}133$ & $1{,}293$ / $2{,}145$ & $1{,}278$ / $2{,}133$ & $1{,}267$ / $2{,}120$ \\
+    $0$ bis $0{,}7$\,Hz in \%       & $0{,}0$ / $0{,}0$ & $14{,}3$ / $9{,}1$ & $0{,}5$ / $0{,}6$ & $0{,}5$ / $0{,}6$ & $0{,}5$ / $0{,}6$ \\
+    $0{,}7$ bis $1{,}5$\,Hz in \%   & $12{,}2$ / $4{,}1$ & $100{,}0$ / $98{,}4$ & $100{,}1$ / $100{,}8$ & $100{,}1$ / $100{,}8$ & $100{,}1$ / $100{,}8$ \\
+    $1{,}5$ bis $40$\,Hz in \%      & $99{,}4$ / $99{,}4$ & $98{,}4$ / $99{,}1$ & $99{,}8$ / $99{,}9$ & $98{,}4$ / $99{,}1$ & $96{,}2$ / $98{,}0$ \\
+    \bottomrule
+  \end{tabular}
+  \caption[Vergleich der Tiefen L und M]{Kennzahlen nach dem Entrauschen
+  (Soft-Thresholding, \texttt{db6}) für verschiedene Tiefen $J$ und $J_S$, jeweils
+  Datensatz $100$ / $103$; die Bänder geben den verbleibenden Anteil der
+  Energie an. Vorher: $s_B = 49$ / $135$\,\textmu V,
+  $\mathcal A_{60} = 7{,}8$ / $8{,}6$\,\textmu V, $\bar R = 1{,}293$ / $2{,}138$\,mV.}
+  \label{tab:varianten}
+\end{table}
+ 
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=\textwidth]{abb6_6_vergleich.pdf}
+  \caption[Ausschnitte vor und nach dem Entrauschen]{Die Ausschnitte aus
+  Abbildung~\ref{fig:datensaetze} nach dem Entrauschen ($\hat f$, blau) und
+  darunter vorher ($Y$, grau), je Datensatz im selben Ma\ss stab; gestrichelt
+  die Nulllinie (Code in Anhang~\ref{anh:code-kap6}).}
+  \label{fig:vergleich}
+\end{figure}
+ 
+\paragraph{Die Ausschnitte.}
+Abbildung~\ref{fig:vergleich} stellt für beide Ausschnitte die Schätzung
+$\hat f$ und darunter die Messwerte $Y$ im selben Ma\ss stab gegenüber. Bei
+Datensatz~$100$ liegt die Nulllinie nach dem Entrauschen gleichmä\ss ig bei
+null, die Form der Schläge bleibt erhalten. Bei Datensatz~$103$ ist die Drift
+au\ss erhalb des schnellen Abfalls bei $1090$\,s entfernt. Der Abfall selbst
+bleibt als Einbruch sichtbar: Die Basislinie springt dort zwischen zwei
+Schlägen von $0{,}6$ auf $-0{,}6$\,mV, in der Messung von $0{,}2$ auf
+$-1{,}8$\,mV.
+ 
+\anmerkung{Alle Zahlen dieses Abschnitts: Ausgabe von
+\texttt{kap6\_auswertung.py}; nur die Werte der Basislinie bei $1090$\,s
+stammen aus einer Zusatzrechnung mit \texttt{isoelektrisch} an den Schlägen
+zwischen $1085$ und $1100$\,s.}
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Diskussion}
 \label{sec:diskussion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Wo bestätigt das Experiment die Theorie, wo nicht — und welche Modellannahmen sind bei echten EKGs verletzt.}
-\quellen{
-  \begin{itemize}
-    \item Mallat, S. 626–627 [bestätigt] — skalenabhängige Rauschvarianz, Grenzen der universellen Schwelle
-    \item LMR, S. 238 [bestätigt] — die Wahl von Skalierungsfunktion, Wavelet und Filtern „verlangt unter Umständen einiges Fingerspitzengefühl"; ehrliche Einordnung der Theoriegrenzen aus mathematischer Feder
-    \item Rebstadt, Kap. 4.4, S. 56–59 [bestätigt] — die DWT wurde dort von einem konkurrierenden Verfahren geschlagen
-    \item Chatterjee, Kap. 5, S. 585–587 [bestätigt]
-  \end{itemize}
-}
-\anmerkung{Die drei Stufen zusammenführen: Wo hält die Theorie aus
-Kapitel~\ref{chapter:denoising}, wo bricht sie? Insbesondere: Basislinien\-wanderung
-und Netzbrummen sind kein wei\ss{}es Rauschen, die Modellannahme ist auf realen
-Daten also nur teilweise erfüllt. Genau das erklärt eine mögliche
-Verschlechterung der Ergebnisse von Stufe~1 zu Stufe~3.}
+ 
+Das Verfahren entfernt aus beiden Aufzeichnungen die Störungen, die nach
+Tabelle~\ref{tab:baender} au\ss erhalb der Bänder des EKG liegen. Den
+grö\ss ten Anteil hat die Basisliniendrift, deren Schwankung auf etwa ein
+Viertel sinkt; das Netzbrummen sinkt auf etwa ein Zehntel. Die Kennzahlen des
+EKG selbst ändern sich um höchstens $1{,}6$\,\%. Dazu braucht es beide
+Bausteine: Das Thresholding aus Kapitel~\ref{chapter:denoising} erreicht die
+Drift nicht, weil sie in der Approximation liegt; erst die Wahl von $J$ nach
+den Frequenzen von Drift und Herzschlag erlaubt, $a_J$ gezielt zu entfernen.
+Nach Satz~\ref{satz:ein-zwei-schritt} ist es dabei gleich, ob man beide
+Schritte in einer Zerlegung ausführt oder nacheinander.
+ 
+Die Ergebnisse haben folgende Grenzen.
+\begin{itemize}
+\item Ohne Referenz lässt sich nicht zeigen, dass nur Störung entfernt wurde.
+  Die Kennzahlen zeigen nur, dass die bekannten Störungen kleiner werden und
+  R-Zacken und das Band $1{,}5$ bis $40$\,Hz fast unverändert bleiben. Ob die Änderung
+  der R-Zacken um bis zu $1{,}2$\,\% klinisch unbedenklich ist, kann nur
+  ärztlich beurteilt werden; ohne diese Erfahrung kann ein Verfahren klinisch
+  unzulässige Verzerrungen einführen \cite[Kap.~1.4.1]{sornmo}. % S. 20
+\item Das Nullsetzen von $a_8$ entfernt alles unter $0{,}70$\,Hz, auch Anteile
+  des EKG, dessen Spektrum bis $0{,}005$\,Hz reicht
+  \cite[Kap.~2.4.3.2]{gacek}. % S. 33
+  Bei langsamem Herzschlag unter $42$ Schlägen pro Minute läge die
+  Herzfrequenz selbst unter $0{,}70$\,Hz; Sörnmo und Laguna nennen für
+  Bradykardie etwa $40$ Schläge pro Minute \cite[Kap.~7.1]{sornmo}. % S. 458
+  Dann wäre $J = 9$ zu wählen, mit mehr verbleibender Drift.
+\item Elektrodenbewegung liegt bei $1$ bis $10$\,Hz und damit in den
+  unveränderten Stufen; das Verfahren kann sie nicht entfernen. Ob der Sprung
+  bei $1090$\,s in Datensatz~$103$ von einer Elektrodenbewegung stammt, lässt
+  sich aus den Daten nicht sagen; das Directory markiert den Abschnitt nur als
+  verrauscht. Er bleibt jedenfalls teilweise erhalten.
+\item Die Schwelle beruht auf einem einzigen $\hat\sigma$ aus $d_1$ und setzt
+  wei\ss es Rauschen voraus. Für Rauschen, das nicht wei\ss{} ist, schätzt man
+  $\sigma$ auf jeder Stufe einzeln \cite[Kap.~15.2.2]{alessio}, % S. 721
+  \cite[Abschn.~3.1.5]{castillo}. % S. 7
+  Muskelrauschen, das auf $d_2$ und $d_3$ stärker ist als auf $d_1$, wird mit
+  der globalen Schwelle daher womöglich nur unvollständig entfernt.
+\item Die Datenbank wurde für die Bewertung von Arrhythmie-Detektoren angelegt,
+  nicht für das Entrauschen, und wir verwenden nur zwei Aufzeichnungen
+  \cite[Kap.~1.4.1]{sornmo}. % S. 20--21
+  Die Parameter sind allerdings aus der Literatur übernommen und nicht an
+  diesen Daten angepasst.
+\end{itemize}
+ 
+Simulierte Signale, bei denen das wahre Signal bekannt ist, erlauben eine
+Genauigkeitsaussage, die hier fehlt; den Hauptteil der Bewertung müssen aber
+gemessene Aufzeichnungen tragen \cite[Kap.~1.4.2]{sornmo}. % S. 21--22
+Für Muskelrauschen bietet sich als nächster Schritt ein Datensatz an, in dem
+es ausdrücklich vorkommt; das Directory nennt etwa für Datensatz~$104$
+mehrere Ausbrüche von Muskelrauschen \cite[Records]{mitdbdir}. % Record 104, Notes
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Fazit und Ausblick}
 \label{chapter:fazit}
@@ -4297,6 +4921,21 @@ Satz~\ref{satz:daubechies} zur Wahl \eqref{eq:g-aus-h} gehört.
     label={lst:db2}]{code/kap4_db2.py}}{%
   \anmerkung{Datei \texttt{code/kap4\_db2.py} fehlt noch.}}
 
+
+\section{Daubechies-Wavelet mit zwölf Koeffizienten}
+\label{anh:code-db6}
+ 
+Der folgende Code erzeugt Abbildung~\ref{fig:db6}. Wie in
+Anhang~\ref{anh:code-db2} legt PyWavelets $\psi_6$ auf $[0,11]$; die
+Verschiebung um $5$ ergibt den Träger $[-5,6]$ aus
+Satz~\ref{satz:daubechies}.
+ 
+\IfFileExists{code/kap4_db6.py}{%
+  \lstinputlisting[caption={Skalierungsfunktion $\varphi_6$ und Wavelet $\psi_6$ aus Beispiel~\ref{bsp:db6}},
+    label={lst:db6}]{code/kap4_db6.py}}{%
+  \anmerkung{Datei \texttt{code/kap4\_db6.py} fehlt noch.}}
+  
+  
 \section{Verrauschter Sinus}
 \label{anh:code-sinus}
 
@@ -4369,6 +5008,31 @@ $T$ bearbeitet, einschlie\ss lich der Approximation $a_5$.
     label={lst:entrauscht}]{code/kap5_entrauscht.py}}{%
   \anmerkung{Datei \texttt{code/kap5\_entrauscht.py} fehlt noch.}}  
 
+
+
+ 
+\section{Anwendung auf EKG-Signale}
+\label{anh:code-kap6}
+ 
+Die Skripte zu Kapitel~\ref{chapter:anwendung} lesen die Datensätze $100$ und
+$103$ der MIT-BIH Arrhythmia Database mit dem Paket \texttt{wfdb} aus dem
+Ordner \texttt{daten/mitdb}. \texttt{kap6\_verfahren.py} enthält das
+Verfahren aus Abschnitt~\ref{sec:verfahren} und die Kennzahlen aus
+Abschnitt~\ref{sec:bewertung}; \texttt{kap6\_auswertung.py} erzeugt die
+Tabellen~\ref{tab:ergebnisse} und \ref{tab:varianten}.
+ 
+\lstinputlisting[caption={Verfahren und Kennzahlen},label={lst:kap6-verfahren}]{code/kap6_verfahren.py}
+\lstinputlisting[caption={Abbildung~\ref{fig:muster}},label={lst:kap6-muster}]{code/kap6_abb_muster.py}
+\lstinputlisting[caption={Abbildung~\ref{fig:drift}},label={lst:kap6-drift}]{code/kap6_abb_drift.py}
+\lstinputlisting[caption={Abbildung~\ref{fig:elektrode}},label={lst:kap6-elektrode}]{code/kap6_abb_elektrode.py}
+\lstinputlisting[caption={Abbildung~\ref{fig:netz}},label={lst:kap6-netz}]{code/kap6_abb_netz.py}
+\lstinputlisting[caption={Abbildung~\ref{fig:muskel}},label={lst:kap6-muskel}]{code/kap6_abb_muskel.py}
+\lstinputlisting[caption={Abbildung~\ref{fig:datensaetze}},label={lst:kap6-datensaetze}]{code/kap6_abb_datensaetze.py}
+\lstinputlisting[caption={Abbildung~\ref{fig:koeffizienten}},label={lst:kap6-koeffizienten}]{code/kap6_abb_koeffizienten.py}
+\lstinputlisting[caption={Abbildung~\ref{fig:schritte}},label={lst:kap6-schritte}]{code/kap6_abb_schritte.py}
+\lstinputlisting[caption={Abbildung~\ref{fig:vergleich}},label={lst:kap6-vergleich}]{code/kap6_abb_vergleich.py}
+\lstinputlisting[caption={Tabellen~\ref{tab:ergebnisse} und \ref{tab:varianten}},label={lst:kap6-auswertung}]{code/kap6_auswertung.py}
+\lstinputlisting[caption={Abbildung~\ref{fig:spektrum}},label={lst:kap6-spektrum}]{code/kap6_abb_spektrum.py}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LITERATURVERZEICHNIS

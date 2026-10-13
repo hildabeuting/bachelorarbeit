@@ -1,10 +1,13 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{CTY{\etalchar{+}}20}
+\begin{thebibliography}{PML{\etalchar{+}}26}
 
 \bibitem[AJB17]{aqil}
 Mounaim Aqil, Atman Jbari, and Abdennasser Bourouhou.
 \newblock {ECG} signal denoising by discrete wavelet transform.
 \newblock {\em International Journal of Online Engineering (iJOE)}, 13(9):51--68, 2017.
+
+\bibitem[ale]{alessio}
+
 
 \bibitem[BK19]{bruntonkutz}
 Steven~L. Brunton and J.~Nathan Kutz.
@@ -15,6 +18,9 @@ Steven~L. Brunton and J.~Nathan Kutz.
 Christian Blatter.
 \newblock {\em Wavelets -- Eine Einf\"uhrung}.
 \newblock Advanced Lectures in Mathematics. Vieweg, Braunschweig/Wiesbaden, 2., durchgesehene edition, 2003.
+
+\bibitem[cas]{castillo}
+
 
 \bibitem[CTY{\etalchar{+}}20]{chatterjee}
 Shubhojeet Chatterjee, Rini~Smita Thakur, Ram~Narayan Yadav, Lalita Gupta, and Deepak~Kumar Raghuvanshi.
@@ -41,6 +47,28 @@ St\'ephane Mallat.
 \newblock {\em A Wavelet Tour of Signal Processing: The Sparse Way}.
 \newblock Academic Press / Elsevier, Burlington, MA, 3. edition, 2009.
 
+\bibitem[MM]{mitdbdir}
+George~B. Moody and Roger~G. Mark.
+\newblock {MIT-BIH} arrhythmia database directory.
+\newblock \url{https://archive.physionet.org/physiobank/database/html/mitdbdir/mitdbdir.htm}.
+\newblock HTML-Ausgabe vom 24.05.1997, Einleitung überarbeitet am 24.06.2010; abgerufen am 09.10.2026.
+
+\bibitem[MM01]{mitbih}
+George~B. Moody and Roger~G. Mark.
+\newblock The impact of the {MIT-BIH} arrhythmia database.
+\newblock {\em IEEE Engineering in Medicine and Biology Magazine}, 20(3):45--50, 2001.
+
+\bibitem[{Phy}]{mitdbseite}
+{PhysioNet}.
+\newblock {MIT-BIH} arrhythmia database, version 1.0.0.
+\newblock \url{https://physionet.org/content/mitdb/1.0.0/}.
+\newblock Abgerufen am 09.10.2026.
+
+\bibitem[PML{\etalchar{+}}26]{physionet}
+Tom Pollard, Benjamin~E. Moody, Li-wei Lehman, Brian Gow, Chrystinne Fernandes, Chenxi Xie, Alistair Johnson, Roger~G. Mark, and Thomas Heldt.
+\newblock {PhysioNet} as a global platform for biomedical research.
+\newblock {\em Nature Health}, 1(8):792--795, 2026.
+
 \bibitem[Reb21]{rebstadt}
 Linda Rebstadt.
 \newblock Spark-basierte analyse von monitoring-daten intensiv \"uberwachter patienten zur identifikation von anomalien: Ein use case der charit\'e health data platform.
@@ -50,6 +78,9 @@ Linda Rebstadt.
 Valery Serov.
 \newblock {\em Fourier Series, Fourier Transform and Their Applications to Mathematical Physics}, volume 197 of {\em Applied Mathematical Sciences}.
 \newblock Springer, Cham, 2017.
+
+\bibitem[sor]{sornmo}
+
 
 \bibitem[SS03]{steinshakarchi}
 Elias~M. Stein and Rami Shakarchi.

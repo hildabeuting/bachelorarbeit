@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  7 OCT 2026 16:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  13 OCT 2026 16:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -858,10 +858,8 @@ Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
  (/usr/local/texlive/2026/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
 File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO)
 \BKM@id=\count372
-)) (./august.aux
-Package babel Info: 'ngerman' activates 'german' shorthands.
-(babel)             Reported on input line 10.
-)
+))
+No file august.aux.
 \openout1 = `august.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 167.
@@ -882,7 +880,9 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 167.
 LaTeX Font Info:    ... okay on input line 167.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 167.
 LaTeX Font Info:    ... okay on input line 167.
- (/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+Package babel Info: 'ngerman' activates 'german' shorthands.
+(babel)             Reported on input line 167.
+(/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count373
 \scratchdimen=\dimen320
@@ -925,33 +925,35 @@ Non-PDF special ignored!
 
 
 
-{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc} <./uhh-logo.png>] (./august.toc
-LaTeX Font Info:    Trying to load font information for U+msa on input line 5.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 5.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
-
-
-
-
-])
+{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc} <./uhh-logo.png>]
+No file august.toc.
 \tf@toc=\write5
 \openout5 = `august.toc'.
 
-Package babel Info: 'ngerman' activates 'german' shorthands.
-(babel)             Reported on input line 222.
- [2]
+[1
+
+
+
+
+]
 chapter 1.
 [1
 
 
 
 
-{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [2]
+{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+LaTeX Font Info:    Trying to load font information for U+msa on input line 296.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 296.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Package babel Info: 'ngerman' activates 'german' shorthands.
+(babel)             Reported on input line 318.
+ [2]
 chapter 2.
 
 Overfull \hbox (5.95517pt too wide) in paragraph at lines 358--358
@@ -961,46 +963,453 @@ Overfull \hbox (5.95517pt too wide) in paragraph at lines 358--358
 [3
 
 
-] [4] [5]
+]
+
+LaTeX Warning: Reference `eq:zulaessigkeit' on page 4 undefined on input line 405.
+
+
+LaTeX Warning: Reference `sec:skalierungsgleichung' on page 4 undefined on input line 406.
+
+
+LaTeX Warning: Reference `sec:cwt' on page 4 undefined on input line 415.
+
+[4]
+
+LaTeX Warning: Reference `chapter:denoising' on page 5 undefined on input line 431.
+
+
+LaTeX Warning: Citation `mallat' on page 5 undefined on input line 433.
+
+
+LaTeX Warning: Citation `mallat' on page 5 undefined on input line 449.
+
+
+LaTeX Warning: Citation `mallat' on page 5 undefined on input line 461.
+
+[5]
 chapter 3.
+
+LaTeX Warning: Citation `blatter' on page 6 undefined on input line 519.
+
+
+LaTeX Warning: Citation `lmr' on page 6 undefined on input line 520.
+
+
+LaTeX Warning: Reference `bem:fourier-konvention' on page 6 undefined on input line 522.
+
+
+LaTeX Warning: Reference `chapter:grundlagen' on page 6 undefined on input line 524.
+
+
+LaTeX Warning: Citation `rebstadt' on page 6 undefined on input line 542.
+
+
+LaTeX Warning: Citation `lmr' on page 6 undefined on input line 547.
+
+
+LaTeX Warning: Citation `blatter' on page 6 undefined on input line 549.
+
+
+LaTeX Warning: Reference `chapter:denoising' on page 6 undefined on input line 550.
+
+
+LaTeX Warning: Reference `sec:wft' on page 6 undefined on input line 554.
+
+
+LaTeX Warning: Reference `sec:wft' on page 6 undefined on input line 564.
+
+
+LaTeX Warning: Citation `blatter' on page 6 undefined on input line 564.
+
+
+LaTeX Warning: Citation `lmr' on page 6 undefined on input line 565.
+
+
+LaTeX Warning: Citation `lmr' on page 6 undefined on input line 572.
+
 [6
 
 
-] [7] [8] [9]
+]
+
+LaTeX Warning: Reference `fig:zeit-frequenz-kachelung' on page 7 undefined on input line 574.
+
+
+LaTeX Warning: Citation `bruntonkutz' on page 7 undefined on input line 652.
+
+
+LaTeX Warning: Citation `bruntonkutz' on page 7 undefined on input line 652.
+
+
+LaTeX Warning: Reference `subsec:wavelet-familie' on page 7 undefined on input line 677.
+
+
+LaTeX Warning: Reference `satz:plancherel-cwt' on page 7 undefined on input line 687.
+
+[7]
+
+LaTeX Warning: Citation `blatter' on page 8 undefined on input line 691.
+
+
+LaTeX Warning: Reference `eq:zulaessigkeit' on page 8 undefined on input line 702.
+
+
+LaTeX Warning: Citation `blatter' on page 8 undefined on input line 708.
+
+
+LaTeX Warning: Reference `bem:fourier-konvention' on page 8 undefined on input line 721.
+
+
+LaTeX Warning: Citation `serov' on page 8 undefined on input line 721.
+
+
+LaTeX Warning: Citation `blatter' on page 8 undefined on input line 725.
+
+
+LaTeX Warning: Reference `eq:zulaessigkeit' on page 8 undefined on input line 737.
+
+
+LaTeX Warning: Citation `lmr' on page 8 undefined on input line 738.
+
+
+LaTeX Warning: Citation `blatter' on page 8 undefined on input line 740.
+
+
+LaTeX Warning: Reference `def:wavelet' on page 8 undefined on input line 745.
+
+
+LaTeX Warning: Reference `satz:zulaessigkeit-mittelwert' on page 8 undefined on input line 746.
+
+
+LaTeX Warning: Reference `satz:zulaessigkeit-mittelwert' on page 8 undefined on input line 762.
+
+
+LaTeX Warning: Reference `def:wavelet' on page 8 undefined on input line 764.
+
+
+LaTeX Warning: Reference `satz:zulaessigkeit-mittelwert' on page 8 undefined on input line 777.
+
+[8]
+
+LaTeX Warning: Reference `fig:haar-wavelet' on page 9 undefined on input line 796.
+
+
+LaTeX Warning: Citation `lmr' on page 9 undefined on input line 797.
+
+
+LaTeX Warning: Citation `lmr' on page 9 undefined on input line 843.
+
+
+LaTeX Warning: Citation `lmr' on page 9 undefined on input line 843.
+
+
+LaTeX Warning: Citation `blatter' on page 9 undefined on input line 870.
+
+
+LaTeX Warning: Reference `def:wavelet' on page 9 undefined on input line 872.
+
+[9]
+
+LaTeX Warning: Reference `def:wavelet' on page 10 undefined on input line 911.
+
+
+LaTeX Warning: Citation `blatter' on page 10 undefined on input line 912.
+
+
+LaTeX Warning: Citation `lmr' on page 10 undefined on input line 932.
+
+
+LaTeX Warning: Reference `fig:haar-familie' on page 10 undefined on input line 933.
+
+
+LaTeX Warning: Citation `rebstadt' on page 10 undefined on input line 937.
+
+
 Overfull \hbox (0.71785pt too wide) in paragraph at lines 924--939
 [][]\T1/cmss/bx/n/10.95 Bemerkung 3.7 \T1/cmss/m/n/10.95 (Be-deu-tung der bei-den Pa-ra-me-ter)\T1/cmss/bx/n/10.95 . []\T1/cmss/m/n/10.95 Ist $\OML/cmm/m/it/10.95  $ \T1/cmss/m/n/10.95 kom-pakt ge-tra-gen, so gilt $[] \OML/cmm/m/it/10.95  [] \OT1/cmr/m/n/10.95 =
  []
 
-<abbildungen/abb1_signal.png, id=305, 505.89pt x 202.356pt>
+
+LaTeX Warning: Reference `eq:wavelet-familie' on page 10 undefined on input line 964.
+
+
+LaTeX Warning: Reference `bem:normierung' on page 10 undefined on input line 964.
+
+
+LaTeX Warning: Reference `eq:wavelet-familie' on page 10 undefined on input line 964.
+
+
+LaTeX Warning: Reference `bem:normierung' on page 10 undefined on input line 964.
+
+
+LaTeX Warning: Reference `fig:signal' on page 10 undefined on input line 994.
+
+<abbildungen/abb1_signal.png, id=128, 505.89pt x 202.356pt>
 File: abbildungen/abb1_signal.png Graphic file (type png)
 <use abbildungen/abb1_signal.png>
 Package pdftex.def Info: abbildungen/abb1_signal.png  used on input line 999.
 (pdftex.def)             Requested size: 431.05931pt x 172.42642pt.
-<abbildungen/abb2_fourier.png, id=311, 505.89pt x 202.356pt>
+
+LaTeX Warning: Reference `bsp:testsignal' on page 10 undefined on input line 1000.
+
+
+LaTeX Warning: Reference `bsp:testsignal' on page 10 undefined on input line 1000.
+
+
+LaTeX Warning: Reference `bem:fourier-konvention' on page 10 undefined on input line 1007.
+
+
+LaTeX Warning: Reference `anh:fourier-testsignal' on page 10 undefined on input line 1008.
+
+
+LaTeX Warning: Reference `fig:fourier' on page 10 undefined on input line 1018.
+
+<abbildungen/abb2_fourier.png, id=129, 505.89pt x 202.356pt>
 File: abbildungen/abb2_fourier.png Graphic file (type png)
 <use abbildungen/abb2_fourier.png>
 Package pdftex.def Info: abbildungen/abb2_fourier.png  used on input line 1025.
 (pdftex.def)             Requested size: 431.05931pt x 172.42642pt.
+
+LaTeX Warning: Reference `eq:ft-testsignal' on page 10 undefined on input line 1027.
+
+
+LaTeX Warning: Reference `eq:ft-testsignal' on page 10 undefined on input line 1027.
+
 [10] [11 <./abbildungen/abb1_signal.png>]
-<abbildungen/abb3_cwt_haar.png, id=340, 650.43pt x 331.7193pt>
+
+LaTeX Warning: Reference `bsp:haar' on page 12 undefined on input line 1041.
+
+
+LaTeX Warning: Reference `eq:cwt' on page 12 undefined on input line 1046.
+
+
+LaTeX Warning: Reference `anh:stammfunktion-testsignal' on page 12 undefined on input line 1055.
+
+
+LaTeX Warning: Reference `fig:cwt' on page 12 undefined on input line 1067.
+
+
+LaTeX Warning: Reference `eq:cwt-haar-exakt' on page 12 undefined on input line 1068.
+
+
+LaTeX Warning: Reference `chapter:anhang-code' on page 12 undefined on input line 1068.
+
+<abbildungen/abb3_cwt_haar.png, id=148, 650.43pt x 331.7193pt>
 File: abbildungen/abb3_cwt_haar.png Graphic file (type png)
 <use abbildungen/abb3_cwt_haar.png>
 Package pdftex.def Info: abbildungen/abb3_cwt_haar.png  used on input line 1072.
 (pdftex.def)             Requested size: 431.05931pt x 219.8465pt.
- [12 <./abbildungen/abb2_fourier.png>] [13 <./abbildungen/abb3_cwt_haar.png>] [14]
+
+LaTeX Warning: Reference `eq:cwt-haar-exakt' on page 12 undefined on input line 1074.
+
+
+LaTeX Warning: Reference `eq:cwt-haar-exakt' on page 12 undefined on input line 1074.
+
+
+LaTeX Warning: Reference `fig:cwt' on page 12 undefined on input line 1078.
+
+
+LaTeX Warning: Reference `fig:fourier' on page 12 undefined on input line 1082.
+
+[12 <./abbildungen/abb2_fourier.png>]
+
+LaTeX Warning: Citation `lmr' on page 13 undefined on input line 1105.
+
+
+LaTeX Warning: Citation `blatter' on page 13 undefined on input line 1105.
+
+
+LaTeX Warning: Citation `blatter' on page 13 undefined on input line 1105.
+
+
+LaTeX Warning: Citation `lmr' on page 13 undefined on input line 1105.
+
+
+LaTeX Warning: Reference `sec:fourier-plancherel' on page 13 undefined on input line 1168.
+
+
+LaTeX Warning: Citation `blatter' on page 13 undefined on input line 1174.
+
+
+LaTeX Warning: Reference `def:cwt' on page 13 undefined on input line 1176.
+
+
+LaTeX Warning: Reference `sec:l2' on page 13 undefined on input line 1184.
+
+[13 <./abbildungen/abb3_cwt_haar.png>]
+
+LaTeX Warning: Citation `blatter' on page 14 undefined on input line 1195.
+
+
+LaTeX Warning: Citation `blatter' on page 14 undefined on input line 1200.
+
+
+LaTeX Warning: Reference `eq:zulaessigkeit' on page 14 undefined on input line 1203.
+
+
+LaTeX Warning: Reference `sec:unitaer' on page 14 undefined on input line 1228.
+
+
+LaTeX Warning: Citation `blatter' on page 14 undefined on input line 1230.
+
+
+LaTeX Warning: Reference `bem:redundanz' on page 14 undefined on input line 1230.
+
+
+LaTeX Warning: Citation `blatter' on page 14 undefined on input line 1233.
+
+
+LaTeX Warning: Citation `lmr' on page 14 undefined on input line 1233.
+
+
+LaTeX Warning: Citation `blatter' on page 14 undefined on input line 1239.
+
+
+LaTeX Warning: Reference `satz:plancherel-cwt' on page 14 undefined on input line 1275.
+
+
+LaTeX Warning: Reference `bsp:testsignal' on page 14 undefined on input line 1276.
+
+
+LaTeX Warning: Reference `eq:plancherel-cwt' on page 14 undefined on input line 1279.
+
+
+LaTeX Warning: Reference `bsp:haar' on page 14 undefined on input line 1280.
+
+
+LaTeX Warning: Reference `eq:cwt-haar-exakt' on page 14 undefined on input line 1281.
+
+[14]
+
+LaTeX Warning: Reference `bsp:haar' on page 15 undefined on input line 1293.
+
+
+LaTeX Warning: Reference `eq:plancherel-cwt' on page 15 undefined on input line 1294.
+
+
+LaTeX Warning: Reference `fig:cwt' on page 15 undefined on input line 1298.
+
+
+LaTeX Warning: Citation `blatter' on page 15 undefined on input line 1299.
+
+
+LaTeX Warning: Reference `eq:cwt-haar-exakt' on page 15 undefined on input line 1319.
+
+
+LaTeX Warning: Reference `eq:plancherel-cwt' on page 15 undefined on input line 1324.
+
+
+LaTeX Warning: Reference `fig:cwt' on page 15 undefined on input line 1326.
+
+
+LaTeX Warning: Reference `eq:plancherel-cwt' on page 15 undefined on input line 1331.
+
+
 Overfull \hbox (2.97401pt too wide) in paragraph at lines 1335--1335
 []\T1/cmss/bx/n/10 Anmerkung. \T1/cmss/m/n/10 fin-de das bei-spiel noch nciht wirk-lich gut... eher ncoh-mal was ein-fa-che-res/Anschaulicheres[] 
  []
 
-[15] [16] [17]
-Overfull \hbox (2.85324pt too wide) in paragraph at lines 1615--1618
-[][]\T1/cmss/bx/n/10.95 Definition 3.16 \T1/cmss/m/n/10.95 (Mul-tis-ka-len-ana-ly-se, [[], Kap. 5.1, (a)--(c)])\T1/cmss/bx/n/10.95 . []\T1/cmss/m/n/10.95 Ei-ne Mul-tis-ka-len-ana-ly-se (MSA)
+
+LaTeX Warning: Reference `satz:plancherel-cwt' on page 15 undefined on input line 1341.
+
+
+LaTeX Warning: Citation `blatter' on page 15 undefined on input line 1346.
+
+
+LaTeX Warning: Citation `blatter' on page 15 undefined on input line 1348.
+
+
+LaTeX Warning: Citation `blatter' on page 15 undefined on input line 1353.
+
+
+LaTeX Warning: Reference `chapter:denoising' on page 15 undefined on input line 1355.
+
+
+LaTeX Warning: Citation `mallat' on page 15 undefined on input line 1357.
+
+[15]
+
+LaTeX Warning: Reference `bem:redundanz' on page 16 undefined on input line 1397.
+
+
+LaTeX Warning: Reference `eq:plancherel-cwt' on page 16 undefined on input line 1399.
+
+
+LaTeX Warning: Citation `blatter' on page 16 undefined on input line 1409.
+
+
+LaTeX Warning: Citation `lmr' on page 16 undefined on input line 1417.
+
+
+LaTeX Warning: Citation `blatter' on page 16 undefined on input line 1418.
+
+
+LaTeX Warning: Citation `blatter' on page 16 undefined on input line 1421.
+
+
+LaTeX Warning: Reference `eq:wavelet-familie' on page 16 undefined on input line 1424.
+
+
+LaTeX Warning: Citation `hankebourgeois' on page 16 undefined on input line 1436.
+
+
+LaTeX Warning: Reference `fig:dyadisches-gitter' on page 16 undefined on input line 1481.
+
+
+LaTeX Warning: Reference `def:dyadisch' on page 16 undefined on input line 1501.
+
+
+LaTeX Warning: Citation `lmr' on page 16 undefined on input line 1503.
+
+
+LaTeX Warning: Citation `blatter' on page 16 undefined on input line 1507.
+
+[16]
+
+LaTeX Warning: Citation `lmr' on page 17 undefined on input line 1510.
+
+
+LaTeX Warning: Citation `hankebourgeois' on page 17 undefined on input line 1515.
+
+
+LaTeX Warning: Reference `fig:haar-mittelung' on page 17 undefined on input line 1521.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 17 undefined on input line 1588.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 17 undefined on input line 1588.
+
+
+LaTeX Warning: Reference `bsp:haar' on page 17 undefined on input line 1594.
+
+
+LaTeX Warning: Reference `eq:dyadische-familie' on page 17 undefined on input line 1609.
+
+
+LaTeX Warning: Citation `blatter' on page 17 undefined on input line 1613.
+
+[17]
+
+LaTeX Warning: Reference `chapter:dwt' on page 18 undefined on input line 1631.
+
+
+LaTeX Warning: Citation `blatter' on page 18 undefined on input line 1637.
+
+
+LaTeX Warning: Citation `lmr' on page 18 undefined on input line 1644.
+
+
+LaTeX Warning: Citation `lmr' on page 18 undefined on input line 1644.
+
+
+Overfull \hbox (13.5998pt too wide) in paragraph at lines 1640--1645
+[][]\T1/cmss/m/n/10.95 Die an-schau-li-che Be-deu-tung von (M1)--
  []
 
 [18]
-Overfull \hbox (2.58365pt too wide) in paragraph at lines 1640--1645
-[][]\T1/cmss/m/n/10.95 Die an-schau-li-che Be-deu-tung von
- []
+
+LaTeX Warning: Citation `blatter' on page 19 undefined on input line 1652.
 
 
 LaTeX Warning: Command \textcircled invalid in math mode on input line 1652.
@@ -1008,123 +1417,2102 @@ LaTeX Warning: Command \textcircled invalid in math mode on input line 1652.
 
 LaTeX Warning: Command \textcircled invalid in math mode on input line 1652.
 
-[19] [20] [21]
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 19 undefined on input line 1654.
+
+
+LaTeX Warning: Citation `blatter' on page 19 undefined on input line 1670.
+
+
+LaTeX Warning: Reference `chapter:dwt' on page 19 undefined on input line 1677.
+
+
+LaTeX Warning: Reference `chapter:anwendung' on page 19 undefined on input line 1677.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 19 undefined on input line 1680.
+
+
+LaTeX Warning: Citation `lmr' on page 19 undefined on input line 1684.
+
+
+LaTeX Warning: Reference `sec:detailraeume' on page 19 undefined on input line 1685.
+
+
+LaTeX Warning: Reference `bem:redundanz' on page 19 undefined on input line 1687.
+
+
+LaTeX Warning: Citation `blatter' on page 19 undefined on input line 1695.
+
+
+LaTeX Warning: Reference `satz:onb-vj' on page 19 undefined on input line 1697.
+
+
+LaTeX Warning: Reference `prop:approximation' on page 19 undefined on input line 1700.
+
+
+LaTeX Warning: Reference `sec:detailraeume' on page 19 undefined on input line 1701.
+
+
+LaTeX Warning: Citation `blatter' on page 19 undefined on input line 1718.
+
+
+LaTeX Warning: Citation `lmr' on page 19 undefined on input line 1719.
+
+[19]
+
+LaTeX Warning: Citation `blatter' on page 20 undefined on input line 1756.
+
+
+LaTeX Warning: Reference `eq:vj-d2j' on page 20 undefined on input line 1768.
+
+
+LaTeX Warning: Citation `serov' on page 20 undefined on input line 1771.
+
+
+LaTeX Warning: Citation `blatter' on page 20 undefined on input line 1775.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 20 undefined on input line 1833.
+
+
+LaTeX Warning: Reference `lem:dwt-orthogonal' on page 20 undefined on input line 1833.
+
+
+LaTeX Warning: Citation `lmr' on page 20 undefined on input line 1851.
+
+
+LaTeX Warning: Reference `satz:onb-vj' on page 20 undefined on input line 1854.
+
+
+LaTeX Warning: Citation `serov' on page 20 undefined on input line 1857.
+
+
+LaTeX Warning: Citation `blatter' on page 20 undefined on input line 1858.
+
+
+LaTeX Warning: Citation `blatter' on page 20 undefined on input line 1867.
+
+
+LaTeX Warning: Reference `bsp:haar-msa' on page 20 undefined on input line 1868.
+
+
+LaTeX Warning: Citation `lmr' on page 20 undefined on input line 1876.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 20 undefined on input line 1877.
+
+
+LaTeX Warning: Citation `lmr' on page 20 undefined on input line 1923.
+
+
+LaTeX Warning: Citation `blatter' on page 20 undefined on input line 1935.
+
+
+LaTeX Warning: Citation `blatter' on page 20 undefined on input line 2075.
+
+[20]
+
+LaTeX Warning: Citation `blatter' on page 21 undefined on input line 2077.
+
+
+LaTeX Warning: Citation `blatter' on page 21 undefined on input line 2090.
+
+
+LaTeX Warning: Citation `lmr' on page 21 undefined on input line 2091.
+
+
+LaTeX Warning: Reference `eq:vj-d2j' on page 21 undefined on input line 2097.
+
+
+LaTeX Warning: Citation `blatter' on page 21 undefined on input line 2102.
+
+
+LaTeX Warning: Citation `blatter' on page 21 undefined on input line 2104.
+
+
+LaTeX Warning: Citation `blatter' on page 21 undefined on input line 2164.
+
+
+LaTeX Warning: Reference `prop:approximation' on page 21 undefined on input line 2188.
+
+
+LaTeX Warning: Reference `eq:l2-zerlegung-endlich' on page 21 undefined on input line 2190.
+
+
+LaTeX Warning: Citation `blatter' on page 21 undefined on input line 2191.
+
+
+LaTeX Warning: Citation `lmr' on page 21 undefined on input line 2192.
+
+
+LaTeX Warning: Reference `eq:l2-zerlegung-endlich' on page 21 undefined on input line 2237.
+
+
+LaTeX Warning: Citation `lmr' on page 21 undefined on input line 2239.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 21 undefined on input line 2243.
+
+
+LaTeX Warning: Citation `lmr' on page 21 undefined on input line 2247.
+
+
+LaTeX Warning: Reference `satz:zerlegung' on page 21 undefined on input line 2272.
+
+
+LaTeX Warning: Citation `blatter' on page 21 undefined on input line 2275.
+
+
+LaTeX Warning: Reference `chapter:dwt' on page 21 undefined on input line 2276.
+
+
+LaTeX Warning: Citation `lmr' on page 21 undefined on input line 2277.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 21 undefined on input line 2278.
+
+
+LaTeX Warning: Citation `lmr' on page 21 undefined on input line 2279.
+
+[21]
+
+LaTeX Warning: Citation `blatter' on page 22 undefined on input line 2305.
+
+
+LaTeX Warning: Reference `eq:dyadische-familie' on page 22 undefined on input line 2309.
+
+
+LaTeX Warning: Reference `satz:onb-vj' on page 22 undefined on input line 2332.
+
+
+LaTeX Warning: Reference `eq:wj-d2j' on page 22 undefined on input line 2332.
+
+
+LaTeX Warning: Reference `satz:zerlegung' on page 22 undefined on input line 2334.
+
+
+LaTeX Warning: Reference `eq:pj' on page 22 undefined on input line 2334.
+
+
+LaTeX Warning: Citation `blatter' on page 22 undefined on input line 2334.
+
+
+LaTeX Warning: Citation `lmr' on page 22 undefined on input line 2335.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 22 undefined on input line 2370.
+
+
+LaTeX Warning: Citation `lmr' on page 22 undefined on input line 2371.
+
+
 Overfull \hbox (72.98683pt too wide) detected at line 2381
 \OML/cmm/m/it/10.95 a[] \OT1/cmr/m/n/10.95 = [](4 + 2 + 5 + 7) = 9\OML/cmm/m/it/10.95 ;  d[] \OT1/cmr/m/n/10.95 = [][](4 + 2) \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/10.95 (5 + 7)[] = \OMS/cmsy/m/n/10.95 ^^@\OT1/cmr/m/n/10.95 3\OML/cmm/m/it/10.95 ;  d[] \OT1/cmr/m/n/10.95 = [] = []\OML/cmm/m/it/10.95 ;  d[] \OT1/cmr/m/n/10.95 = [] = \OMS/cmsy/m/n/10.95 ^^@[]\OT1/cmr/m/n/10.95 ;
  []
 
+
+LaTeX Warning: Reference `eq:zerlegung-koeffizienten' on page 22 undefined on input line 2384.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 22 undefined on input line 2391.
+
+
+LaTeX Warning: Reference `def:dyadisch' on page 22 undefined on input line 2394.
+
+
+LaTeX Warning: Reference `bem:redundanz' on page 22 undefined on input line 2397.
+
+
+LaTeX Warning: Reference `chapter:denoising' on page 22 undefined on input line 2404.
+
+
+LaTeX Warning: Reference `eq:zerlegung-koeffizienten' on page 22 undefined on input line 2434.
+
+
+LaTeX Warning: Reference `chapter:dwt' on page 22 undefined on input line 2435.
+
+
+LaTeX Warning: Citation `lmr' on page 22 undefined on input line 2438.
+
+
+LaTeX Warning: Citation `blatter' on page 22 undefined on input line 2439.
+
+
+LaTeX Warning: Reference `chapter:denoising' on page 22 undefined on input line 2440.
+
 [22]
-Overfull \hbox (3.12456pt too wide) in paragraph at lines 2465--2465
-[]\T1/cmss/bx/n/10 Anmerkung. \T1/cmss/m/n/10 Die Ener-gie-glei-chung [] ist das, was Ab-schnitt [][]5.1[][] braucht: Die Wavelet-Koeffizienten
- []
+
+LaTeX Warning: Reference `eq:zerlegung-koeffizienten' on page 23 undefined on input line 2465.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 23 undefined on input line 2465.
 
 [23]
 chapter 4.
+
+LaTeX Warning: Reference `chapter:mra' on page 24 undefined on input line 2475.
+
+
+LaTeX Warning: Reference `kor:wavelet-basis' on page 24 undefined on input line 2478.
+
+
+LaTeX Warning: Reference `chapter:mra' on page 24 undefined on input line 2484.
+
+
+LaTeX Warning: Reference `chapter:anwendung' on page 24 undefined on input line 2485.
+
+
+LaTeX Warning: Reference `satz:onb-vj' on page 24 undefined on input line 2505.
+
+
+LaTeX Warning: Citation `lmr' on page 24 undefined on input line 2518.
+
+
+LaTeX Warning: Reference `satz:onb-vj' on page 24 undefined on input line 2535.
+
+
+LaTeX Warning: Citation `serov' on page 24 undefined on input line 2536.
+
+
+LaTeX Warning: Citation `serov' on page 24 undefined on input line 2539.
+
 [24
 
 
 ]
+
+LaTeX Warning: Reference `bsp:haar-msa' on page 25 undefined on input line 2546.
+
+
+LaTeX Warning: Reference `eq:skalierungsgleichung' on page 25 undefined on input line 2554.
+
+
+LaTeX Warning: Citation `lmr' on page 25 undefined on input line 2563.
+
+
+LaTeX Warning: Citation `lmr' on page 25 undefined on input line 2573.
+
+
+LaTeX Warning: Citation `blatter' on page 25 undefined on input line 2580.
+
+
+LaTeX Warning: Reference `eq:skalierung-fourier' on page 25 undefined on input line 2581.
+
+
+LaTeX Warning: Citation `lmr' on page 25 undefined on input line 2588.
+
+
 Overfull \hbox (3.61122pt too wide) in paragraph at lines 2599--2599
 \T1/cmss/bx/n/10 Belegstellen. \T1/cmss/m/n/10 LMR, Lem-ma 2.2.8, Gl. (2.2.22) [Sei-te nach-tra-gen, ver-mutl. S. 120--121]; LMR, Satz 2.2.10,
  []
 
-[25] [26] [27] [28]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 2884.
- [29] [30]
-Overfull \hbox (11.39694pt too wide) in paragraph at lines 3036--3041
-[]\T1/cmss/m/n/10.95 Das Mo-ment $\OML/cmm/m/it/10.95 m \OT1/cmr/m/n/10.95 = 0$ \T1/cmss/m/n/10.95 ist die Zu-läs-sig-keits-be-din-gung aus Satz [][]3.2[][]. All-ge-mein ist $[][] \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 ) \OML/cmm/m/it/10.95  []\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 ) \OML/cmm/m/it/10.95 dt \OT1/cmr/m/n/10.95 =
+
+LaTeX Warning: Reference `eq:H0' on page 25 undefined on input line 2605.
+
+
+LaTeX Warning: Citation `lmr' on page 25 undefined on input line 2608.
+
+[25]
+
+LaTeX Warning: Reference `eq:skalierungsgleichung' on page 26 undefined on input line 2619.
+
+
+LaTeX Warning: Citation `serov' on page 26 undefined on input line 2622.
+
+
+Overfull \hbox (25.63155pt too wide) in paragraph at lines 2619--2625
+[] [][] \OML/cmm/m/it/10.95 h[] '\OT1/cmr/m/n/10.95 (2\OML/cmm/m/it/10.95 t \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/10.95 2\OML/cmm/m/it/10.95 m \OMS/cmsy/m/n/10.95 ^^@ \OML/cmm/m/it/10.95 k\OT1/cmr/m/n/10.95 ) = [][] \OML/cmm/m/it/10.95 h[] '[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 )$\T1/cmss/m/n/10.95 . Die Voll-stän-dig-keits-re-la-ti-on in $\OML/cmm/m/it/10.95 V[]$ \T1/cmss/m/n/10.95 [[], Satz 25.18(4)]
  []
+
+
+LaTeX Warning: Reference `eq:H0' on page 26 undefined on input line 2637.
+
+
+LaTeX Warning: Reference `eq:h-orthogonal' on page 26 undefined on input line 2637.
+
+
+LaTeX Warning: Citation `lmr' on page 26 undefined on input line 2653.
+
+
+LaTeX Warning: Reference `sec:daubechies' on page 26 undefined on input line 2659.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 26 undefined on input line 2664.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 26 undefined on input line 2667.
+
+
+LaTeX Warning: Citation `lmr' on page 26 undefined on input line 2672.
+
+
+LaTeX Warning: Reference `kor:wavelet-basis' on page 26 undefined on input line 2681.
+
+
+LaTeX Warning: Citation `lmr' on page 26 undefined on input line 2685.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 26 undefined on input line 2696.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 26 undefined on input line 2697.
+
+[26]
+
+LaTeX Warning: Reference `sec:filter' on page 27 undefined on input line 2710.
+
+
+LaTeX Warning: Reference `eq:symbol-H' on page 27 undefined on input line 2712.
+
+
+LaTeX Warning: Reference `sec:skalierungsgleichung' on page 27 undefined on input line 2717.
+
+
+LaTeX Warning: Citation `lmr' on page 27 undefined on input line 2720.
+
+
+LaTeX Warning: Reference `eq:symbol-H' on page 27 undefined on input line 2722.
+
+
+LaTeX Warning: Reference `eq:H0' on page 27 undefined on input line 2731.
+
+
+LaTeX Warning: Reference `lem:h-orthogonal' on page 27 undefined on input line 2732.
+
+
+LaTeX Warning: Reference `eq:qmf' on page 27 undefined on input line 2734.
+
+
+LaTeX Warning: Citation `lmr' on page 27 undefined on input line 2737.
+
+
+LaTeX Warning: Reference `eq:g-aus-h' on page 27 undefined on input line 2739.
+
+
+LaTeX Warning: Citation `lmr' on page 27 undefined on input line 2748.
+
+
+LaTeX Warning: Reference `eq:qmf' on page 27 undefined on input line 2749.
+
+
+LaTeX Warning: Reference `eq:G-aus-H' on page 27 undefined on input line 2749.
+
+
+LaTeX Warning: Reference `satz:zulaessigkeit-mittelwert' on page 27 undefined on input line 2755.
+
+
+LaTeX Warning: Citation `lmr' on page 27 undefined on input line 2757.
+
+
+LaTeX Warning: Citation `lmr' on page 27 undefined on input line 2761.
+
+
+LaTeX Warning: Reference `fig:tief-hochpass' on page 27 undefined on input line 2764.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 27 undefined on input line 2766.
+
+
+LaTeX Warning: Citation `lmr' on page 27 undefined on input line 2768.
+
+
+LaTeX Warning: Reference `sec:daubechies' on page 27 undefined on input line 2769.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 27 undefined on input line 2795.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 27 undefined on input line 2795.
+
+[27]
+
+LaTeX Warning: Reference `def:projektion-pj' on page 28 undefined on input line 2820.
+
+
+LaTeX Warning: Reference `kor:wavelet-basis' on page 28 undefined on input line 2820.
+
+
+LaTeX Warning: Citation `blatter' on page 28 undefined on input line 2821.
+
+
+LaTeX Warning: Citation `lmr' on page 28 undefined on input line 2822.
+
+
+LaTeX Warning: Citation `blatter' on page 28 undefined on input line 2827.
+
+
+LaTeX Warning: Citation `blatter' on page 28 undefined on input line 2838.
+
+
+LaTeX Warning: Reference `eq:zwei-skalen' on page 28 undefined on input line 2839.
+
+
+LaTeX Warning: Citation `blatter' on page 28 undefined on input line 2842.
+
+
+LaTeX Warning: Citation `blatter' on page 28 undefined on input line 2854.
+
+
+LaTeX Warning: Reference `eq:zwei-skalen' on page 28 undefined on input line 2854.
+
+[28]
+
+LaTeX Warning: Reference `eq:analyse' on page 29 undefined on input line 2873.
+
+
+LaTeX Warning: Citation `blatter' on page 29 undefined on input line 2875.
+
+
+LaTeX Warning: Citation `blatter' on page 29 undefined on input line 2879.
+
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 2884.
+
+LaTeX Warning: Citation `blatter' on page 29 undefined on input line 2884.
+
+
+LaTeX Warning: Citation `lmr' on page 29 undefined on input line 2884.
+
+
+LaTeX Warning: Citation `blatter' on page 29 undefined on input line 2884.
+
+
+LaTeX Warning: Citation `lmr' on page 29 undefined on input line 2884.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 29 undefined on input line 2926.
+
+
+LaTeX Warning: Citation `blatter' on page 29 undefined on input line 2926.
+
+
+LaTeX Warning: Citation `lmr' on page 29 undefined on input line 2926.
+
+
+LaTeX Warning: Reference `eq:analyse' on page 29 undefined on input line 2926.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 29 undefined on input line 2926.
+
+
+LaTeX Warning: Citation `blatter' on page 29 undefined on input line 2926.
+
+
+LaTeX Warning: Citation `lmr' on page 29 undefined on input line 2926.
+
+
+LaTeX Warning: Reference `eq:analyse' on page 29 undefined on input line 2926.
+
+
+LaTeX Warning: Reference `bsp:haar-wavelet-koeff' on page 29 undefined on input line 2930.
+
+
+LaTeX Warning: Reference `eq:g-aus-h' on page 29 undefined on input line 2932.
+
+
+LaTeX Warning: Reference `eq:analyse' on page 29 undefined on input line 2934.
+
+
+LaTeX Warning: Reference `bsp:haar-mittelung' on page 29 undefined on input line 2941.
+
+
+LaTeX Warning: Reference `bsp:haar-wavelet-koeff' on page 29 undefined on input line 2946.
+
+[29]
+
+LaTeX Warning: Citation `blatter' on page 30 undefined on input line 2954.
+
+
+LaTeX Warning: Citation `hankebourgeois' on page 30 undefined on input line 2956.
+
+
+LaTeX Warning: Citation `blatter' on page 30 undefined on input line 2960.
+
+
+LaTeX Warning: Reference `def:detailraeume' on page 30 undefined on input line 2971.
+
+
+LaTeX Warning: Reference `kor:wavelet-basis' on page 30 undefined on input line 2971.
+
+
+LaTeX Warning: Reference `lem:zwei-skalen' on page 30 undefined on input line 2973.
+
+
+LaTeX Warning: Reference `eq:synthese' on page 30 undefined on input line 2974.
+
+
+LaTeX Warning: Citation `blatter' on page 30 undefined on input line 2974.
+
+
+Overfull \hbox (0.2224pt too wide) in paragraph at lines 2971--2975
+[]\T1/cmss/m/n/10.95 Nach De-fi-ni-ti-on [] und Ko-rol-lar [] ist $\OML/cmm/m/it/10.95 P[]f \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 P[]f \OT1/cmr/m/n/10.95 + \OML/cmm/m/it/10.95 Q[]f \OT1/cmr/m/n/10.95 = [][] \OML/cmm/m/it/10.95 a[]'[] \OT1/cmr/m/n/10.95 + [][] \OML/cmm/m/it/10.95 d[] []$\T1/cmss/m/n/10.95 .
+ []
+
+
+LaTeX Warning: Citation `blatter' on page 30 undefined on input line 2981.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 30 undefined on input line 2986.
+
+
+LaTeX Warning: Citation `blatter' on page 30 undefined on input line 2988.
+
+
+LaTeX Warning: Citation `serov' on page 30 undefined on input line 2989.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 30 undefined on input line 2998.
+
+
+LaTeX Warning: Citation `blatter' on page 30 undefined on input line 3003.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 30 undefined on input line 3005.
+
+
+LaTeX Warning: Citation `blatter' on page 30 undefined on input line 3025.
+
+[30]
+
+LaTeX Warning: Reference `satz:zulaessigkeit-mittelwert' on page 31 undefined on input line 3037.
+
+
+Overfull \hbox (8.88675pt too wide) in paragraph at lines 3036--3041
+[]\T1/cmss/m/n/10.95 Das Mo-ment $\OML/cmm/m/it/10.95 m \OT1/cmr/m/n/10.95 = 0$ \T1/cmss/m/n/10.95 ist die Zu-läs-sig-keits-be-din-gung aus Satz []. All-ge-mein ist $[][] \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 ) \OML/cmm/m/it/10.95  []\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 ) \OML/cmm/m/it/10.95 dt \OT1/cmr/m/n/10.95 =
+ []
+
+
+LaTeX Warning: Reference `eq:analyse' on page 31 undefined on input line 3044.
+
+
+LaTeX Warning: Reference `bsp:haar-g' on page 31 undefined on input line 3049.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 31 undefined on input line 3053.
+
+
+LaTeX Warning: Citation `lmr' on page 31 undefined on input line 3060.
+
+
+LaTeX Warning: Reference `bsp:db2-filter' on page 31 undefined on input line 3061.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 31 undefined on input line 3062.
+
+
+LaTeX Warning: Citation `blatter' on page 31 undefined on input line 3063.
+
+
+LaTeX Warning: Citation `lmr' on page 31 undefined on input line 3071.
+
+
+LaTeX Warning: Citation `lmr' on page 31 undefined on input line 3085.
+
+
+LaTeX Warning: Reference `lem:abklingen' on page 31 undefined on input line 3094.
 
 [31]
 
+LaTeX Warning: Citation `blatter' on page 32 undefined on input line 3103.
+
+
+LaTeX Warning: Citation `lmr' on page 32 undefined on input line 3103.
+
+
+LaTeX Warning: Reference `eq:g-aus-h' on page 32 undefined on input line 3116.
+
+
+LaTeX Warning: Citation `lmr' on page 32 undefined on input line 3117.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 32 undefined on input line 3118.
+
+
+LaTeX Warning: Citation `blatter' on page 32 undefined on input line 3119.
+
+
+LaTeX Warning: Reference `fig:db2' on page 32 undefined on input line 3120.
+
+
 LaTeX Warning: Citation `pywavelets' on page 32 undefined on input line 3121.
 
-<abbildungen/abb4_db2.pdf, id=763, 505.89pt x 187.902pt>
+<abbildungen/abb4_db2.pdf, id=327, 505.89pt x 187.902pt>
 File: abbildungen/abb4_db2.pdf Graphic file (type pdf)
 <use abbildungen/abb4_db2.pdf>
 Package pdftex.def Info: abbildungen/abb4_db2.pdf  used on input line 3127.
 (pdftex.def)             Requested size: 387.95074pt x 144.09721pt.
-[32 <./abbildungen/abb4_db2.pdf>] [33]
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 32 undefined on input line 3131.
+
+
+LaTeX Warning: Reference `eq:skalierungsgleichung' on page 32 undefined on input line 3131.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 32 undefined on input line 3131.
+
+
+LaTeX Warning: Reference `eq:skalierungsgleichung' on page 32 undefined on input line 3131.
+
+
+LaTeX Warning: Citation `blatter' on page 32 undefined on input line 3137.
+
+
+LaTeX Warning: Citation `lmr' on page 32 undefined on input line 3140.
+
+
+LaTeX Warning: Reference `lem:abklingen' on page 32 undefined on input line 3144.
+
+
+LaTeX Warning: Citation `rebstadt' on page 32 undefined on input line 3146.
+
+
+LaTeX Warning: Citation `hankebourgeois' on page 32 undefined on input line 3150.
+
+
+LaTeX Warning: Reference `sec:duennbesetztheit' on page 32 undefined on input line 3151.
+
+
+LaTeX Warning: Reference `satz:daubechies' on page 32 undefined on input line 3155.
+
+[32 <./abbildungen/abb4_db2.pdf>]
+
+LaTeX Warning: Citation `blatter' on page 33 undefined on input line 3168.
+
+
+LaTeX Warning: Citation `pywavelets' on page 33 undefined on input line 3169.
+
+
+LaTeX Warning: Reference `eq:H0' on page 33 undefined on input line 3170.
+
+
+LaTeX Warning: Reference `eq:h-orthogonal' on page 33 undefined on input line 3170.
+
+
+LaTeX Warning: Reference `eq:g-aus-h' on page 33 undefined on input line 3172.
+
+
+LaTeX Warning: Reference `bsp:momente' on page 33 undefined on input line 3173.
+
+
+LaTeX Warning: Reference `fig:db6' on page 33 undefined on input line 3178.
+
+
+LaTeX Warning: Citation `lmr' on page 33 undefined on input line 3181.
+
+
+LaTeX Warning: Citation `castillo' on page 33 undefined on input line 3183.
+
+
+LaTeX Warning: Reference `chapter:anwendung' on page 33 undefined on input line 3184.
+
+
+Overfull \hbox (1.83531pt too wide) in paragraph at lines 3176--3185
+\T1/cmss/m/n/10.95 das sind die sechs ver-schwin-den-den Mo-men-te von $\OML/cmm/m/it/10.95  []$ \T1/cmss/m/n/10.95 in der Form, in der sie im Mallat-Algorithmus
+ []
+
+<abbildungen/abb4_db6.pdf, id=364, 455.30101pt x 158.99399pt>
+File: abbildungen/abb4_db6.pdf Graphic file (type pdf)
+<use abbildungen/abb4_db6.pdf>
+Package pdftex.def Info: abbildungen/abb4_db6.pdf  used on input line 3189.
+(pdftex.def)             Requested size: 387.95074pt x 135.48032pt.
+
+LaTeX Warning: Reference `eq:db6-koeff' on page 33 undefined on input line 3193.
+
+
+LaTeX Warning: Reference `eq:skalierungsgleichung' on page 33 undefined on input line 3193.
+
+
+LaTeX Warning: Reference `anh:code-db6' on page 33 undefined on input line 3193.
+
+
+LaTeX Warning: Reference `eq:db6-koeff' on page 33 undefined on input line 3193.
+
+
+LaTeX Warning: Reference `eq:skalierungsgleichung' on page 33 undefined on input line 3193.
+
+
+LaTeX Warning: Reference `anh:code-db6' on page 33 undefined on input line 3193.
+
+
+LaTeX Warning: Reference `chapter:denoising' on page 33 undefined on input line 3198.
+
+
+LaTeX Warning: Reference `bem:mallat-orthogonal' on page 33 undefined on input line 3200.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 33 undefined on input line 3201.
+
+
+LaTeX Warning: Reference `lem:abklingen' on page 33 undefined on input line 3202.
+
+[33 <./abbildungen/abb4_db6.pdf>]
 chapter 5.
+
+LaTeX Warning: Reference `chapter:dwt' on page 34 undefined on input line 3238.
+
+
+LaTeX Warning: Citation `mallat' on page 34 undefined on input line 3239.
+
+
+LaTeX Warning: Citation `mallat' on page 34 undefined on input line 3241.
+
+
+LaTeX Warning: Citation `mallat' on page 34 undefined on input line 3244.
+
+
+LaTeX Warning: Citation `mallat' on page 34 undefined on input line 3246.
+
+
+LaTeX Warning: Reference `fig:dreischritt' on page 34 undefined on input line 3247.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Reference `satz:rekonstruktion' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Reference `sec:mad' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Citation `mallat' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Citation `rebstadt' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Reference `satz:rekonstruktion' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Reference `sec:mad' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Citation `mallat' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Citation `rebstadt' on page 34 undefined on input line 3269.
+
+
+LaTeX Warning: Citation `mallat' on page 34 undefined on input line 3277.
+
+
+LaTeX Warning: Reference `sec:wahrscheinlichkeit' on page 34 undefined on input line 3285.
+
+
+LaTeX Warning: Citation `mallat' on page 34 undefined on input line 3287.
+
+
+LaTeX Warning: Reference `satz:unkorreliert-unabhaengig' on page 34 undefined on input line 3296.
+
+
+LaTeX Warning: Citation `mallat' on page 34 undefined on input line 3307.
+
+
+LaTeX Warning: Reference `chapter:mra' on page 34 undefined on input line 3308.
+
+
+LaTeX Warning: Reference `chapter:dwt' on page 34 undefined on input line 3308.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 34 undefined on input line 3311.
+
+
+LaTeX Warning: Citation `lmr' on page 34 undefined on input line 3311.
+
 [34
-
-
-] [35]
-
-LaTeX Warning: Citation `pywavelets' on page 36 undefined on input line 3414.
-
-[36]
-<abbildungen/bsp_5.5.pdf, id=895, 433.62pt x 202.356pt>
-File: abbildungen/bsp_5.5.pdf Graphic file (type pdf)
-<use abbildungen/bsp_5.5.pdf>
-Package pdftex.def Info: abbildungen/bsp_5.5.pdf  used on input line 3428.
-(pdftex.def)             Requested size: 387.95074pt x 181.05345pt.
- [37 <./abbildungen/bsp_5.5.pdf>] [38] [39]
-<abbildungen/abb5_1_signal.pdf, id=969, 505.89pt x 260.17201pt>
-File: abbildungen/abb5_1_signal.pdf Graphic file (type pdf)
-<use abbildungen/abb5_1_signal.pdf>
-Package pdftex.def Info: abbildungen/abb5_1_signal.pdf  used on input line 3690.
-(pdftex.def)             Requested size: 387.95074pt x 199.51923pt.
- [40]
-<abbildungen/abb5_2a_koeffizienten_f.pdf, id=990, 583.21887pt x 433.62pt>
-File: abbildungen/abb5_2a_koeffizienten_f.pdf Graphic file (type pdf)
-<use abbildungen/abb5_2a_koeffizienten_f.pdf>
-Package pdftex.def Info: abbildungen/abb5_2a_koeffizienten_f.pdf  used on input line 3752.
-(pdftex.def)             Requested size: 409.50502pt x 304.47809pt.
- [41 <./abbildungen/abb5_1_signal.pdf>] [42 <./abbildungen/abb5_2a_koeffizienten_f.pdf>] [43]
-<abbildungen/abb5_2b_koeffizienten_Y.pdf, id=1101, 648.9846pt x 433.62pt>
-File: abbildungen/abb5_2b_koeffizienten_Y.pdf Graphic file (type pdf)
-<use abbildungen/abb5_2b_koeffizienten_Y.pdf>
-Package pdftex.def Info: abbildungen/abb5_2b_koeffizienten_Y.pdf  used on input line 3913.
-(pdftex.def)             Requested size: 431.05931pt x 288.01624pt.
-<abbildungen/abb5_3_entrauscht.pdf, id=1106, 613.57233pt x 215.3646pt>
-File: abbildungen/abb5_3_entrauscht.pdf Graphic file (type pdf)
-<use abbildungen/abb5_3_entrauscht.pdf>
-Package pdftex.def Info: abbildungen/abb5_3_entrauscht.pdf  used on input line 3924.
-(pdftex.def)             Requested size: 431.05931pt x 151.30298pt.
- [44] [45 <./abbildungen/abb5_2b_koeffizienten_Y.pdf> <./abbildungen/abb5_3_entrauscht.pdf>]
-chapter 6.
-[46
 
 
 ]
 
-LaTeX Warning: Command \O invalid in math mode on input line 4009.
+LaTeX Warning: Citation `mallat' on page 35 undefined on input line 3315.
 
-Missing character: There is no Ø in font cmr10!
 
-Overfull \hbox (18.6703pt too wide) in paragraph at lines 4009--4009
-[]\T1/cmss/m/n/10 LMR, Lem-ma 2.4.29 / Gl. (2.4.17), S. 175 [be-stä-tigt] ^^V die da-bei be-nö-tig-te Be-din-gung $[][] [] \OT1/cmr/m/n/10 =
+LaTeX Warning: Citation `mallat' on page 35 undefined on input line 3328.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 35 undefined on input line 3331.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 35 undefined on input line 3336.
+
+
+LaTeX Warning: Citation `lmr' on page 35 undefined on input line 3344.
+
+
+LaTeX Warning: Citation `mallat' on page 35 undefined on input line 3347.
+
+
+LaTeX Warning: Citation `lmr' on page 35 undefined on input line 3370.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 35 undefined on input line 3371.
+
+
+LaTeX Warning: Citation `lmr' on page 35 undefined on input line 3375.
+
+
+LaTeX Warning: Reference `chapter:dwt' on page 35 undefined on input line 3379.
+
+
+LaTeX Warning: Citation `mallat' on page 35 undefined on input line 3386.
+
+[35]
+
+LaTeX Warning: Reference `lem:dwt-orthogonal' on page 36 undefined on input line 3406.
+
+
+LaTeX Warning: Citation `mallat' on page 36 undefined on input line 3410.
+
+
+LaTeX Warning: Reference `eq:rauschmodell' on page 36 undefined on input line 3411.
+
+
+LaTeX Warning: Citation `mallat' on page 36 undefined on input line 3417.
+
+
+LaTeX Warning: Citation `mallat' on page 36 undefined on input line 3421.
+
+
+LaTeX Warning: Citation `mallat' on page 36 undefined on input line 3436.
+
+
+LaTeX Warning: Citation `mallat' on page 36 undefined on input line 3439.
+
+
+LaTeX Warning: Reference `satz:unkorreliert-unabhaengig' on page 36 undefined on input line 3440.
+
+
+LaTeX Warning: Citation `mallat' on page 36 undefined on input line 3445.
+
+
+LaTeX Warning: Reference `eq:rauschmodell' on page 36 undefined on input line 3456.
+
+
+LaTeX Warning: Reference `fig:bsp-sinus' on page 36 undefined on input line 3457.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 36 undefined on input line 3458.
+
+
+LaTeX Warning: Citation `pywavelets' on page 36 undefined on input line 3459.
+
+
+LaTeX Warning: Reference `anh:code-sinus' on page 36 undefined on input line 3459.
+
+[36]
+
+LaTeX Warning: Reference `lem:rauschen-invariant' on page 37 undefined on input line 3468.
+
+<abbildungen/bsp_5.5.pdf, id=442, 433.62pt x 202.356pt>
+File: abbildungen/bsp_5.5.pdf Graphic file (type pdf)
+<use abbildungen/bsp_5.5.pdf>
+Package pdftex.def Info: abbildungen/bsp_5.5.pdf  used on input line 3473.
+(pdftex.def)             Requested size: 387.95074pt x 181.05345pt.
+
+LaTeX Warning: Reference `bsp:sinus' on page 37 undefined on input line 3475.
+
+
+LaTeX Warning: Reference `bsp:sinus' on page 37 undefined on input line 3475.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 37 undefined on input line 3485.
+
+
+LaTeX Warning: Reference `eq:rauschmodell-koeff' on page 37 undefined on input line 3488.
+
+
+LaTeX Warning: Reference `fig:dreischritt' on page 37 undefined on input line 3489.
+
+
+LaTeX Warning: Citation `mallat' on page 37 undefined on input line 3494.
+
+[37 <./abbildungen/bsp_5.5.pdf>]
+
+LaTeX Warning: Citation `mallat' on page 38 undefined on input line 3522.
+
+
+LaTeX Warning: Citation `mallat' on page 38 undefined on input line 3524.
+
+
+LaTeX Warning: Reference `bsp:mallat-haar' on page 38 undefined on input line 3565.
+
+
+LaTeX Warning: Reference `bsp:mallat-haar' on page 38 undefined on input line 3570.
+
+
+LaTeX Warning: Reference `satz:rekonstruktion' on page 38 undefined on input line 3585.
+
+[38]
+
+LaTeX Warning: Reference `fig:hard-soft' on page 39 undefined on input line 3596.
+
+
+LaTeX Warning: Reference `sec:mad' on page 39 undefined on input line 3598.
+
+
+LaTeX Warning: Reference `fig:thresholding' on page 39 undefined on input line 3600.
+
+
+LaTeX Warning: Reference `bsp:diagonal' on page 39 undefined on input line 3628.
+
+
+LaTeX Warning: Reference `bsp:diagonal' on page 39 undefined on input line 3628.
+
+
+LaTeX Warning: Citation `mallat' on page 39 undefined on input line 3636.
+
+
+LaTeX Warning: Reference `eq:risiko-summe' on page 39 undefined on input line 3658.
+
+
+LaTeX Warning: Citation `mallat' on page 39 undefined on input line 3663.
+
+
+LaTeX Warning: Reference `lem:rauschen-invariant' on page 39 undefined on input line 3668.
+
+[39]
+
+LaTeX Warning: Citation `mallat' on page 40 undefined on input line 3680.
+
+
+LaTeX Warning: Reference `lem:risiko-summe' on page 40 undefined on input line 3686.
+
+
+LaTeX Warning: Citation `mallat' on page 40 undefined on input line 3696.
+
+
+LaTeX Warning: Citation `mallat' on page 40 undefined on input line 3700.
+
+
+LaTeX Warning: Citation `mallat' on page 40 undefined on input line 3709.
+
+
+LaTeX Warning: Citation `mallat' on page 40 undefined on input line 3713.
+
+
+LaTeX Warning: Citation `mallat' on page 40 undefined on input line 3715.
+
+
+LaTeX Warning: Citation `mallat' on page 40 undefined on input line 3719.
+
+
+LaTeX Warning: Reference `bsp:sinus' on page 40 undefined on input line 3723.
+
+
+LaTeX Warning: Reference `fig:bsp-signal' on page 40 undefined on input line 3730.
+
+<abbildungen/abb5_1_signal.pdf, id=488, 505.89pt x 260.17201pt>
+File: abbildungen/abb5_1_signal.pdf Graphic file (type pdf)
+<use abbildungen/abb5_1_signal.pdf>
+Package pdftex.def Info: abbildungen/abb5_1_signal.pdf  used on input line 3735.
+(pdftex.def)             Requested size: 387.95074pt x 199.51923pt.
+
+LaTeX Warning: Reference `bsp:spitzen' on page 40 undefined on input line 3738.
+
+
+LaTeX Warning: Reference `code:kap5-signal' on page 40 undefined on input line 3738.
+
+
+LaTeX Warning: Reference `bsp:spitzen' on page 40 undefined on input line 3738.
+
+
+LaTeX Warning: Reference `code:kap5-signal' on page 40 undefined on input line 3738.
+
+
+LaTeX Warning: Reference `bsp:sinus' on page 40 undefined on input line 3742.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 40 undefined on input line 3743.
+
+
+LaTeX Warning: Reference `code:kap5-signal' on page 40 undefined on input line 3747.
+
+
+LaTeX Warning: Reference `def:ideale-auswahl' on page 40 undefined on input line 3754.
+
+[40]
+
+LaTeX Warning: Reference `lem:abklingen' on page 41 undefined on input line 3777.
+
+
+LaTeX Warning: Reference `fig:bsp-koeffizienten' on page 41 undefined on input line 3780.
+
+
+LaTeX Warning: Reference `eq:orakel' on page 41 undefined on input line 3783.
+
+<abbildungen/abb5_2a_koeffizienten_f.pdf, id=496, 583.21887pt x 433.62pt>
+File: abbildungen/abb5_2a_koeffizienten_f.pdf Graphic file (type pdf)
+<use abbildungen/abb5_2a_koeffizienten_f.pdf>
+Package pdftex.def Info: abbildungen/abb5_2a_koeffizienten_f.pdf  used on input line 3797.
+(pdftex.def)             Requested size: 409.50502pt x 304.47809pt.
+
+LaTeX Warning: Reference `bsp:spitzen' on page 41 undefined on input line 3801.
+
+
+LaTeX Warning: Reference `bsp:spitzen' on page 41 undefined on input line 3801.
+
+[41 <./abbildungen/abb5_1_signal.pdf>]
+
+LaTeX Warning: Citation `mallat' on page 42 undefined on input line 3816.
+
+
+LaTeX Warning: Citation `mallat' on page 42 undefined on input line 3823.
+
+
+LaTeX Warning: Citation `mallat' on page 42 undefined on input line 3824.
+
+
+LaTeX Warning: Citation `mallat' on page 42 undefined on input line 3826.
+
+
+LaTeX Warning: Citation `mallat' on page 42 undefined on input line 3828.
+
+
+LaTeX Warning: Citation `mallat' on page 42 undefined on input line 3838.
+
+
+LaTeX Warning: Reference `sec:thresholding' on page 42 undefined on input line 3839.
+
+[42 <./abbildungen/abb5_2a_koeffizienten_f.pdf>]
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3844.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3849.
+
+
+LaTeX Warning: Reference `eq:universelle-schwelle' on page 43 undefined on input line 3864.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3867.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3875.
+
+
+LaTeX Warning: Reference `chapter:anwendung' on page 43 undefined on input line 3879.
+
+
+LaTeX Warning: Citation `lmr' on page 43 undefined on input line 3880.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3883.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3888.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3894.
+
+
+LaTeX Warning: Reference `lem:rauschen-invariant' on page 43 undefined on input line 3896.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3899.
+
+
+LaTeX Warning: Reference `chapter:anwendung' on page 43 undefined on input line 3900.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3906.
+
+
+LaTeX Warning: Reference `eq:mad' on page 43 undefined on input line 3907.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3907.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3912.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3912.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 43 undefined on input line 3916.
+
+
+LaTeX Warning: Reference `eq:mad' on page 43 undefined on input line 3917.
+
+
+LaTeX Warning: Reference `satz:rekonstruktion' on page 43 undefined on input line 3919.
+
+
+LaTeX Warning: Reference `satz:donoho-johnstone' on page 43 undefined on input line 3923.
+
+
+LaTeX Warning: Reference `eq:donoho-johnstone' on page 43 undefined on input line 3924.
+
+
+LaTeX Warning: Reference `bsp:diagonal' on page 43 undefined on input line 3928.
+
+
+LaTeX Warning: Citation `mallat' on page 43 undefined on input line 3930.
+
+[43]
+
+LaTeX Warning: Reference `bsp:spitzen' on page 44 undefined on input line 3935.
+
+
+LaTeX Warning: Reference `eq:mad' on page 44 undefined on input line 3937.
+
+
+LaTeX Warning: Reference `fig:bsp-koeffizienten-Y' on page 44 undefined on input line 3941.
+
+
+LaTeX Warning: Reference `fig:bsp-entrauscht' on page 44 undefined on input line 3947.
+
+<abbildungen/abb5_2b_koeffizienten_Y.pdf, id=572, 648.9846pt x 433.62pt>
+File: abbildungen/abb5_2b_koeffizienten_Y.pdf Graphic file (type pdf)
+<use abbildungen/abb5_2b_koeffizienten_Y.pdf>
+Package pdftex.def Info: abbildungen/abb5_2b_koeffizienten_Y.pdf  used on input line 3958.
+(pdftex.def)             Requested size: 431.05931pt x 288.01624pt.
+
+LaTeX Warning: Reference `bsp:mad-testsignal' on page 44 undefined on input line 3963.
+
+
+LaTeX Warning: Reference `fig:bsp-koeffizienten' on page 44 undefined on input line 3963.
+
+
+LaTeX Warning: Reference `bsp:mad-testsignal' on page 44 undefined on input line 3963.
+
+
+LaTeX Warning: Reference `fig:bsp-koeffizienten' on page 44 undefined on input line 3963.
+
+<abbildungen/abb5_3_entrauscht.pdf, id=573, 613.57233pt x 215.3646pt>
+File: abbildungen/abb5_3_entrauscht.pdf Graphic file (type pdf)
+<use abbildungen/abb5_3_entrauscht.pdf>
+Package pdftex.def Info: abbildungen/abb5_3_entrauscht.pdf  used on input line 3969.
+(pdftex.def)             Requested size: 431.05931pt x 151.30298pt.
+
+LaTeX Warning: Reference `alg:visushrink' on page 44 undefined on input line 3972.
+
+
+LaTeX Warning: Reference `anh:code-entrauscht' on page 44 undefined on input line 3972.
+
+
+LaTeX Warning: Reference `alg:visushrink' on page 44 undefined on input line 3972.
+
+
+LaTeX Warning: Reference `anh:code-entrauscht' on page 44 undefined on input line 3972.
+
+[44] [45 <./abbildungen/abb5_2b_koeffizienten_Y.pdf> <./abbildungen/abb5_3_entrauscht.pdf>]
+chapter 6.
+
+LaTeX Warning: Reference `chapter:dwt' on page 46 undefined on input line 3988.
+
+
+Overfull \hbox (20.81258pt too wide) in paragraph at lines 3988--3988
+\T1/cmss/bx/n/10 Anmerkung. \T1/cmss/m/n/10 Neue Bib-Einträge: \T1/cmtt/m/n/10 sornmo\T1/cmss/m/n/10 , \T1/cmtt/m/n/10 alessio\T1/cmss/m/n/10 , \T1/cmtt/m/n/10 castillo\T1/cmss/m/n/10 , \T1/cmtt/m/n/10 mitbih\T1/cmss/m/n/10 , \T1/cmtt/m/n/10 mitdbseite\T1/cmss/m/n/10 , \T1/cmtt/m/n/10 mitdbdir\T1/cmss/m/n/10 , \T1/cmtt/m/n/10 physionet
  []
 
-[47]
 
-LaTeX Warning: Reference `bem:db-bezeichnung' on page 48 undefined on input line 4048.
+LaTeX Warning: Reference `chapter:denoising' on page 46 undefined on input line 3990.
 
-[48] [49] [50]
+
+LaTeX Warning: Citation `castillo' on page 46 undefined on input line 3994.
+
+
+LaTeX Warning: Citation `alessio' on page 46 undefined on input line 3995.
+
+
+LaTeX Warning: Citation `gacek' on page 46 undefined on input line 4007.
+
+
+LaTeX Warning: Citation `sornmo' on page 46 undefined on input line 4010.
+
+
+LaTeX Warning: Reference `fig:muster' on page 46 undefined on input line 4012.
+
+
+LaTeX Warning: Citation `rebstadt' on page 46 undefined on input line 4015.
+
+
+LaTeX Warning: Citation `aqil' on page 46 undefined on input line 4017.
+
+
+LaTeX Warning: Reference `chapter:dwt' on page 46 undefined on input line 4018.
+
+<abbildungen/abb6_1_muster.pdf, id=653, 455.30101pt x 187.902pt>
+File: abbildungen/abb6_1_muster.pdf Graphic file (type pdf)
+<use abbildungen/abb6_1_muster.pdf>
+Package pdftex.def Info: abbildungen/abb6_1_muster.pdf  used on input line 4023.
+(pdftex.def)             Requested size: 431.05931pt x 177.90378pt.
+
+LaTeX Warning: Reference `sec:bewertung' on page 46 undefined on input line 4028.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 46 undefined on input line 4028.
+
+
+LaTeX Warning: Reference `sec:bewertung' on page 46 undefined on input line 4028.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 46 undefined on input line 4028.
+
+
+LaTeX Warning: Citation `sornmo' on page 46 undefined on input line 4033.
+
+
+LaTeX Warning: Reference `fig:drift' on page 46 undefined on input line 4034.
+
+
+LaTeX Warning: Reference `fig:muskel' on page 46 undefined on input line 4034.
+
+
+LaTeX Warning: Citation `castillo' on page 46 undefined on input line 4043.
+
+<abbildungen/abb6_1b_drift.pdf, id=654, 455.30101pt x 101.17801pt>
+File: abbildungen/abb6_1b_drift.pdf Graphic file (type pdf)
+<use abbildungen/abb6_1b_drift.pdf>
+Package pdftex.def Info: abbildungen/abb6_1b_drift.pdf  used on input line 4045.
+(pdftex.def)             Requested size: 403.68425pt x 89.71002pt.
+
+LaTeX Warning: Reference `anh:code-kap6' on page 46 undefined on input line 4047.
+
+[46
+
+
+ <./abbildungen/abb6_1b_drift.pdf>]
+
+LaTeX Warning: Reference `anh:code-kap6' on page 47 undefined on input line 4047.
+
+<abbildungen/abb6_1c_elektrode.pdf, id=686, 455.30101pt x 101.17801pt>
+File: abbildungen/abb6_1c_elektrode.pdf Graphic file (type pdf)
+<use abbildungen/abb6_1c_elektrode.pdf>
+Package pdftex.def Info: abbildungen/abb6_1c_elektrode.pdf  used on input line 4055.
+(pdftex.def)             Requested size: 403.68425pt x 89.71002pt.
+
+LaTeX Warning: Reference `anh:code-kap6' on page 47 undefined on input line 4057.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 47 undefined on input line 4057.
+
+<abbildungen/abb6_1d_netz.pdf, id=687, 455.30101pt x 101.17801pt>
+File: abbildungen/abb6_1d_netz.pdf Graphic file (type pdf)
+<use abbildungen/abb6_1d_netz.pdf>
+Package pdftex.def Info: abbildungen/abb6_1d_netz.pdf  used on input line 4063.
+(pdftex.def)             Requested size: 403.68425pt x 89.71002pt.
+[47 <./abbildungen/abb6_1_muster.pdf> <./abbildungen/abb6_1c_elektrode.pdf>]
+
+LaTeX Warning: Reference `anh:code-kap6' on page 48 undefined on input line 4065.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 48 undefined on input line 4065.
+
+
+LaTeX Warning: Citation `gacek' on page 48 undefined on input line 4071.
+
+<abbildungen/abb6_1e_muskel.pdf, id=761, 455.30101pt x 101.17801pt>
+File: abbildungen/abb6_1e_muskel.pdf Graphic file (type pdf)
+<use abbildungen/abb6_1e_muskel.pdf>
+Package pdftex.def Info: abbildungen/abb6_1e_muskel.pdf  used on input line 4073.
+(pdftex.def)             Requested size: 403.68425pt x 89.71002pt.
+
+LaTeX Warning: Reference `anh:code-kap6' on page 48 undefined on input line 4075.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 48 undefined on input line 4075.
+
+
+LaTeX Warning: Citation `sornmo' on page 48 undefined on input line 4080.
+
+
+LaTeX Warning: Citation `mitdbdir' on page 48 undefined on input line 4085.
+
+
+LaTeX Warning: Citation `mitdbdir' on page 48 undefined on input line 4087.
+
+
+LaTeX Warning: Citation `sornmo' on page 48 undefined on input line 4095.
+
+
+LaTeX Warning: Citation `mitbih' on page 48 undefined on input line 4096.
+
+
+LaTeX Warning: Citation `mitdbseite' on page 48 undefined on input line 4098.
+
+
+LaTeX Warning: Citation `sornmo' on page 48 undefined on input line 4100.
+
+
+LaTeX Warning: Citation `mitdbseite' on page 48 undefined on input line 4102.
+
+
+LaTeX Warning: Citation `mitdbdir' on page 48 undefined on input line 4109.
+
+
+LaTeX Warning: Citation `mitdbseite' on page 48 undefined on input line 4110.
+
+
+LaTeX Warning: Citation `mitdbdir' on page 48 undefined on input line 4112.
+
+
+LaTeX Warning: Citation `sornmo' on page 48 undefined on input line 4113.
+
+
+LaTeX Warning: Citation `physionet' on page 48 undefined on input line 4114.
+
+[48 <./abbildungen/abb6_1d_netz.pdf> <./abbildungen/abb6_1e_muskel.pdf>]
+
+LaTeX Warning: Citation `mitdbdir' on page 49 undefined on input line 4118.
+
+
+LaTeX Warning: Citation `mitdbdir' on page 49 undefined on input line 4120.
+
+
+LaTeX Warning: Citation `mitdbdir' on page 49 undefined on input line 4124.
+
+<abbildungen/abb6_2_datensaetze.pdf, id=820, 455.30101pt x 260.17201pt>
+File: abbildungen/abb6_2_datensaetze.pdf Graphic file (type pdf)
+<use abbildungen/abb6_2_datensaetze.pdf>
+Package pdftex.def Info: abbildungen/abb6_2_datensaetze.pdf  used on input line 4130.
+(pdftex.def)             Requested size: 431.05931pt x 246.32831pt.
+
+LaTeX Warning: Reference `anh:code-kap6' on page 49 undefined on input line 4135.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 49 undefined on input line 4135.
+
+
+LaTeX Warning: Reference `fig:datensaetze' on page 49 undefined on input line 4139.
+
+
+LaTeX Warning: Reference `tab:ergebnisse' on page 49 undefined on input line 4145.
+
+
+LaTeX Warning: Citation `sornmo' on page 49 undefined on input line 4148.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 49 undefined on input line 4151.
+
+
+Overfull \hbox (23.14886pt too wide) in paragraph at lines 4147--4153
+[]\T1/cmss/m/n/10.95 Langzeit-EKG wer-den erst aus-ge-wer-tet, nach-dem die Auf-zeich-nung ab-ge-schlos-sen ist [[], Kap. 6.6.3].
+ []
+
+
+LaTeX Warning: Reference `fig:tief-hochpass' on page 49 undefined on input line 4162.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 49 undefined on input line 4164.
+
+
+LaTeX Warning: Citation `castillo' on page 49 undefined on input line 4165.
+
+[49 <./abbildungen/abb6_2_datensaetze.pdf>]
+
+LaTeX Warning: Citation `rebstadt' on page 50 undefined on input line 4174.
+
+
+LaTeX Warning: Citation `aqil' on page 50 undefined on input line 4175.
+
+
+LaTeX Warning: Reference `fig:tief-hochpass' on page 50 undefined on input line 4177.
+
+
+LaTeX Warning: Reference `eq:frequenzbaender' on page 50 undefined on input line 4180.
+
+
+LaTeX Warning: Reference `tab:baender' on page 50 undefined on input line 4181.
+
+
+LaTeX Warning: Reference `sec:ekg' on page 50 undefined on input line 4182.
+
+
+LaTeX Warning: Citation `rebstadt' on page 50 undefined on input line 4185.
+
+
+LaTeX Warning: Reference `eq:frequenzbaender' on page 50 undefined on input line 4210.
+
+
+LaTeX Warning: Reference `sec:ekg' on page 50 undefined on input line 4210.
+
+
+LaTeX Warning: Reference `sec:daten' on page 50 undefined on input line 4210.
+
+
+LaTeX Warning: Reference `eq:frequenzbaender' on page 50 undefined on input line 4210.
+
+
+LaTeX Warning: Reference `sec:ekg' on page 50 undefined on input line 4210.
+
+
+LaTeX Warning: Reference `sec:daten' on page 50 undefined on input line 4210.
+
+
+LaTeX Warning: Citation `alessio' on page 50 undefined on input line 4218.
+
+
+LaTeX Warning: Reference `eq:rauschmodell' on page 50 undefined on input line 4232.
+
+
+LaTeX Warning: Citation `alessio' on page 50 undefined on input line 4234.
+
+
+LaTeX Warning: Citation `castillo' on page 50 undefined on input line 4235.
+
+[50]
+
+LaTeX Warning: Reference `tab:baender' on page 51 undefined on input line 4241.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 51 undefined on input line 4243.
+
+
+LaTeX Warning: Reference `eq:db6-koeff' on page 51 undefined on input line 4243.
+
+
+LaTeX Warning: Reference `lem:dwt-orthogonal' on page 51 undefined on input line 4248.
+
+
+LaTeX Warning: Reference `def:thresholding' on page 51 undefined on input line 4259.
+
+
+LaTeX Warning: Citation `castillo' on page 51 undefined on input line 4265.
+
+
+LaTeX Warning: Citation `alessio' on page 51 undefined on input line 4267.
+
+
+LaTeX Warning: Citation `castillo' on page 51 undefined on input line 4268.
+
+
+LaTeX Warning: Reference `alg:visushrink' on page 51 undefined on input line 4269.
+
+
+LaTeX Warning: Citation `alessio' on page 51 undefined on input line 4274.
+
+
+LaTeX Warning: Citation `castillo' on page 51 undefined on input line 4276.
+
+
+LaTeX Warning: Reference `eq:mad' on page 51 undefined on input line 4284.
+
+
+LaTeX Warning: Reference `alg:mallat' on page 51 undefined on input line 4293.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 51 undefined on input line 4294.
+
+
+LaTeX Warning: Reference `lem:dwt-orthogonal' on page 51 undefined on input line 4295.
+
+
+LaTeX Warning: Reference `eq:mad' on page 51 undefined on input line 4303.
+
+
+LaTeX Warning: Reference `satz:rekonstruktion' on page 51 undefined on input line 4314.
+
+[51]
+
+LaTeX Warning: Reference `eq:ein-schritt' on page 52 undefined on input line 4319.
+
+
+LaTeX Warning: Reference `satz:daubechies' on page 52 undefined on input line 4329.
+
+
+LaTeX Warning: Citation `castillo' on page 52 undefined on input line 4330.
+
+
+LaTeX Warning: Citation `alessio' on page 52 undefined on input line 4331.
+
+
+LaTeX Warning: Citation `alessio' on page 52 undefined on input line 4333.
+
+
+LaTeX Warning: Citation `castillo' on page 52 undefined on input line 4336.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 4338.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 4338.
+
+
+LaTeX Warning: Citation `castillo' on page 52 undefined on input line 4348.
+
+
+LaTeX Warning: Citation `alessio' on page 52 undefined on input line 4349.
+
+
+LaTeX Warning: Reference `sec:daten' on page 52 undefined on input line 4356.
+
+
+LaTeX Warning: Citation `sornmo' on page 52 undefined on input line 4360.
+
+
+LaTeX Warning: Reference `eq:lbw' on page 52 undefined on input line 4361.
+
+
+LaTeX Warning: Citation `castillo' on page 52 undefined on input line 4373.
+
+
+LaTeX Warning: Reference `sec:ergebnisse' on page 52 undefined on input line 4374.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 4376.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 4376.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 4376.
+
+
+LaTeX Warning: Citation `alessio' on page 52 undefined on input line 4380.
+
+
+LaTeX Warning: Citation `castillo' on page 52 undefined on input line 4383.
+
+
+LaTeX Warning: Reference `eq:frequenzbaender' on page 52 undefined on input line 4384.
+
+
+LaTeX Warning: Citation `castillo' on page 52 undefined on input line 4389.
+
+
+LaTeX Warning: Reference `tab:baender' on page 52 undefined on input line 4391.
+
+[52]
+
+LaTeX Warning: Reference `eq:universelle-schwelle' on page 53 undefined on input line 4396.
+
+
+LaTeX Warning: Reference `eq:mad' on page 53 undefined on input line 4396.
+
+
+LaTeX Warning: Citation `castillo' on page 53 undefined on input line 4398.
+
+
+LaTeX Warning: Citation `alessio' on page 53 undefined on input line 4399.
+
+
+LaTeX Warning: Citation `alessio' on page 53 undefined on input line 4402.
+
+
+LaTeX Warning: Reference `lem:rauschen-invariant' on page 53 undefined on input line 4404.
+
+
+LaTeX Warning: Reference `eq:rauschmodell' on page 53 undefined on input line 4408.
+
+
+LaTeX Warning: Reference `lem:rauschen-invariant' on page 53 undefined on input line 4418.
+
+
+LaTeX Warning: Reference `sec:ergebnisse' on page 53 undefined on input line 4428.
+
+
+LaTeX Warning: Reference `eq:wandlerstufe' on page 53 undefined on input line 4429.
+
+
+LaTeX Warning: Citation `pywavelets' on page 53 undefined on input line 4431.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 53 undefined on input line 4432.
+
+
+LaTeX Warning: Citation `alessio' on page 53 undefined on input line 4441.
+
+
+LaTeX Warning: Citation `sornmo' on page 53 undefined on input line 4443.
+
+
+LaTeX Warning: Citation `castillo' on page 53 undefined on input line 4445.
+
+
+LaTeX Warning: Citation `sornmo' on page 53 undefined on input line 4454.
+
+
+LaTeX Warning: Reference `sec:ekg' on page 53 undefined on input line 4455.
+
+
+LaTeX Warning: Reference `fig:muster' on page 53 undefined on input line 4457.
+
+[53]
+
+LaTeX Warning: Reference `sec:ekg' on page 54 undefined on input line 4475.
+
+
+LaTeX Warning: Citation `hankebourgeois' on page 54 undefined on input line 4478.
+
+
+LaTeX Warning: Reference `tab:baender' on page 54 undefined on input line 4484.
+
+
+LaTeX Warning: Reference `fig:koeffizienten' on page 54 undefined on input line 4495.
+
+
+LaTeX Warning: Reference `fig:datensaetze' on page 54 undefined on input line 4496.
+
+
+LaTeX Warning: Reference `fig:bsp-koeffizienten-Y' on page 54 undefined on input line 4497.
+
+
+LaTeX Warning: Reference `eq:mad' on page 54 undefined on input line 4498.
+
+<abbildungen/abb6_3_koeffizienten.pdf, id=901, 455.30101pt x 505.89pt>
+File: abbildungen/abb6_3_koeffizienten.pdf Graphic file (type pdf)
+<use abbildungen/abb6_3_koeffizienten.pdf>
+Package pdftex.def Info: abbildungen/abb6_3_koeffizienten.pdf  used on input line 4505.
+(pdftex.def)             Requested size: 431.05931pt x 478.97171pt.
+
+LaTeX Warning: Reference `fig:datensaetze' on page 54 undefined on input line 4511.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 54 undefined on input line 4511.
+
+
+LaTeX Warning: Reference `fig:datensaetze' on page 54 undefined on input line 4511.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 54 undefined on input line 4511.
+
+
+LaTeX Warning: Citation `alessio' on page 54 undefined on input line 4517.
+
+<abbildungen/abb6_4_schritte.pdf, id=902, 455.30101pt x 361.35pt>
+File: abbildungen/abb6_4_schritte.pdf Graphic file (type pdf)
+<use abbildungen/abb6_4_schritte.pdf>
+Package pdftex.def Info: abbildungen/abb6_4_schritte.pdf  used on input line 4527.
+(pdftex.def)             Requested size: 431.05931pt x 342.12267pt.
+
+LaTeX Warning: Reference `fig:datensaetze' on page 54 undefined on input line 4532.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 54 undefined on input line 4532.
+
+
+LaTeX Warning: Reference `fig:datensaetze' on page 54 undefined on input line 4532.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 54 undefined on input line 4532.
+
+
+LaTeX Warning: Reference `fig:schritte' on page 54 undefined on input line 4537.
+
+
+LaTeX Warning: Reference `tab:ergebnisse' on page 54 undefined on input line 4543.
+
+
+LaTeX Warning: Reference `fig:spektrum' on page 54 undefined on input line 4545.
+
+[54] [55 <./abbildungen/abb6_3_koeffizienten.pdf>] [56 <./abbildungen/abb6_4_schritte.pdf>]
+
+LaTeX Warning: Reference `fig:schritte' on page 57 undefined on input line 4549.
+
+
+LaTeX Warning: Reference `fig:spektrum' on page 57 undefined on input line 4556.
+
+<abbildungen/abb6_5_spektrum.pdf, id=1051, 455.30101pt x 187.902pt>
+File: abbildungen/abb6_5_spektrum.pdf Graphic file (type pdf)
+<use abbildungen/abb6_5_spektrum.pdf>
+Package pdftex.def Info: abbildungen/abb6_5_spektrum.pdf  used on input line 4560.
+(pdftex.def)             Requested size: 431.05931pt x 177.90378pt.
+
+LaTeX Warning: Reference `anh:code-kap6' on page 57 undefined on input line 4566.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 57 undefined on input line 4566.
+
+
+LaTeX Warning: Reference `tab:ergebnisse' on page 57 undefined on input line 4571.
+
+
+LaTeX Warning: Reference `tab:baender' on page 57 undefined on input line 4574.
+
+
+LaTeX Warning: Citation `castillo' on page 57 undefined on input line 4578.
+
+
+LaTeX Warning: Citation `alessio' on page 57 undefined on input line 4580.
+
+
+LaTeX Warning: Reference `sec:bewertung' on page 57 undefined on input line 4605.
+
+
+LaTeX Warning: Reference `sec:bewertung' on page 57 undefined on input line 4605.
+
+
+LaTeX Warning: Reference `tab:varianten' on page 57 undefined on input line 4610.
+
+
+LaTeX Warning: Reference `sec:verfahren' on page 57 undefined on input line 4611.
+
+
+LaTeX Warning: Citation `sornmo' on page 57 undefined on input line 4616.
+
+[57 <./abbildungen/abb6_5_spektrum.pdf>]
+<abbildungen/abb6_6_vergleich.pdf, id=1098, 455.30101pt x 361.35pt>
+File: abbildungen/abb6_6_vergleich.pdf Graphic file (type pdf)
+<use abbildungen/abb6_6_vergleich.pdf>
+Package pdftex.def Info: abbildungen/abb6_6_vergleich.pdf  used on input line 4651.
+(pdftex.def)             Requested size: 431.05931pt x 342.12267pt.
+
+
+LaTeX Warning: Reference `fig:datensaetze' on page 58 undefined on input line 4655.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 58 undefined on input line 4655.
+
+
+LaTeX Warning: Reference `fig:datensaetze' on page 58 undefined on input line 4655.
+
+
+LaTeX Warning: Reference `anh:code-kap6' on page 58 undefined on input line 4655.
+
+
+LaTeX Warning: Reference `fig:vergleich' on page 58 undefined on input line 4660.
+
+
+LaTeX Warning: Reference `tab:baender' on page 58 undefined on input line 4680.
+
+
+LaTeX Warning: Reference `chapter:denoising' on page 58 undefined on input line 4684.
+
+
+LaTeX Warning: Reference `satz:ein-zwei-schritt' on page 58 undefined on input line 4687.
+
+[58] [59 <./abbildungen/abb6_6_vergleich.pdf>]
+
+LaTeX Warning: Citation `sornmo' on page 60 undefined on input line 4697.
+
+
+LaTeX Warning: Citation `gacek' on page 60 undefined on input line 4700.
+
+
+LaTeX Warning: Citation `sornmo' on page 60 undefined on input line 4703.
+
+
+LaTeX Warning: Citation `alessio' on page 60 undefined on input line 4712.
+
+
+LaTeX Warning: Citation `castillo' on page 60 undefined on input line 4713.
+
+
+LaTeX Warning: Citation `sornmo' on page 60 undefined on input line 4718.
+
+
+LaTeX Warning: Citation `sornmo' on page 60 undefined on input line 4725.
+
+
+LaTeX Warning: Citation `mitdbdir' on page 60 undefined on input line 4728.
+
+[60]
 chapter 7.
-[51
+[61
 
 
 ]
 chapter A.
-[52
+
+LaTeX Warning: Reference `eq:ft-testsignal' on page 62 undefined on input line 4764.
 
 
-] [53]
+LaTeX Warning: Reference `bsp:testsignal' on page 62 undefined on input line 4764.
+
+
+LaTeX Warning: Reference `bem:fourier-konvention' on page 62 undefined on input line 4766.
+
+
+LaTeX Warning: Reference `eq:stammfunktion-exp' on page 62 undefined on input line 4788.
+
+
+LaTeX Warning: Reference `eq:stammfunktion-exp' on page 62 undefined on input line 4794.
+
+[62
+
+
+]
+
+LaTeX Warning: Reference `eq:ft-testsignal' on page 63 undefined on input line 4833.
+
+
+LaTeX Warning: Citation `serov' on page 63 undefined on input line 4837.
+
+
+LaTeX Warning: Reference `eq:ft-testsignal' on page 63 undefined on input line 4837.
+
+
+Overfull \hbox (13.75015pt too wide) in paragraph at lines 4836--4851
+[] \T1/cmss/bx/n/10.95 Die Aus-nah-me-stel-len.[][] \T1/cmss/m/n/10.95 Da $[]$ als Fourier-Transformierte ei-ner $\OML/cmm/m/it/10.95 L[]$\T1/cmss/m/n/10.95 -Funktion ste-tig ist [[], Satz 12.1],
+ []
+
+
+LaTeX Warning: Reference `bsp:testsignal' on page 63 undefined on input line 4856.
+
+
+LaTeX Warning: Reference `eq:ft-testsignal' on page 63 undefined on input line 4859.
+
+
+LaTeX Warning: Reference `eq:ft-testsignal' on page 63 undefined on input line 4860.
+
+
+LaTeX Warning: Reference `chapter:anhang-code' on page 63 undefined on input line 4861.
+
+[63]
 chapter B.
 
-LaTeX Warning: Citation `pywavelets' on page 54 undefined on input line 4264.
-
-(./code/BeispielCWT.py [54
+LaTeX Warning: Citation `pywavelets' on page 64 undefined on input line 4888.
 
 
-]) [55] (./code/kap4_db2.py) (./code/kap5_sinus.py [56]) (./code/kap5_signal.py [57]) (./code/kap5_koeffizienten.py [58]) (./code/kap5_koeffizienten_Y.py [59]) (./code/kap5_entrauscht.py [60]) [61] (./august.bbl [62]
+LaTeX Warning: Reference `chapter:denoising' on page 64 undefined on input line 4891.
+
+
+LaTeX Warning: Reference `eq:db2-koeff' on page 64 undefined on input line 4892.
+
+
+LaTeX Warning: Reference `sec:onb-invarianz' on page 64 undefined on input line 4893.
+
+
+LaTeX Warning: Reference `fig:signal' on page 64 undefined on input line 4900.
+
+
+LaTeX Warning: Reference `fig:fourier' on page 64 undefined on input line 4901.
+
+
+LaTeX Warning: Reference `fig:cwt' on page 64 undefined on input line 4901.
+
+
+LaTeX Warning: Reference `eq:cwt-haar-exakt' on page 64 undefined on input line 4902.
+
+
+LaTeX Warning: Reference `bsp:testsignal' on page 64 undefined on input line 4908.
+
+
+LaTeX Warning: Reference `bsp:testsignal' on page 64 undefined on input line 4908.
+
+(./code/BeispielCWT.py [64
+
+
+]) [65]
+
+LaTeX Warning: Reference `fig:db2' on page 66 undefined on input line 4913.
+
+
+LaTeX Warning: Reference `eq:skalierungsgleichung' on page 66 undefined on input line 4915.
+
+
+LaTeX Warning: Reference `satz:daubechies' on page 66 undefined on input line 4917.
+
+
+LaTeX Warning: Reference `eq:g-aus-h' on page 66 undefined on input line 4917.
+
+
+LaTeX Warning: Reference `satz:daubechies' on page 66 undefined on input line 4922.
+
+
+LaTeX Warning: Reference `satz:daubechies' on page 66 undefined on input line 4922.
+
+(./code/kap4_db2.py)
+
+LaTeX Warning: Reference `fig:db6' on page 66 undefined on input line 4928.
+
+
+LaTeX Warning: Reference `anh:code-db2' on page 66 undefined on input line 4929.
+
+
+LaTeX Warning: Reference `satz:daubechies' on page 66 undefined on input line 4931.
+
+
+LaTeX Warning: Reference `bsp:db6' on page 66 undefined on input line 4936.
+
+
+LaTeX Warning: Reference `bsp:db6' on page 66 undefined on input line 4936.
+
+(./code/kap4_db6.py [66])
+
+LaTeX Warning: Reference `fig:bsp-sinus' on page 67 undefined on input line 4942.
+
+
+LaTeX Warning: Reference `bsp:sinus' on page 67 undefined on input line 4943.
+
+
+LaTeX Warning: Reference `lem:dwt-orthogonal' on page 67 undefined on input line 4946.
+
+
+LaTeX Warning: Reference `bsp:sinus' on page 67 undefined on input line 4953.
+
+
+LaTeX Warning: Reference `bsp:sinus' on page 67 undefined on input line 4953.
+
+(./code/kap5_sinus.py [67])
+
+LaTeX Warning: Reference `fig:bsp-signal' on page 68 undefined on input line 4958.
+
+
+LaTeX Warning: Reference `bsp:spitzen' on page 68 undefined on input line 4959.
+
+
+LaTeX Warning: Reference `eq:orakel' on page 68 undefined on input line 4963.
+
+
+LaTeX Warning: Reference `bsp:spitzen' on page 68 undefined on input line 4968.
+
+
+LaTeX Warning: Reference `bsp:spitzen' on page 68 undefined on input line 4968.
+
+(./code/kap5_signal.py [68])
+
+LaTeX Warning: Reference `fig:bsp-koeffizienten' on page 69 undefined on input line 4973.
+
+
+LaTeX Warning: Reference `bsp:spitzen' on page 69 undefined on input line 4981.
+
+
+LaTeX Warning: Reference `bsp:spitzen' on page 69 undefined on input line 4981.
+
+(./code/kap5_koeffizienten.py [69])
+
+LaTeX Warning: Reference `fig:bsp-koeffizienten-Y' on page 70 undefined on input line 4986.
+
+
+LaTeX Warning: Reference `bsp:mad-testsignal' on page 70 undefined on input line 4987.
+
+
+LaTeX Warning: Reference `eq:mad' on page 70 undefined on input line 4988.
+
+
+LaTeX Warning: Reference `bsp:mad-testsignal' on page 70 undefined on input line 4995.
+
+
+LaTeX Warning: Reference `bsp:mad-testsignal' on page 70 undefined on input line 4995.
+
+(./code/kap5_koeffizienten_Y.py [70])
+
+LaTeX Warning: Reference `fig:bsp-entrauscht' on page 71 undefined on input line 5001.
+
+
+LaTeX Warning: Reference `bsp:mad-testsignal' on page 71 undefined on input line 5002.
+
+
+LaTeX Warning: Reference `alg:visushrink' on page 71 undefined on input line 5003.
+
+
+LaTeX Warning: Reference `bsp:mad-testsignal' on page 71 undefined on input line 5009.
+
+
+LaTeX Warning: Reference `bsp:mad-testsignal' on page 71 undefined on input line 5009.
+
+(./code/kap5_entrauscht.py [71])
+
+LaTeX Warning: Reference `chapter:anwendung' on page 72 undefined on input line 5017.
+
+
+LaTeX Warning: Reference `sec:verfahren' on page 72 undefined on input line 5020.
+
+
+LaTeX Warning: Reference `sec:bewertung' on page 72 undefined on input line 5021.
+
+
+LaTeX Warning: Reference `tab:ergebnisse' on page 72 undefined on input line 5022.
+
+
+LaTeX Warning: Reference `tab:varianten' on page 72 undefined on input line 5022.
+
+(./code/kap6_verfahren.py [72])
+
+LaTeX Warning: Reference `fig:muster' on page 73 undefined on input line 5025.
+
+
+LaTeX Warning: Reference `fig:muster' on page 73 undefined on input line 5025.
+
+(./code/kap6_abb_muster.py) [73]
+
+LaTeX Warning: Reference `fig:drift' on page 74 undefined on input line 5026.
+
+
+LaTeX Warning: Reference `fig:drift' on page 74 undefined on input line 5026.
+
+(./code/kap6_abb_drift.py)
+
+LaTeX Warning: Reference `fig:elektrode' on page 74 undefined on input line 5027.
+
+
+LaTeX Warning: Reference `fig:elektrode' on page 74 undefined on input line 5027.
+
+(./code/kap6_abb_elektrode.py)
+
+LaTeX Warning: Reference `fig:netz' on page 74 undefined on input line 5028.
+
+
+LaTeX Warning: Reference `fig:netz' on page 74 undefined on input line 5028.
+
+(./code/kap6_abb_netz.py [74])
+
+LaTeX Warning: Reference `fig:muskel' on page 75 undefined on input line 5029.
+
+
+LaTeX Warning: Reference `fig:muskel' on page 75 undefined on input line 5029.
+
+(./code/kap6_abb_muskel.py)
+
+LaTeX Warning: Reference `fig:datensaetze' on page 75 undefined on input line 5030.
+
+
+LaTeX Warning: Reference `fig:datensaetze' on page 75 undefined on input line 5030.
+
+(./code/kap6_abb_datensaetze.py [75])
+
+LaTeX Warning: Reference `fig:koeffizienten' on page 76 undefined on input line 5031.
+
+
+LaTeX Warning: Reference `fig:koeffizienten' on page 76 undefined on input line 5031.
+
+(./code/kap6_abb_koeffizienten.py)
+
+LaTeX Warning: Reference `fig:schritte' on page 76 undefined on input line 5032.
+
+
+LaTeX Warning: Reference `fig:schritte' on page 76 undefined on input line 5032.
+
+(./code/kap6_abb_schritte.py [76])
+
+LaTeX Warning: Reference `fig:vergleich' on page 77 undefined on input line 5033.
+
+
+LaTeX Warning: Reference `fig:vergleich' on page 77 undefined on input line 5033.
+
+(./code/kap6_abb_vergleich.py [77])
+
+LaTeX Warning: Reference `tab:ergebnisse' on page 78 undefined on input line 5034.
+
+
+LaTeX Warning: Reference `tab:varianten' on page 78 undefined on input line 5034.
+
+
+LaTeX Warning: Reference `tab:ergebnisse' on page 78 undefined on input line 5034.
+
+
+LaTeX Warning: Reference `tab:varianten' on page 78 undefined on input line 5034.
+
+(./code/kap6_auswertung.py [78])
+
+LaTeX Warning: Reference `fig:spektrum' on page 79 undefined on input line 5035.
+
+
+LaTeX Warning: Reference `fig:spektrum' on page 79 undefined on input line 5035.
+
+(./code/kap6_abb_spektrum.py [79]) (./august.bbl [80]
 chapter without number
-) [63
+[81
 
 
-] (./august.aux)
+]) [82] (./august.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
@@ -1133,20 +3521,23 @@ L3 programming layer <2020/03/25>
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 42250 strings out of 467525
- 948923 string characters out of 5418982
- 2270439 words of memory out of 5000000
- 69910 multiletter control sequences out of 15000+600000
- 657148 words of font info for 112 fonts, out of 8000000 for 9000
+ 43003 strings out of 467525
+ 963268 string characters out of 5418982
+ 2316559 words of memory out of 5000000
+ 70187 multiletter control sequences out of 15000+600000
+ 660792 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,19n,107p,11270b,2251s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1728.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on august.pdf (66 pages, 2376821 bytes).
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1728.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on august.pdf (84 pages, 2916608 bytes).
 PDF statistics:
- 2173 PDF objects out of 2487 (max. 8388607)
- 1840 compressed objects within 19 object streams
- 609 named destinations out of 1000 (max. 500000)
- 575 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2619 PDF objects out of 2984 (max. 8388607)
+ 2002 compressed objects within 21 object streams
+ 1046 named destinations out of 1200 (max. 500000)
+ 622 words of extra memory for PDF output out of 10000 (max. 10000000)
 

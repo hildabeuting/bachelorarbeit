@@ -23,7 +23,7 @@
 \contentsline {section}{\numberline {3.2}Das dyadische Gitter und die Multiskalenanalyse}{16}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Die Axiome}{17}{subsection.3.2.1}%
 \contentsline {section}{\numberline {3.3}Skalierungsfunktion und Orthonormalbasis der Räume $V_j$}{19}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Die Orthonormalbasis auf allen Skalen}{20}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.1}Die Orthonormalbasis auf allen Skalen}{19}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Die Approximationsoperatoren}{20}{subsection.3.3.2}%
 \contentsline {section}{\numberline {3.4}Detailräume $W_j$ und die Zerlegung von $L^2(\mathbb {R})$}{21}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Die Wavelet-Basis}{22}{subsection.3.4.1}%
@@ -35,45 +35,50 @@
 \contentsline {section}{\numberline {4.5}Daubechies-Wavelets}{30}{section.4.5}%
 \contentsline {chapter}{\numberline {5}Entrauschung durch Thresholding}{34}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Rauschmodell und diskrete Wavelet-Transformation}{34}{section.5.1}%
-\contentsline {paragraph}{\nonumberline Das Modell.}{34}{paragraph*.16}%
-\contentsline {paragraph}{\nonumberline Die DWT eines endlichen Signals.}{35}{paragraph*.17}%
-\contentsline {paragraph}{\nonumberline Die DWT als orthogonale Matrix.}{36}{paragraph*.18}%
-\contentsline {paragraph}{\nonumberline Was mit dem Rauschen geschieht.}{36}{paragraph*.19}%
+\contentsline {paragraph}{\nonumberline Das Modell.}{34}{paragraph*.17}%
+\contentsline {paragraph}{\nonumberline Die DWT eines endlichen Signals.}{35}{paragraph*.18}%
+\contentsline {paragraph}{\nonumberline Die DWT als orthogonale Matrix.}{36}{paragraph*.19}%
+\contentsline {paragraph}{\nonumberline Was mit dem Rauschen geschieht.}{36}{paragraph*.20}%
 \contentsline {section}{\numberline {5.2}Diagonale Schätzer und Thresholding}{37}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Die Wahl der Schwelle}{42}{section.5.3}%
 \contentsline {section}{\numberline {5.4}Schätzung der Rauschstärke}{43}{section.5.4}%
-\contentsline {paragraph}{\nonumberline Das vollständige Verfahren.}{43}{paragraph*.25}%
+\contentsline {paragraph}{\nonumberline Das vollständige Verfahren.}{43}{paragraph*.26}%
 \contentsline {chapter}{\numberline {6}Anwendung: Entrauschung von EKG-Signalen}{46}{chapter.6}%
-\contentsline {section}{\numberline {6.1}EKG-Signale: Morphologie und Störquellen}{46}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Der Herzzyklus: P-Welle, QRS-Komplex, T-Welle}{46}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Typische Störquellen}{46}{subsection.6.1.2}%
-\contentsline {section}{\numberline {6.2}Bewertungsma\ss {}e und das Problem der fehlenden Referenz}{47}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Stufe 1: Synthetisch konstruiertes EKG-Signal}{48}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Konstruktion des Modellsignals}{48}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Rauschmodell und Wahl der Parameter}{48}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {6.3.3}Wahl von Wavelet und Zerlegungstiefe}{48}{subsection.6.3.3}%
-\contentsline {subsection}{\numberline {6.3.4}Vergleich von Hard- und Soft-Thresholding}{48}{subsection.6.3.4}%
-\contentsline {subsection}{\numberline {6.3.5}Ergebnisse}{48}{subsection.6.3.5}%
-\contentsline {section}{\numberline {6.4}Stufe 2: Reale Signale aus der MIT-BIH-Datenbank}{49}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Beschreibung des Datensatzes}{49}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Validierung ohne sauberes Referenzsignal}{49}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Ergebnisse}{49}{subsection.6.4.3}%
-\contentsline {section}{\numberline {6.5}Diskussion}{49}{section.6.5}%
-\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{51}{chapter.7}%
+\contentsline {section}{\numberline {6.1}EKG-Signale und ihre Störquellen}{46}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Die Datensätze}{48}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Skalen als Frequenzbänder}{50}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Das Verfahren}{51}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Modell und Ein-Schritt-Verfahren}{51}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Wavelet}{52}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Tiefe $J$ für die Drift}{52}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.4}Tiefe $J_S$ für das Rauschen}{53}{subsection.6.4.4}%
+\contentsline {subsection}{\numberline {6.4.5}Schwelle}{53}{subsection.6.4.5}%
+\contentsline {section}{\numberline {6.5}Bewertung ohne Referenz}{53}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Ergebnisse}{54}{section.6.6}%
+\contentsline {paragraph}{\nonumberline Die Koeffizienten.}{54}{paragraph*.36}%
+\contentsline {paragraph}{\nonumberline Nullsetzen von $a_8$.}{54}{paragraph*.39}%
+\contentsline {paragraph}{\nonumberline Schwellen von $d_1$ bis $d_3$.}{57}{paragraph*.40}%
+\contentsline {paragraph}{\nonumberline Gesamtergebnis.}{57}{paragraph*.42}%
+\contentsline {paragraph}{\nonumberline Wahl von $J$ und $J_S$.}{57}{paragraph*.44}%
+\contentsline {paragraph}{\nonumberline Die Ausschnitte.}{58}{paragraph*.47}%
+\contentsline {section}{\numberline {6.7}Diskussion}{60}{section.6.7}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{61}{chapter.7}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{52}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Fourier-Transformierte des Testsignals}{52}{section.A.1}%
-\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{52}{paragraph*.28}%
-\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{53}{paragraph*.29}%
-\contentsline {paragraph}{\nonumberline Die Ausnahmestellen.}{53}{paragraph*.30}%
-\contentsline {section}{\numberline {A.2}Stammfunktion des Testsignals}{53}{section.A.2}%
-\contentsline {chapter}{\numberline {B}Python-Code}{54}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{54}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{56}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Verrauschter Sinus}{56}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Sinus mit Spitzen}{57}{section.B.4}%
-\contentsline {section}{\numberline {B.5}Detailkoeffizienten des Testsignals}{58}{section.B.5}%
-\contentsline {section}{\numberline {B.6}Detailkoeffizienten der Messwerte}{59}{section.B.6}%
-\contentsline {section}{\numberline {B.7}Entrauschtes Testsignal}{60}{section.B.7}%
-\contentsline {chapter}{\nonumberline Literaturverzeichnis}{63}{chapter*.31}%
+\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{62}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Fourier-Transformierte des Testsignals}{62}{section.A.1}%
+\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{62}{paragraph*.48}%
+\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{63}{paragraph*.49}%
+\contentsline {paragraph}{\nonumberline Die Ausnahmestellen.}{63}{paragraph*.50}%
+\contentsline {section}{\numberline {A.2}Stammfunktion des Testsignals}{63}{section.A.2}%
+\contentsline {chapter}{\numberline {B}Python-Code}{64}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{64}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{66}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{66}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{67}{section.B.4}%
+\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{68}{section.B.5}%
+\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{69}{section.B.6}%
+\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{70}{section.B.7}%
+\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{71}{section.B.8}%
+\contentsline {section}{\numberline {B.9}Anwendung auf EKG-Signale}{72}{section.B.9}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{81}{chapter*.51}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
