@@ -3,92 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: august.aux
 The style file: alpha.bst
 Database file #1: literature.bib
-Repeated entry---line 181 of file literature.bib
- : @article{mitbih
- :                ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 192 of file literature.bib
- : % @misc{mitdbseite
- :                   ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 200 of file literature.bib
- : % @article{physionet
- :                     ,
-I'm skipping whatever remains of this entry
-Repeated entry---line 213 of file literature.bib
- : % @misc{mitdbdir
- :                 ,
-I'm skipping whatever remains of this entry
-You're missing a field name---line 221 of file literature.bib
- : 
- : %   author    = {S{\"o}rnmo, Leif and Laguna, Pablo},
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
-You're missing a field name---line 230 of file literature.bib
- : 
- : %   author    = {Alessio, Silvia Maria},
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
-You're missing a field name---line 241 of file literature.bib
- : 
- : %   author  = {Castillo, Encarnaci{\'o}n and Morales, Diego P. and Garc{\'i}a, Antonio and
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
-Warning--I didn't find a database entry for "pywavelets"
-Warning--to sort, need author or key in castillo
-Warning--to sort, need author, editor, or key in alessio
-Warning--to sort, need author, editor, or key in sornmo
-Warning--empty author and editor in alessio
-Warning--empty title in alessio
-Warning--empty publisher in alessio
-Warning--empty year in alessio
-Warning--empty author in castillo
-Warning--empty title in castillo
-Warning--empty journal in castillo
-Warning--empty year in castillo
-Warning--empty author and editor in sornmo
-Warning--empty title in sornmo
-Warning--empty publisher in sornmo
-Warning--empty year in sornmo
-You've used 18 entries,
+You've used 20 entries,
             2543 wiz_defined-function locations,
-            665 strings with 7112 characters,
-and the built_in function-call counts, 6371 in all, are:
-= -- 604
-> -- 283
-< -- 11
-+ -- 95
-- -- 92
-* -- 471
-:= -- 1031
-add.period$ -- 53
-call.type$ -- 18
-change.case$ -- 102
-chr.to.int$ -- 18
-cite$ -- 36
-duplicate$ -- 279
-empty$ -- 496
-format.name$ -- 111
-if$ -- 1294
+            690 strings with 8053 characters,
+and the built_in function-call counts, 7740 in all, are:
+= -- 750
+> -- 401
+< -- 12
++ -- 137
+- -- 134
+* -- 562
+:= -- 1326
+add.period$ -- 66
+call.type$ -- 20
+change.case$ -- 127
+chr.to.int$ -- 20
+cite$ -- 20
+duplicate$ -- 307
+empty$ -- 549
+format.name$ -- 157
+if$ -- 1558
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 22
-newline$ -- 90
-num.names$ -- 47
-pop$ -- 151
+missing$ -- 26
+newline$ -- 106
+num.names$ -- 62
+pop$ -- 139
 preamble$ -- 1
-purify$ -- 125
+purify$ -- 151
 quote$ -- 0
-skip$ -- 198
+skip$ -- 228
 stack$ -- 0
-substring$ -- 268
-swap$ -- 32
-text.length$ -- 11
-text.prefix$ -- 6
+substring$ -- 328
+swap$ -- 37
+text.length$ -- 12
+text.prefix$ -- 7
 top$ -- 0
-type$ -- 108
-warning$ -- 15
-while$ -- 53
-width$ -- 22
-write$ -- 227
-(There were 7 error messages)
+type$ -- 124
+warning$ -- 0
+while$ -- 71
+width$ -- 26
+write$ -- 275

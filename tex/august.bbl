@@ -1,13 +1,15 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{PML{\etalchar{+}}26}
+\begin{thebibliography}{LGW{\etalchar{+}}19}
 
 \bibitem[AJB17]{aqil}
 Mounaim Aqil, Atman Jbari, and Abdennasser Bourouhou.
 \newblock {ECG} signal denoising by discrete wavelet transform.
 \newblock {\em International Journal of Online Engineering (iJOE)}, 13(9):51--68, 2017.
 
-\bibitem[ale]{alessio}
-
+\bibitem[Ale16]{alessio}
+Silvia~Maria Alessio.
+\newblock {\em Digital Signal Processing and Spectral Analysis for Scientists. Concepts and Applications}.
+\newblock Signals and Communication Technology. Springer, Cham, 2016.
 
 \bibitem[BK19]{bruntonkutz}
 Steven~L. Brunton and J.~Nathan Kutz.
@@ -19,8 +21,10 @@ Christian Blatter.
 \newblock {\em Wavelets -- Eine Einf\"uhrung}.
 \newblock Advanced Lectures in Mathematics. Vieweg, Braunschweig/Wiesbaden, 2., durchgesehene edition, 2003.
 
-\bibitem[cas]{castillo}
-
+\bibitem[CMG{\etalchar{+}}13]{castillo}
+Encarnaci{\'o}n Castillo, Diego~P. Morales, Antonio Garc{\'i}a, Francisco Mart{\'i}nez-Mart{\'i}, Luis Parrilla, and Alberto~J. Palma.
+\newblock Noise suppression in {ECG} signals through efficient one-step wavelet processing techniques.
+\newblock {\em Journal of Applied Mathematics}, 2013:763903, 2013.
 
 \bibitem[CTY{\etalchar{+}}20]{chatterjee}
 Shubhojeet Chatterjee, Rini~Smita Thakur, Ram~Narayan Yadav, Lalita Gupta, and Deepak~Kumar Raghuvanshi.
@@ -36,6 +40,16 @@ Adam Gacek.
 Martin Hanke-Bourgeois.
 \newblock {\em Grundlagen der Numerischen Mathematik und des Wissenschaftlichen Rechnens}.
 \newblock Vieweg+Teubner, Wiesbaden, 3., aktualisierte edition, 2009.
+
+\bibitem[KS20]{kumar}
+Pramendra Kumar and Vijay~Kumar Sharma.
+\newblock Detection and classification of {ECG} noises using decomposition on mixed codebook for quality analysis.
+\newblock {\em Healthcare Technology Letters}, 7(1):18--24, 2020.
+
+\bibitem[LGW{\etalchar{+}}19]{pywavelets}
+Gregory~R. Lee, Ralf Gommers, Filip Waselewski, Kai Wohlfahrt, and Aaron O'Leary.
+\newblock {PyWavelets}: A {Python} package for wavelet analysis.
+\newblock {\em Journal of Open Source Software}, 4(36):1237, 2019.
 
 \bibitem[LMR98]{lmr}
 Alfred~Karl Louis, Peter Maa{\ss}, and Andreas Rieder.
@@ -79,8 +93,10 @@ Valery Serov.
 \newblock {\em Fourier Series, Fourier Transform and Their Applications to Mathematical Physics}, volume 197 of {\em Applied Mathematical Sciences}.
 \newblock Springer, Cham, 2017.
 
-\bibitem[sor]{sornmo}
-
+\bibitem[SL05]{sornmo}
+Leif S{\"o}rnmo and Pablo Laguna.
+\newblock {\em Bioelectrical Signal Processing in Cardiac and Neurological Applications}.
+\newblock Elsevier Academic Press, Burlington, 2005.
 
 \bibitem[SS03]{steinshakarchi}
 Elias~M. Stein and Rami Shakarchi.
