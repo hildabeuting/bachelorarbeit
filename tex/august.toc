@@ -50,41 +50,39 @@
 \contentsline {paragraph}{\nonumberline Annotationen.}{48}{paragraph*.32}%
 \contentsline {paragraph}{\nonumberline Datensätze 100 und 103.}{48}{paragraph*.33}%
 \contentsline {paragraph}{\nonumberline Länge.}{48}{paragraph*.35}%
-\contentsline {section}{\numberline {6.3}Skalen als Frequenzbänder}{49}{section.6.3}%
-\contentsline {paragraph}{\nonumberline Höchste Frequenz.}{49}{paragraph*.36}%
+\contentsline {section}{\numberline {6.3}Skalen als Frequenzbänder}{50}{section.6.3}%
+\contentsline {paragraph}{\nonumberline Höchste Frequenz.}{50}{paragraph*.36}%
 \contentsline {paragraph}{\nonumberline Halbierung des Bandes.}{50}{paragraph*.37}%
-\contentsline {paragraph}{\nonumberline Unsere Daten.}{50}{paragraph*.38}%
+\contentsline {paragraph}{\nonumberline Unsere Daten.}{51}{paragraph*.38}%
 \contentsline {section}{\numberline {6.4}Das Verfahren}{51}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Modell und Ein-Schritt-Verfahren}{51}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Tiefe $J$ für die Drift}{52}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.1}Modell und Ein-Schritt-Verfahren}{52}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Tiefe $J$ für die Drift}{53}{subsection.6.4.2}%
 \contentsline {paragraph}{\nonumberline Unsere Daten.}{53}{paragraph*.40}%
-\contentsline {subsection}{\numberline {6.4.3}Anzahl $J_S$ der geschwellten Stufen}{53}{subsection.6.4.3}%
-\contentsline {section}{\numberline {6.5}Bewertung ohne Referenz}{54}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Ergebnisse}{54}{section.6.6}%
-\contentsline {paragraph}{\nonumberline Die Koeffizienten.}{54}{paragraph*.41}%
-\contentsline {paragraph}{\nonumberline Nullsetzen von $a_8$.}{56}{paragraph*.44}%
-\contentsline {paragraph}{\nonumberline Schwellen von $d_1$ bis $d_3$.}{57}{paragraph*.45}%
-\contentsline {paragraph}{\nonumberline Gesamtergebnis.}{57}{paragraph*.47}%
-\contentsline {paragraph}{\nonumberline Wahl von $J$ und $J_S$.}{57}{paragraph*.49}%
-\contentsline {paragraph}{\nonumberline Die Ausschnitte.}{58}{paragraph*.52}%
-\contentsline {section}{\numberline {6.7}Diskussion}{60}{section.6.7}%
-\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{61}{chapter.7}%
+\contentsline {subsection}{\numberline {6.4.3}Anzahl $J_S$ der geschwellten Stufen}{54}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.4}Schwelle}{54}{subsection.6.4.4}%
+\contentsline {section}{\numberline {6.5}Test an einem künstlichen EKG}{54}{section.6.5}%
+\contentsline {paragraph}{\nonumberline Gütema\ss .}{54}{paragraph*.41}%
+\contentsline {paragraph}{\nonumberline Test-EKG und Störungen.}{55}{paragraph*.42}%
+\contentsline {paragraph}{\nonumberline Ergebnis.}{55}{paragraph*.47}%
+\contentsline {section}{\numberline {6.6}Anwendung auf die Datensätze 100 und 103}{57}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Diskussion}{57}{section.6.7}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{60}{chapter.7}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{62}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Fourier-Transformierte des Testsignals}{62}{section.A.1}%
-\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{62}{paragraph*.53}%
-\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{63}{paragraph*.54}%
-\contentsline {paragraph}{\nonumberline Die Ausnahmestellen.}{63}{paragraph*.55}%
-\contentsline {section}{\numberline {A.2}Stammfunktion des Testsignals}{63}{section.A.2}%
-\contentsline {chapter}{\numberline {B}Python-Code}{64}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{64}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{66}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{66}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{67}{section.B.4}%
-\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{68}{section.B.5}%
-\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{69}{section.B.6}%
-\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{70}{section.B.7}%
-\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{71}{section.B.8}%
-\contentsline {section}{\numberline {B.9}Anwendung auf EKG-Signale}{72}{section.B.9}%
-\contentsline {chapter}{\nonumberline Literaturverzeichnis}{79}{chapter*.56}%
+\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{61}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Fourier-Transformierte des Testsignals}{61}{section.A.1}%
+\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{61}{paragraph*.49}%
+\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{62}{paragraph*.50}%
+\contentsline {paragraph}{\nonumberline Die Ausnahmestellen.}{62}{paragraph*.51}%
+\contentsline {section}{\numberline {A.2}Stammfunktion des Testsignals}{62}{section.A.2}%
+\contentsline {chapter}{\numberline {B}Python-Code}{63}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{63}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{65}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{65}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{66}{section.B.4}%
+\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{67}{section.B.5}%
+\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{68}{section.B.6}%
+\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{69}{section.B.7}%
+\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{70}{section.B.8}%
+\contentsline {section}{\numberline {B.9}Anwendung auf EKG-Signale}{71}{section.B.9}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{81}{chapter*.52}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

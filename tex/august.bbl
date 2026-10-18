@@ -61,6 +61,11 @@ St\'ephane Mallat.
 \newblock {\em A Wavelet Tour of Signal Processing: The Sparse Way}.
 \newblock Academic Press / Elsevier, Burlington, MA, 3. edition, 2009.
 
+\bibitem[MCTS03]{mcsharry}
+Patrick~E. McSharry, Gari~D. Clifford, Lionel Tarassenko, and Leonard~A. Smith.
+\newblock A dynamical model for generating synthetic electrocardiogram signals.
+\newblock {\em IEEE Transactions on Biomedical Engineering}, 50(3):289--294, 2003.
+
 \bibitem[MM]{mitdbdir}
 George~B. Moody and Roger~G. Mark.
 \newblock {MIT-BIH} arrhythmia database directory.
@@ -71,6 +76,11 @@ George~B. Moody and Roger~G. Mark.
 George~B. Moody and Roger~G. Mark.
 \newblock The impact of the {MIT-BIH} arrhythmia database.
 \newblock {\em IEEE Engineering in Medicine and Biology Magazine}, 20(3):45--50, 2001.
+
+\bibitem[MPL{\etalchar{+}}21]{neurokit2}
+Dominique Makowski, Tam Pham, Zen~J. Lau, Jan~C. Brammer, Fran{\c{c}}ois Lespinasse, Hung Pham, Christopher Sch{\"o}lzel, and S.~H.~Annabel Chen.
+\newblock {NeuroKit2}: A {Python} toolbox for neurophysiological signal processing.
+\newblock {\em Behavior Research Methods}, 53(4):1689--1696, 2021.
 
 \bibitem[{Phy}]{mitdbseite}
 {PhysioNet}.

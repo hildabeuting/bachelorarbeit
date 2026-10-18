@@ -1,4 +1,4 @@
-# Abbildung 6.10: 8-s-Ausschnitte aus den Datensätzen 100 und 103 (MLII) nach und vor dem Entrauschen
+# Abbildung 6.6: 8-s-Ausschnitte aus den Datensätzen 100 und 103 (MLII) nach und vor dem Entrauschen
 import numpy as np
 import matplotlib.pyplot as plt
 import wfdb
