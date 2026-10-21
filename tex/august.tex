@@ -3984,12 +3984,6 @@ alle grö\ss er als $T$ sind und den glatten Sinus tragen.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\anmerkung{Neue Bib-Einträge: \texttt{sornmo}, \texttt{alessio}, \texttt{kumar},
-\texttt{castillo}, \texttt{mitbih}, \texttt{mitdbseite}, \texttt{mitdbdir},
-\texttt{mcsharry}, \texttt{neurokit2}, \texttt{pywavelets}
-(in \texttt{bib\_kap6.bib}; \texttt{physionet} wird nicht mehr zitiert). \texttt{chatterjee} wird in
-diesem Kapitel nicht mehr zitiert. \texttt{eq:db6-koeff} kommt aus dem db6-Baustein für Kapitel~\ref{chapter:dwt}.}
-
 In diesem Kapitel wird das Thresholding aus Kapitel~\ref{chapter:denoising}
 auf reale EKG-Aufzeichnungen der MIT-BIH Arrhythmia Database angewandt. Ziel
 ist, die Störungen zu entfernen, die in diesen Aufzeichnungen bereits enthalten
@@ -4012,41 +4006,23 @@ Körpers, die durch die Erregung des Herzmuskels entsteht
 Jeder Herzschlag erzeugt dieselbe Folge von Ausschlägen
 (Abbildung~\ref{fig:muster}): die P-Welle bei der Erregung der Vorhöfe, den
 QRS-Komplex bei der Erregung der Kammern und die T-Welle bei deren
-Repolarisation \cite[Kap.~2.1]{rebstadt}. % S. 9
+Repolarisation \cite[Abb.~2.1]{gacek}, % S. 24--25
+\cite[Kap.~2.1]{rebstadt}. % S. 9
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb6_1_muster.pdf}
+  \includegraphics[width=0.8\textwidth]{abb6_1_muster.pdf}
   \caption[Schematischer Herzschlag]{Schematischer Herzschlag mit P-, Q-, R-,
-  S- und T-Welle; Amplituden und Dauern frei gewählt (Code in
-  Anhang~\ref{anh:code-kap6}).}
+  S- und T-Welle in Anlehnung an \cite[Abb.~2.2]{rebstadt}; Amplituden und
+  Dauern frei gewählt (Code in Anhang~\ref{anh:code-kap6}).}
   \label{fig:muster}
 \end{figure}
 
-\anmerkung{Darstellung nach \cite[Abb.~2.2]{rebstadt} (S.~10), dort in
-Anlehnung an Li et al.\ (2020). Quelle in der Bildunterschrift ergänzen, sobald
-die Abbildung feststeht.}
-
 Ein gemessenes EKG enthält neben dem Signal des Herzens Störungen
-\cite[Kap.~6.5]{sornmo}, % S. 440--442
-\cite[Abschn.~1]{kumar}; % S. 18
-Beispiele echter gestörter EKG zeigen \cite[Abb.~6.17]{sornmo} % S. 442
-und \cite[Abb.~1]{kumar}. % S. 18
-Wir fassen die in den Quellen genannten Störungen
-(Tabelle~\ref{tab:stoerungen}) additiv zu einem Modell zusammen und erweitern
-damit \eqref{eq:rauschmodell} zu
-\begin{equation}
-\label{eq:stoermodell}
-  Y_n = f_n + b_n + w^{\mathrm{El}}_n + w^{\mathrm{Netz}}_n + w^{\mathrm{Mu}}_n
-        + \sigma Z_n, \qquad n = 0,\dots,N-1 .
-\end{equation}
-Dabei ist $f\in\R^N$ das EKG, $b, w^{\mathrm{El}}, w^{\mathrm{Netz}},
-w^{\mathrm{Mu}}\in\R^N$ sind die Störungen aus Tabelle~\ref{tab:stoerungen},
-und $\sigma Z$ ist wie in \eqref{eq:rauschmodell} Gau\ss'sches wei\ss es
-Rauschen $Z$ der Varianz~$1$ mit der Rauschstärke $\sigma > 0$.
-Dass sich die Störungen addieren, ist eine Annahme. Rebstadt beschreibt die
-Artefakte als additive Funktionen im gestörten Signal
-\cite[Kap.~2.3]{rebstadt}, % S. 16
+\cite[Abschn.~1]{castillo}; % S. 1
+Tabelle~\ref{tab:stoerungen} fasst die wichtigsten zusammen. Wir nehmen an,
+dass sie sich zum EKG addieren. Rebstadt beschreibt die Artefakte als additive Funktionen im
+gestörten Signal \cite[Kap.~2.3.1]{rebstadt}, % S. 16
 und auch Alessio und Castillo et al.\ gehen von additivem Rauschen aus
 \cite[Kap.~15.2.1]{alessio}, % S. 717
 \cite[Abschn.~2.2.2, Gl.~(8)]{castillo}. % S. 3
@@ -4054,30 +4030,27 @@ und auch Alessio und Castillo et al.\ gehen von additivem Rauschen aus
 \begin{table}[htbp]
   \centering
   \small
-  \begin{tabular}{@{}llll@{}}
+  \begin{tabular}{@{}lll@{}}
     \toprule
-    Term & Störung & Ursache & Frequenzen \\
+    Störung & Ursache & Frequenzen \\
     \midrule
-    $b$ & Basisliniendrift & Atmung, Bewegung, Elektrodenkontakt
+    Basisliniendrift & Atmung, Bewegung, Elektrodenkontakt
         & meist $< 1$\,Hz \\
-    $w^{\mathrm{El}}$ & Elektrodenbewegung & Impedanzänderung der Haut
+    Elektrodenbewegung & Impedanzänderung der Haut
         & $1$--$10$\,Hz \\
-    $w^{\mathrm{Netz}}$ & Netzbrummen & Erdung, Geräte in der Nähe
+    Netzbrummen & Erdung, Geräte in der Nähe
         & $50$ oder $60$\,Hz \\
-    $w^{\mathrm{Mu}}$ & Muskelrauschen & Aktivität der Skelettmuskeln
+    Muskelrauschen & Aktivität der Skelettmuskeln
         & etwa $20$--$80$\,Hz \\
-    $\sigma Z$ & wei\ss es Rauschen & Kanalübertragung, Messgeräte
+    wei\ss es Rauschen & Kanalübertragung, Messgeräte
         & alle \\
     \bottomrule
   \end{tabular}
-  \caption[Störungen im EKG]{Störungen im EKG nach
-  \cite[Kap.~6.5]{sornmo} % S. 441--442
-  ($b$, $w^{\mathrm{El}}$, $w^{\mathrm{Netz}}$, $w^{\mathrm{Mu}}$),
-  \cite[Kap.~2.4.3.2]{gacek} % S. 33
-  (Frequenzen von $w^{\mathrm{Mu}}$),
-  \cite[Kap.~2.1]{rebstadt} % S. 10--11
-  und \cite[Abschn.~1]{kumar} % S. 18
-  ($\sigma Z$); Zusammenstellung und Bezeichnungen eigen.}
+   \caption[Störungen im EKG]{Störungen im EKG nach
+  \cite[Kap.~6.5]{sornmo}, % S. 441
+  \cite[Kap.~2.3, 2.4.3]{gacek} % S. 25, 32--33
+  und \cite[Kap.~2.1]{rebstadt}; % S. 9--11
+  Zusammenstellung eigen.}
   \label{tab:stoerungen}
 \end{table}
 
@@ -4103,55 +4076,42 @@ gedacht (Abschnitt~\ref{sec:ein-schritt}).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Die MIT-BIH Arrhythmia Database ist eine der meistgenutzten Datenbanken zur
-Bewertung von Verfahren für Herzrhythmusstörungen \cite[Kap.~1.4.1]{sornmo}, % S. 18
-\cite[S.~45--50]{mitbih}. % PRÜFEN: genaue Seite im Artikel
+Bewertung von Verfahren für Herzrhythmusstörungen \cite[Kap.~1.4.1]{sornmo}. % S. 18
 Sie enthält $48$ halbstündige Ausschnitte zweikanaliger
 Langzeit-EKG von $47$ Personen, aufgezeichnet zwischen 1975 und 1979 am Beth
-Israel Hospital in Boston \cite[Abschn.~Data Description]{mitdbseite}, und
-ist über PhysioNet frei zugänglich \cite[Abschn.~Access]{mitdbseite}.
+Israel Hospital in Boston \cite[Abschn.~Selection of Data]{mitbih}, % S. 45--46
+und ist über PhysioNet frei zugänglich \cite{mitdbseite}. % Seitenleiste "Access": "Anyone can access the files ..."
 Die Aufzeichnungen entstanden im Alltag, etwa beim Arbeiten und Essen
 \cite[Kap.~1.4.1]{sornmo}. % S. 18
 
 \paragraph{Aufzeichnung und Digitalisierung.}
 Vor der Digitalisierung wurden die Signale auf $0{,}1$ bis $100$\,Hz
-bandbegrenzt \cite[Introduction, Digitization]{mitdbdir}; das hei\ss t,
-Anteile mit Frequenzen au\ss erhalb dieses Bereichs wurden durch ein Filter
-weitgehend entfernt. In der Zeit wurde mit $f_s = 360$\,Hz abgetastet
-\cite[Abschn.~Data Description]{mitdbseite};
+bandbegrenzt \cite[Abschn.~Technical Limitations of the Data]{mitbih}; % S. 47
+das hei\ss t, Anteile mit Frequenzen au\ss erhalb dieses Bereichs wurden durch
+ein Filter weitgehend entfernt. In der Zeit wurde mit $f_s = 360$\,Hz abgetastet
+\cite[Abschn.~Digitization]{mitbih}; % S. 46
 alle $1/360\,\mathrm s \approx 2{,}8$\,ms wurde also ein Wert gespeichert.
 Welche Frequenzen sich damit darstellen lassen, behandelt
-Abschnitt~\ref{sec:frequenzbaender}. In der Spannung beträgt die Auflösung
-$11$\,bit über einen Bereich von $10$\,mV
-\cite[Abschn.~Data Description]{mitdbseite};
-der Analog-Digital-Wandler, der die Spannung in Zahlen umsetzt, kann also
-$2^{11}$ verschiedene Werte ausgeben, und zwei benachbarte Werte unterscheiden
-sich um
-\begin{equation}
-\label{eq:wandlerstufe}
-  \Delta = \frac{10\,\mathrm{mV}}{2^{11}} \approx 4{,}9\,\text{\textmu V}.
-\end{equation}
-Jeder gespeicherte Wert ist ein ganzzahliges Vielfaches von $\Delta$;
-kleinere Spannungsunterschiede gehen beim Runden verloren. $\Delta$ dient uns
-später als Ma\ss stab für kleine Amplituden.
+Abschnitt~\ref{sec:frequenzbaender}.
 
 Zu den Störquellen aus Tabelle~\ref{tab:stoerungen} kommt eine technische
 hinzu: Die Bandgeräte, mit denen die Langzeit-EKG aufgezeichnet und später
 abgespielt wurden, erzeugen durch ihre Mechanik langsame Störungen mit
 Frequenzen zwischen $0{,}042$ und $0{,}54$\,Hz
-\cite[Introduction, Analog recording and playback]{mitdbdir}. % Tabelle "Frequency (Hz) / Source"
+\cite[Abschn.~Introduction, Analog recording and playback]{mitdbdir}. % Tabelle "Frequency (Hz) / Source" (ab 0.042 Hz) und Absatz darunter (Supply reel bis 0.54 Hz)
 Das Netzbrummen aus Tabelle~\ref{tab:stoerungen} liegt bei diesen Daten bei
 $60$\,Hz und entstand grö\ss tenteils erst beim Abspielen
-\cite[Introduction, Digitization]{mitdbdir}.
+\cite[Abschn.~Technical Limitations of the Data]{mitbih}. % S. 47; 100 und 103 in Echtzeit abgespielt (mitdbdir, Analog recording and playback)
 
 \paragraph{Annotationen.}
-Zu jeder Aufzeichnung gehört eine Annotationsdatei: Mindestens zwei
-Kardiologen haben unabhängig voneinander jeden Herzschlag markiert
-\cite[Abschn.~Data Description]{mitdbseite},
+Zu jeder Aufzeichnung gehört eine Annotationsdatei: Zwei Kardiologen haben
+unabhängig voneinander jeden Herzschlag geprüft und beschriftet
+\cite[Abschn.~Annotation]{mitbih}, % S. 47
 im Allgemeinen am Maximum der R-Zacke
-\cite[Introduction, Annotations]{mitdbdir}. Aus diesen Markierungen bestimmen wir in
+\cite[Abschn.~Introduction, Annotations]{mitdbdir}. Aus diesen Markierungen bestimmen wir in
 Abschnitt~\ref{sec:tiefe-J} die Herzfrequenz. Au\ss erdem
 kennzeichnen die Annotationen Abschnitte mit starkem Rauschen
-\cite[Kap.~1.4.1]{sornmo}. % S. 18
+\cite[Abschn.~Annotation]{mitbih}. % S. 47: "signal quality labels"
 
 \paragraph{Datensätze 100 und 103.}
 Zwischen welchen zwei Punkten des Körpers ein EKG-Signal die Spannung misst
@@ -4161,15 +4121,16 @@ misst sie zwischen rechtem Arm und linkem Bein
 Wir verwenden die Datensätze $100$ und $103$, jeweils das obere der beiden
 Signale. Es ist die modifizierte Ableitung~II (MLII), bei der die Elektroden
 auf dem Brustkorb statt an den Extremitäten sitzen
-\cite[Introduction, ECG lead configuration; Records]{mitdbdir}. % Record 100: MLII, V5; Record 103: MLII, V2
-% PRÜFEN: steht im Directory (ECG lead configuration) ausdrücklich, dass die Elektroden auf dem Brustkorb sitzen?
+\cite[Abschn.~ECG lead configuration; Records]{mitdbdir}. % "upper signal is ... MLII, obtained by placing the electrodes on the chest"; Record 100: MLII, V5; Record 103: MLII, V2
 Beide zeigen über die gesamte Dauer einen normalen Sinusrhythmus
-\cite[Introduction, Selection criteria; Tables]{mitdbdir}, also Schläge der
-Form aus Abbildung~\ref{fig:muster} \cite[Kap.~2.1]{rebstadt}. % S. 9: Abb. 2.2 zeigt einen Sinusrhythmus
+\cite[Abschn.~Records]{mitdbdir}, % Record 100 und 103: "Normal sinus rhythm", 1 Episode, 30:06
+also Schläge der
+Form aus Abbildung~\ref{fig:muster} \cite[Kap.~2.1, Abb.~2.2]{rebstadt}. % S. 9--10: S. 9 "anhand eines Sinusrhythmus erläutert, welcher in Abbildung 2.2 dargestellt wird"; Abb. 2.2 auf S. 10
 Bei Datensatz~$100$ ist kein Abschnitt des oberen
 Signals als stark verrauscht markiert, bei Datensatz~$103$ ein Abschnitt von
-$9$\,s \cite[Records]{mitdbdir}; % Record 103: "Upper noisy 1 0:09"
-nach der Annotationsdatei liegt er zwischen $1089{,}8$ und $1098{,}4$\,s.
+etwa $9$\,s \cite[Abschn.~Records]{mitdbdir}; % Record 100: "Both clean 1 30:06"; Record 103: "Upper noisy 1 0:09"
+nach der Annotationsdatei liegt er zwischen $1089{,}8$ und $1098{,}4$\,s
+(Code in Anhang~\ref{anh:code-kap6}).
 
 \begin{figure}[htbp]
   \centering
@@ -4188,8 +4149,7 @@ Störung. Bei
 Datensatz~$100$ schwankt die Nulllinie innerhalb weniger Sekunden um etwa
 $0{,}4$\,mV. Bei Datensatz~$103$ fällt die Nulllinie zu Beginn des
 verrauschten Abschnitts innerhalb von etwa einer Sekunde um rund $2$\,mV und
-steigt danach langsam wieder an. Das Netzbrummen ist im Zeitverlauf nicht zu
-sehen.
+steigt danach langsam wieder an.
 
 \paragraph{Länge.}
 Wir transformieren jede Aufzeichnung als Ganzes. Das ist möglich, weil
@@ -4208,33 +4168,24 @@ $24$\,min $16$\,s.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Um zu entscheiden, welche Stufen der DWT gelöscht, geschwellt oder
-unverändert gelassen werden, ordnen wir wie Castillo et al.\ jeder Stufe ein
-Frequenzband zu \cite[Abschn.~3.1.2]{castillo}. % S. 4--5
+unverändert gelassen werden, ordnen wir jeder Stufe ein Frequenzband zu.
+Castillo et al.\ wählen so die Tiefe für die Drift und die Zahl der
+geschwellten Stufen \cite[Abschn.~3.1.2, 3.1.3]{castillo}. % S. 4--5
 
 \paragraph{Höchste Frequenz.}
-Sei $x\colon\R\to\R$ ein analoges Signal, also die Spannung $x(t)$ zur Zeit
-$t$ in Sekunden. Abtasten mit der Rate $f_s$ liefert die Werte
-$x_n = x(n/f_s)$, $n\in\Z$. Für die Schwingung $x(t) = \cos(2\pi f t)$ mit
-der Frequenz $f$ ist
+Die Frequenzbänder der Stufen entstehen, indem das Band des Signals von oben
+her fortlaufend halbiert wird. Dazu brauchen wir seine obere Grenze. Nach dem
+Abtasttheorem ist ein mit der Rate $f_s$ abgetastetes Signal nur bis zur
+Frequenz
 \[
-  x_n = \cos(\omega n), \qquad \omega := 2\pi\,\frac{f}{f_s},
-  \qquad\text{und}\qquad
-  \cos\bigl((2\pi-\omega)n\bigr) = \cos(-\omega n) = \cos(\omega n),
+  F_{\max} = \frac{f_s}{2}
 \]
-da $\cos$ gerade und $2\pi$-periodisch ist. $f$ und $f_s - f$ liefern also
-dieselben Werte; unterscheidbar sind nur $\omega\in[0,\pi]$, das hei\ss t
-\[
-  f \in [0, F_{\max}], \qquad F_{\max} = \frac{f_s}{2}
-\]
-\cite[Abschn.~3.1.2]{castillo}. % S. 5: "F_max = 125 Hz (Nyquist Theorem)"
-
-\anmerkung{Noch begründen, warum eine einzelne Schwingung $\cos(2\pi f t)$
-genügt: Nach der Fourier-Analyse (Abschnitt~\ref{sec:fourier-plancherel}) ist
-ein Signal eine Überlagerung solcher Schwingungen, und das Abtasten ist linear.
-Au\ss erdem prüfen: $\omega$ ist hier ein Winkel pro Abtastwert (ohne Einheit),
-in Kapitel~2 dagegen die Variable der Fourier-Transformation; ggf.\ anderen
-Buchstaben wählen. Für $F_{\max} = f_s/2$ zusätzlich \cite[Kap.~2.4]{blatter}
-zitieren (S.~49 Nyquist-Frequenz, S.~50--51 Aliasing).}
+eindeutig darstellbar \cite[Abschn.~3.1.2]{castillo}, % S. 5
+\cite[Kap.~2.4, Satz (2.16)]{blatter}; % S. 48--51
+eine Schwingung der Frequenz $f > F_{\max}$ hat an den Abtastzeiten
+$n/f_s$ dieselben Werte wie eine der Frequenz $f_s - f < F_{\max}$.
+In der Variablen $\omega = 2\pi f/f_s$ der Filter aus
+Kapitel~\ref{chapter:dwt} entspricht $[0,F_{\max}]$ dem Intervall $[0,\pi]$.
 
 \paragraph{Halbierung des Bandes.}
 Die Fourier-Filter
@@ -4243,35 +4194,38 @@ Die Fourier-Filter
   G(\omega) = \frac{1}{\sqrt2}\sum_k g_k e^{-ik\omega}
 \]
 aus \eqref{eq:symbol-H} und \eqref{eq:G-aus-H} sind nach
-Abbildung~\ref{fig:tief-hochpass} ein Tief- und ein Hochpass:
-$\lvert H\rvert \approx 1$ auf $[0,\pi/2]$, $\lvert G\rvert \approx 1$ auf
-$[\pi/2,\pi]$.
+Abschnitt~\ref{sec:fourier-bedingungen} ein Tief- und ein Hochpass:
+$\lvert H\rvert$ ist auf $[0,\pi/2]$ gro\ss{} und auf $[\pi/2,\pi]$ klein,
+$\lvert G\rvert$ umgekehrt (Abbildung~\ref{fig:tief-hochpass}).
 \anmerkung{Abbildung~\ref{fig:tief-hochpass} zeigt nur Haar und db2, nicht
 das hier verwendete $\psi_6$. Empfehlung: beim Beispiel~\ref{bsp:db6} in
 Kapitel~\ref{chapter:dwt} eine Teilabbildung mit $\lvert H\rvert$ und
 $\lvert G\rvert$ für $\psi_6$ ergänzen und hier darauf verweisen. Werte zum
 Vergleich: $\lvert H(\pi/4)\rvert = 0{,}924$ / $0{,}971$ / $0{,}999$ und
 $\lvert H(3\pi/4)\rvert = 0{,}383$ / $0{,}241$ / $0{,}048$ für Haar / db2 /
-db6; bei $\pi/2$ gilt für jedes Filter $\lvert H\rvert = \lvert G\rvert =
-1/\sqrt2$ wegen \eqref{eq:G-aus-H}.}
-Die Approximation $a_{i}$ entsteht aus $a_{i-1}$ durch den
-Tiefpass und Downsampling um den Faktor $2$; dabei werden die Frequenzen
-oberhalb der halben höchsten Frequenz entfernt, und das Band der Approximation
-halbiert sich auf jeder Stufe \cite[Abschn.~3.1.2]{castillo}. % S. 4--5
-Mit $a_0 = Y$ folgt
+db6.}
+Eine Stufe der DWT wendet nach \eqref{eq:analyse} beide auf $a_{i-1}$ an und
+behält jeden zweiten Wert: $a_i$ entsteht durch den Tiefpass und erhält die
+untere Hälfte des Bandes von $a_{i-1}$, $d_i$ entsteht durch den Hochpass und
+erhält die obere \cite[Abschn.~3.1.2]{castillo}. % S. 4--5
+Mit $a_0 = Y$ und dem Band $[0, F_{\max}]$ von $Y$ folgt
 \begin{equation}
 \label{eq:frequenzbaender}
   a_i \;\leftrightarrow\; \Bigl[0,\,\frac{F_{\max}}{2^{i}}\Bigr],
   \qquad
   d_i \;\leftrightarrow\; \Bigl[\frac{F_{\max}}{2^{i}},\,\frac{F_{\max}}{2^{i-1}}\Bigr]
 \end{equation}
-\cite[Kap.~2.3.2, Tab.~2.4]{rebstadt}, % S. 27--28
-\cite[Kap.~3.2, Tab.~2]{aqil}. % S. 59
+\cite[Kap.~2.3.2, Tab.~2.4]{rebstadt}. % S. 27--28
 Bei Castillo et al.\ ist $f_s = 250$\,Hz, also $F_{\max} = 125$\,Hz, und $a_7$
 erfasst $0$ bis $125/2^7 \approx 0{,}977$\,Hz \cite[Abschn.~3.1.2]{castillo}. % S. 5
-Die Zuordnung ist nicht scharf, da $\lvert H\rvert$ und $\lvert G\rvert$ nicht
-sprunghaft von $1$ auf $0$ fallen; Frequenzen nahe einer Bandgrenze verteilen
-sich auf beide benachbarten Stufen.
+Die Zuordnung ist nicht scharf, da $\lvert H\rvert$ und $\lvert G\rvert$
+nicht sprunghaft von $1$ auf $0$ fallen. Wegen
+$\lvert H\rvert^2 + \lvert G\rvert^2 = 1$
+(Abschnitt~\ref{sec:fourier-bedingungen}) und
+$\lvert G(\pi/2)\rvert = \lvert H(\pi/2)\rvert$ nach \eqref{eq:G-aus-H} gilt
+an der Grenze $\lvert H(\pi/2)\rvert = \lvert G(\pi/2)\rvert = 1/\sqrt2$:
+Eine Frequenz genau auf einer Bandgrenze verteilt ihre Energie je zur Hälfte
+auf beide benachbarten Stufen, Frequenzen nahe der Grenze auf beide.
 
 \paragraph{Unsere Daten.}
 Die Tiefe $J$ ist die Anzahl der Stufen. Sie ist eine positive ganze Zahl mit
@@ -4320,8 +4274,12 @@ Bereiche:
 \item $a_8$, $[0;\,0{,}70]$\,Hz: Drift und Bandmechanik.
 \item $d_4$ bis $d_8$, $[0{,}70;\,22{,}5]$\,Hz: P- und T-Welle, Herzfrequenz
   und Elektrodenbewegung.
-\item $d_1$ bis $d_3$, $[22{,}5;\,180]$\,Hz: Netzbrummen, Muskelrauschen und
-  die hochfrequenten Anteile des QRS-Komplexes \cite[Kap.~2.3]{rebstadt}. % S. 17
+\item $d_1$ bis $d_3$, $[22{,}5;\,180]$\,Hz: Netzbrummen und Muskelrauschen.
+  Vom EKG, dessen Spektrum bis $150$\,Hz reicht
+  \cite[Kap.~2.4.3.2]{gacek}, % S. 33
+  liegen P- und T-Welle und die tieffrequenten Anteile des QRS-Komplexes
+  unter $20$\,Hz \cite[Kap.~2.3.1]{rebstadt}; % S. 17
+  in diesen Stufen bleiben also nur seine hochfrequenten Anteile.
 \end{itemize}
 Deshalb wird $a_8$ gelöscht, $d_4$ bis $d_8$ bleiben unverändert, und
 $d_1$ bis $d_3$ werden geschwellt (Abschnitt~\ref{sec:verfahren}).
@@ -4344,13 +4302,16 @@ Castillo et al.\ und Alessio gehen für das Rauschen vom Modell
 \eqref{eq:rauschmodell} aus, $Y_n = f_n + \sigma Z_n$
 \cite[Abschn.~2.2.2, Gl.~(8)]{castillo}, % S. 3
 \cite[Kap.~15.2.1]{alessio}, % S. 717
-und behandeln die Drift $b$ getrennt davon \cite[Abschn.~2.2.1]{castillo}. % S. 3
+und behandeln die Basisliniendrift getrennt davon \cite[Abschn.~2.2.1]{castillo}. % S. 3
 Wir fassen beides in einer Gleichung zusammen; diese Schreibweise ist eigen:
 \begin{equation}
 \label{eq:modell-ekg}
   Y_n = f_n + b_n + \sigma Z_n, \qquad n = 0,\dots,N-1 .
 \end{equation}
-Die übrigen Terme von \eqref{eq:stoermodell} sind darin nicht enthalten.
+Dabei ist $f\in\R^N$ das EKG, $b\in\R^N$ die Basisliniendrift und $\sigma Z$
+wie in \eqref{eq:rauschmodell} Gau\ss'sches wei\ss es Rauschen.
+Elektrodenbewegung, Netzbrummen und Muskelrauschen aus
+Tabelle~\ref{tab:stoerungen} sind darin nicht enthalten.
 Es bezeichne $A$ die periodisierte DWT der Tiefe $J$ aus
 Abschnitt~\ref{sec:onb-invarianz} mit dem Filter \eqref{eq:db6-koeff} des
 Wavelets $\psi_6$ (Beispiel~\ref{bsp:db6}). $AY$ ist die Zerlegung des

@@ -491,8 +491,6 @@ INPUT ./abbildungen/abb6_1_muster.pdf
 INPUT ./abbildungen/abb6_1_muster.pdf
 INPUT ./abbildungen/abb6_1_muster.pdf
 INPUT ./abbildungen/abb6_1_muster.pdf
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcss0800.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcss0600.tfm
 INPUT ./abbildungen/abb6_2_datensaetze.pdf
 INPUT ./abbildungen/abb6_2_datensaetze.pdf
 INPUT ./abbildungen/abb6_2_datensaetze.pdf
