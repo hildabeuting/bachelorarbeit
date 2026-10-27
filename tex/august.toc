@@ -55,34 +55,34 @@
 \contentsline {paragraph}{\nonumberline Halbierung des Bandes.}{49}{paragraph*.37}%
 \contentsline {paragraph}{\nonumberline Unsere Daten.}{50}{paragraph*.38}%
 \contentsline {section}{\numberline {6.4}Das Verfahren}{50}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Modell und Ein-Schritt-Verfahren}{51}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.1}Modell und Ein-Schritt-Verfahren}{50}{subsection.6.4.1}%
 \contentsline {subsection}{\numberline {6.4.2}Tiefe $J$ für die Drift}{52}{subsection.6.4.2}%
 \contentsline {paragraph}{\nonumberline Unsere Daten.}{52}{paragraph*.40}%
-\contentsline {subsection}{\numberline {6.4.3}Anzahl $J_S$ der geschwellten Stufen}{53}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.3}Anzahl $J_S$ der geschwellten Stufen}{52}{subsection.6.4.3}%
 \contentsline {subsection}{\numberline {6.4.4}Schwelle}{53}{subsection.6.4.4}%
-\contentsline {section}{\numberline {6.5}Test an einem künstlichen EKG}{53}{section.6.5}%
-\contentsline {paragraph}{\nonumberline Gütema\ss .}{53}{paragraph*.41}%
-\contentsline {paragraph}{\nonumberline Test-EKG und Störungen.}{54}{paragraph*.42}%
-\contentsline {paragraph}{\nonumberline Ergebnis.}{54}{paragraph*.47}%
-\contentsline {section}{\numberline {6.6}Anwendung auf die Datensätze 100 und 103}{56}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Diskussion}{56}{section.6.7}%
-\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{59}{chapter.7}%
+\contentsline {paragraph}{\nonumberline Zusammenfassung.}{54}{paragraph*.41}%
+\contentsline {section}{\numberline {6.5}Test an einem künstlichen EKG}{54}{section.6.5}%
+\contentsline {paragraph}{\nonumberline Gütema\ss .}{55}{paragraph*.43}%
+\contentsline {paragraph}{\nonumberline Ergebnis.}{57}{paragraph*.51}%
+\contentsline {section}{\numberline {6.6}Anwendung auf die Datensätze 100 und 103}{61}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Diskussion}{61}{section.6.7}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{64}{chapter.7}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{60}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Fourier-Transformierte des Testsignals}{60}{section.A.1}%
-\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{60}{paragraph*.49}%
-\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{61}{paragraph*.50}%
-\contentsline {paragraph}{\nonumberline Die Ausnahmestellen.}{61}{paragraph*.51}%
-\contentsline {section}{\numberline {A.2}Stammfunktion des Testsignals}{61}{section.A.2}%
-\contentsline {chapter}{\numberline {B}Python-Code}{62}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{62}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{64}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{64}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{65}{section.B.4}%
-\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{66}{section.B.5}%
-\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{67}{section.B.6}%
-\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{68}{section.B.7}%
-\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{69}{section.B.8}%
-\contentsline {section}{\numberline {B.9}Anwendung auf EKG-Signale}{70}{section.B.9}%
-\contentsline {chapter}{\nonumberline Literaturverzeichnis}{80}{chapter*.52}%
+\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{65}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Fourier-Transformierte des Testsignals}{65}{section.A.1}%
+\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{65}{paragraph*.53}%
+\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{66}{paragraph*.54}%
+\contentsline {paragraph}{\nonumberline Die Ausnahmestellen.}{66}{paragraph*.55}%
+\contentsline {section}{\numberline {A.2}Stammfunktion des Testsignals}{66}{section.A.2}%
+\contentsline {chapter}{\numberline {B}Python-Code}{67}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{67}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{69}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{69}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{70}{section.B.4}%
+\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{71}{section.B.5}%
+\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{72}{section.B.6}%
+\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{73}{section.B.7}%
+\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{74}{section.B.8}%
+\contentsline {section}{\numberline {B.9}Anwendung auf EKG-Signale}{75}{section.B.9}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{84}{chapter*.56}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -1,7 +1,8 @@
-# Abbildung 6.6: 8-s-Ausschnitte aus den Datensätzen 100 und 103 (MLII) nach und vor dem Entrauschen
+# Abbildung 6.10: 8-s-Ausschnitte aus den Datensätzen 100 und 103 (MLII) nach und vor dem Entrauschen
 import numpy as np
 import matplotlib.pyplot as plt
 import wfdb
+import pywt
 from kap6_verfahren import entrauschen, fs, N
 
 plt.rcParams.update({"font.size": 9, "font.family": "serif"})
@@ -12,6 +13,8 @@ for k, (name, von) in enumerate(ausschnitte.items()):
     x = wfdb.rdrecord("../daten/mitdb/" + name).p_signal[:N, 0]
     y = x - np.mean(x)
     f = entrauschen(y)
+    d1 = pywt.wavedec(y, "db6", mode="periodization", level=1)[1]
+    print(f"{name}: sigma_hat = {np.median(np.abs(d1)) / 0.6745:.4f} mV")   # Schätzer wie im Verfahren
     t = np.arange(N) / fs
     m = (t >= von) & (t <= von + dauer)
     unten, oben = min(y[m].min(), f[m].min()) - 0.2, max(y[m].max(), f[m].max()) + 0.2
@@ -25,5 +28,5 @@ for k, (name, von) in enumerate(ausschnitte.items()):
         achse.axhline(0, color="gray", lw=0.5, ls="--")
     ax[2 * k + 1].set_xlabel("Zeit $t$ in s")
 fig.tight_layout()
-fig.savefig("../abbildungen/abb6_6_vergleich.pdf")
+fig.savefig("../abbildungen/abb6_10_vergleich.pdf")
 plt.show()

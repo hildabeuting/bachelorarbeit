@@ -6,7 +6,7 @@ fs = 360
 N = 2 ** 19
 wavelet = "db6"
 J = 8
-JS = 3
+JS = 2
 
 
 def entrauschen(y, modus="soft", a_null=True, J=J, JS=JS):

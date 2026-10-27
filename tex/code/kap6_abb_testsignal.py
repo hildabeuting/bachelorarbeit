@@ -1,12 +1,12 @@
-# Abbildung 6.3: Ausschnitt von 4 s aus dem Test-EKG f und der gestörten Messung Y (sigma = 0,05 mV)
+# Abbildung 6.3: Ausschnitt von 4 s aus dem Test-EKG f und der gestörten Messung Y (sigma = 0,025 mV)
 import numpy as np
 import matplotlib.pyplot as plt
 from kap6_verfahren import fs
-from kap6_test import testsignal, gestoert, DRIFT
+from kap6_test import testsignal, gestoert, DRIFT, SEED
 
 plt.rcParams.update({"font.size": 9, "font.family": "serif"})
 f = testsignal()
-y = gestoert(f, 0)
+y = gestoert(f, SEED)
 t = np.arange(len(f)) / fs
 b = DRIFT[0] * np.sin(2 * np.pi * DRIFT[1] * t)
 m = (t >= 60) & (t < 64)

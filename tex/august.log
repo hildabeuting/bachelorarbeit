@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  20 OCT 2026 17:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  25 OCT 2026 15:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -943,7 +943,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \openout5 = `august.toc'.
 
 Package babel Info: 'ngerman' activates 'german' shorthands.
-(babel)             Reported on input line 222.
+(babel)             Reported on input line 221.
  [2]
 chapter 1.
 [1
@@ -954,7 +954,7 @@ chapter 1.
 {/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [2]
 chapter 2.
 
-Overfull \hbox (5.95517pt too wide) in paragraph at lines 358--358
+Overfull \hbox (5.95517pt too wide) in paragraph at lines 357--357
 []\T1/cmss/m/n/10 HankeBourgeois, Ÿ31 ^^RIn-nen-pro-duk-träu-me, Or-tho-nor-mal-ba-sen und Gram-sche Ma-tri-zen", S. 275^^U282
  []
 
@@ -967,54 +967,54 @@ chapter 3.
 
 
 ] [7] [8] [9]
-Overfull \hbox (0.71785pt too wide) in paragraph at lines 924--939
+Overfull \hbox (0.71785pt too wide) in paragraph at lines 923--938
 [][]\T1/cmss/bx/n/10.95 Bemerkung 3.7 \T1/cmss/m/n/10.95 (Be-deu-tung der bei-den Pa-ra-me-ter)\T1/cmss/bx/n/10.95 . []\T1/cmss/m/n/10.95 Ist $\OML/cmm/m/it/10.95  $ \T1/cmss/m/n/10.95 kom-pakt ge-tra-gen, so gilt $[] \OML/cmm/m/it/10.95  [] \OT1/cmr/m/n/10.95 =
  []
 
 <abbildungen/abb1_signal.png, id=301, 505.89pt x 202.356pt>
 File: abbildungen/abb1_signal.png Graphic file (type png)
 <use abbildungen/abb1_signal.png>
-Package pdftex.def Info: abbildungen/abb1_signal.png  used on input line 999.
+Package pdftex.def Info: abbildungen/abb1_signal.png  used on input line 998.
 (pdftex.def)             Requested size: 431.05931pt x 172.42642pt.
 <abbildungen/abb2_fourier.png, id=307, 505.89pt x 202.356pt>
 File: abbildungen/abb2_fourier.png Graphic file (type png)
 <use abbildungen/abb2_fourier.png>
-Package pdftex.def Info: abbildungen/abb2_fourier.png  used on input line 1025.
+Package pdftex.def Info: abbildungen/abb2_fourier.png  used on input line 1024.
 (pdftex.def)             Requested size: 431.05931pt x 172.42642pt.
 [10] [11 <./abbildungen/abb1_signal.png>]
 <abbildungen/abb3_cwt_haar.png, id=336, 650.43pt x 331.7193pt>
 File: abbildungen/abb3_cwt_haar.png Graphic file (type png)
 <use abbildungen/abb3_cwt_haar.png>
-Package pdftex.def Info: abbildungen/abb3_cwt_haar.png  used on input line 1072.
+Package pdftex.def Info: abbildungen/abb3_cwt_haar.png  used on input line 1071.
 (pdftex.def)             Requested size: 431.05931pt x 219.8465pt.
  [12 <./abbildungen/abb2_fourier.png>] [13 <./abbildungen/abb3_cwt_haar.png>] [14]
-Overfull \hbox (2.97401pt too wide) in paragraph at lines 1335--1335
+Overfull \hbox (2.97401pt too wide) in paragraph at lines 1334--1334
 []\T1/cmss/bx/n/10 Anmerkung. \T1/cmss/m/n/10 fin-de das bei-spiel noch nciht wirk-lich gut... eher ncoh-mal was ein-fa-che-res/Anschaulicheres[] 
  []
 
 [15] [16] [17]
-Overfull \hbox (2.85324pt too wide) in paragraph at lines 1615--1618
+Overfull \hbox (2.85324pt too wide) in paragraph at lines 1614--1617
 [][]\T1/cmss/bx/n/10.95 Definition 3.16 \T1/cmss/m/n/10.95 (Mul-tis-ka-len-ana-ly-se, [[], Kap. 5.1, (a)--(c)])\T1/cmss/bx/n/10.95 . []\T1/cmss/m/n/10.95 Ei-ne Mul-tis-ka-len-ana-ly-se (MSA)
  []
 
 [18]
-Overfull \hbox (2.58365pt too wide) in paragraph at lines 1640--1645
+Overfull \hbox (2.58365pt too wide) in paragraph at lines 1639--1644
 [][]\T1/cmss/m/n/10.95 Die an-schau-li-che Be-deu-tung von
  []
 
 
-LaTeX Warning: Command \textcircled invalid in math mode on input line 1652.
+LaTeX Warning: Command \textcircled invalid in math mode on input line 1651.
 
 
-LaTeX Warning: Command \textcircled invalid in math mode on input line 1652.
+LaTeX Warning: Command \textcircled invalid in math mode on input line 1651.
 
 [19] [20] [21]
-Overfull \hbox (72.98683pt too wide) detected at line 2381
+Overfull \hbox (72.98683pt too wide) detected at line 2380
 \OML/cmm/m/it/10.95 a[] \OT1/cmr/m/n/10.95 = [](4 + 2 + 5 + 7) = 9\OML/cmm/m/it/10.95 ;  d[] \OT1/cmr/m/n/10.95 = [][](4 + 2) \OMS/cmsy/m/n/10.95 ^^@ \OT1/cmr/m/n/10.95 (5 + 7)[] = \OMS/cmsy/m/n/10.95 ^^@\OT1/cmr/m/n/10.95 3\OML/cmm/m/it/10.95 ;  d[] \OT1/cmr/m/n/10.95 = [] = []\OML/cmm/m/it/10.95 ;  d[] \OT1/cmr/m/n/10.95 = [] = \OMS/cmsy/m/n/10.95 ^^@[]\OT1/cmr/m/n/10.95 ;
  []
 
 [22]
-Overfull \hbox (3.12456pt too wide) in paragraph at lines 2465--2465
+Overfull \hbox (3.12456pt too wide) in paragraph at lines 2464--2464
 []\T1/cmss/bx/n/10 Anmerkung. \T1/cmss/m/n/10 Die Ener-gie-glei-chung [] ist das, was Ab-schnitt [][]5.1[][] braucht: Die Wavelet-Koeffizienten
  []
 
@@ -1024,14 +1024,14 @@ chapter 4.
 
 
 ]
-Overfull \hbox (3.61122pt too wide) in paragraph at lines 2599--2599
+Overfull \hbox (3.61122pt too wide) in paragraph at lines 2598--2598
 \T1/cmss/bx/n/10 Belegstellen. \T1/cmss/m/n/10 LMR, Lem-ma 2.2.8, Gl. (2.2.22) [Sei-te nach-tra-gen, ver-mutl. S. 120--121]; LMR, Satz 2.2.10,
  []
 
 [25] [26] [27] [28]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 2884.
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 2883.
  [29] [30]
-Overfull \hbox (11.39694pt too wide) in paragraph at lines 3036--3041
+Overfull \hbox (11.39694pt too wide) in paragraph at lines 3035--3040
 []\T1/cmss/m/n/10.95 Das Mo-ment $\OML/cmm/m/it/10.95 m \OT1/cmr/m/n/10.95 = 0$ \T1/cmss/m/n/10.95 ist die Zu-läs-sig-keits-be-din-gung aus Satz [][]3.2[][]. All-ge-mein ist $[][] \OML/cmm/m/it/10.95 q\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 ) \OML/cmm/m/it/10.95  []\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 ) \OML/cmm/m/it/10.95 dt \OT1/cmr/m/n/10.95 =
  []
 
@@ -1039,17 +1039,17 @@ Overfull \hbox (11.39694pt too wide) in paragraph at lines 3036--3041
 <abbildungen/abb4_db2.pdf, id=760, 505.89pt x 187.902pt>
 File: abbildungen/abb4_db2.pdf Graphic file (type pdf)
 <use abbildungen/abb4_db2.pdf>
-Package pdftex.def Info: abbildungen/abb4_db2.pdf  used on input line 3127.
+Package pdftex.def Info: abbildungen/abb4_db2.pdf  used on input line 3126.
 (pdftex.def)             Requested size: 387.95074pt x 144.09721pt.
  [32 <./abbildungen/abb4_db2.pdf>]
-Overfull \hbox (1.83531pt too wide) in paragraph at lines 3176--3185
+Overfull \hbox (1.83531pt too wide) in paragraph at lines 3175--3184
 \T1/cmss/m/n/10.95 das sind die sechs ver-schwin-den-den Mo-men-te von $\OML/cmm/m/it/10.95  []$ \T1/cmss/m/n/10.95 in der Form, in der sie im Mallat-Algorithmus
  []
 
 <abbildungen/abb4_db6.pdf, id=820, 455.30101pt x 158.99399pt>
 File: abbildungen/abb4_db6.pdf Graphic file (type pdf)
 <use abbildungen/abb4_db6.pdf>
-Package pdftex.def Info: abbildungen/abb4_db6.pdf  used on input line 3189.
+Package pdftex.def Info: abbildungen/abb4_db6.pdf  used on input line 3188.
 (pdftex.def)             Requested size: 387.95074pt x 135.48032pt.
 [33 <./abbildungen/abb4_db6.pdf>]
 chapter 5.
@@ -1060,37 +1060,37 @@ chapter 5.
 <abbildungen/bsp_5.5.pdf, id=960, 433.62pt x 202.356pt>
 File: abbildungen/bsp_5.5.pdf Graphic file (type pdf)
 <use abbildungen/bsp_5.5.pdf>
-Package pdftex.def Info: abbildungen/bsp_5.5.pdf  used on input line 3473.
+Package pdftex.def Info: abbildungen/bsp_5.5.pdf  used on input line 3472.
 (pdftex.def)             Requested size: 387.95074pt x 181.05345pt.
  [37 <./abbildungen/bsp_5.5.pdf>] [38] [39]
 <abbildungen/abb5_1_signal.pdf, id=1034, 505.89pt x 260.17201pt>
 File: abbildungen/abb5_1_signal.pdf Graphic file (type pdf)
 <use abbildungen/abb5_1_signal.pdf>
-Package pdftex.def Info: abbildungen/abb5_1_signal.pdf  used on input line 3735.
+Package pdftex.def Info: abbildungen/abb5_1_signal.pdf  used on input line 3734.
 (pdftex.def)             Requested size: 387.95074pt x 199.51923pt.
  [40]
 <abbildungen/abb5_2a_koeffizienten_f.pdf, id=1056, 583.21887pt x 433.62pt>
 File: abbildungen/abb5_2a_koeffizienten_f.pdf Graphic file (type pdf)
 <use abbildungen/abb5_2a_koeffizienten_f.pdf>
-Package pdftex.def Info: abbildungen/abb5_2a_koeffizienten_f.pdf  used on input line 3797.
+Package pdftex.def Info: abbildungen/abb5_2a_koeffizienten_f.pdf  used on input line 3796.
 (pdftex.def)             Requested size: 409.50502pt x 304.47809pt.
  [41 <./abbildungen/abb5_1_signal.pdf>] [42 <./abbildungen/abb5_2a_koeffizienten_f.pdf>] [43]
 <abbildungen/abb5_2b_koeffizienten_Y.pdf, id=1166, 648.9846pt x 433.62pt>
 File: abbildungen/abb5_2b_koeffizienten_Y.pdf Graphic file (type pdf)
 <use abbildungen/abb5_2b_koeffizienten_Y.pdf>
-Package pdftex.def Info: abbildungen/abb5_2b_koeffizienten_Y.pdf  used on input line 3960.
+Package pdftex.def Info: abbildungen/abb5_2b_koeffizienten_Y.pdf  used on input line 3959.
 (pdftex.def)             Requested size: 431.05931pt x 288.01624pt.
 <abbildungen/abb5_3_entrauscht.pdf, id=1171, 613.57233pt x 215.3646pt>
 File: abbildungen/abb5_3_entrauscht.pdf Graphic file (type pdf)
 <use abbildungen/abb5_3_entrauscht.pdf>
-Package pdftex.def Info: abbildungen/abb5_3_entrauscht.pdf  used on input line 3971.
+Package pdftex.def Info: abbildungen/abb5_3_entrauscht.pdf  used on input line 3970.
 (pdftex.def)             Requested size: 431.05931pt x 151.30298pt.
  [44] [45 <./abbildungen/abb5_2b_koeffizienten_Y.pdf> <./abbildungen/abb5_3_entrauscht.pdf>]
 chapter 6.
 <abbildungen/abb6_1_muster.pdf, id=1262, 455.30101pt x 173.448pt>
 File: abbildungen/abb6_1_muster.pdf Graphic file (type pdf)
 <use abbildungen/abb6_1_muster.pdf>
-Package pdftex.def Info: abbildungen/abb6_1_muster.pdf  used on input line 4014.
+Package pdftex.def Info: abbildungen/abb6_1_muster.pdf  used on input line 4013.
 (pdftex.def)             Requested size: 344.84875pt x 131.37456pt.
 [46
 
@@ -1099,143 +1099,120 @@ Package pdftex.def Info: abbildungen/abb6_1_muster.pdf  used on input line 4014.
 <abbildungen/abb6_2_datensaetze.pdf, id=1336, 455.30101pt x 260.17201pt>
 File: abbildungen/abb6_2_datensaetze.pdf Graphic file (type pdf)
 <use abbildungen/abb6_2_datensaetze.pdf>
-Package pdftex.def Info: abbildungen/abb6_2_datensaetze.pdf  used on input line 4137.
+Package pdftex.def Info: abbildungen/abb6_2_datensaetze.pdf  used on input line 4136.
 (pdftex.def)             Requested size: 431.05931pt x 246.32831pt.
- [48 <./abbildungen/abb6_2_datensaetze.pdf>] [49] [50] [51]
+ [48 <./abbildungen/abb6_2_datensaetze.pdf>] [49] [50]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 4385.
+(hyperref)                removing `math shift' on input line 4375.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 4385.
+(hyperref)                removing `math shift' on input line 4375.
 
-
-Overfull \hbox (9.62889pt too wide) in paragraph at lines 4404--4410
+[51]
+Overfull \hbox (9.62889pt too wide) in paragraph at lines 4392--4398
 \T1/cmss/m/n/10.95 wobei $[]$ auf die nächs-te gan-ze Zahl run-det [[], Ab-schn. 3.1.2, Gl. (9)], [[], Kap. 15.2.4].
  []
 
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 4446.
+Overfull \hbox (2.0303pt too wide) detected at line 4422
+\OML/cmm/m/it/10.95 J \OT1/cmr/m/n/10.95 = [][[][] 360] = 8 ([][] 360 \OMS/cmsy/m/n/10.95 ^^Y \OT1/cmr/m/n/10.95 8[]49)\OML/cmm/m/it/10.95 ;  \OT1/cmr/m/n/10.95 0[]3 []  \OML/cmm/m/it/10.95 <  [] [] \OMS/cmsy/m/n/10.95 ^^Y \OT1/cmr/m/n/10.95 0[]70 []  \OML/cmm/m/it/10.95 <  \OT1/cmr/m/n/10.95 0[]88 []\OML/cmm/m/it/10.95 ;
+ []
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 4446.
+(hyperref)                removing `math shift' on input line 4435.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 4446.
+(hyperref)                removing `subscript' on input line 4435.
 
-[52] [53]
-<abbildungen/abb6_3_testsignal.pdf, id=1530, 455.30101pt x 260.17201pt>
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 4435.
+
+[52] [53] [54]
+<abbildungen/abb6_3_testsignal.pdf, id=1552, 455.30101pt x 260.17201pt>
 File: abbildungen/abb6_3_testsignal.pdf Graphic file (type pdf)
 <use abbildungen/abb6_3_testsignal.pdf>
-Package pdftex.def Info: abbildungen/abb6_3_testsignal.pdf  used on input line 4541.
+Package pdftex.def Info: abbildungen/abb6_3_testsignal.pdf  used on input line 4621.
 (pdftex.def)             Requested size: 431.05931pt x 246.32831pt.
-<abbildungen/abb6_4_test.pdf, id=1535, 455.30101pt x 158.99399pt>
+<abbildungen/abb6_4_test.pdf, id=1561, 455.30101pt x 158.99399pt>
 File: abbildungen/abb6_4_test.pdf Graphic file (type pdf)
 <use abbildungen/abb6_4_test.pdf>
-Package pdftex.def Info: abbildungen/abb6_4_test.pdf  used on input line 4573.
+Package pdftex.def Info: abbildungen/abb6_4_test.pdf  used on input line 4664.
 (pdftex.def)             Requested size: 431.05931pt x 150.53395pt.
-<abbildungen/abb6_5_test_schlag.pdf, id=1540, 455.30101pt x 187.902pt>
+<abbildungen/abb6_5_test_schlag.pdf, id=1566, 455.30101pt x 187.902pt>
 File: abbildungen/abb6_5_test_schlag.pdf Graphic file (type pdf)
 <use abbildungen/abb6_5_test_schlag.pdf>
-Package pdftex.def Info: abbildungen/abb6_5_test_schlag.pdf  used on input line 4582.
+Package pdftex.def Info: abbildungen/abb6_5_test_schlag.pdf  used on input line 4673.
 (pdftex.def)             Requested size: 431.05931pt x 177.90378pt.
- [54 <./abbildungen/abb6_3_testsignal.pdf>] [55 <./abbildungen/abb6_4_test.pdf> <./abbildungen/abb6_5_test_schlag.pdf>]
-<abbildungen/abb6_6_vergleich.pdf, id=1691, 455.30101pt x 361.35pt>
-File: abbildungen/abb6_6_vergleich.pdf Graphic file (type pdf)
-<use abbildungen/abb6_6_vergleich.pdf>
-Package pdftex.def Info: abbildungen/abb6_6_vergleich.pdf  used on input line 4621.
+<abbildungen/abb6_6_test_fehler.pdf, id=1571, 455.30101pt x 158.99399pt>
+File: abbildungen/abb6_6_test_fehler.pdf Graphic file (type pdf)
+<use abbildungen/abb6_6_test_fehler.pdf>
+Package pdftex.def Info: abbildungen/abb6_6_test_fehler.pdf  used on input line 4682.
+(pdftex.def)             Requested size: 431.05931pt x 150.53395pt.
+<abbildungen/abb6_7_zerlegung_f.pdf, id=1576, 455.30101pt x 534.79799pt>
+File: abbildungen/abb6_7_zerlegung_f.pdf Graphic file (type pdf)
+<use abbildungen/abb6_7_zerlegung_f.pdf>
+Package pdftex.def Info: abbildungen/abb6_7_zerlegung_f.pdf  used on input line 4690.
+(pdftex.def)             Requested size: 431.05931pt x 506.34152pt.
+<abbildungen/abb6_7_zerlegung_Y.pdf, id=1581, 455.30101pt x 534.79799pt>
+File: abbildungen/abb6_7_zerlegung_Y.pdf Graphic file (type pdf)
+<use abbildungen/abb6_7_zerlegung_Y.pdf>
+Package pdftex.def Info: abbildungen/abb6_7_zerlegung_Y.pdf  used on input line 4700.
+(pdftex.def)             Requested size: 431.05931pt x 506.34152pt.
+<abbildungen/abb6_7_zerlegung_fhat.pdf, id=1586, 455.30101pt x 534.79799pt>
+File: abbildungen/abb6_7_zerlegung_fhat.pdf Graphic file (type pdf)
+<use abbildungen/abb6_7_zerlegung_fhat.pdf>
+Package pdftex.def Info: abbildungen/abb6_7_zerlegung_fhat.pdf  used on input line 4709.
+(pdftex.def)             Requested size: 431.05931pt x 506.34152pt.
+ [55 <./abbildungen/abb6_3_testsignal.pdf>] [56 <./abbildungen/abb6_4_test.pdf> <./abbildungen/abb6_5_test_schlag.pdf>] [57 <./abbildungen/abb6_6_test_fehler.pdf>] [58 <./abbildungen/abb6_7_zerlegung_f.pdf>] [59 <./abbildungen/abb6_7_zerlegung_Y.pdf>] [60 <./abbildungen/abb6_7_zerlegung_fhat.pdf>]
+<abbildungen/abb6_10_vergleich.pdf, id=1976, 455.30101pt x 361.35pt>
+File: abbildungen/abb6_10_vergleich.pdf Graphic file (type pdf)
+<use abbildungen/abb6_10_vergleich.pdf>
+Package pdftex.def Info: abbildungen/abb6_10_vergleich.pdf  used on input line 4792.
 (pdftex.def)             Requested size: 431.05931pt x 342.12267pt.
- [56] [57 <./abbildungen/abb6_6_vergleich.pdf>] [58]
+ [61] [62 <./abbildungen/abb6_10_vergleich.pdf>] [63]
 chapter 7.
-[59
+[64
 
 
 ]
 chapter A.
-[60
+[65
 
 
-] [61]
+] [66]
 chapter B.
-(./code/BeispielCWT.py [62
+(./code/BeispielCWT.py [67
 
 
-]) [63] (./code/kap4_db2.py) (./code/kap4_db6.py [64]) (./code/kap5_sinus.py [65]) (./code/kap5_signal.py [66]) (./code/kap5_koeffizienten.py [67]) (./code/kap5_koeffizienten_Y.py [68]) (./code/kap5_entrauscht.py [69])
-
-LaTeX Warning: Reference `sec:bewertung' on page 70 undefined on input line 4991.
-
-
-LaTeX Warning: Reference `tab:ergebnisse' on page 70 undefined on input line 4992.
-
-
-LaTeX Warning: Reference `tab:varianten' on page 70 undefined on input line 4992.
-
-(./code/kap6_verfahren.py [70]) (./code/kap6_abb_muster.py) (./code/kap6_abb_datensaetze.py [71])
-
-LaTeX Warning: Reference `fig:koeffizienten' on page 72 undefined on input line 5005.
-
-
-LaTeX Warning: Reference `fig:koeffizienten' on page 72 undefined on input line 5005.
-
-(./code/kap6_abb_koeffizienten.py)
-
-LaTeX Warning: Reference `fig:schritte' on page 72 undefined on input line 5008.
-
-
-LaTeX Warning: Reference `fig:schritte' on page 72 undefined on input line 5008.
-
-(./code/kap6_abb_schritte.py [72]) (./code/kap6_abb_vergleich.py [73])
-
-LaTeX Warning: Reference `tab:ergebnisse' on page 74 undefined on input line 5014.
-
-
-LaTeX Warning: Reference `tab:varianten' on page 74 undefined on input line 5014.
-
-
-LaTeX Warning: Reference `tab:ergebnisse' on page 74 undefined on input line 5014.
-
-
-LaTeX Warning: Reference `tab:varianten' on page 74 undefined on input line 5014.
-
-(./code/kap6_auswertung.py [74])
-
-LaTeX Warning: Reference `fig:spektrum' on page 75 undefined on input line 5017.
-
-
-LaTeX Warning: Reference `fig:spektrum' on page 75 undefined on input line 5017.
-
-(./code/kap6_abb_spektrum.py [75]) (./code/kap6_test.py [76]) (./code/kap6_abb_testsignal.py) [77] (./code/kap6_abb_test.py) (./code/kap6_abb_test_schlag.py) [78] (./august.bbl [79]
+]) [68] (./code/kap4_db2.py) (./code/kap4_db6.py [69]) (./code/kap5_sinus.py [70]) (./code/kap5_signal.py [71]) (./code/kap5_koeffizienten.py [72]) (./code/kap5_koeffizienten_Y.py [73]) (./code/kap5_entrauscht.py [74]) (./code/kap6_verfahren.py [75]) (./code/kap6_abb_muster.py) (./code/kap6_abb_datensaetze.py [76]) (./code/kap6_herzfrequenz.py) (./code/kap6_abb_vergleich.py [77]) (./code/kap6_test.py [78] [79]) (./code/kap6_abb_testsignal.py) (./code/kap6_abb_test.py [80]) (./code/kap6_abb_test_schlag.py) (./code/kap6_abb_test_fehler.py [81]) (./code/kap6_abb_zerlegung.py [82]) (./august.bbl [83]
 chapter without number
-[80
+[84
 
 
-]) [81] (./august.aux)
+]) [85] (./august.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 43041 strings out of 467525
- 963079 string characters out of 5418982
- 2325174 words of memory out of 5000000
- 70193 multiletter control sequences out of 15000+600000
+ 43029 strings out of 467525
+ 963738 string characters out of 5418982
+ 2273608 words of memory out of 5000000
+ 70205 multiletter control sequences out of 15000+600000
  659000 words of font info for 119 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,19n,107p,11270b,2251s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1728.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on august.pdf (84 pages, 2648397 bytes).
+Output written on august.pdf (88 pages, 2760624 bytes).
 PDF statistics:
- 3299 PDF objects out of 3580 (max. 8388607)
- 2737 compressed objects within 28 object streams
- 1078 named destinations out of 1200 (max. 500000)
- 594 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 3551 PDF objects out of 3580 (max. 8388607)
+ 2843 compressed objects within 29 object streams
+ 1057 named destinations out of 1200 (max. 500000)
+ 614 words of extra memory for PDF output out of 10000 (max. 10000000)
 
