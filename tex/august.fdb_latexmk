@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex august"] 1792938421.52559 "august.aux" "august.bbl" "august" 1792938480.5873 0
+["bibtex august"] 1793120530.24751 "august.aux" "august.bbl" "august" 1793120533.7415 0
   "./literature.bib" 1792425527.22435 8596 59eb3fe2b76fe6bf580e08e1e9bbc7b5 ""
   "/usr/local/texlive/2026/texmf-dist/bibtex/bst/base/alpha.bst" 1292289607 23907 a5f93555796fb564b924339521f10a7c ""
-  "august.aux" 1792938480.2873 75110 0dcd0e899ae489f1dd376de3e3b7fc2e "pdflatex"
+  "august.aux" 1793120533.46537 75599 79f736000a8ddfef9fe19f5bf5f3102e "pdflatex"
   (generated)
   "august.bbl"
   "august.blg"
   (rewritten before read)
-["pdflatex"] 1792938476.96341 "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" "august.pdf" "august" 1792938480.5875 0
-  "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" 1792938476.78515 259012 96874256bc696e14a8e5897a98c4159f ""
+["pdflatex"] 1793120530.33949 "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" "august.pdf" "august" 1793120533.74169 0
+  "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" 1793120526.39342 202683 c27e7c8864760b2c73aa243f58662adc ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -85,12 +85,9 @@
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1248133631 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb" 1248133631 32442 c975af247b6702f7ca0c299af3616b80 ""
-  "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb" 1248133631 30212 b6aafa449db0097a6b9b890f66741063 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb" 1248133631 31764 459c573c03a4949a528c2cc7f557e217 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb" 1248133631 33366 60462f3d16c3d0f024f1f856e64b09cd ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
-  "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb" 1248133631 35309 940e81a5b9e04201a07e8b33a3ae6e64 ""
-  "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi0800.pfb" 1215737283 106155 4e16f416d5fdb93b4f46066a1e2489e8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb" 1215737283 103607 8dec125a771685406ae21998f7cfb6f2 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1095.pfb" 1215737283 106965 72348192f7f7f7c44b4558f2996b4879 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb" 1215737283 95441 e322369dec2b43bb317c506a4a44deaa ""
@@ -329,10 +326,10 @@
   "abbildungen/abb6_7_zerlegung_f.pdf" 1792937376.60026 31796 ddec21c34de433f78d151c17c5cbf5ec ""
   "abbildungen/abb6_7_zerlegung_fhat.pdf" 1792937384.59189 30163 f0e448aad7acb526f634017daf5f6eab ""
   "abbildungen/bsp_5.5.pdf" 1791281505.014 28138 ca4b9aa0a14cb627d8a578e8685e7389 ""
-  "august.aux" 1792938480.2873 75110 0dcd0e899ae489f1dd376de3e3b7fc2e "pdflatex"
-  "august.bbl" 1792938421.69354 5547 3cd2838689d246f1b29bbb21e41ee48f "bibtex august"
-  "august.tex" 1792938476.78515 259012 96874256bc696e14a8e5897a98c4159f ""
-  "august.toc" 1792938480.29573 7677 00079146760afb5b9abf0c661a59c2bc "pdflatex"
+  "august.aux" 1793120533.46537 75599 79f736000a8ddfef9fe19f5bf5f3102e "pdflatex"
+  "august.bbl" 1793120530.33616 5547 3cd2838689d246f1b29bbb21e41ee48f "bibtex august"
+  "august.tex" 1793120526.39342 202683 c27e7c8864760b2c73aa243f58662adc ""
+  "august.toc" 1793120533.47338 7767 3e66accda35469618fe1e25f805efc8c "pdflatex"
   "code/BeispielCWT.py" 1791282387.20013 2475 21aecf9df72b888e838f56d1b3cd2c8b ""
   "code/kap4_db2.py" 1791289382.93161 612 f24d56d1df8ebe2f13f67d9bc4e5feed ""
   "code/kap4_db6.py" 1791900291.94706 706 4b8d4d1a6addb4c8ea00051d62e7151a ""

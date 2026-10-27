@@ -15,74 +15,75 @@
 \contentsline {section}{\numberline {2.6}Grundbegriffe der Wahrscheinlichkeitsrechnung}{5}{section.2.6}%
 \contentsline {chapter}{\numberline {3}Von der kontinuierlichen Wavelet-Transformation zur Multiskalenanalyse}{6}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Die kontinuierliche Wavelet-Transformation}{6}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Wavelets und die Zulässigkeitsbedingung}{7}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Die Wavelet-Familie und die Transformation}{9}{subsection.3.1.2}%
-\contentsline {paragraph}{\nonumberline Fourier-Transformierte.}{10}{paragraph*.6}%
-\contentsline {paragraph}{\nonumberline Wavelet-Transformierte.}{12}{paragraph*.8}%
-\contentsline {subsection}{\numberline {3.1.3}Die Plancherel-Formel}{13}{subsection.3.1.3}%
-\contentsline {section}{\numberline {3.2}Das dyadische Gitter und die Multiskalenanalyse}{16}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Die Axiome}{17}{subsection.3.2.1}%
-\contentsline {section}{\numberline {3.3}Skalierungsfunktion und Orthonormalbasis der Räume $V_j$}{19}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Die Orthonormalbasis auf allen Skalen}{20}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Die Approximationsoperatoren}{20}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Detailräume $W_j$ und die Zerlegung von $L^2(\mathbb {R})$}{21}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Die Wavelet-Basis}{22}{subsection.3.4.1}%
-\contentsline {chapter}{\numberline {4}Konstruktion der diskreten Wavelet-Transformation}{24}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Die Skalierungsgleichung}{24}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Filterkoeffizienten: Tiefpass und Hochpass}{25}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Bedingungen im Fourier-Bereich}{27}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Der Mallat-Algorithmus}{28}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Daubechies-Wavelets}{30}{section.4.5}%
-\contentsline {chapter}{\numberline {5}Entrauschung durch Thresholding}{34}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Rauschmodell und diskrete Wavelet-Transformation}{34}{section.5.1}%
-\contentsline {paragraph}{\nonumberline Das Modell.}{34}{paragraph*.17}%
-\contentsline {paragraph}{\nonumberline Die DWT eines endlichen Signals.}{35}{paragraph*.18}%
-\contentsline {paragraph}{\nonumberline Die DWT als orthogonale Matrix.}{36}{paragraph*.19}%
-\contentsline {paragraph}{\nonumberline Was mit dem Rauschen geschieht.}{36}{paragraph*.20}%
-\contentsline {section}{\numberline {5.2}Diagonale Schätzer und Thresholding}{37}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Die Wahl der Schwelle}{42}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Schätzung der Rauschstärke}{43}{section.5.4}%
-\contentsline {paragraph}{\nonumberline Das vollständige Verfahren.}{43}{paragraph*.26}%
-\contentsline {chapter}{\numberline {6}Anwendung: Entrauschung von EKG-Signalen}{46}{chapter.6}%
-\contentsline {section}{\numberline {6.1}EKG-Signale und ihre Störquellen}{46}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Die Datensätze}{47}{section.6.2}%
-\contentsline {paragraph}{\nonumberline Aufzeichnung und Digitalisierung.}{47}{paragraph*.31}%
-\contentsline {paragraph}{\nonumberline Annotationen.}{47}{paragraph*.32}%
-\contentsline {paragraph}{\nonumberline Datensätze 100 und 103.}{48}{paragraph*.33}%
-\contentsline {paragraph}{\nonumberline Länge.}{49}{paragraph*.35}%
-\contentsline {section}{\numberline {6.3}Skalen als Frequenzbänder}{49}{section.6.3}%
-\contentsline {paragraph}{\nonumberline Höchste Frequenz.}{49}{paragraph*.36}%
-\contentsline {paragraph}{\nonumberline Halbierung des Bandes.}{49}{paragraph*.37}%
-\contentsline {paragraph}{\nonumberline Unsere Daten.}{50}{paragraph*.38}%
-\contentsline {section}{\numberline {6.4}Das Verfahren}{50}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Modell und Ein-Schritt-Verfahren}{50}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Tiefe $J$ für die Drift}{52}{subsection.6.4.2}%
-\contentsline {paragraph}{\nonumberline Unsere Daten.}{52}{paragraph*.40}%
-\contentsline {subsection}{\numberline {6.4.3}Anzahl $J_S$ der geschwellten Stufen}{52}{subsection.6.4.3}%
-\contentsline {subsection}{\numberline {6.4.4}Schwelle}{53}{subsection.6.4.4}%
-\contentsline {paragraph}{\nonumberline Zusammenfassung.}{54}{paragraph*.41}%
-\contentsline {section}{\numberline {6.5}Test an einem künstlichen EKG}{54}{section.6.5}%
-\contentsline {paragraph}{\nonumberline Gütema\ss .}{55}{paragraph*.43}%
-\contentsline {paragraph}{\nonumberline Ergebnis.}{57}{paragraph*.51}%
-\contentsline {section}{\numberline {6.6}Anwendung auf die Datensätze 100 und 103}{61}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Diskussion}{61}{section.6.7}%
-\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{64}{chapter.7}%
+\contentsline {subsection}{\numberline {3.1.1}Wavelets und die Zulässigkeitsbedingung}{6}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Die Wavelet-Familie und die Transformation}{8}{subsection.3.1.2}%
+\contentsline {paragraph}{\nonumberline Fourier-Transformierte.}{9}{paragraph*.6}%
+\contentsline {paragraph}{\nonumberline Wavelet-Transformierte.}{11}{paragraph*.8}%
+\contentsline {subsection}{\numberline {3.1.3}Die Plancherel-Formel}{12}{subsection.3.1.3}%
+\contentsline {section}{\numberline {3.2}Das dyadische Gitter und die Multiskalenanalyse}{12}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Die Axiome}{13}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}Skalierungsfunktion und Orthonormalbasis der Räume $V_j$}{15}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Die Orthonormalbasis auf allen Skalen}{16}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Die Approximationsoperatoren}{16}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Detailräume $W_j$ und die Zerlegung von $L^2(\mathbb {R})$}{17}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Die Wavelet-Basis}{18}{subsection.3.4.1}%
+\contentsline {chapter}{\numberline {4}Konstruktion der diskreten Wavelet-Transformation}{19}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Die Skalierungsgleichung}{19}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Filterkoeffizienten: Tiefpass und Hochpass}{20}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Bedingungen im Fourier-Bereich}{22}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Der Mallat-Algorithmus}{23}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Daubechies-Wavelets}{25}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Entrauschung durch Thresholding}{29}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Rauschmodell und diskrete Wavelet-Transformation}{29}{section.5.1}%
+\contentsline {paragraph}{\nonumberline Das Modell.}{29}{paragraph*.17}%
+\contentsline {paragraph}{\nonumberline Die DWT eines endlichen Signals.}{30}{paragraph*.18}%
+\contentsline {paragraph}{\nonumberline Die DWT als orthogonale Matrix.}{31}{paragraph*.19}%
+\contentsline {paragraph}{\nonumberline Was mit dem Rauschen geschieht.}{31}{paragraph*.20}%
+\contentsline {section}{\numberline {5.2}Diagonale Schätzer und Thresholding}{32}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Die Wahl der Schwelle}{37}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Schätzung der Rauschstärke}{38}{section.5.4}%
+\contentsline {paragraph}{\nonumberline Das vollständige Verfahren.}{38}{paragraph*.26}%
+\contentsline {chapter}{\numberline {6}Anwendung: Entrauschung von EKG-Signalen}{41}{chapter.6}%
+\contentsline {section}{\numberline {6.1}EKG-Signale und ihre Störquellen}{41}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Die Datensätze}{42}{section.6.2}%
+\contentsline {paragraph}{\nonumberline Aufzeichnung und Digitalisierung.}{42}{paragraph*.31}%
+\contentsline {paragraph}{\nonumberline Annotationen.}{42}{paragraph*.32}%
+\contentsline {paragraph}{\nonumberline Datensätze 100 und 103.}{43}{paragraph*.33}%
+\contentsline {paragraph}{\nonumberline Länge.}{44}{paragraph*.35}%
+\contentsline {section}{\numberline {6.3}Skalen als Frequenzbänder}{44}{section.6.3}%
+\contentsline {paragraph}{\nonumberline Höchste Frequenz.}{44}{paragraph*.36}%
+\contentsline {paragraph}{\nonumberline Halbierung des Bandes.}{44}{paragraph*.37}%
+\contentsline {paragraph}{\nonumberline Unsere Daten.}{45}{paragraph*.38}%
+\contentsline {section}{\numberline {6.4}Das Verfahren}{45}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Modell und Ein-Schritt-Verfahren}{45}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Tiefe $J$ für die Drift}{47}{subsection.6.4.2}%
+\contentsline {paragraph}{\nonumberline Unsere Daten.}{47}{paragraph*.40}%
+\contentsline {subsection}{\numberline {6.4.3}Anzahl $J_S$ der geschwellten Stufen}{47}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.4}Schwelle}{48}{subsection.6.4.4}%
+\contentsline {paragraph}{\nonumberline Zusammenfassung.}{49}{paragraph*.41}%
+\contentsline {section}{\numberline {6.5}Test an einem künstlichen EKG}{49}{section.6.5}%
+\contentsline {paragraph}{\nonumberline Gütema\ss .}{50}{paragraph*.43}%
+\contentsline {paragraph}{\nonumberline Ergebnis.}{52}{paragraph*.51}%
+\contentsline {section}{\numberline {6.6}Anwendung auf die Datensätze 100 und 103}{56}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Diskussion}{56}{section.6.7}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{59}{chapter.7}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{65}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Fourier-Transformierte des Testsignals}{65}{section.A.1}%
-\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{65}{paragraph*.53}%
-\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{66}{paragraph*.54}%
-\contentsline {paragraph}{\nonumberline Die Ausnahmestellen.}{66}{paragraph*.55}%
-\contentsline {section}{\numberline {A.2}Stammfunktion des Testsignals}{66}{section.A.2}%
-\contentsline {chapter}{\numberline {B}Python-Code}{67}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{67}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{69}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{69}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{70}{section.B.4}%
-\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{71}{section.B.5}%
-\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{72}{section.B.6}%
-\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{73}{section.B.7}%
-\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{74}{section.B.8}%
-\contentsline {section}{\numberline {B.9}Anwendung auf EKG-Signale}{75}{section.B.9}%
-\contentsline {chapter}{\nonumberline Literaturverzeichnis}{84}{chapter*.56}%
+\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{60}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Zulässigkeitskonstante des Haar-Wavelets}{60}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Fourier-Transformierte des Testsignals}{60}{section.A.2}%
+\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{60}{paragraph*.53}%
+\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{61}{paragraph*.54}%
+\contentsline {paragraph}{\nonumberline Ergebnis.}{61}{paragraph*.55}%
+\contentsline {section}{\numberline {A.3}Stammfunktion des Testsignals}{61}{section.A.3}%
+\contentsline {chapter}{\numberline {B}Python-Code}{63}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{63}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{65}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{65}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{66}{section.B.4}%
+\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{67}{section.B.5}%
+\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{68}{section.B.6}%
+\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{69}{section.B.7}%
+\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{70}{section.B.8}%
+\contentsline {section}{\numberline {B.9}Anwendung auf EKG-Signale}{71}{section.B.9}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{80}{chapter*.56}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

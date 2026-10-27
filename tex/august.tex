@@ -372,6 +372,21 @@ und damit Energie — der Grund, warum Rauschen unter der DWT seine Statistik be
    $T_{b'}D_{a'}T_{b}D_a = T_{b'+a'b}D_{aa'}$ 
   \end{itemize}
 }
+
+\begin{Definition}[Isometrie, unitärer Operator, vgl.\ {\cite[Def.~27.6, Def.~27.7]{serov}}] % S. 282
+\label{def:isometrie}
+Seien $\mathcal H_1$ und $\mathcal H_2$ Hilberträume. Eine lineare Abbildung
+$U\colon \mathcal H_1 \to \mathcal H_2$ hei\ss{}t Isometrie, wenn
+$\norm{Ux} = \norm{x}$ für alle $x \in \mathcal H_1$ gilt. Eine surjektive
+Isometrie hei\ss{}t unitär.
+\end{Definition}
+ 
+Eine Isometrie erhält auch Skalarprodukte, also
+$\scal{Ux}{Uy} = \scal{x}{y}$ für alle $x,y$ \cite[Übung~27.2]{serov}. % S. 282
+Serov formuliert die Definition für $\mathcal H_1 = \mathcal H_2$. Wir
+brauchen sie auch für verschiedene Räume, etwa für die Abbildung von $\LZwei$
+in den Bildraum der Wavelet-Transformation (Satz~\ref{satz:plancherel-cwt}).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fourier-Transformation und Satz von Plancherel}
 \label{sec:fourier-plancherel}
@@ -465,116 +480,44 @@ sind unabhängig.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Von der kontinuierlichen Wavelet-Transformation zur Multiskalenanalyse}
 \label{chapter:mra}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\anmerkung{Die kontinuierliche Wavelet-Transformation wird in diesem Kapitel nur so weit
-%entwickelt, dass sichtbar wird, warum man sie diskretisieren muss.
-%Zielpunkt des Kapitels ist die Multiskalenanalyse.}
-
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Die kontinuierliche Wavelet-Transformation}
 \label{sec:cwt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\anmerkung{Definition der CWT über Verschiebung und Skalierung eines Mutter-Wavelets;
-%die Zulässigkeitsbedingung sichert die Umkehrbarkeit.}
-%\quellen{
-%  \begin{itemize}
-%    \item LMR, Definition 1.1.1 und Beispiel (1), S. 18--19 [bestätigt] -- Haar-Wavelet,
-%    $C_\psi=2\ln2$, $\lvert\hat\psi\rvert$ gerade, Maximum bei $\omega_0=\pm4{,}6622$;
-%    notwendige Bedingung $\int\psi=0$ schon für $\psi\in L^1$ (S. 18)
-%    \item LMR, Satz 1.1.8 S. 18 ff. [geschätzt]
-%    \item LMR, Bem. 1.3.4, S. 32 [bestätigt]; Kap. 1.3.2, S. 36 f. [bestätigt]
-%    \item Blatter, Kap. 1.2, S. 7 [bestätigt] -- jeder Fourier-Koeffizient trägt Information
-%    aus dem ganzen Definitionsbereich; Kap. 1.3, S. 8; Kap. 2.3 (Heisenberg), S. 43 ff.
-%    \item Blatter, Satz (3.1), S. 54 [bestätigt] -- Voraussetzung $t\psi\in L^1$,
-%    $\psi\in L^1$ folgt von selbst
-%    \item Blatter, Kap. 3.1, Gl. (4)--(6), S. 55--56 [bestätigt] -- zersägte Ebene,
-%    $\norm{\psi_{a,b}}=1$
-%    \item Blatter, Kap. 3.2, Gl. (2) und Satz (3.3), S. 62 [bestätigt]; Satz (3.4), S. 63--64
-%    [bestätigt] -- Halbebene $a>0$ bei reellem $\psi$
-%    \item Blatter, Kap. 3.3, Gl. (2) und (4), schwacher Sinn, S. 67--68 [bestätigt]
-%    \item Blatter, Kap. 3.4, S. 69--70 [bestätigt] -- $\psi_{a,b}$ linear abhängig,
-%    Bildraum $U$ echter Teilraum von $\mathcal H$, Satz (3.9) reproduzierender Kern
-%    \item Blatter, Kap. 4.1, S. 79 [bestätigt] -- Bildraum höchstens $n$-dimensional
-%    \item Serov, Theorem 12.1 [bestätigt] -- Riemann--Lebesgue, Stetigkeit von $\hat f$
-%    \item Rebstadt, Kap. 2.3.1, S. 16--20 [bestätigt] -- tief- vs.\ hochfrequente
-%    EKG-Anteile, QRS-Fensterbreite $100$\,ms
-%    \item Mallat, Kap. 11.2 (insb. 11.2.2 Thresholding) [bestätigt]
-%    \item Brunton--Kutz, Figure 2.23 [NICHT geprüft -- Nummer und Bib-Eintrag prüfen]
-%  \end{itemize}
-%}
-
-% ============================================================
-% Abschnitt 3.1 -- Die kontinuierliche Wavelet-Transformation
-% Bausteine 1-2: Motivation, Zulaessigkeit, Charakterisierung
-% Konvention: Blatter (Konstante ausserhalb der Definition, ||psi||=1)
-% Fourier-Konvention: \hat f(\xi) = (2\pi)^{-1/2} \int f(t) e^{-i\xi t} dt
-% ============================================================
-
-Die Darstellung dieses Abschnitts folgt im Wesentlichen \cite[Kap.~3.1--3.3]{blatter}; ergänzend, insbesondere zum Abklingverhalten und zu den
-Approximationseigenschaften, wird \cite[Kap.~1.1]{lmr}
-herangezogen. Es gilt durchgehend die Fourier-Konvention aus
-Bemerkung~\ref{bem:fourier-konvention}.
-
-Die in Kapitel~\ref{chapter:grundlagen} entwickelte Fourier-Transformation
-zerlegt ein Signal in reine Schwingungen $e^{i\omega t}$ und misst mit
-$\hat f(\omega)$, wie stark jede Frequenz $\omega$ darin vertreten ist. Sie
-liefert damit welche Frequenzen vorkommen und in welcher Stärke --
-nicht aber, an welcher Stelle des Signals. 
-%Das ist keine Ungenauigkeit der
-%Darstellung, sondern strukturell bedingt: In das Integral geht $f$ auf ganz $\R$
-%ein, jeder einzelne Wert $\hat f(\omega)$ hängt also vom gesamten Signalverlauf
-%ab. Verschiebt man das Signal zeitlich, so ändert sich nach der
-%Verschiebungsregel $\widehat{f(\,\cdot\,-b)} = e^{-i\omega b}\,\hat f$ nur die
-%Phase; das Betragsspektrum $\lvert\hat f\rvert$ bleibt unverändert
-%\cite[Anhang]{lmr}. Die zeitliche Lage ist damit nicht verloren, aber sie steckt
-%vollständig im Phasenfaktor -- und dort über alle Frequenzen verteilt.
-
-Für ein EKG-Signal ist das eine ungünstige Ausgangslage. Der QRS-Komplex ist
-zeitlich kurz und damit breitbandig, das hei\ss t, seine Energie verteilt sich
-über einen weiten Frequenzbereich; P- und T-Welle sind zeitlich ausgedehnt
-und schmalbandig, ihre Energie konzentriert sich auf wenige tiefe Frequenzen
-\cite[Kap.~2.3.1]{rebstadt}. Eine geeignete Analyse muss beide Anteile
-gleichzeitig auflösen können.
-
-Die Fourier-Transformation kann das prinzipiell nicht leisten: Ihre Analysefunktionen
-$e^{i\omega t}$ haben auf ganz $\R$ konstanten Betrag, sie zerlegt also ausschlie\ss{}lich
-entlang der Frequenzachse \cite[Bem.~1.3.4]{lmr}. Der zeitlich kurze QRS-Komplex wird dabei über das gesamte
-Spektrum verschmiert und liegt in keinem einzelnen Koeffizienten von den gleichzeitig
-vorhandenen Anteilen der P- und T-Welle getrennt vor \cite[Kap.~1.2--1.3]{blatter}. % seite 7--8
-Da die in Kapitel~\ref{chapter:denoising} betrachteten Schwellenwertverfahren koeffizientenweise arbeiten, trifft ein Eingriff, der
-Rauschen bei einer Frequenz entfernt, damit unvermeidlich das Signal zu allen
-Zeitpunkten. 
-
-Die in Abschnitt~\ref{sec:wft} beschriebene gefensterte Fourier-Transformation
-löst dieses Problem nur teilweise. Sie betrachtet nicht mehr das ganze Signal
-auf einmal, sondern schneidet mit einem Fenster jeweils einen Ausschnitt heraus
-und bestimmt dessen Frequenzgehalt. Damit ist bekannt, wann welche Frequenzen
-auftreten -- allerdings nur so genau, wie das Fenster breit ist. Da diese Breite
-für alle Frequenzen dieselbe ist, muss man sich von vornherein festlegen: Ein
-Fenster, das schmal genug ist, um den QRS-Komplex zu isolieren, enthält zu
-wenige Perioden der T-Welle, um deren niedrige Frequenzanteile aufzulösen -- und
-umgekehrt. Dass sich Zeit- und Frequenzauflösung dabei nicht gleichzeitig
-beliebig verbessern lassen, ist der Gehalt der Heisenbergschen Unschärferelation
-(Abschnitt~\ref{sec:wft}); vgl.\ \cite[Kap.~2.3]{blatter} und
-\cite[Kap.~1.3.1]{lmr}.
-
+ 
+Die Darstellung folgt \cite[Kap.~3.1--3.3]{blatter} % S. 54--68
+und ergänzend \cite[Kap.~1.1]{lmr}. % S. 18--19
+Es gilt die Fourier-Konvention aus Bemerkung~\ref{bem:fourier-konvention}.
+ 
+Die Fourier-Transformation misst mit $\hat f(\omega)$, wie stark die Frequenz
+$\omega$ in $f$ vertreten ist. Ihre Analysefunktionen $e^{i\omega t}$ haben auf
+ganz $\R$ konstanten Betrag. Sie zerlegt daher nur entlang der Frequenzachse
+\cite[Bem.~1.3.4]{lmr}. % S. 32
+Wann eine Frequenz auftritt, ist an $\lvert\hat f\rvert$ nicht abzulesen
+\cite[Kap.~1.2--1.3]{blatter}. % S. 7--8
+ 
+Beim EKG ist das ungünstig. Der QRS-Komplex ist kurz und breitbandig. P- und
+T-Welle sind lang und schmalbandig \cite[Kap.~2.3.1]{rebstadt}. % S. 16--17
+Eine geeignete Analyse muss beide Anteile zugleich auflösen.
+ 
+Die gefensterte Fourier-Transformation (Abschnitt~\ref{sec:wft}) bestimmt den
+Frequenzgehalt eines Ausschnitts. Die Fensterbreite ist dabei für alle
+Frequenzen gleich. Zeit- und Frequenzauflösung lassen sich nach der
+Heisenbergschen Unschärferelation nicht zugleich beliebig verbessern
+\cite[Kap.~2.3]{blatter}, % S. 43--46
+\cite[Kap.~1.3.1]{lmr}. % S. 30--35
+Die Wavelet-Transformation wählt die Fensterbreite deshalb abhängig von der
+Frequenz. Hohe Frequenzen werden mit kurzen Fenstern untersucht, tiefe mit
+langen \cite[Kap.~1.3.2]{lmr}. % S. 36--37
+Abbildung~\ref{fig:zeit-frequenz-kachelung} zeigt das schematisch.
+ 
 \anmerkung{wenn heisenbergunschärfe geschirieben dann richtigen verweis einfügen...}
-
-Die Wavelet-Transformation macht die Fensterbreite deshalb von der Frequenz
-abhängig, statt sie fest zu wählen. Hohe Frequenzen werden mit kurzen, tiefe
-mit langen Fenstern untersucht -- schnelle Vorgänge also zeitlich genau,
-langsame dafür in der Frequenz genau \cite[Kap.~1.3.2]{lmr}.
-
-Abbildung~\ref{fig:zeit-frequenz-kachelung} stellt die Zeit-Frequenz-Auflösung
-der drei Transformationen einander gegenüber. Jede Kachel steht darin für die
-kleinste Zelle der Zeit-Frequenz-Ebene, die von der jeweiligen Transformation
-noch getrennt aufgelöst wird.
-
+ 
 \begin{figure}[htbp]
   \centering
   \begin{tikzpicture}[
@@ -584,14 +527,10 @@ noch getrennt aufgelöst wird.
       titel/.style={font=\small},
       beschriftung/.style={font=\footnotesize}
     ]
-    \def\W{3.4}   % Breite eines Panels
-    \def\H{3.4}   % Höhe eines Panels
-    \def\D{5.0}   % horizontaler Abstand der Panel-Ursprünge
-    \def\TY{4.9}  % gemeinsame Oberkante der Panel-Titel (= \H + 1.5)
-    % Jede Kachel hat in allen drei Panels den Flächeninhalt \W*\H/16.
-
-    % ---------- (a) Fourier-Transformation ----------
-    % 16 Kacheln der Breite \W und der Höhe \H/16
+    \def\W{3.4}
+    \def\H{3.4}
+    \def\D{5.0}
+    \def\TY{4.9}
     \begin{scope}[shift={(0,0)}]
       \foreach \i in {0,...,15}{
         \draw[kachel] (0,\i*\H/16) rectangle (\W,{(\i+1)*\H/16});
@@ -602,9 +541,6 @@ noch getrennt aufgelöst wird.
       \node[titel, anchor=north, align=center, text width=3.6cm] at (\W/2,\TY)
         {(a) Fourier-\\Transformation};
     \end{scope}
-
-    % ---------- (b) gefensterte Fourier-Transformation ----------
-    % 16 Kacheln der Breite \W/4 und der Höhe \H/4
     \begin{scope}[shift={(\D,0)}]
       \foreach \i in {0,...,3}{
         \foreach \j in {0,...,3}{
@@ -617,15 +553,6 @@ noch getrennt aufgelöst wird.
       \node[titel, anchor=north, align=center, text width=3.6cm] at (\W/2,\TY)
         {(b) Gefensterte\\Fourier-Transformation};
     \end{scope}
-
-    % ---------- (c) Wavelet-Transformation ----------
-    % Oktavbänder von unten nach oben:
-    %   [0,\H/16]      1 Kachel  der Breite \W
-    %   [\H/16,\H/8]   1 Kachel  der Breite \W     (gröbste Skala: Approximation + Detail)
-    %   [\H/8,\H/4]    2 Kacheln der Breite \W/2
-    %   [\H/4,\H/2]    4 Kacheln der Breite \W/4
-    %   [\H/2,\H]      8 Kacheln der Breite \W/8
-    % Summe: 16 Kacheln, jede vom Flächeninhalt \W*\H/16.
     \begin{scope}[shift={(2*\D,0)}]
       \draw[kachel] (0,0)     rectangle (\W,\H/16);
       \draw[kachel] (0,\H/16) rectangle (\W,\H/8);
@@ -645,105 +572,49 @@ noch getrennt aufgelöst wird.
         {(c) Wavelet-\\Transformation};
     \end{scope}
   \end{tikzpicture}
-  \caption[Zeit-Frequenz-Auflösung im Vergleich]{Zeit-Frequenz-Auflösung im
-  Vergleich. Jede Kachel steht für die kleinste Zelle, die von der jeweiligen
-  Transformation noch getrennt aufgelöst wird. Alle Kacheln besitzen denselben Flächeninhalt; die Transformationen unterscheiden sich
-  allein in deren Zuschnitt. In Anlehnung an \cite[Figure 2.23]{bruntonkutz}.}
+  \caption[Zeit-Frequenz-Auflösung im Vergleich]{Schematische
+  Zeit-Frequenz-Auflösung. Jede Kachel steht für die kleinste Zelle, die die
+  Transformation noch trennt. Alle Kacheln haben denselben Flächeninhalt. In (c)
+  sind die Kacheln bei hohen Frequenzen schmal und bei tiefen breit. Dieselbe
+  Einteilung in Oktavbänder tritt in Abschnitt~\ref{sec:frequenzbaender} bei der
+  diskreten Transformation auf. In Anlehnung an \cite[Figure 2.23]{bruntonkutz}.}
   \label{fig:zeit-frequenz-kachelung}
 \end{figure}
-
-Die drei Bilder lassen sich nacheinander lesen. In (a) ist jede Kachel so breit
-wie das ganze Signal: Die Frequenz wird so genau bestimmt, wie es die
-Signallänge zulässt, ihr Zeitpunkt überhaupt nicht. In (b) zerfällt die Ebene in ein gleichmä\ss iges Raster; Zeit-
-und Frequenzauflösung sind nun beide endlich, aber auf allen Frequenzen
-dieselbe -- die Kachelform wird mit dem Fenster einmal festgelegt und gilt
-überall. In (c) ändert sie sich dagegen mit der Höhe: Oben, bei hohen
-Frequenzen, sind die Kacheln schmal und hoch, unten breit und flach.
-
-Entscheidend ist, dass der Flächeninhalt dabei konstant bleibt. Auflösung lässt
-sich nicht gewinnen, sondern nur umverteilen; die Wavelet-Transformation
-verteilt sie dorthin, wo ein EKG sie braucht -- Zeitauflösung beim kurzen,
-hochfrequenten QRS-Komplex, Frequenzauflösung bei der langen, tieffrequenten
-T-Welle. 
-%Die untere Kachelreihe in (c) deutet zugleich voraus, was in
-%Abschnitt~\ref{sec:detailraeume} als Zerlegung in eine grobe Approximation und
-%die Detailanteile aller feineren Skalen wiederkehrt.
-
-Damit ist geklärt, welche Eigenschaft die Wavelet-Transformation von den beiden
-zuvor betrachteten Verfahren unterscheidet. Zwei Fragen bleiben offen: Welche
-Funktionen $\psi$ sind überhaupt als Wavelet zugelassen, und wie ist die
-Transformation genau definiert? Die erste beantwortet der folgende Abschnitt,
-die zweite Abschnitt~\ref{subsec:wavelet-familie}.
-
+ 
 \subsection{Wavelets und die Zulässigkeitsbedingung}
 \label{subsec:zulaessigkeit}
-
-Ausgangspunkt ist eine einzige Funktion $\psi$, aus der die gesamte
-Wavelet-Familie durch Skalierung und Verschiebung hervorgeht.
-%(Definition~\ref{def:cwt})
-An $\psi$ ist eine
-Integralbedingung zu stellen; ihre Tragweite wird erst in
-Satz~\ref{satz:plancherel-cwt} vollständig sichtbar, wo sie sich als genau
-diejenige Bedingung erweist, unter der die Transformation umkehrbar ist.
-
+ 
 \anmerkung{davor auf jeden fall l2 norm definienren}
-\begin{Definition}[Wavelet, {\cite[Kap.~3.1, Bedingungen (1) und (2)]{blatter}}]
+ 
+\begin{Definition}[Wavelet, {\cite[Kap.~3.1, Bedingungen (1) und (2)]{blatter}}] % S. 54
 \label{def:wavelet}
-Eine Funktion $\psi \in \LZwei$ mit $\norm{\psi}_{\LZwei} = 1$ hei\ss t
+Eine Funktion $\psi \in \LZwei$ mit $\norm{\psi}_{\LZwei} = 1$ hei\ss{}t
 Mutter-Wavelet (kurz: Wavelet), falls sie die Zulässigkeitsbedingung
 \begin{equation}
 \label{eq:zulaessigkeit}
   C_\psi \;:=\; 2\pi \int_{\R^*} \frac{\lvert \hat\psi(\omega)\rvert^2}{\lvert\omega\rvert}\, d\omega \;<\; \infty
 \end{equation}
-erfüllt, wobei $\R^* := \R\setminus\{0\}$.
+erfüllt. Dabei ist $\R^* := \R\setminus\{0\}$.
 \end{Definition}
 
-Die Bedingung \eqref{eq:zulaessigkeit} ist abstrakt und für eine gegebene Funktion nicht unmittelbar sichtbar.
-Unter einer milden Abklingvoraussetzung lässt sie sich jedoch
-äquivalent durch eine Bedingung im Zeitbereich ersetzen, die unmittelbar
-überprüfbar ist und zugleich erklärt, warum die Bezeichnung
-Wavelet -- kleine Welle -- angemessen ist.
+Ob ein gegebenes $\psi$ die Bedingung \eqref{eq:zulaessigkeit} erfüllt, ist
+nicht direkt zu sehen \cite[Kap.~3.1]{blatter}. % S. 54
+Der folgende Satz führt sie auf eine einfache Bedingung im Zeitbereich zurück.
 
-\begin{Satz}[Charakterisierung der Zulässigkeit, {\cite[Satz~(3.1)]{blatter}}]
+\begin{Satz}[Charakterisierung der Zulässigkeit, {\cite[Satz~(3.1)]{blatter}}] % S. 54
 \label{satz:zulaessigkeit-mittelwert}
 Sei $\psi \in \LZwei$, $\psi \neq 0$, mit $\int_\R \lvert t\rvert\,\lvert\psi(t)\rvert\,dt < \infty$.
 Dann sind äquivalent:
 \begin{enumerate}
 \item[(i)] $C_\psi < \infty$,
-\item[(ii)] $\displaystyle\int_\R \psi(t)\,dt = 0$, gleichbedeutend mit $\hat\psi(0) = 0$.\footnote{Die
-  Gleichbedeutung ist die Fourier-Konvention aus Bemerkung~\ref{bem:fourier-konvention}
-  an der Stelle $\omega = 0$: Dort steht $\hat\psi(0) = (2\pi)^{-1/2}\int_\R \psi(t)\,dt$,
-  beide Formulierungen sagen also dasselbe. Der Punktwert ist dabei erklärt, weil
-  die Voraussetzung $\psi \in L^1(\R)$ erzwingt -- auf $\lvert t\rvert \le 1$ nach
-  Cauchy--Schwarz, auf $\lvert t\rvert > 1$ wegen
-  $\lvert\psi(t)\rvert \le \lvert t\rvert\,\lvert\psi(t)\rvert$ -- und $\hat\psi$ für
-  $L^1$-Funktionen stetig ist \cite[Satz~12.1]{serov}.}
+\item[(ii)] $\displaystyle\int_\R \psi(t)\,dt = 0$.
 \end{enumerate}
 \end{Satz}
- 
-Der Beweis findet sich bei \cite[Beweis zu Satz~(3.1)]{blatter} und wird hier
-nicht ausgeführt.
 
-%\anmerkung{AUSGELAGERT (\texttt{ausgelagert.tex}, Block~A1): der vollständig
-%ausgeführte Beweis über Cauchy--Schwarz, Riemann--Lebesgue und den Mittelwertsatz,
-%sowie die Bemerkung zur Schärfe der Abklingvoraussetzung. Der Beweis ist gut geführt,
-%aber die Zulässigkeitsbedingung geht in den Hauptsatz von Kapitel~\ref{chapter:denoising}
-%nicht ein -- sie motiviert nur. Rückholbar, falls am Ende Platz bleibt.}
-
-\begin{Bemerkung}
-\label{bem:welle}
-Jedes Wavelet $\psi \in L^1(\R)$ hat den Mittelwert null: $\hat\psi$ ist dann stetig,
-und das Integral in \eqref{eq:zulaessigkeit} kann nur für $\hat\psi(0) = 0$
-konvergieren \cite[Kap.~1.1]{lmr}. Sein Graph verläuft daher notwendig teils
-oberhalb, teils unterhalb der $t$-Achse, wie bei einer Welle
-\cite[Kap.~3.1]{blatter}. Die in den Anwendungen verwendeten Wavelets haben
-darüber hinaus kompakten Träger oder fallen schnell ab; erst zusammen damit
-ergibt sich das Bild einer zeitlich begrenzten, kleinen Welle.
-\end{Bemerkung}
-
-Das folgende Beispiel macht Definition~\ref{def:wavelet} und
-Satz~\ref{satz:zulaessigkeit-mittelwert} an der einfachsten möglichen Funktion
-konkret. %Es begleitet die Arbeit bis in Kapitel~\ref{chapter:anwendung}.
+Der Beweis steht bei \cite[Satz~(3.1)]{blatter}. % S. 54--55
+Ein Wavelet erfüllt also $\int_\R \psi(t)\,dt = 0$. Man sagt dafür auch, $\psi$
+habe Mittelwert null \cite[Kap.~3.1]{blatter}. % S. 54
+Sein Graph verläuft daher teils oberhalb, teils unterhalb der $t$-Achse.
 
 \begin{Beispiel}[Haar-Wavelet]
 \label{bsp:haar}
@@ -756,50 +627,33 @@ Die Funktion
     \phantom{-}0, & \text{sonst,}
   \end{cases}
 \]
-hat kompakten Träger, also $\int_\R \lvert t\rvert\,\lvert\psi^{\mathrm{H}}(t)\rvert\,dt<\infty$,
-und Mittelwert null, erfüllt also nach
-Satz~\ref{satz:zulaessigkeit-mittelwert} die Zulässigkeitsbedingung; wegen
-$\norm{\psi^{\mathrm{H}}}_{\LZwei} = 1$ ist sie ein Wavelet im Sinne von
-Definition~\ref{def:wavelet}. Ihre Fourier-Transformierte lässt sich mit der
-stetig nach $x = 0$ fortgesetzten Funktion
-\[
-  \operatorname{sinc}(x) \;:=\; \frac{\sin x}{x} \quad (x \neq 0),
-  \qquad \operatorname{sinc}(0) \;:=\; 1,
-\]
-geschlossen angeben als
+hat kompakten Träger. Daher ist
+$\int_\R \lvert t\rvert\,\lvert\psi^{\mathrm H}(t)\rvert\,dt < \infty$, und
+Satz~\ref{satz:zulaessigkeit-mittelwert} ist anwendbar. Wegen
+$\int_\R \psi^{\mathrm H}(t)\,dt = \tfrac12 - \tfrac12 = 0$ ist Bedingung (ii)
+erfüllt. Also ist $\psi^{\mathrm H}$ zulässig. Mit
+$\norm{\psi^{\mathrm H}}_{\LZwei} = 1$ ist $\psi^{\mathrm H}$ ein Wavelet im
+Sinne von Definition~\ref{def:wavelet}.
+
+Die Zulässigkeitskonstante lässt sich auch direkt berechnen. Mit
+$\operatorname{sinc}(x) := \sin(x)/x$ für $x \neq 0$ und
+$\operatorname{sinc}(0) := 1$ ist
 \begin{equation}
 \label{eq:haar-fourier}
   \widehat{\psi^{\mathrm{H}}}(\omega)
   \;=\; \frac{i}{\sqrt{2\pi}}\; e^{-i\omega/2}\,\sin(\omega/4)\,\operatorname{sinc}(\omega/4),
-  \qquad \omega \in \R.
+  \qquad \omega \in \R .
 \end{equation}
-Die Aussage von Satz~\ref{satz:zulaessigkeit-mittelwert} ist
-unmittelbar ablesbar: Der Faktor $\sin(\omega/4)$ verschwindet bei $\omega = 0$,
-also ist $\widehat{\psi^{\mathrm{H}}}(0) = 0$. Da $\psi^{\mathrm{H}}$ reellwertig ist, gilt au\ss erdem $\widehat{\psi^{\mathrm{H}}}(-\omega)=\overline{\widehat{\psi^{\mathrm{H}}}(\omega)}$, also ist $\lvert\widehat{\psi^{\mathrm{H}}}\rvert$ eine gerade Funktion.
-Wegen
-$\sin(\omega/4)\operatorname{sinc}(\omega/4) = 4\sin^{2}(\omega/4)/\omega$ für
-$\omega \neq 0$ ist
-$\lvert\widehat{\psi^{\mathrm{H}}}(\omega)\rvert^{2} = 16\sin^{4}(\omega/4)/(2\pi\omega^{2})$,
-und aus der Symmetrie des Integranden folgt
-\begin{align*}
-  C_{\psi^{\mathrm{H}}}
-  &= 2\pi \cdot 2 \int_0^\infty \frac{16\sin^{4}(\omega/4)}{2\pi\,\omega^{2}}\cdot\frac{d\omega}{\omega}
-   \;=\; 32\int_0^\infty \frac{\sin^{4}(\omega/4)}{\omega^{3}}\,d\omega \\[2pt]
-  &= 32\int_0^\infty \frac{\sin^{4}u}{(4u)^{3}}\,4\,du
-   \;=\; 2\int_0^\infty \frac{\sin^{4}u}{u^{3}}\,du
-   \;=\; 2\ln 2 ,
-\end{align*}
-wobei im vorletzten Schritt $u = \omega/4$ substituiert wurde; der Wert des
-letzten Integrals ist $\ln 2$.
-%\anmerkung{Der explizite Wert geht als Normierungskonstante in Korollar~\ref{kor:umkehrformel} ein und wird in Beispiel~\ref{bsp:plancherel-testsignal} benutzt.}
-Abbildung~\ref{fig:haar-wavelet} zeigt $\psi^{\mathrm{H}}$ und den Betrag ihrer
-Fourier-Transformierten \cite[Kap.~1.1, Beispiel~(1)]{lmr}.
+Einsetzen in \eqref{eq:zulaessigkeit} ergibt $C_{\psi^{\mathrm{H}}} = 2\ln 2$
+\cite[Kap.~1.1, Beispiel~(1)]{lmr} % S. 18--19
+(Rechnung in Anhang~\ref{anh:haar-konstante}).
+Abbildung~\ref{fig:haar-wavelet} zeigt $\psi^{\mathrm H}$ und
+$\lvert\widehat{\psi^{\mathrm H}}\rvert$.
 \end{Beispiel}
-
+ 
 \begin{figure}[htbp]
   \centering
   \begin{tikzpicture}
-    % ---------- (a) Zeitbereich ----------
     \begin{scope}[x=2.6cm, y=1.1cm]
       \draw[-latex, line width=0.5pt] (-0.5,0) -- (1.6,0) node[below right, font=\footnotesize] {$t$};
       \draw[-latex, line width=0.5pt] (0,-1.5) -- (0,1.6);
@@ -820,8 +674,6 @@ Fourier-Transformierten \cite[Kap.~1.1, Beispiel~(1)]{lmr}.
       \draw[uhh_blue, fill=white] (1,-1) circle (1.3pt);
       \node[font=\small, anchor=north] at (0.55,-1.9) {(a) $\psi^{\mathrm{H}}$};
     \end{scope}
-
-    % ---------- (b) Betrag der Fourier-Transformierten ----------
     \begin{scope}[shift={(8cm,-1.65cm)}]
       \begin{axis}[
           width=6.6cm, height=4.4cm,
@@ -838,145 +690,103 @@ Fourier-Transformierten \cite[Kap.~1.1, Beispiel~(1)]{lmr}.
         {(b) $\lvert\widehat{\psi^{\mathrm{H}}}\rvert$};
     \end{scope}
   \end{tikzpicture}
-  \caption[Das Haar-Wavelet]{Das Haar-Wavelet $\psi^{\mathrm{H}}$ im Zeitbereich (a)
-  und der Betrag seiner Fourier-Transformierten (b); $\omega_0 \approx 4{,}66$ bezeichnet die Lage des globalen Maximums, nach \cite[Kap.~1.1, Beispiel~(1)]{lmr}.}
-  %Der Mittelwert null ist in (a)
-  %an der Flächengleichheit der beiden Rechtecke ablesbar und äu\ss{}ert sich in (b) in
-  %der Nullstelle bei $\omega = 0$, nach \cite[Kap.~1.1, Beispiel~(1)]{lmr}.} 
-  %Das globale Maximum liegt bei
-  %$\omega_0 \approx \pm 4{,}6622$ \cite[Kap.~1.1, Beispiel~(1)]{lmr}; das langsame Abklingen
-  %$\lvert\widehat{\psi^{\mathrm{H}}}(\omega)\rvert = \mathcal{O}(\lvert\omega\rvert^{-1})$
-  %spiegelt die Unstetigkeit von $\psi^{\mathrm{H}}$ wider und ist der Grund, weshalb
-  %in Kapitel~\ref{chapter:dwt} glattere Wavelets konstruiert werden; in der
-  %Anwendung (Kapitel~\ref{chapter:anwendung}) tritt $\psi^{\mathrm{H}}$ nur noch
-  %als Vergleichsfall gegen diese an.}
+  \caption[Das Haar-Wavelet]{Das Haar-Wavelet $\psi^{\mathrm{H}}$ (a) und der
+  Betrag seiner Fourier-Transformierten (b). Das globale Maximum liegt bei
+  $\omega_0 \approx 4{,}66$ \cite[Kap.~1.1, Beispiel~(1)]{lmr}.} % S. 19
   \label{fig:haar-wavelet}
 \end{figure}
-
-%\anmerkung{AUSGELAGERT (Block~A2): das Beispiel Mexikanerhut und die Bemerkung, dass
-%die zulässigen Wavelets dicht in $\LZwei$ liegen. Das Haar-Wavelet genügt als Beispiel;
-%es ist zugleich dasjenige, das in Kapitel~\ref{chapter:dwt} wieder auftritt.}
-
+ 
 \subsection{Die Wavelet-Familie und die Transformation}
 \label{subsec:wavelet-familie}
  
-Wir wollen das feste Mutter-Wavelet nun skalieren und verschieben und
-dadurch eine Wavelet-Familie erhalten.
-%Der Normierungsfaktor
-%$\lvert a\rvert^{-1/2}$ ist dabei nicht willkürlich, sondern genau derjenige,
-%der die $\LZwei$-Norm über alle Skalen hinweg erhält.
- 
-\begin{Definition}[Wavelet-Familie und kontinuierliche Wavelet-Transformation, {\cite[Kap.~3.1, Gl.~(4)--(6)]{blatter}}] %seite 55 56
+\begin{Definition}[Wavelet-Familie und kontinuierliche Wavelet-Transformation, {\cite[Kap.~3.1, Gl.~(4)--(6)]{blatter}}] % S. 55--56
 \label{def:cwt}
 Sei $\psi$ ein Wavelet im Sinne von Definition~\ref{def:wavelet}. Für
-$(a,b) \in \R^* \times \R$ setzen wir
+$(a,b) \in \R^* \times \R$ sei
 \begin{equation}
 \label{eq:wavelet-familie}
   \psi_{a,b}(t) \;:=\; \frac{1}{\lvert a\rvert^{1/2}}\,\psi\!\left(\frac{t-b}{a}\right),
   \qquad t \in \R .
 \end{equation}
-Die kontinuierliche Wavelet-Transformation (CWT) von $f \in \LZwei$
-bezüglich $\psi$ ist die Funktion
+Die kontinuierliche Wavelet-Transformation (CWT) von $f \in \LZwei$ ist
 \begin{equation}
 \label{eq:cwt}
   W_\psi f \colon \R^*\times\R \to \C, \qquad
   W_\psi f(a,b) \;:=\; \scal{f}{\psi_{a,b}}
   \;=\; \frac{1}{\lvert a\rvert^{1/2}} \int_\R f(t)\,\overline{\psi\!\left(\frac{t-b}{a}\right)}\,dt .
 \end{equation}
-Die Menge $\R^*_\square := \R^*\times\R$, auf der $W_\psi f$ erklärt ist, hei\ss{}t
-die zersägte $(a,b)$-Ebene. Ist das zugrunde liegende Wavelet aus dem
-Zusammenhang klar, schreiben wir kurz $Wf$.
+Die Menge $\R^*_\square := \R^*\times\R$ hei\ss{}t zersägte $(a,b)$-Ebene. Ist
+$\psi$ aus dem Zusammenhang klar, schreiben wir kurz $Wf$.
 \end{Definition}
- 
-%\quellen{Blatter, Kap.~3.1, Gl.~(4) und (6), S.~55--56
-%\cite[S.~55--56]{blatter}; LMR, Gl.~(1.1.1) und Definition~1.1.1, S.~18
-%\cite[S.~18]{lmr}. In der Anwendungsliteratur findet sich dieselbe Definition
-%bei Aqil, Kap.~2, Gl.~(2), S.~55 \cite[S.~55]{aqil}.}
 
+%Der Wertebereich ist $\C$, weil Funktionen in $\LZwei$ komplexwertig sein
+%dürfen. Daher steht in \eqref{eq:cwt} die komplexe Konjugation. Sind $f$ und
+%$\psi$ reellwertig, so ist auch $W_\psi f$ reellwertig. Das gilt für alle
+%Signale und Wavelets in dieser Arbeit.
+ 
 \begin{Bemerkung}[Normierung der Familie]
 \label{bem:normierung}
-Die Substitution $t = as + b$ liefert
+Es gilt $\norm{\psi_{a,b}}_{\LZwei} = \norm{\psi}_{\LZwei} = 1$ für alle
+$(a,b)$. Einsetzen von \eqref{eq:wavelet-familie} und Quadrieren ergibt
 \[
   \norm{\psi_{a,b}}_{\LZwei}^2
-  \;=\; \frac{1}{\lvert a\rvert}\int_\R \Bigl\lvert\psi\!\left(\tfrac{t-b}{a}\right)\Bigr\rvert^2 dt
-  \;=\; \int_\R \lvert\psi(s)\rvert^2\,ds
-  \;=\; \norm{\psi}_{\LZwei}^2
+  \;=\; \int_\R \Bigl\lvert \lvert a\rvert^{-1/2}\,\psi\!\left(\tfrac{t-b}{a}\right)\Bigr\rvert^2 dt
+  \;=\; \frac{1}{\lvert a\rvert}\int_\R \Bigl\lvert\psi\!\left(\tfrac{t-b}{a}\right)\Bigr\rvert^2 dt .
 \]
-für alle $(a,b) \in \R^*\times\R$; dabei ist $dt = \lvert a\rvert\,ds$, was den
-Vorfaktor $\lvert a\rvert^{-1}$ gerade aufhebt -- auch für $a < 0$, da die
-Substitution dann zusätzlich die Integrationsgrenzen vertauscht. Genau dafür
-ist der Faktor $\lvert a\rvert^{-1/2}$ gewählt: Jede andere Potenz von
-$\lvert a\rvert$ würde die Norm skalenabhängig machen. Mit
-$\norm{\psi}_{\LZwei} = 1$ aus Definition~\ref{def:wavelet} ist somit die
-gesamte Wavelet-Familie normiert \cite[Kap.~3.1]{blatter}. %s. 55
-%Für die Theorie ist diese Festlegung
-%unerheblich; Louis, Maa\ss{} und Rieder verzichten darauf
-%\cite[Definition~1.1.1]{lmr}. Sie wahrt jedoch die Analogie zu der in
-%Abschnitt~\ref{sec:detailraeume} gewonnenen Orthonormalbasis, deren Elemente
-%ebenfalls die Norm eins haben.
+Nun substituiert man $s = \frac{t-b}{a}$, also $t = as + b$ und $dt = a\,ds$.
+Für $a < 0$ vertauscht die Substitution zusätzlich die Integrationsgrenzen. Das
+gleicht das Vorzeichen aus, und es bleibt $dt = \lvert a\rvert\,ds$. Damit folgt
+\[
+  \frac{1}{\lvert a\rvert}\int_\R \Bigl\lvert\psi\!\left(\tfrac{t-b}{a}\right)\Bigr\rvert^2 dt
+  \;=\; \frac{1}{\lvert a\rvert}\int_\R \lvert\psi(s)\rvert^2\,\lvert a\rvert\,ds
+  \;=\; \int_\R \lvert\psi(s)\rvert^2\,ds
+  \;=\; \norm{\psi}_{\LZwei}^2 .
+\]
+Mit einem Vorfaktor $\lvert a\rvert^{-p}$ statt $\lvert a\rvert^{-1/2}$ ergäbe
+dieselbe Rechnung $\lvert a\rvert^{1-2p}\,\norm{\psi}_{\LZwei}^2$. Die Norm
+hängt also genau für $p = \tfrac12$ nicht von $a$ ab \cite[Kap.~3.1]{blatter}. % S. 55
 \end{Bemerkung}
-
+ 
 \anmerkung{davor support definieren - in grundlagen ist der träger einfach...}
  
 \begin{Bemerkung}[Bedeutung der beiden Parameter]
 \label{bem:parameter}
-Ist $\psi$ kompakt getragen, so gilt
-$\supp \psi_{a,b} = b + a\cdot\supp\psi$, das hei\ss t der Träger von
-$\psi_{a,b}$ ist das um den Faktor $\lvert a\rvert$ gestreckte und nach $b$
-verschobene Bild von $\supp\psi$; für $a < 0$ wird $\psi$ dabei zusätzlich an
-der Geraden $t = b$ gespiegelt. Der Parameter $b$ verschiebt also das
-Wavelet entlang der Zeitachse, sodass $Wf(a,b)$ lokale Information über $f$
-in der Umgebung von $t = b$ trägt; der Parameter $a$ steuert die Grö\ss{}e dieses
-Einflussbereichs. Für $a \to 0$ zoomt die Transformation immer schärfer auf
-$t = b$ \cite[Kap.~1.1]{lmr}. %seite 18
-Abbildung~\ref{fig:haar-familie} zeigt die Skalierung und Verschiebung des Haar-Wavelets.
-Für das EKG bedeutet das: Der QRS-Komplex wird
-bei kleinen $\lvert a\rvert$ mit einem Träger von einigen zehn Millisekunden
-abgetastet -- der QRS-Komplex selbst ist etwa $100$\,ms breit
-\cite[Kap.~2.3.1]{rebstadt} --, die T-Welle bei gro\ss{}en $\lvert a\rvert$ mit
-einem entsprechend langen.
+Ist $\psi$ kompakt getragen, so gilt $\supp \psi_{a,b} = b + a\cdot\supp\psi$.
+Der Parameter $b$ verschiebt das Wavelet entlang der Zeitachse. Daher trägt
+$Wf(a,b)$ Information über $f$ in der Nähe von $t = b$. Der Parameter $a$
+streckt oder staucht das Wavelet und legt die Breite dieses Bereichs fest. Für
+$a \to 0$ zieht sich $\psi_{a,b}$ auf $t = b$ zusammen \cite[Kap.~1.1]{lmr}. % S. 18
+Abbildung~\ref{fig:haar-familie} zeigt beides am Haar-Wavelet.
 \end{Bemerkung}
-
+ 
 \begin{figure}[htbp]
   \centering
   \begin{tikzpicture}
     \begin{scope}[x=1.05cm, y=0.78cm]
-      \haarplot{1}{0}{(a) $\psi^{\mathrm{H}} = \psi^{\mathrm{H}}_{1,0}$\;--- Mutterwavelet}
+      \haarplot{1}{0}{(a) $\psi^{\mathrm{H}} = \psi^{\mathrm{H}}_{1,0}$}
     \end{scope}
     \begin{scope}[shift={(6.4cm,0cm)}, x=1.05cm, y=0.78cm]
-      \haarplot{1}{1.5}{(b) $\psi^{\mathrm{H}}_{1,\,3/2}$ \;--- nur verschoben}
+      \haarplot{1}{1.5}{(b) $\psi^{\mathrm{H}}_{1,\,3/2}$, verschoben}
     \end{scope}
     \begin{scope}[shift={(0cm,-4.3cm)}, x=1.05cm, y=0.78cm]
-      \haarplot{0.5}{0}{(c) $\psi^{\mathrm{H}}_{1/2,\,0}$ \;--- nur skaliert}
+      \haarplot{0.5}{0}{(c) $\psi^{\mathrm{H}}_{1/2,\,0}$, gestaucht}
     \end{scope}
     \begin{scope}[shift={(6.4cm,-4.3cm)}, x=1.05cm, y=0.78cm]
-      \haarplot{2}{1}{(d) $\psi^{\mathrm{H}}_{2,\,1}$ \;--- beides}
+      \haarplot{2}{1}{(d) $\psi^{\mathrm{H}}_{2,\,1}$, gestreckt und verschoben}
     \end{scope}
   \end{tikzpicture}
   \caption[Skalierung und Verschiebung des Haar-Wavelets]{Die Wavelet-Familie
-  \eqref{eq:wavelet-familie} am Haar-Wavelet. (b) verschiebt den Träger nach
-  $[\tfrac32,\tfrac52]$, ohne die Form zu ändern. (c) staucht ihn auf
-  $[0,\tfrac12]$, wobei die Amplitude auf $\sqrt2$ steigt; (d) streckt ihn auf
-  $[1,3]$ bei Amplitude $1/\sqrt2$. Die gestrichelten Linien markieren
-  $\pm1$. In allen vier Fällen ist das Produkt aus Trägerlänge und
-  quadrierter Amplitude gleich eins --- die Familie ist normiert
+  \eqref{eq:wavelet-familie} am Haar-Wavelet. In (b) liegt der Träger auf
+  $[\tfrac32,\tfrac52]$. In (c) liegt er auf $[0,\tfrac12]$, die Amplitude ist
+  $\sqrt2$. In (d) liegt er auf $[1,3]$, die Amplitude ist $1/\sqrt2$.
+  Gestrichelt die Werte $\pm1$. In allen vier Fällen ist das Produkt aus
+  Trägerlänge und quadrierter Amplitude gleich eins
   (Bemerkung~\ref{bem:normierung}).}
   \label{fig:haar-familie}
 \end{figure}
+
+\anmerkung{stört das die im index hier nicht als bruch sind?}
  
-%\quellen{LMR, Kap.~1.1, S.~18 \cite[S.~18]{lmr}; Blatter, S.~55, mit Bild~3.1
-%\cite[S.~55]{blatter}.}
-
-% =====================================================================
-%  Beispiel am Ende von Abschnitt 3.1.2 -- gekuerzte Fassung
-%  Die Rechnungen stehen in Anhang~\ref{anh:fourier-testsignal} und
-%  Anhang~\ref{anh:stammfunktion-testsignal}, der Code in
-%  Anhang~\ref{chapter:anhang-code}.
-%  Alle Labels der alten Fassung bleiben erhalten:
-%     bsp:testsignal, fig:signal, fig:fourier, fig:cwt,
-%     eq:ft-testsignal, eq:cwt-haar-exakt
-% =====================================================================
-
 \begin{Beispiel}[Ein Testsignal mit zwei Frequenzen]
 \label{bsp:testsignal}
 Betrachtet wird
@@ -988,10 +798,10 @@ Betrachtet wird
     0,                                   & \text{sonst.}
   \end{cases}
 \]
-Auf $[0,3]$ schwingt $f$ mit der Frequenz $1$, auf $[4,5]$ mit der
-Frequenz $5$; in beide Intervalle passt jeweils eine ganze Anzahl von
-Perioden (Abbildung~\ref{fig:signal}). Als beschränkte Funktion mit
-kompaktem Träger liegt $f$ in $L^1(\R)\cap\LZwei$.
+Die Funktion $\cos(2\pi\nu t)$ hat die Periode $1/\nu$, sie schwingt also mit der
+Frequenz $\nu$. Auf $[0,3]$ schwingt $f$ daher mit der Frequenz $1$, auf $[4,5]$
+mit der Frequenz $5$ (Abbildung~\ref{fig:signal}). Wir vergleichen, was
+Fourier- und Wavelet-Transformation über $f$ aussagen.
 
 \begin{figure}[htbp]
   \centering
@@ -1001,427 +811,151 @@ kompaktem Träger liegt $f$ in $L^1(\R)\cap\LZwei$.
 \end{figure}
 
 \paragraph{Fourier-Transformierte.}
-Elementare Integration, bei der die ganzzahligen Periodenzahlen die
-Randterme vereinfachen, liefert in der Konvention aus
-Bemerkung~\ref{bem:fourier-konvention}
-(Rechnung in Anhang~\ref{anh:fourier-testsignal})
-\begin{equation}\label{eq:ft-testsignal}
-  \hat f(\omega)
-  =\frac{i}{\sqrt{2\pi}\,\omega}
-   \left[
-     \frac{4\pi^{2}\bigl(1-e^{-3i\omega}\bigr)}{\omega^{2}-4\pi^{2}}
-     +\frac{50\pi^{2}\bigl(e^{-4i\omega}-e^{-5i\omega}\bigr)}{\omega^{2}-100\pi^{2}}
-   \right],
-\end{equation}
-wobei die Stellen $\omega\in\{0,\pm2\pi,\pm10\pi\}$ hebbar sind.
-Abbildung~\ref{fig:fourier} zeigt beide Frequenzen als Maxima nahe
-$\pm2\pi$ und $\pm10\pi$; durch Überlagerung mit den Nebenkeulen sind sie
-leicht verschoben, nach $\omega \approx \pm1{,}90\pi$ bzw.\
-$\omega \approx \pm9{,}73\pi$.
+Abbildung~\ref{fig:fourier} zeigt $\lvert\hat f\rvert$. Die geschlossene Form
+ist \eqref{eq:ft-testsignal} in Anhang~\ref{anh:fourier-testsignal}. Zur
+Frequenz $\nu$ gehört die Stelle $\omega = 2\pi\nu$. Daher erscheinen beide
+Frequenzen als Maxima nahe $\pm2\pi$ und $\pm10\pi$. Wann sie auftreten, ist
+$\lvert\hat f\rvert$ nicht zu entnehmen.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{abb2_fourier.png}
-  \caption{Betragsspektrum $|\hat f(\omega)|$ nach \eqref{eq:ft-testsignal};
-    gestrichelt die Stellen $\pm2\pi$ und $\pm10\pi$.}
+  \caption{Betragsspektrum $\lvert\hat f(\omega)\rvert$ des Testsignals.
+    Gestrichelt die Stellen $\pm2\pi$ und $\pm10\pi$.}
   \label{fig:fourier}
 \end{figure}
 
-Wann die jeweilige Frequenz auftritt, ist $|\hat f|$ nicht zu entnehmen.
-Für die an $t=\tfrac52$ gespiegelte Funktion $g(t):=f(5-t)$, in der die
-beiden Komponenten ihre Plätze tauschen, gilt nämlich
-$\hat g(\omega)=e^{-5i\omega}\,\overline{\hat f(\omega)}$, da $f$ reell
-ist, also $\lvert\hat g\rvert=\lvert\hat f\rvert$. Die zeitliche
-Information ist in $\hat f$ zwar vorhanden, steckt aber vollständig in der
-Phase.
-
 \paragraph{Wavelet-Transformierte.}
-Wir transformieren nun mit dem Haar-Wavelet $\psi^{\mathrm H}$ aus
-Beispiel~\ref{bsp:haar} und beschränken uns auf $a>0$. Für $a>0$ nimmt
-$\psi^{\mathrm H}\bigl(\frac{t-b}{a}\bigr)$ auf $[b,\,b+\tfrac a2[$ den
-Wert $1$, auf $[b+\tfrac a2,\,b+a[$ den Wert $-1$ an und verschwindet
-sonst; das Wavelet ist also ein Fenster über $[b,b+a]$ mit Sprungstelle in
-der Mitte. Da $\psi^{\mathrm H}$ reellwertig ist, entfällt die Konjugation
-in \eqref{eq:cwt}, und mit der Stammfunktion
-$F(t):=\int_{-\infty}^{t}f(s)\,ds$ folgt
+Wir verwenden das Haar-Wavelet und beschränken uns auf $a>0$. Dann ist
+$\lvert a\rvert^{1/2} = \sqrt a$. Da $\psi^{\mathrm H}$ reell ist, entfällt die
+Konjugation in \eqref{eq:cwt}, und es gilt
+\[
+  W_{\psi^{\mathrm H}}f(a,b)
+  =\frac{1}{\sqrt a}\int_\R f(t)\,\psi^{\mathrm H}\Bigl(\frac{t-b}{a}\Bigr)\,dt .
+\]
+Das Fenster $[b,\,b+a[$ hat die Breite $a$. Auf seiner linken Hälfte
+$[b,\,b+\tfrac a2[$ ist $\psi^{\mathrm H}\bigl(\frac{t-b}{a}\bigr) = 1$, auf
+der rechten Hälfte $[b+\tfrac a2,\,b+a[$ ist es $-1$, sonst null. Also ist
+\[
+  W_{\psi^{\mathrm H}}f(a,b)
+  =\frac{1}{\sqrt a}\left(\int_b^{b+a/2} f(t)\,dt-\int_{b+a/2}^{b+a} f(t)\,dt\right).
+\]
+Der Wert ist gro\ss{}, wenn sich die Integrale über die beiden Fensterhälften
+stark unterscheiden. Ist $f$ auf dem Fenster nahezu konstant, ist er nahe null.
+Mit der Stammfunktion $F(t):=\int_{-\infty}^{t}f(s)\,ds$
+(Anhang~\ref{anh:stammfunktion-testsignal}) folgt die geschlossene Form
 \begin{equation}\label{eq:cwt-haar-exakt}
   W_{\psi^{\mathrm H}}f(a,b)
-  =\frac{1}{\sqrt a}\left(\int_b^{b+a/2} f(t)\,dt-\int_{b+a/2}^{b+a} f(t)\,dt\right)
   =\frac{2F\bigl(b+\tfrac a2\bigr)-F(b)-F(b+a)}{\sqrt a}.
 \end{equation}
-Die Transformation vergleicht also das Integral von $f$ über die linke
-Fensterhälfte mit dem über die rechte; sie wirkt als Differenzenfilter. Die
-Stammfunktion ist elementar (Anhang~\ref{anh:stammfunktion-testsignal}):
-\[
-  F(t)=
-  \begin{cases}
-    0, & t<0,\\[2pt]
-    t-\dfrac{\sin(2\pi t)}{2\pi}, & 0\le t\le 3,\\[4pt]
-    3, & 3\le t\le 4,\\[2pt]
-    3+\dfrac{t-4}{2}-\dfrac{\sin(10\pi t)}{20\pi}, & 4\le t\le 5,\\[4pt]
-    \dfrac72, & t>5.
-  \end{cases}
-\]
-Damit ist $W_{\psi^{\mathrm H}}f$ für alle $(a,b)$ in geschlossener Form
-bekannt; Abbildung~\ref{fig:cwt} zeigt ihren Betrag, ausgewertet nach
-\eqref{eq:cwt-haar-exakt} (Code in Anhang~\ref{chapter:anhang-code}).
+Abbildung~\ref{fig:cwt} zeigt ihren Betrag.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=\textwidth]{abb3_cwt_haar.png}
-  \caption{Betrag der Wavelet-Transformierten nach
-    \eqref{eq:cwt-haar-exakt}; die Skalenachse ist logarithmisch.}
+  \caption{Betrag $\lvert W_{\psi^{\mathrm H}}f(a,b)\rvert$ des Testsignals nach
+    \eqref{eq:cwt-haar-exakt}. Waagerecht ist die Verschiebung $b$ aufgetragen,
+    senkrecht die Skala $a$ in logarithmischer Teilung. Die Farbe gibt den
+    Betrag an.}
   \label{fig:cwt}
 \end{figure}
 
-Abbildung~\ref{fig:cwt} zerfällt in zwei Bereiche. In der Ortsvariablen
-$b$ liegen sie über den Trägern $[0,3]$ und $[4,5]$, in der Skala $a$
-unterscheiden sie sich um den Faktor fünf -- genau das Verhältnis der
-beiden Frequenzen. Zeitpunkt und Frequenz sind also gleichzeitig ablesbar.
-Auch die schwache schnelle Komponente, die in Abbildung~\ref{fig:fourier}
-kaum hervortritt, bildet hier ein eigenes Band: Bei kleinem $a$ wertet die
-Transformation nur ein kurzes Zeitfenster aus, in dem die lange Dauer der
-langsamen Komponente nicht ins Gewicht fällt.
+Kleine $a$ gehören zu hohen Frequenzen, also schnellen Schwingungen, gro\ss{}e
+$a$ zu tiefen Frequenzen, also langsamen Schwingungen \cite[Kap.~1.5]{blatter}. % S. 14
+Genau das zeigt Abbildung~\ref{fig:cwt}. Die langsame Schwingung über $[0,3]$
+liefert gro\ss{}e Werte bei gro\ss{}en $a$, die schnelle über $[4,5]$ bei
+kleinen $a$. Die Wavelet-Transformation zeigt also gleichzeitig, wann und mit
+welcher Frequenz $f$ schwingt.
 \end{Beispiel}
-
-%\anmerkung{Die Bänder sind auffällig breit. Das liegt am
-%Abklingverhalten $|\hat\psi^{\mathrm H}(\omega)|=O(|\omega|^{-1})$: das
-%Haar-Wavelet ist im Zeitbereich perfekt, im Frequenzbereich aber nur
-%schwach lokalisiert. Diese Asymmetrie motiviert die Konstruktion glatterer
-%Wavelets in Kapitel~4.}
-%
-%\anmerkung{Die Streifen kippen mit wachsendem $a$ nach links, weil
-%$\operatorname{supp}\psi^{\mathrm H}_{a,b}=[b,\,b+a]$ rechts von $b$ liegt
-%und nicht symmetrisch um $b$. Das ist kein Artefakt, sondern eine
-%Folge der Lage des Trägers $[0,1]$ von $\psi^{\mathrm H}$ aus Beispiel~\ref{bsp:haar}.}
-
-Damit ist an einem Beispiel vorgeführt, was die Transformation leistet:
-sie trennt, was im Betragsspektrum vermengt bleibt.
-
-\quellen{Haar-Wavelet und seine Fourier-Transformierte:
-\cite[Kap.~1.1]{lmr}, \cite[Kap.~1.6]{blatter}. Zur Darstellung von
-Wavelet-Transformierten und zur Wahl zusammengesetzter Testsignale
-vgl.\ \cite[Kap.~3.1]{blatter} sowie \cite[Kap.~1.1]{lmr}.}
-
-%\anmerkung{AUSGELAGERT (Block~A3, ca.\ acht Seiten): die affinen Operatoren $D_a$ und
-%$T_b$ mit Unitaritätsbeweis, das Verknüpfungsgesetz und die Nichtkommutativität der
-%affinen Gruppe, der Kovarianzsatz, die Fourier-Darstellung der CWT und die
-%Filterdarstellung als Faltung samt Bandpasscharakter. Sachlich richtig und sauber
-%bewiesen, aber keiner dieser Sätze wird in Kapitel~\ref{chapter:dwt} oder
-%\ref{chapter:denoising} noch einmal gebraucht. Die inhaltliche Substanz ist unten in
-%zwei Absätze zusammengezogen.}
-
-%\subsubsection*{Die CWT als Filterbank}
-%
-%Bei festgehaltener Skala ist die CWT eine Faltung. Setzt man
-%$\psi^{-}_{a}(u) := \lvert a\rvert^{-1/2}\,\psi(-u/a)$, so ist
-%$W_\psi f(a,\cdot) = f * \psi^{-}_{a}$ und folglich
-%\[
-%  \bigl(W_\psi f(a,\cdot)\bigr)^{\wedge}(\omega)
-%  \;=\; (2\pi)^{1/2}\,\lvert a\rvert^{1/2}\,\hat\psi(a\omega)\,\hat f(\omega).
-%\]
-%Die CWT ist bei festem $a$ also ein linearer, zeitinvarianter Filter mit
-%Übertragungsfunktion $H_a(\omega) = (2\pi)^{1/2}\lvert a\rvert^{1/2}\hat\psi(a\omega)$.
-%Wegen $\hat\psi(0) = 0$ nach Satz~\ref{satz:zulaessigkeit-mittelwert} und
-%$\hat\psi(\omega)\to 0$ für $\lvert\omega\rvert\to\infty$ (Riemann--Lebesgue) ist jedes
-%$H_a$ ein Bandpass. Ist $\lvert\hat\psi\rvert$ um eine Frequenz $\omega_0>0$ mit Breite
-%$\Delta$ konzentriert, so liegt das Durchlassband bei allgemeinem $a$ um
-%$\omega_0/\lvert a\rvert$ und hat die Breite $\Delta/\lvert a\rvert$; das Verhältnis von
-%Mittenfrequenz zu Bandbreite ist damit von $a$ unabhängig. Die Skalenachse entspricht
-%einer Filterbank mit \emph{konstanter relativer} Bandbreite -- im Unterschied zur
-%konstanten \emph{absoluten} Bandbreite der gefensterten Fourier-Transformation.
-%
-%\quellen{LMR, Kap.~1.3 Filtereigenschaften der Wavelet-Transformation, S.~28--30,
-%insbesondere Lemma~1.3.1, S.~29 \cite[S.~28--30]{lmr}; Blatter, Kap.~3.1,
-%Gl.~(8)--(10), S.~56--57 \cite[S.~56--57]{blatter}.}
-%
-%\begin{Bemerkung}[Bedeutung für das EKG]
-%\label{bem:filter-ekg}
-%Die Filterdarstellung erklärt, weshalb die Wavelet-Analyse für
-%EKG-Signale strukturell passend ist. Der QRS-Komplex ist ein Transient mit
-%steilen Flanken und daher breitbandig mit Schwerpunkt bei hohen Frequenzen; er
-%erscheint in $W_\psi f(a,\cdot)$ bei kleinen $\lvert a\rvert$. P- und T-Welle
-%sind niederfrequent und erscheinen bei gro\ss{}en $\lvert a\rvert$. Da die
-%Bandbreite mit $1/\lvert a\rvert$ mitwächst, wird der QRS-Komplex zeitlich
-%scharf lokalisiert, während die T-Welle mit hinreichender Frequenzauflösung
-%erfasst wird -- beides mit demselben Werkzeug. Da $\hat\psi(0) = 0$ ist,
-%unterdrückt zudem jeder Filter $H_a$ den Gleichanteil; die für EKG-Aufzeichnungen
-%typische Basisliniendrift wirkt sich daher nur auf die gröbsten Skalen aus.
-%\end{Bemerkung}
-% 
-%\quellen{Zum klinischen Frequenzgehalt der EKG-Komponenten: Gacek
-%\cite{gacek}; Chatterjee et al., Abschnitt~2 \cite{chatterjee}; Aqil, Kap.~1--2,
-%S.~51--55 \cite[S.~51--55]{aqil}.}
-% 
-%\anmerkung{Seitenzahlen für Gacek und Chatterjee bitte noch ergänzen --
-%diese Bemerkung ist die inhaltliche Brücke zu Kapitel~\ref{chapter:anwendung} und
-%sollte belegt sein.}
  
-%% ============================================================
-
 \subsection{Die Plancherel-Formel}
 \label{subsec:plancherel}
 
-Offen ist, ob sich $f$ aus $W_\psi f$ zurückgewinnen lässt. Für die
-Fourier-Transformation beantwortet das der Satz von Plancherel
-(Abschnitt~\ref{sec:fourier-plancherel}): Wegen $\norm{\hat f} = \norm{f}$ bleibt
-die Energie $\norm{f}^2 = \int_\R \lvert f(t)\rvert^2\,dt$ erhalten, und zwei
-verschiedene Signale können nicht dasselbe Spektrum besitzen. Für die CWT gilt
-eine entsprechende Aussage. Da $W_\psi f$ eine Funktion auf der $(a,b)$-Ebene
-ist, muss dazu zunächst festgelegt werden, wie dort Energie gemessen wird.
+Dieser Abschnitt zeigt, dass bei der CWT keine Information verloren geht, sie
+aber viel mehr Werte liefert als nötig. Das begründet den Übergang zum
+dyadischen Gitter in Abschnitt~\ref{sec:mra-axiome}.
 
-\begin{Definition}[Bildraum, {\cite[Kap.~3.2, Gl.~(2)]{blatter}}]
-\label{def:bildraum}
-Auf der zersägten Ebene $\R^*_\square$ aus Definition~\ref{def:cwt} sei
-\[
-  \mathcal H \;:=\; \Bigl\{\, u\colon \R^*_\square \to \C \;\Bigm|\;
-  \int_{\R^*_\square} \lvert u(a,b)\rvert^2\,\frac{da\,db}{a^2} < \infty \Bigr\},
-  \qquad
-  \scal{u}{v}_{\mathcal H} \;:=\; \int_{\R^*_\square} u(a,b)\,\overline{v(a,b)}\;\frac{da\,db}{a^2} .
-\]
-Dabei sind nur messbare Funktionen $u$ zugelassen, und wie bei $\LZwei$ in
-Abschnitt~\ref{sec:l2} werden Funktionen, die fast überall übereinstimmen, identifiziert.
-\end{Definition}
+Für die Fourier-Transformation gilt $\norm{\hat f} = \norm{f}$
+(Bemerkung~\ref{bem:fourier-konvention}). Für die CWT gilt eine ähnliche
+Formel.
 
-\anmerkung{Hier noch Verweis auf Abschnitt~2.5 einfügen: Vergleich mit der
-gefensterten Fourier-Transformation. Dort genügt auf der $(b,\omega)$-Ebene das
-gewöhnliche Ma\ss{} $d\omega\,db$, weil Verschiebung und Modulation Flächen nicht
-verzerren; bei der CWT streckt der Parameter $a$, daher das Gewicht $a^{-2}$.}
-
-$\mathcal H$ ist also der Raum $L^2$ über der $(a,b)$-Ebene, mit dem Unterschied,
-dass beim Integrieren das Gewicht $\lvert a\rvert^{-2}$ eingeht; kurz
-$\mathcal H = L^2(\R^*_\square, d\mu)$ mit
-$d\mu = \lvert a\rvert^{-2}\,da\,db$ \cite[Kap.~3.2, Gl.~(2)]{blatter}. Die Energie
-von $W_\psi f$ ist damit
-$\norm{W_\psi f}^2_{\mathcal H} = \int_{\R^*_\square}\lvert W_\psi f(a,b)\rvert^2\,\frac{da\,db}{a^2}$,
-und mit diesem Gewicht gilt der folgende Satz.
-
-\begin{Satz}[Plancherel-Formel für die CWT, {\cite[Satz~(3.3)]{blatter}}]
+\begin{Satz}[Plancherel-Formel für die CWT, {\cite[Satz~(3.3)]{blatter}}] % S. 62
 \label{satz:plancherel-cwt}
-Sei $\psi$ ein Wavelet mit Zulässigkeitskonstante $C_\psi$ gemä\ss
-\eqref{eq:zulaessigkeit}. Dann ist $W_\psi f \in \mathcal H$ für jedes
-$f \in \LZwei$, und es gilt
+Sei $\psi$ ein Wavelet mit Zulässigkeitskonstante $C_\psi$ gemä\ss{}
+\eqref{eq:zulaessigkeit}. Dann gilt für jedes $f \in \LZwei$
 \begin{equation}
 \label{eq:plancherel-cwt}
-  \scal{W_\psi f}{W_\psi g}_{\mathcal H} \;=\; C_\psi\,\scal{f}{g}
-  \qquad\text{für alle } f,g \in \LZwei .
+  \int_{\R^*_\square} \lvert W_\psi f(a,b)\rvert^2\,\frac{da\,db}{a^2}
+  \;=\; C_\psi\,\norm{f}^2 .
 \end{equation}
-Insbesondere ist $C_\psi^{-1/2}\,W_\psi$ eine Isometrie und $W_\psi$ injektiv.
 \end{Satz}
 
-Der Satz besagt: Mit $g = f$ ist
-\[
-  \norm{W_\psi f}^2_{\mathcal H}
-  = \scal{W_\psi f}{W_\psi f}_{\mathcal H}
-  = C_\psi\,\scal{f}{f}
-  = C_\psi\,\norm{f}^2 < \infty .
-\]
-Die Transformierte hat also endliche Energie, und diese ist genau das
-$C_\psi$-Fache der Energie von $f$. Teilt man durch $\sqrt{C_\psi}$, so bleibt die
-Norm erhalten:
-\[
-  \norm{C_\psi^{-1/2}\,W_\psi f}_{\mathcal H} = \norm{f}
-  \qquad\text{für alle } f \in \LZwei .
-\]
-$C_\psi^{-1/2}W_\psi$ ist also eine Isometrie; unitär im Sinne von
-Abschnitt~\ref{sec:unitaer} wäre sie erst, wenn sie zusätzlich surjektiv wäre
--- das ist sie nicht, ihr Bild ist ein echter Teilraum von $\mathcal H$
-\cite[Kap.~3.4]{blatter}, vgl.\ Bemerkung~\ref{bem:redundanz}. Der Beweis beruht auf mehrfacher
-Anwendung des Satzes von Plancherel und des Satzes von Fubini; die
-Zulässigkeitsbedingung sichert dabei die Endlichkeit der Konstante. Er findet
-sich bei \cite[Beweis zu Satz~(3.3)]{blatter}, vgl.\ auch \cite[Satz~1.1.8]{lmr}.
+\anmerkung{hab ich das mit R kästchen schon definert?}
 
-Damit ist die Eingangsfrage beantwortet: Da $W_\psi$ injektiv ist, ist $f$ durch
-$W_\psi f$ eindeutig bestimmt. Wie man $f$ konkret zurückgewinnt, sagt die
-folgende Umkehrformel.
+Der Beweis steht bei \cite[Satz~(3.3)]{blatter}. % S. 62--63
+Links steht das Integral über $\lvert W_\psi f\rvert^2$ auf der
+$(a,b)$-Ebene, gewichtet mit $a^{-2}$. Es ist bis auf den Faktor $C_\psi$
+gleich $\norm{f}^2$. Das Gewicht $a^{-2}$ wird in
+Abschnitt~\ref{sec:mra-axiome} erklärt.
 
-\begin{Korollar}[Umkehrformel, {\cite[Kap.~3.3, Gl.~(2) und (4)]{blatter}}]
-\label{kor:umkehrformel}
-Für alle $f,g \in \LZwei$ gilt
-$\scal{f}{g} = C_\psi^{-1}\int_{\R^*_\square} W_\psi f(a,b)\,\scal{\psi_{a,b}}{g}\,\frac{da\,db}{a^2}$,
-in diesem schwachen Sinn also
-\[
-  f \;=\; \frac{1}{C_\psi}\int_{\R^*_\square} W_\psi f(a,b)\,\psi_{a,b}\;\frac{da\,db}{a^2} .
-\]
-\end{Korollar}
-
-%\begin{Beispiel}[Ein endlichdimensionales Analogon, vgl.\ {\cite[Kap.~4.1, Beispiel~(1)]{blatter}}]
-%\label{bsp:mercedes}
-%Im $\R^2$ seien die drei Einheitsvektoren
-%\[
-%  u_1 = (1,0),\qquad
-%  u_2 = \bigl(-\tfrac12,\tfrac{\sqrt3}{2}\bigr),\qquad
-%  u_3 = \bigl(-\tfrac12,-\tfrac{\sqrt3}{2}\bigr)
-%\]
-%im Winkel von $120^\circ$ gegeben -- drei Vektoren für zwei Dimensionen. Für
-%$v = (3,4)$ mit $\norm{v}^2 = 25$ sind die Koordinaten $\scal{v}{u_1} = 3$ und
-%$\scal{v}{u_{2,3}} = \tfrac12(-3\pm4\sqrt3)$, und die Summe ihrer Quadrate ist
-%$9 + \tfrac{57}{2} = \tfrac{75}{2} = \tfrac32\,\norm{v}^2$. Wegen
-%$\sum_{i=1}^3 u_i u_i^{\top} = \tfrac32 I$ gilt allgemein
-%\[
-%  \sum_{i=1}^{3}\scal{v}{u_i}^2 = \tfrac32\,\norm{v}^2
-%  \qquad\text{und}\qquad
-%  v = \tfrac23\sum_{i=1}^{3}\scal{v}{u_i}\,u_i
-%  \qquad (v \in \R^2).
-%\]
-%Das sind Satz~\ref{satz:plancherel-cwt} und Korollar~\ref{kor:umkehrformel} im
-%Kleinen: $C_\psi$ entspricht dem Überzählfaktor $\tfrac32$, die Division durch
-%$C_\psi$ dem Faktor $\tfrac23$.
-%\end{Beispiel}
-
-\begin{Beispiel}[Plancherel-Formel am Testsignal]
-\label{bsp:plancherel-testsignal}
-Wir prüfen Satz~\ref{satz:plancherel-cwt} am Signal $f$ aus
-Beispiel~\ref{bsp:testsignal} mit dem Haar-Wavelet, und zwar an zwei Paaren:
-(i) für $g = f$ als Erhaltung der Energie, (ii) für die beiden Komponenten von
-$f$ als Erhaltung der Orthogonalität. Die beiden Seiten von
-\eqref{eq:plancherel-cwt} werden dabei auf verschiedenen Wegen berechnet:
-$C_{\psi^{\mathrm H}}$ im Frequenzbereich (Beispiel~\ref{bsp:haar}),
-$W_{\psi^{\mathrm H}} f$ rein im Zeitbereich nach \eqref{eq:cwt-haar-exakt}.
-
-\textbf{(i) Energie.} Als beschränkte Funktion mit kompaktem Träger liegt $f$ in
-$\LZwei$. Wegen $(1-\cos x)^2 = 1 - 2\cos x + \tfrac12(1+\cos 2x)$ verschwinden
-bei Integration über ganze Perioden alle Cosinus-Terme, und es bleibt das
-$\tfrac32$-Fache der Intervalllänge:
-\[
-  \norm{f}^2
-  = \int_0^3 \bigl(1-\cos(2\pi t)\bigr)^2\,dt
-    + \frac14\int_4^5 \bigl(1-\cos(10\pi t)\bigr)^2\,dt
-  = \frac92 + \frac38 = \frac{39}{8}.
-\]
-Mit $C_{\psi^{\mathrm H}} = 2\ln 2$ aus Beispiel~\ref{bsp:haar} folgt nach
-\eqref{eq:plancherel-cwt} mit $g = f$
-$\norm{W_{\psi^{\mathrm H}} f}^2_{\mathcal H} = C_{\psi^{\mathrm H}}\norm{f}^2
-= 2\ln 2\cdot\tfrac{39}{8} \approx 6{,}76$.
-Da $\psi^{\mathrm H}$ reellwertig ist, entfällt davon auf die in
-Abbildung~\ref{fig:cwt} gezeigte Halbebene $a>0$ genau die Hälfte
-\cite[Satz~(3.4)]{blatter}. Für das Haar-Wavelet sieht man das direkt: Wegen
-$\psi^{\mathrm H}(-x) = -\psi^{\mathrm H}(x+1)$ für fast alle $x \in \R$ ist für $c>0$
-\begin{gather*}
-  \psi^{\mathrm H}_{-c,b}(t)
-  = \frac{1}{\sqrt c}\,\psi^{\mathrm H}\Bigl(-\frac{t-b}{c}\Bigr)
-  = -\frac{1}{\sqrt c}\,\psi^{\mathrm H}\Bigl(\frac{t-(b-c)}{c}\Bigr)
-  = -\psi^{\mathrm H}_{c,\,b-c}(t),
-  \\
-  \text{also}\qquad
-  W_{\psi^{\mathrm H}} f(-c,b) = -W_{\psi^{\mathrm H}} f(c,\,b-c).
-\end{gather*}
-Die Werte auf der Halbebene $a<0$ sind also bis aufs Vorzeichen die in $b$
-verschobenen Werte auf $a>0$; da $db$ verschiebungsinvariant ist, tragen beide
-Halbebenen dieselbe Energie. Damit ist
-\[
-  \int_0^\infty\!\!\int_\R \bigl\lvert W_{\psi^{\mathrm H}} f(a,b)\bigr\rvert^2\,
-  \frac{db\,da}{a^2}
-  = \ln 2\cdot\frac{39}{8} \approx 3{,}379 .
-\]
-Zur Kontrolle werten wir dieses Doppelintegral mit der geschlossenen Form
-\eqref{eq:cwt-haar-exakt} numerisch aus und erhalten $3{,}3790$, in
-Übereinstimmung mit dem exakten Wert.
-
-\textbf{(ii) Orthogonalität.} Zerlegt man $f = f_1 + f_2$ in die langsame
-Komponente auf $[0,3]$ und die schnelle auf $[4,5]$, so ist $\scal{f_1}{f_2} = 0$
-wegen der disjunkten Träger, nach \eqref{eq:plancherel-cwt} also auch
-$\scal{W_{\psi^{\mathrm H}} f_1}{W_{\psi^{\mathrm H}} f_2}_{\mathcal H} = 0$ --
-obwohl sich die beiden Bänder in Abbildung~\ref{fig:cwt} für gro\ss{}e $a$
-überlappen. Nach derselben Symmetrie wie in (i) verschwindet das Skalarprodukt
-auch auf der Halbebene $a>0$ allein. Die Energien $\ln 2\cdot\tfrac92$ und
-$\ln 2\cdot\tfrac38$ der beiden Komponenten addieren sich daher ohne Mischterm.
-
-Das Beispiel bestätigt \eqref{eq:plancherel-cwt} damit in beiden Lesarten: als
-Erhaltung der Energie und als Erhaltung der Orthogonalität.
-\end{Beispiel}
-
-\anmerkung{finde das beispiel noch nciht wirklich gut... eher ncohmal was einfacheres/Anschaulicheres}
+Daraus folgt, dass $f$ durch $W_\psi f$ eindeutig bestimmt ist
+\cite[Satz~(3.3)]{blatter}. % S. 62
+Ist nämlich $W_\psi f = W_\psi g$, so ist $W_\psi(f-g) = 0$. Nach
+\eqref{eq:plancherel-cwt} folgt $\norm{f-g} = 0$, also $f = g$.
 
 \begin{Bemerkung}[Redundanz der CWT]
 \label{bem:redundanz}
-Die CWT stellt ein Signal, also eine Funktion der einen Variablen $t$, durch
-eine Funktion der beiden Variablen $(a,b)$ dar. Neue Information entsteht dabei
-nicht, denn nach Satz~\ref{satz:plancherel-cwt} ist $W_\psi$ injektiv und $f$
-aus $W_\psi f$ eindeutig bestimmt. Dieselbe Information wird lediglich auf sehr
-viel mehr Werte verteilt. Im Endlichdimensionalen lässt sich das abzählen: Ein
-Signal aus $N$ Abtastwerten liefert bei $N$ Skalen und $N$ Verschiebungen $N^2$
-Koeffizienten, die aber nur einen höchstens $N$-dimensionalen Teilraum des
-$\mathbb C^{N^2}$ ausfüllen können \cite[Kap.~4.1]{blatter}. Entsprechend
-sind die Funktionen $\psi_{a,b}$ nicht linear unabhängig
-\cite[Kap.~3.4]{blatter}.
+Da $f$ durch $W_\psi f$ eindeutig bestimmt ist, geht bei der CWT keine
+Information verloren. Blatter gibt auch eine Formel an, mit der sich $f$ aus
+$W_\psi f$ zurückgewinnen lässt \cite[Kap.~3.3]{blatter}. % S. 65--68
+Die Werte $W_\psi f(a,b)$ sind aber nicht frei. Nicht jede Funktion auf
+$\R^*_\square$ ist die Transformierte eines Signals
+\cite[Kap.~3.4]{blatter}. % S. 69--70
+Diese Eigenschaft hei\ss{}t Redundanz. Anschaulich hängt $f$ von einer
+Variablen ab, $W_\psi f$ von zweien.
 
-Die Werte einer Wavelet-Transformierten sind deshalb nicht frei wählbar, sondern
-müssen zueinander passen. Blatter macht das mit dem reproduzierenden Kern präzise:
-Jeder Wert ist durch alle übrigen festgelegt, und nicht jede Funktion von $(a,b)$
-ist die Transformierte eines Signals \cite[Kap.~3.4, Satz~(3.9)]{blatter}.
+Im Endlichdimensionalen sieht man das direkt. Für ein Signal $x \in \R^N$
+liefern $N$ Skalen und $N$ Verschiebungen $N^2$ Koeffizienten. Jeder ist ein
+Skalarprodukt mit $x$. Zusammengefasst gilt daher $c = Ax$ mit einer Matrix
+$A \in \R^{N^2 \times N}$. Der Vektor $c$ liegt also in einem Teilraum des
+$\R^{N^2}$ der Dimension höchstens $N$.
 
-Die Schwellenwertverfahren, mit denen in Kapitel~\ref{chapter:denoising}
-entrauscht wird, sind dagegen für Orthonormalbasen formuliert
-\cite[Kap.~11.2]{mallat}. Gesucht ist daher eine abzählbare Auswahl von
-Parametern $(a,b)$, für die $\{\psi_{a,b}\}$ eine Orthonormalbasis von $\LZwei$
-ist. Der Rest dieses Kapitels führt dorthin.
+Das Thresholding in Kapitel~\ref{chapter:denoising} arbeitet dagegen mit den
+Koeffizienten bezüglich einer Orthonormalbasis \cite[Kap.~11.2]{mallat}. % S. 548--549
+Gesucht ist daher eine abzählbare Auswahl von Parametern $(a,b)$, für die
+$\{\psi_{a,b}\}$ eine Orthonormalbasis von $\LZwei$ ist.
 \end{Bemerkung}
-
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Das dyadische Gitter und die Multiskalenanalyse}
 \label{sec:mra-axiome}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\quellen{
-%  \begin{itemize}
-%    \item Blatter, Kap.~4.3 „Diskrete Wavelet-Transformation``, S.~91--93
-%    [bestätigt] -- Gitter $(\sigma^m, n\sigma^m\beta)$, Rechtecke $R_{m,n}$ mit
-%    von $m,n$ unabhängigem Inhalt (Bild~4.4, 4.5)
-%    \item LMR, Kap.~2.1.1, Gl.~(2.1.2)--(2.1.3), S.~88 [bestätigt] -- Gitter
-%    $(a_0^m, nb_0a_0^m)$, allgemeiner mit $a_0>1$, $b_0>0$; „Gitter wie (2.1.2)
-%    sind optimal``
-%    \item Blatter, Kap.~5.1 „Axiomatische Beschreibung``, S.~106--107
-%    [bestätigt] -- Axiome (a)--(c), Warnhinweis zur Indexrichtung, Beispiel
-%    $\textcircled{1}$ (Haar), Interpretation von $P_j$ als Tiefpass
-%    \item Blatter, Kap.~4.3, S.~95 [bestätigt] -- Dilatationsoperator als
-%    unitärer Operator
-%    \item LMR, Lemma~1.2.1, S.~26--27 [geschätzt] -- Dilatationsoperator
-%    \item LMR, Definition~2.2.1 und Bemerkung~2.2.2, S.~111--113 [bestätigt]
-%    -- MSA-Axiome (mit Riesz-Basis statt ONB!) und Interpretation der Grenzübergänge
-%    \item Blatter, Kap.~5 (Einleitung), S.~105 [bestätigt] -- Wahl $a:=2$
-%    \item Blatter, Kap.~5.1, S.~107 [bestätigt] -- Dichtheit der Treppenfunktionen
-%    mit dual rationalen Sprungstellen
-%    \item Hanke-Bourgeois, §56, S.~434--438 [bestätigt] -- Haar-MSA in
-%    $L^2(0,1)$ mit gespiegeltem Index; Zerlegung in „Trend`` und
-%    „Fluktuation``, Gl.~(56.8)--(56.10)
-%    \item Hanke-Bourgeois, Satz~43.1, S.~356 [bestätigt] -- Bestapproximation
-%    durch Treppenfunktionen sind die Intervallmittelwerte
-%    \item LMR, Kap.~2.2.1, S.~110--111 [bestätigt] -- Motivation der MSA als
-%    Zerlegung in glatten und rauhen Anteil, Abbildung~2.6
-%    \item LMR, Beispiel in Kap.~2.2.1, S.~114--116 [bestätigt] -- Haar-MSA,
-%    $P_{m+1}f$ als gemittelte Version von $P_m f$, Differenz als Haar-Wavelet
-%  \end{itemize}
-%}
-
-Nach Bemerkung~\ref{bem:redundanz} ist eine abzählbare Auswahl von Parametern
-$(a,b)$ zu treffen, mit der Skala $a$ und der Verschiebung $b$ in der Zeit.
-Einen Ma\ss stab liefert die Plancherel-Formel \eqref{eq:plancherel-cwt} für
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+Einen Ma\ss{}stab für die Auswahl liefert \eqref{eq:plancherel-cwt} mit
 $g = f$:
 \[
   \norm{f}^2 \;=\; \frac{1}{C_\psi}\int_{\R^*_\square}
   \lvert W_\psi f(a,b)\rvert^2\,\frac{da}{a}\,\frac{db}{a}.
 \]
-Die Energie wird also über die $(a,b)$-Ebene verteilt, wobei $da/a$ jede
-Verdopplung der Skala gleich zählt und $db/a$ die Zeit in Vielfachen der
-Wavelet-Breite $a$ misst. Vertritt jeder Gitterpunkt einen Bereich gleichen
-Inhalts, dürfen alle Gitterpunkte gleich gewichtet werden
-\cite[Kap.~4.3]{blatter}. Für $c > 0$ und $b_1 \in \R$ gilt
+Das Ma\ss{} $da/a$ zählt jede Verdopplung der Skala gleich. Das Ma\ss{}
+$db/a$ misst die Zeit in Vielfachen der Wavelet-Breite $a$. Gitterpunkte, die
+Zellen gleichen Inhalts vertreten, können daher gleich gewichtet werden
+\cite[Kap.~4.3]{blatter}. % S. 91--93
+Für $c > 0$ und $b_1 \in \R$ ist
 \[
   \int_{b_1}^{b_1+c}\int_{c}^{2c} \frac{da\,db}{a^2}
   \;=\; c\,\Bigl(\frac1c - \frac1{2c}\Bigr) \;=\; \frac12 .
 \]
-Das legt das Gitter $a = 2^{j}$, $b = k\,2^{j}$ nahe: ein Punkt pro
-Verdopplung der Skala und ein Zeitschritt, der mit der Wavelet-Breite mitwächst.
-Zellen gleichen Inhalts liefert ebenso jedes Gitter $(a_0^{j}, k\,b_0 a_0^{j})$
-mit $a_0>1$, $b_0>0$ \cite[Kap.~2.1.1]{lmr}; die Wahl $a_0=2$ ist die in der
-Praxis übliche \cite[Kap.~5]{blatter}. Ob die so ausgewählten Funktionen
-tatsächlich eine Orthonormalbasis bilden, hängt dabei allein von $\psi$ ab.
-
-\begin{Definition}[Dyadische Wavelet-Familie, {\cite[Kap.~5.1]{blatter}}]
+Das führt auf das Gitter $a = 2^{j}$, $b = k\,2^{j}$. Allgemeiner liefert jedes
+Gitter $(a_0^{j},\, k\,b_0 a_0^{j})$ Zellen gleichen Inhalts. Dabei ist
+$a_0 > 1$ der Skalenschritt und $b_0 > 0$ der Verschiebungsschritt
+\cite[Kap.~2.1.1]{lmr}. % S. 88
+Üblich ist $a_0 = 2$, $b_0 = 1$ \cite[Kap.~5]{blatter}. % S. 105
+ 
+\begin{Definition}[Dyadische Wavelet-Familie, {\cite[Kap.~5.1]{blatter}}] % S. 106
 \label{def:dyadisch}
-Sei $\psi$ ein Wavelet. Für die Elemente der Wavelet-Familie
-\eqref{eq:wavelet-familie} auf dem dyadischen Gitter
-$\{(2^{j},k2^{j}) : j,k\in\Z\} \subset \R^*_\square$ schreiben wir kurz
+Sei $\psi$ ein Wavelet. Auf dem dyadischen Gitter
+$\{(2^{j},k2^{j}) : j,k\in\Z\}$ sei
 \begin{equation}
 \label{eq:dyadische-familie}
   \psi_{j,k} \;:=\; \psi_{2^{j},\,k2^{j}},
@@ -1429,33 +963,28 @@ $\{(2^{j},k2^{j}) : j,k\in\Z\} \subset \R^*_\square$ schreiben wir kurz
   \psi_{j,k}(t) \;=\; 2^{-j/2}\,\psi\!\left(\frac{t}{2^{j}} - k\right),
   \qquad j,k \in \Z .
 \end{equation}
-Dabei gehört zu kleinerem $j$ die feinere Skala: Für $j \to -\infty$ wird
-$\psi_{j,k}$ schmal, für $j \to +\infty$ breit.\footnote{Diese Konvention folgt
-Blatter und Louis/Maa\ss{}/Rieder; ein Teil der Literatur zählt umgekehrt, so
-Hanke-Bourgeois \cite[§~56]{hankebourgeois}.}
+Kleineres $j$ gehört zur feineren Skala.\footnote{Diese Konvention folgt
+Blatter und Louis/Maa\ss{}/Rieder. Hanke-Bourgeois zählt umgekehrt
+\cite[§~56]{hankebourgeois}.} % S. 434
 \end{Definition}
-
+ 
 \begin{figure}[htbp]
   \centering
   \begin{tikzpicture}[x=1.2cm,y=1.0cm]
-    % Zellen [2^j,2^{j+1}] x [k2^j,(k+1)2^j]; Zeilen j=-1..2 (a logarithmisch)
     \foreach \j/\w in {-1/0.5, 0/1, 1/2, 2/4}{
       \pgfmathtruncatemacro{\n}{8/\w - 1}
       \foreach \k in {0,...,\n}
         \draw[fill=gray!10] ({\k*\w},{\j}) rectangle ({(\k+1)*\w},{\j+1});
     }
-    % zwei Zellen gleichen Inhalts hervorheben
     \draw[fill=blue!25] (0,-1) rectangle (0.5,0);
     \node at (0.25,-0.5) {\scriptsize$\tfrac12$};
     \draw[fill=blue!25] (4,2) rectangle (8,3);
     \node at (6,2.5) {\scriptsize$\tfrac12$};
-    % Gitterpunkte (2^j, k2^j)
     \foreach \j/\w in {-1/0.5, 0/1, 1/2, 2/4}{
       \pgfmathtruncatemacro{\n}{8/\w - 1}
       \foreach \k in {0,...,\n}
         \fill ({\k*\w},{\j}) circle (1.5pt);
     }
-    % Achsen
     \draw[->] (-0.25,-1.3) -- (8.5,-1.3) node[right] {$b$};
     \draw[->] (-0.25,-1.3) -- (-0.25,3.5) node[above] {$a$};
     \foreach \x in {0,...,8}{
@@ -1469,74 +998,52 @@ Hanke-Bourgeois \cite[§~56]{hankebourgeois}.}
     \foreach \j in {-1,0,1,2}
       \node[right] at (8.1,\j+0.5) {\small $j=\j$};
   \end{tikzpicture}
-  \caption{Das dyadische Gitter $(2^j, k\,2^j)$ mit logarithmisch aufgetragener
-  Skala $a$. Jeder Gitterpunkt vertritt die Zelle
-  $[2^j,2^{j+1}]\times[k\,2^j,(k+1)\,2^j]$ rechts oberhalb von ihm; alle Zellen
-  haben bezüglich $da\,db/a^2$ den Inhalt $\tfrac12$. Nur die Skalenachse ist
-  logarithmisch, weil Stauchen multiplikativ, Verschieben dagegen additiv wirkt.}
+  \caption{Das dyadische Gitter $(2^j, k\,2^j)$. Die Skala $a$ ist
+  logarithmisch aufgetragen. Jeder Gitterpunkt vertritt die Zelle
+  $[2^j,2^{j+1}]\times[k\,2^j,(k+1)\,2^j]$ rechts oberhalb von ihm. Bezüglich
+  $da\,db/a^2$ hat jede Zelle den Inhalt $\tfrac12$. Hervorgehoben sind die
+  Zellen $[\tfrac12,1]\times[0,\tfrac12]$ und $[4,8]\times[4,8]$. Ihre
+  gewöhnlichen Flächen sind $\tfrac14$ und $16$.}
   \label{fig:dyadisches-gitter}
 \end{figure}
-
-Die beiden hervorgehobenen Zellen in Abbildung~\ref{fig:dyadisches-gitter}
-zeigen das konkret. Die feine Zelle $[\tfrac12,1]\times[0,\tfrac12]$ zur Skala
-$j=-1$ hat den Inhalt
-\[
-  \int_{0}^{1/2}\int_{1/2}^{1} \frac{da\,db}{a^2}
-  \;=\; \frac12\cdot\Bigl(2 - 1\Bigr) \;=\; \frac12 ,
-\]
-die grobe Zelle $[4,8]\times[4,8]$ zur Skala $j=2$ den Inhalt
-\[
-  \int_{4}^{8}\int_{4}^{8} \frac{da\,db}{a^2}
-  \;=\; 4\cdot\Bigl(\frac14 - \frac18\Bigr) \;=\; \frac12 .
-\]
-Im gewöhnlichen Sinn ist die grobe Zelle mit Fläche $16$ gegenüber $\tfrac14$
-zwar 64-mal so gro\ss, das Gewicht $1/a^2$ ist dort aber entsprechend kleiner.
-
-
+ 
 \subsection{Die Axiome}
 \label{subsec:mra-axiome}
-
-Gesucht ist ein Wavelet $\psi$, dessen dyadische Familie $\{\psi_{j,k}\}$ aus
-Definition~\ref{def:dyadisch} eine Orthonormalbasis von $\LZwei$ ist.
-Direkt lässt sich ein solches $\psi$ kaum finden; bekannt sind zunächst nur
-Einzelfälle wie das Haar-Wavelet \cite[Kap.~2.2.1]{lmr}. Die
-Multiskalenanalyse geht deshalb einen Umweg: Statt nach $\psi$ zu suchen,
-beschreibt man zuerst, wie ein Signal auf verschiedenen Skalen vergröbert wird.
-Das Wavelet ergibt sich danach aus dem Übergang zwischen zwei benachbarten
-Skalen \cite[Kap.~5.1]{blatter}. Das folgende Beispiel zeigt das am
-Haar-Wavelet.
-
-\begin{Beispiel}[Mittelwerte und Details, {\cite[Kap.~2.2.1]{lmr}}]
+ 
+Gesucht ist ein Wavelet $\psi$, für das $\{\psi_{j,k}\}$ eine Orthonormalbasis
+von $\LZwei$ ist. Direkt lässt sich ein solches $\psi$ schwer finden. Die
+Multiskalenanalyse beschreibt deshalb zuerst, wie ein Signal auf verschiedenen
+Skalen vergröbert wird. Das Wavelet ergibt sich aus dem Übergang zwischen zwei
+benachbarten Skalen \cite[Kap.~5.1]{blatter}. % S. 106
+Das folgende Beispiel zeigt das am Haar-Wavelet.
+ 
+\begin{Beispiel}[Mittelwerte und Details, {\cite[Kap.~2.2.1]{lmr}}] % S. 110--111
 \label{bsp:haar-mittelung}
 Sei $V_j$ der Raum der Funktionen in $\LZwei$, die auf jedem Intervall
 $[k2^{j},(k+1)2^{j}[$ konstant sind. Die Orthogonalprojektion $P_j$ auf $V_j$
 ersetzt eine Funktion auf jedem dieser Intervalle durch ihren Mittelwert
-\cite[Satz~43.1]{hankebourgeois}. Wir wenden das auf die Treppenfunktion
+\cite[Satz~43.1]{hankebourgeois}. % S. 356
+Wir betrachten die Treppenfunktion
 \[
   f \;=\; 4\cdot\mathbf 1_{[0,1[} + 2\cdot\mathbf 1_{[1,2[}
         + 5\cdot\mathbf 1_{[2,3[} + 7\cdot\mathbf 1_{[3,4[} \;\in\; V_0
 \]
-an und schreiben kurz $f = (4,2,5,7)$ für ihre Werte auf den vier Intervallen
-(Abbildung~\ref{fig:haar-mittelung}).
-
+und schreiben kurz $f = (4,2,5,7)$ (Abbildung~\ref{fig:haar-mittelung}).
+ 
 \begin{figure}[htbp]
   \centering
   \begin{tikzpicture}[x=0.6cm,y=0.32cm,font=\scriptsize]
-    % Achsen für Signal/Mittelungen: t in [0,4], Werte in [0,8]
     \newcommand{\ObenAchsen}{%
       \draw[->] (0,0) -- (4.5,0) node[right] {$t$};
       \draw[->] (0,0) -- (0,9.2);
       \foreach \x in {0,...,4} \draw (\x,0) -- (\x,-0.25) node[below] {$\x$};
       \foreach \y in {4,8} \draw (0,\y) -- (-0.12,\y) node[left] {$\y$};}
-    % Achsen für Details: gleicher Maßstab, Werte in [-2,2]
     \newcommand{\UntenAchsen}{%
       \draw[gray] (0,0) -- (4.5,0);
       \draw[->] (0,-2.6) -- (4.5,-2.6) node[right] {$t$};
       \draw[->] (0,-2.6) -- (0,2.9);
       \foreach \x in {0,...,4} \draw (\x,-2.6) -- (\x,-2.85) node[below] {$\x$};
       \foreach \y in {-2,0,2} \draw (0,\y) -- (-0.12,\y) node[left] {$\y$};}
-
-    % ---------- obere Reihe: Mittelungen ----------
     \begin{scope}
       \ObenAchsen
       \node[anchor=south west] at (-0.3,9.4) {\small $f$ (Stufenbreite $1$)};
@@ -1546,7 +1053,6 @@ an und schreiben kurz $f = (4,2,5,7)$ für ihre Werte auf den vier Intervallen
       \node[above] at (2.5,5) {$5$};
       \node[above] at (3.5,7) {$7$};
     \end{scope}
-
     \begin{scope}[xshift=4.4cm]
       \ObenAchsen
       \node[anchor=south west] at (-0.3,9.4) {\small $P_1 f$ (Stufenbreite $2$)};
@@ -1554,15 +1060,12 @@ an und schreiben kurz $f = (4,2,5,7)$ für ihre Werte auf den vier Intervallen
       \node[above] at (1,3) {$3$};
       \node[above] at (3,6) {$6$};
     \end{scope}
-
     \begin{scope}[xshift=8.8cm]
       \ObenAchsen
       \node[anchor=south west] at (-0.3,9.4) {\small $P_2 f$ (Stufenbreite $4$)};
       \draw[uhh_blue, line width=1.1pt] (0,4.5) -- (4,4.5);
       \node[above] at (2,4.5) {$4{,}5$};
     \end{scope}
-
-    % ---------- untere Reihe: verlorene Details ----------
     \begin{scope}[xshift=4.4cm,yshift=-2.5cm]
       \UntenAchsen
       \node[anchor=south west] at (-0.3,3.0) {\small $f-P_1 f$ (verlorenes Detail)};
@@ -1571,7 +1074,6 @@ an und schreiben kurz $f = (4,2,5,7)$ für ihre Werte auf den vier Intervallen
       \node[below] at (2,-1) {$-1$};
       \node[above] at (3.5,1) {$1$};
     \end{scope}
-
     \begin{scope}[xshift=8.8cm,yshift=-2.5cm]
       \UntenAchsen
       \node[anchor=south west] at (-0.3,3.0) {\small $P_1 f-P_2 f$ (verlorenes Detail)};
@@ -1580,40 +1082,35 @@ an und schreiben kurz $f = (4,2,5,7)$ für ihre Werte auf den vier Intervallen
       \node[above] at (3,1.5) {$1{,}5$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Die Treppenfunktion $f=(4,2,5,7)$ aus Beispiel~\ref{bsp:haar-mittelung} und ihre
-  Mittelungen $P_1 f$ und $P_2 f$ (oben). Darunter steht jeweils das Detail, das beim
-  Übergang zu dieser Mittelung verloren geht (unten). Alle Panels haben denselben
-  vertikalen Maßstab. Jedes Detail ist ein Vielfaches eines gestreckten und
-  verschobenen Haar-Wavelets.}
+  \caption{Die Treppenfunktion $f=(4,2,5,7)$ aus Beispiel~\ref{bsp:haar-mittelung}
+  und ihre Mittelungen $P_1 f$ und $P_2 f$ (oben). Darunter das Detail, das
+  beim Übergang zu der jeweiligen Mittelung verloren geht. Alle Panels haben
+  denselben vertikalen Ma\ss{}stab.}
   \label{fig:haar-mittelung}
 \end{figure}
-
+ 
 Mittelung über je zwei benachbarte Intervalle liefert $P_1 f = (3,3,6,6)$.
-Dabei geht $f - P_1 f = (1,-1,-1,1)$ verloren; mit dem Haar-Wavelet
-$\psi^{\mathrm H}$ aus Beispiel~\ref{bsp:haar} ist das
+Dabei geht $f - P_1 f = (1,-1,-1,1)$ verloren. Mit dem Haar-Wavelet ist das
 \[
   (f - P_1 f)(t) \;=\; \psi^{\mathrm H}\bigl(\tfrac t2\bigr) - \psi^{\mathrm H}\bigl(\tfrac t2 - 1\bigr).
 \]
-Nochmalige Mittelung liefert $P_2 f = (4{,}5,\,4{,}5,\,4{,}5,\,4{,}5)$, und
-verloren geht $P_1 f - P_2 f = (-1{,}5,\,-1{,}5,\,1{,}5,\,1{,}5)$, also
-$(P_1 f - P_2 f)(t) = -1{,}5\,\psi^{\mathrm H}\bigl(\tfrac t4\bigr)$. Insgesamt ist
+Nochmalige Mittelung liefert $P_2 f = (4{,}5,\,4{,}5,\,4{,}5,\,4{,}5)$. Dabei
+geht $(P_1 f - P_2 f)(t) = -1{,}5\,\psi^{\mathrm H}\bigl(\tfrac t4\bigr)$
+verloren. Insgesamt ist
 \[
   f(t) \;=\; 4{,}5\cdot\mathbf 1_{[0,4[}(t) \;-\; 1{,}5\,\psi^{\mathrm H}\bigl(\tfrac t4\bigr)
-  \;+\; \psi^{\mathrm H}\bigl(\tfrac t2\bigr) \;-\; \psi^{\mathrm H}\bigl(\tfrac t2 - 1\bigr),
-  \qquad t \in \R .
+  \;+\; \psi^{\mathrm H}\bigl(\tfrac t2\bigr) \;-\; \psi^{\mathrm H}\bigl(\tfrac t2 - 1\bigr).
 \]
-Die vier Werte von $f$ sind damit durch vier andere Zahlen ersetzt: den
-Mittelwert $4{,}5$, ein grobes Detail $-1{,}5$ und zwei feine Details $1$ und
-$-1$. Aus ihnen lässt sich $f$ exakt zurückgewinnen. Die Zahlen sind hier ohne
-die Normierungsfaktoren $2^{-j/2}$ aus \eqref{eq:dyadische-familie} angegeben.
+Die vier Werte von $f$ sind durch vier andere Zahlen ersetzt: den Mittelwert
+$4{,}5$, ein grobes Detail $-1{,}5$ und zwei feine Details $1$ und $-1$. Aus
+ihnen lässt sich $f$ exakt zurückgewinnen. Die Normierungsfaktoren $2^{-j/2}$
+aus \eqref{eq:dyadische-familie} sind hier weggelassen.
 \end{Beispiel}
-
-
-\begin{Definition}[Multiskalenanalyse, {\cite[Kap.~5.1, (a)--(c)]{blatter}}]
+ 
+\begin{Definition}[Multiskalenanalyse, {\cite[Kap.~5.1, (a)--(c)]{blatter}}] % S. 106
 \label{def:msa}
-Eine Multiskalenanalyse (MSA) von $\LZwei$ ist eine Folge
-$(V_j)_{j\in\Z}$ abgeschlossener Teilräume von $\LZwei$ mit den folgenden
-Eigenschaften:
+Eine Multiskalenanalyse (MSA) von $\LZwei$ ist eine Folge $(V_j)_{j\in\Z}$
+abgeschlossener Teilräume von $\LZwei$ mit folgenden Eigenschaften:
 \begin{enumerate}
 \item[(M1)] (Schachtelung)
   $\;\cdots \subset V_{2} \subset V_{1} \subset V_{0} \subset V_{-1} \subset V_{-2} \subset \cdots \subset \LZwei$,
@@ -1624,302 +1121,161 @@ Eigenschaften:
 \item[(M4)] (Skalierung)
   $\;f \in V_j \iff f(2^{j}\,\cdot\,) \in V_0$ für alle $j \in \Z$,
 \item[(M5)] (Erzeugende Funktion) Es gibt ein
-  $\varphi \in \LZwei \cap L^1(\R)$,\footnote{Die Forderung $\varphi \in L^1(\R)$
-  folgt Blatter und sichert, dass $\hat\varphi$ stetig ist; das wird in
-  Kapitel~\ref{chapter:dwt} bei der Auswertung der Skalierungsgleichung an der
-  Stelle $\omega = 0$ gebraucht.} sodass $\{\varphi(\,\cdot - k) : k \in \Z\}$
-  eine Orthonormalbasis von $V_0$ ist.
+  $\varphi \in \LZwei \cap L^1(\R)$,\footnote{Die Forderung
+  $\varphi \in L^1(\R)$ folgt Blatter. Sie sichert, dass $\hat\varphi$ stetig
+  ist. Das wird in Abschnitt~\ref{sec:skalierungsgleichung} an der Stelle
+  $\omega = 0$ gebraucht.} sodass $\{\varphi(\,\cdot - k) : k \in \Z\}$ eine
+  Orthonormalbasis von $V_0$ ist.
 \end{enumerate}
-Die Funktion $\varphi$ hei\ss t Skalierungsfunktion der MSA.
+Die Funktion $\varphi$ hei\ss{}t Skalierungsfunktion der MSA.
 \end{Definition}
-
-\begin{Bemerkung}[Zu den Axiomen, {\cite[Kap.~5.1]{blatter}}]
+ 
+\begin{Bemerkung}[Zu den Axiomen, {\cite[Kap.~5.1]{blatter}}] % S. 106--107
 \label{bem:msa-axiome}
 \begin{enumerate}
-\item[(a)] Die anschauliche Bedeutung von (M1)--(M3): Ein $f \in V_j$ enthält
-  nur Strukturen der zeitlichen Ausdehnung $\gtrsim 2^{j}$. Je kleiner $j$,
-  desto feinere Details sind zugelassen; (M3) besagt, dass im Limes
-  $j \to -\infty$ jedes Signal erreichbar ist, (M2), dass im Limes
-  $j \to +\infty$ nichts übrigbleibt \cite[Bem.~2.2.2]{lmr}.\footnote{Louis, Maa\ss{} und Rieder verlangen in (M5) nur eine Riesz-Basis \cite[Def.~2.2.1]{lmr}; wir folgen Blatter und fordern eine Orthonormalbasis.}
-\item[(b)] Axiom (M4) ist die eigentliche Substanz: Die $V_j$ sind nicht
-  irgendwelche geschachtelten Räume, sondern skalierte Kopien ein und desselben
-  Raumes $V_0$. Erst dadurch genügt eine einzige Funktion $\varphi$, um die
-  gesamte Hierarchie festzulegen.
+\item[(a)] Je kleiner $j$, desto feinere Strukturen enthält $V_j$. Nach (M3)
+  lässt sich jedes Signal für $j \to -\infty$ beliebig genau annähern. Nach
+  (M2) bleibt für $j \to +\infty$ nur die Null übrig \cite[Bem.~2.2.2]{lmr}. % S. 112--113
+\item[(b)] Nach (M4) sind die $V_j$ skalierte Kopien desselben Raumes $V_0$.
+  Deshalb genügt eine einzige Funktion $\varphi$, um alle $V_j$ festzulegen.
+\item[(c)] Axiom (M5) liefert eine Orthonormalbasis, allerdings nur für den
+  Grundraum $V_0$ \cite[Kap.~5.1, (c)]{blatter}. % S. 106
+  Zusammen mit (M4) überträgt sie sich auf alle $V_j$
+  (Satz~\ref{satz:onb-vj}).\footnote{Louis, Maa\ss{} und Rieder verlangen in
+  (M5) nur eine Riesz-Basis \cite[Def.~2.2.1]{lmr}. % S. 111
+  Wir folgen Blatter und fordern eine Orthonormalbasis.}
 \end{enumerate}
 \end{Bemerkung}
-
-\begin{Beispiel}[Die Haar-MSA, {\cite[Kap.~5.1, Beispiel~$\textcircled{1}$]{blatter}}]
+ 
+\begin{Beispiel}[Die Haar-MSA, {\cite[Kap.~5.1, Beispiel~\textcircled{1}]{blatter}}] % S. 107
 \label{bsp:haar-msa}
-Die Räume $V_j$ aus Beispiel~\ref{bsp:haar-mittelung}, also die Treppenfunktionen
-der Stufenbreite $2^j$, bilden eine MSA mit der Skalierungsfunktion
-$\varphi := \mathbf 1_{[0,1[}$, einer einzelnen Stufe (nicht dem Haar-Wavelet).
-(M1) gilt, weil eine Treppe der Stufenbreite $2$ auch eine der Stufenbreite $1$
-ist; (M4), weil $f$ genau dann auf allen Intervallen $[k2^j,(k+1)2^j[$ konstant
-ist, wenn $f(2^j\,\cdot)$ auf allen Intervallen $[k,k+1[$ konstant ist -- etwa
-$\mathbf 1_{[0,2[} \in V_1$ und $\mathbf 1_{[0,2[}(2\,\cdot) = \mathbf 1_{[0,1[} \in V_0$. Für (M5) sind die Verschiebungen
-$\varphi(\,\cdot - k) = \mathbf 1_{[k,k+1[}$ orthonormal, und etwa
-$f = (4,2,5,7) = 4\varphi + 2\varphi(\,\cdot-1) + 5\varphi(\,\cdot-2) + 7\varphi(\,\cdot-3)$.
-
-(M2): Liegt $f$ in allen $V_j$, so ist $f$ auf $[0,2^j[$ für jedes $j$ konstant,
-also auf ganz $[0,\infty[$; das ist in $\LZwei$ nur für $f = 0$ möglich,
-ebenso auf $]-\infty,0[$. (M3): $\mathbf 1_{[0,1/3[}$ liegt in keinem $V_j$, lässt
-sich aber annähern, etwa durch $\mathbf 1_{[0,5/16[} \in V_{-4}$ mit
-Fehlerquadrat $\tfrac13 - \tfrac5{16} = \tfrac1{48}$. Mit feineren Stufen wird der
-Fehler beliebig klein, und da Treppenfunktionen mit dyadischen Sprungstellen dicht in $\LZwei$ liegen
-\cite[Kap.~5.1]{blatter},
-folgt (M3).
+Die Räume $V_j$ aus Beispiel~\ref{bsp:haar-mittelung} bilden eine MSA mit der
+Skalierungsfunktion $\varphi := \mathbf 1_{[0,1[}$. Die Skalierungsfunktion ist
+also eine einzelne Stufe und nicht das Haar-Wavelet. Die Axiome lassen sich
+einzeln prüfen.
+\begin{itemize}
+\item (M1): Eine Treppe der Stufenbreite $2^{j}$ ist auch eine Treppe der
+  Stufenbreite $2^{j-1}$.
+\item (M2): Liegt $f$ in allen $V_j$, so ist $f$ auf $[0,2^j[$ für jedes $j$
+  konstant, also auf $[0,\infty[$. In $\LZwei$ geht das nur für $f = 0$.
+  Dasselbe gilt auf $]-\infty,0[$.
+\item (M3): Treppenfunktionen mit dyadischen Sprungstellen liegen dicht in
+  $\LZwei$ \cite[Kap.~5.1]{blatter}. % S. 107
+  So liegt $\mathbf 1_{[0,1/3[}$ in keinem $V_j$. Die Funktion
+  $\mathbf 1_{[0,5/16[} \in V_{-4}$ nähert sie aber mit Fehlerquadrat
+  $\tfrac13 - \tfrac5{16} = \tfrac1{48}$ an.
+\item (M4): $f$ ist genau dann auf allen Intervallen $[k2^j,(k+1)2^j[$
+  konstant, wenn $f(2^j\,\cdot)$ auf allen Intervallen $[k,k+1[$ konstant ist.
+  Etwa ist $\mathbf 1_{[0,2[} \in V_1$ und
+  $\mathbf 1_{[0,2[}(2\,\cdot) = \mathbf 1_{[0,1[} \in V_0$.
+\item (M5): Die Verschiebungen $\varphi(\,\cdot - k) = \mathbf 1_{[k,k+1[}$ sind
+  orthonormal. Etwa ist
+  $f = 4\varphi + 2\varphi(\,\cdot-1) + 5\varphi(\,\cdot-2) + 7\varphi(\,\cdot-3)$.
+\end{itemize}
 \end{Beispiel}
-
-\anmerkung{Dieses Beispiel wird in Kapitel~\ref{chapter:dwt} bis zum
-Haar-Wavelet durchgerechnet und ist in Kapitel~\ref{chapter:anwendung} der
-Referenzfall, gegen den \texttt{db2} antritt. Es lohnt sich, es hier vollständig
-zu bringen.}
-
-
-Beispiel~\ref{bsp:haar-mittelung} zeigt die Multiskalenanalyse im Kleinen.
-Jede gröbere Näherung $P_{j+1} f$ entsteht aus der feineren $P_j f$ durch
-Mittelung; darin spiegelt sich die Schachtelung (M1). Was bei der Mittelung
-verloren geht, sind Vielfache gestreckter und verschobener Haar-Wavelets
-\cite[Kap.~2.2.1]{lmr}; diese Unterschiede zwischen zwei Stufen werden in
-Abschnitt~\ref{sec:detailraeume} als Detailräume $W_j$ gefasst. Schlie\ss lich
-werden aus $4$ Werten wieder $4$ Koeffizienten: Die Zerlegung ist frei von der
-Redundanz, die Bemerkung~\ref{bem:redundanz} an der CWT bemängelt.
-
+ 
+In Beispiel~\ref{bsp:haar-mittelung} entsteht jede gröbere Näherung
+$P_{j+1} f$ durch Mittelung aus $P_j f$. Das entspricht der Schachtelung (M1).
+Was bei der Mittelung verloren geht, sind Vielfache gestreckter und
+verschobener Haar-Wavelets \cite[Kap.~2.2.1]{lmr}. % S. 110--111
+Diese Unterschiede werden in Abschnitt~\ref{sec:detailraeume} als Detailräume
+$W_j$ gefasst. Aus vier Werten werden wieder vier Koeffizienten. Die Zerlegung
+ist also frei von der Redundanz aus Bemerkung~\ref{bem:redundanz}.
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Skalierungsfunktion und Orthonormalbasis der Räume \texorpdfstring{$V_j$}{Vj}}
 \label{sec:skalierungsfunktion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Axiom (M5) stattet nur den Grundraum $V_0$ mit einer Orthonormalbasis aus
-\cite[Kap.~5.1, (c)]{blatter}. % S. 106, Blatter
-In diesem Abschnitt wird diese Basis auf alle Skalen übertragen
-(Satz~\ref{satz:onb-vj}), und es wird festgehalten, dass die
-Orthogonalprojektionen $P_j$ auf $V_j$ für $j \to -\infty$ gegen die Identität
-und für $j \to +\infty$ gegen null streben
-(Proposition~\ref{prop:approximation}). Beides zusammen liefert in
-Abschnitt~\ref{sec:detailraeume} die Zerlegung von $\LZwei$ in Detailräume.
-Normen ohne Index sind im Folgenden stets Normen in $\LZwei$.
-
+ 
+In diesem Abschnitt wird die Basis aus (M5) auf alle Skalen übertragen
+(Satz~\ref{satz:onb-vj}). Au\ss{}erdem wird gezeigt, dass die
+Orthogonalprojektionen $P_j$ für $j \to -\infty$ gegen die Identität und für
+$j \to +\infty$ gegen null streben (Proposition~\ref{prop:approximation}).
+Normen ohne Index sind im Folgenden Normen in $\LZwei$.
+ 
 %-------------------------------------------------------------------------------
 \subsection{Die Orthonormalbasis auf allen Skalen}
 \label{subsec:onb-alle-skalen}
 %-------------------------------------------------------------------------------
-
-Mit dem Dilatationsoperator $D_a f := \lvert a\rvert^{-1/2} f(\,\cdot/a)$,
-$a \in \R^*$, lässt sich (M4) als Aussage über Räume lesen: $f$ liegt genau dann
-in $V_j$, wenn $f = h(\,\cdot/2^{j})$ mit einem $h \in V_0$ ist. Da $V_j$ ein
-linearer Raum ist, spielt der Vorfaktor keine Rolle, und es folgt
+ 
+Sei $D_a f := \lvert a\rvert^{-1/2} f(\,\cdot/a)$ der Dilatationsoperator,
+$a \in \R^*$. Nach (M4) liegt $f$ genau dann in $V_j$, wenn
+$f = h(\,\cdot/2^{j})$ mit einem $h \in V_0$ ist. Da $V_j$ ein linearer Raum ist,
+spielt der Vorfaktor keine Rolle. Es folgt
 \begin{equation}
 \label{eq:vj-d2j}
-  V_j \;=\; D_{2^{j}}(V_0) \qquad\text{für alle } j \in \Z .
+  V_j \;=\; D_{2^{j}}(V_0) \qquad\text{für alle } j \in \Z
 \end{equation}
-Jedes $V_j$ ist also eine gestreckte Kopie von $V_0$
-\cite[Kap.~5.1, (b)]{blatter}. % S. 106, Blatter
-Da $D_{2^j}$ unitär ist \cite[Kap.~1.2]{lmr}, % S. 27, LMR
-überträgt sich damit auch die Basis.
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): Lemma unitaer-onb mit Beweis. Inhalt steckt jetzt im
-% Satz nach Satz~\ref{satz:onb-vj}.
-% ---------------------------------------------------------------------------
-% \begin{Lemma}[Unitäre Operatoren und Orthonormalbasen]
-% \label{lem:unitaer-onb}
-% Sei $U \colon \LZwei \to \LZwei$ unitär, und seien $V, V' \subset \LZwei$
-% abgeschlossene Teilräume mit $U(V) = V'$. Ist $\{e_k : k \in \Z\}$ eine
-% Orthonormalbasis von $V$, so ist $\{U e_k : k \in \Z\}$ eine Orthonormalbasis
-% von $V'$.
-% \end{Lemma}
-%
-% \begin{proof}
-% Als unitärer Operator ist $U$ surjektiv und erhält Skalarprodukte,
-% $\scal{Uf}{Ug} = \scal{f}{g}$ für alle $f,g \in \LZwei$
-% \cite[Def.~27.7, Bem.~27.8]{serov}. % S. 282, Serov
-%
-% \textbf{Schritt 1 (Orthonormalität).} Für $k,l \in \Z$ ist
-% $\scal{Ue_k}{Ue_l} = \scal{e_k}{e_l} = \delta_{k,l}$.
-%
-% \textbf{Schritt 2 (Vollständigkeit).} Sei $g \in V'$ mit $\scal{g}{Ue_k} = 0$
-% für alle $k \in \Z$. Wegen $U(V) = V'$ gibt es ein $v \in V$ mit $g = Uv$, und
-% \[
-%   \scal{v}{e_k} \;=\; \scal{Uv}{Ue_k} \;=\; \scal{g}{Ue_k} \;=\; 0
-%   \qquad\text{für alle } k \in \Z .
-% \]
-% Da $\{e_k\}$ eine Orthonormalbasis von $V$ ist, folgt $v = 0$ und damit $g = 0$
-% \cite[Satz~25.18\,(2)]{serov}. % S. 257, Serov
-% Als abgeschlossener Teilraum ist $V'$ selbst ein Hilbertraum
-% \cite[Def.~25.7, Def.~25.10]{serov}, % S. 251 und 254, Serov
-% und ein Orthonormalsystem darin, auf dem nur die Null senkrecht steht, ist
-% eine Orthonormalbasis \cite[Satz~25.18]{serov}. % S. 257--258, Serov
-% \end{proof}
-
-\begin{Satz}[Orthonormalbasis von $V_j$, {\cite[Kap.~5.1]{blatter}}] % S. 107, Blatter
+\cite[Kap.~5.1, (b)]{blatter}. % S. 106
+Der Operator $D_{2^j}$ ist unitär \cite[Kap.~1.2]{lmr}. % S. 27
+ 
+\begin{Satz}[Orthonormalbasis von $V_j$, {\cite[Kap.~5.1]{blatter}}] % S. 107
 \label{satz:onb-vj}
-Sei $(V_j)_{j\in\Z}$ eine MSA mit Skalierungsfunktion $\varphi$. Setzt man
+Sei $(V_j)_{j\in\Z}$ eine MSA mit Skalierungsfunktion $\varphi$. Mit
 \begin{equation}
 \label{eq:phi-jk}
   \varphi_{j,k}(t) \;:=\; 2^{-j/2}\,\varphi\!\left(\frac{t}{2^{j}} - k\right),
   \qquad j,k \in \Z ,
 \end{equation}
-so ist $\{\varphi_{j,k} : k \in \Z\}$ für jedes feste $j \in \Z$ eine
+ist $\{\varphi_{j,k} : k \in \Z\}$ für jedes feste $j \in \Z$ eine
 Orthonormalbasis von $V_j$.
 \end{Satz}
-
-Die Aussage folgt direkt aus \eqref{eq:vj-d2j}: Ein unitärer Operator erhält
-Skalarprodukte und bildet deshalb eine Orthonormalbasis eines abgeschlossenen
-Teilraums auf eine Orthonormalbasis von dessen Bild ab
-\cite[Def.~27.7, Satz~25.18]{serov}. % S. 282, 257--258, Serov
-Angewandt auf die Basis $\{\varphi(\,\cdot-k)\}_k$ von $V_0$ aus (M5) liefert
-$D_{2^j}$ die Basis $\{D_{2^j}\varphi(\,\cdot-k)\}_k = \{\varphi_{j,k}\}_k$ von
-$V_j$. Benachbarte Basisfunktionen sind dabei um die Schrittweite $2^{j}$
-gegeneinander verschoben \cite[Kap.~5.1]{blatter}. % S. 107, Blatter
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): Meta-Satz + ausgeführter Beweis von Satz~\ref{satz:onb-vj}.
-% Hinweis: Mit (M4) in der hier verwendeten Form "f in V_j <=> f(2^j .) in V_0"
-% ist (eq:vj-d2j) unmittelbar, die Induktion in Schritt 2 war überflüssig.
-% ---------------------------------------------------------------------------
-% Blatter leitet den Satz ohne Beweis aus der Skalierungseigenschaft (M4) ab
-% \cite[Kap.~5.1]{blatter}; % S. 107, Blatter
-% Louis, Maa\ss{} und Rieder halten fest, dass die $\varphi_{m,k}$ den Raum $V_m$
-% aufspannen und alle dieselbe Norm besitzen \cite[Bem.~2.2.2\,(c)]{lmr}. % S. 113, LMR
-% Wir führen den Beweis aus.
-%
-% \begin{proof}
-% \textbf{Schritt 1 (Die Dilatationen bilden eine Gruppe).} Für $a,b \in \R^*$ und
-% $f \in \LZwei$ ist nach Definition~\ref{def:dilatation}
-% \[
-%   (D_a D_b f)(t)
-%   \;=\; \lvert a\rvert^{-1/2}\,(D_b f)\!\left(\frac ta\right)
-%   \;=\; \lvert a\rvert^{-1/2}\,\lvert b\rvert^{-1/2}\, f\!\left(\frac{t}{ab}\right)
-%   \;=\; (D_{ab} f)(t),
-% \]
-% also $D_a D_b = D_{ab}$; das ist der Spezialfall $b = b' = 0$ des
-% Verknüpfungsgesetzes der affin-linearen Gruppe \cite[Kap.~1.2]{lmr}. % S. 27, LMR
-% Insbesondere ist $D_2 D_{2^{j}} = D_{2^{j+1}}$ und
-% $D_{1/2} D_{2^{j}} = D_{2^{j-1}}$ für alle $j \in \Z$.
-%
-% \textbf{Schritt 2 ($V_j$ ist eine gestreckte Kopie von $V_0$).} Wir zeigen
-% \eqref{eq:vj-d2j}.
-% Für $j = 0$ ist das klar. Gilt \eqref{eq:vj-d2j} für ein $j \ge 0$, so liefert
-% (M4) \cite[Kap.~5.1, Gl.~(4)]{blatter} % S. 106, Blatter
-% mit Schritt~1 $V_{j+1} = D_2(V_j) = D_2 D_{2^{j}}(V_0) = D_{2^{j+1}}(V_0)$.
-% Gilt \eqref{eq:vj-d2j} für ein $j \le 0$, so folgt aus (M4) in der Form
-% $V_j = D_2(V_{j-1})$ durch Anwenden von $D_2^{-1} = D_{1/2}$
-% \cite[Lemma~1.2.1]{lmr} % S. 27, LMR
-% \[
-%   V_{j-1} \;=\; D_{1/2}(V_j) \;=\; D_{1/2} D_{2^{j}}(V_0) \;=\; D_{2^{j-1}}(V_0).
-% \]
-% Induktion in beide Richtungen ergibt \eqref{eq:vj-d2j}.
-%
-% \textbf{Schritt 3 (Übertragung der Basis).} Nach (M5) ist
-% $\{\varphi(\,\cdot - k) : k \in \Z\}$ eine Orthonormalbasis von $V_0$
-% \cite[Kap.~5.1, (c)]{blatter}, % S. 106, Blatter
-% und $D_{2^{j}}$ ist unitär \cite[Kap.~1.2]{lmr}. % S. 27, LMR
-% Da alle $V_j$ abgeschlossen sind \cite[Kap.~5.1, (a)]{blatter}, % S. 106, Blatter
-% ist nach Lemma~\ref{lem:unitaer-onb} und \eqref{eq:vj-d2j} die Familie
-% $\{D_{2^{j}}\varphi(\,\cdot - k) : k \in \Z\}$ eine Orthonormalbasis von $V_j$.
-%
-% \textbf{Schritt 4 (Identifikation).} Für $k \in \Z$ und $t \in \R$ ist
-% \[
-%   \bigl(D_{2^{j}}\varphi(\,\cdot-k)\bigr)(t)
-%   \;=\; 2^{-j/2}\,\varphi\!\left(\frac{t}{2^{j}} - k\right)
-%   \;=\; \varphi_{j,k}(t). \qedhere
-% \]
-% \end{proof}
-
+ 
+Ein unitärer Operator erhält Skalarprodukte. Er bildet daher eine
+Orthonormalbasis eines abgeschlossenen Teilraums auf eine Orthonormalbasis des
+Bildes ab \cite[Def.~27.7, Satz~25.18]{serov}. % S. 282, 257--258
+Nach \eqref{eq:vj-d2j} bildet $D_{2^j}$ die Basis $\{\varphi(\,\cdot-k)\}_k$
+von $V_0$ auf $\{\varphi_{j,k}\}_k$ ab. Das beweist den Satz.
+ 
 \anmerkung{Der rote Faden: Die gesamte Konstruktion liefert Orthonormalbasen.
 In Abschnitt~\ref{sec:onb-invarianz} ist es die Orthogonalität der DWT
 (Lemma~\ref{lem:dwt-orthogonal}), die das Rauschen invariant lässt.}
-
+ 
 %-------------------------------------------------------------------------------
 \subsection{Die Approximationsoperatoren}
 \label{subsec:approximationsoperatoren}
 %-------------------------------------------------------------------------------
-
-\begin{Definition}[Approximationsoperator]
+ 
+\begin{Definition}[Approximationsoperator, {\cite[Bem.~2.2.2\,(a)]{lmr}}] % S. 113
 \label{def:projektion-pj}
-Für $f \in \LZwei$ und $j \in \Z$ hei\ss{}en die Zahlen
+Für $f \in \LZwei$ und $j \in \Z$ hei\ss{}en
 $a_{j,k} := \scal{f}{\varphi_{j,k}}$, $k \in \Z$, die
-Approximationskoeffizienten von $f$ auf der Skala $j$, und
+Approximationskoeffizienten von $f$ auf der Skala $j$. Die Abbildung
+$P_j \colon \LZwei \to V_j$,
 \begin{equation}
 \label{eq:pj}
-  P_j f \;:=\; \sum_{k\in\Z} a_{j,k}\,\varphi_{j,k}
+  P_j f \;:=\; \sum_{k\in\Z} a_{j,k}\,\varphi_{j,k},
 \end{equation}
-hei\ss{}t die Approximation von $f$ auf der Skala $j$; die Abbildung
-$P_j \colon \LZwei \to V_j$ hei\ss{}t Approximationsoperator
-\cite[Bem.~2.2.2\,(a)]{lmr}. % S. 113, LMR
+hei\ss{}t Approximationsoperator.
 \end{Definition}
-
-Da $\{\varphi_{j,k}\}_k$ nach Satz~\ref{satz:onb-vj} eine Orthonormalbasis von
-$V_j$ ist, konvergiert die Reihe in $\LZwei$, und es gilt
-$\norm{P_j f}^2 = \sum_{k} \lvert a_{j,k}\rvert^2$
-\cite[Satz~25.18]{serov}, % S. 257--258, Serov
-\cite[Kap.~5.1, Gl.~(7)]{blatter}. % S. 107, Blatter
-Wegen $\scal{f - P_j f}{\varphi_{j,l}} = a_{j,l} - a_{j,l} = 0$ für alle
-$l \in \Z$ steht $f - P_j f$ senkrecht auf $V_j$; $P_j$ ist also die
-Orthogonalprojektion auf $V_j$. Für jedes $g \in V_j$ folgt daraus nach
-Pythagoras $\norm{f - g} \ge \norm{f - P_j f}$, das hei\ss{}t, $P_j f$ ist die
-beste Näherung von $f$ in $V_j$.
-
-Blatter deutet $P_j$ als Tiefpass-Filter: $P_j f$ enthält noch alle Details von
-$f$, die wenigstens die Ausdehnung $2^{j}$ auf der Zeitachse besitzen
-\cite[Kap.~5.1]{blatter}. % S. 107, Blatter
-Für die Haar-MSA aus Beispiel~\ref{bsp:haar-msa} ist
-$\varphi_{j,k} = 2^{-j/2}\,\mathbf 1_{I_{j,k}}$ mit
-$I_{j,k} := [k2^{j},(k+1)2^{j}[$, also
+ 
+Wir halten drei Eigenschaften fest.
+\begin{enumerate}
+\item[(i)] Da $\{\varphi_{j,k}\}_k$ eine Orthonormalbasis von $V_j$ ist,
+  konvergiert \eqref{eq:pj} in $\LZwei$, und es gilt
+  $\norm{P_j f}^2 = \sum_{k} \lvert a_{j,k}\rvert^2$
+  \cite[Satz~25.18]{serov}. % S. 257--258
+\item[(ii)] Für alle $l \in \Z$ ist
+  $\scal{f - P_j f}{\varphi_{j,l}} = a_{j,l} - a_{j,l} = 0$. Also steht
+  $f - P_j f$ senkrecht auf $V_j$, und $P_j$ ist die Orthogonalprojektion auf
+  $V_j$.
+\item[(iii)] Aus (ii) und dem Satz des Pythagoras folgt
+  $\norm{f - g} \ge \norm{f - P_j f}$ für alle $g \in V_j$. Also ist $P_j f$
+  die beste Näherung von $f$ in $V_j$
+  \cite[Satz~31.6]{hankebourgeois}. % S. 281
+\end{enumerate}
+ 
+Für die Haar-MSA ist $\varphi_{j,k} = 2^{-j/2}\,\mathbf 1_{I_{j,k}}$ mit
+$I_{j,k} := [k2^{j},(k+1)2^{j}[$. Dann ist
 \[
   a_{j,k}\,\varphi_{j,k}
-  \;=\; \Bigl(\frac{1}{2^{j}}\int_{I_{j,k}} f(t)\,dt\Bigr)\,\mathbf 1_{I_{j,k}} ,
+  \;=\; \Bigl(\frac{1}{2^{j}}\int_{I_{j,k}} f(t)\,dt\Bigr)\,\mathbf 1_{I_{j,k}} .
 \]
-und $P_j$ ersetzt $f$ auf jedem $I_{j,k}$ durch seinen Mittelwert
-\cite[Kap.~2.2]{lmr}. % S. 115, LMR
-Das ist die in Beispiel~\ref{bsp:haar-mittelung} benutzte Aussage; die dort
-angegebenen Mittelwerte sind die Zahlen $2^{-j/2}a_{j,k}$.
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): Pythagoras-Gleichung zwischen den Skalen. Dieselbe
-% Aussage liefert Abschnitt 3.4 als ||P_{j-1}f||^2 = ||P_j f||^2 + ||Q_j f||^2.
-% ---------------------------------------------------------------------------
-% Die Projektionen verschiedener Skalen sind durch die Schachtelung (M1)
-% verzahnt. Für $i \ge j$ ist $V_i \subset V_j$, daher steht $P_j f - P_i f$
-% senkrecht auf $V_i$, und der Satz des Pythagoras liefert
-% \begin{equation}
-% \label{eq:pythagoras-pj}
-%   \norm{P_j f}^2 \;=\; \norm{P_i f}^2 + \norm{P_j f - P_i f}^2
-%   \qquad (i \ge j).
-% \end{equation}
-% Insbesondere ist $j \mapsto \norm{P_j f}$ monoton fallend.
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): Lemma projektionen mit Beweis.
-% ACHTUNG: Lemma~\ref{lem:projektionen} wird noch im Beweis von
-% Lemma~\ref{lem:wj-eigenschaften}\,(b) in Abschnitt 3.4 zitiert.
-% ---------------------------------------------------------------------------
-% \begin{Lemma}[Verträglichkeit der Projektionen]
-% \label{lem:projektionen}
-% Seien $i,j \in \Z$ mit $i \ge j$ und $f \in \LZwei$. Dann gilt:
-% \begin{enumerate}
-% \item[(a)] $P_j f - P_i f \perp V_i$,
-% \item[(b)] $\norm{P_j f}^2 = \norm{P_i f}^2 + \norm{P_j f - P_i f}^2$,
-%   insbesondere $\norm{P_i f} \le \norm{P_j f}$.
-% \end{enumerate}
-% \end{Lemma}
-%
-% \begin{proof}
-% Wegen $i \ge j$ ist $V_i \subset V_j$ nach (M1) \cite[Kap.~5.1, Gl.~(1)]{blatter}. % S. 106, Blatter
-%
-% (a) Es ist $P_j f - P_i f = (f - P_i f) - (f - P_j f)$. Der erste Summand steht
-% nach Definition~\ref{def:projektion-pj} senkrecht auf $V_i$, der zweite
-% senkrecht auf $V_j \supset V_i$, also ebenfalls auf $V_i$; das orthogonale
-% Komplement ist ein linearer Teilraum \cite[Def.~25.8, Bem.~25.9]{serov}. % S. 254, Serov
-%
-% (b) Wegen $P_i f \in V_i$ und (a) sind $P_i f$ und $P_j f - P_i f$ orthogonal;
-% der Satz des Pythagoras \cite[Übung~25.1]{serov}, % S. 250, Serov
-% \cite[Satz~31.6\,(b)]{hankebourgeois} % S. 281, Hanke-Bourgeois
-% liefert die Gleichung.
-% \end{proof}
-
-\begin{Proposition}[Approximationseigenschaft, {\cite[Bem.~2.2.2\,(a)]{lmr}}] % S. 112--113, LMR
+$P_j$ ersetzt $f$ also auf jedem $I_{j,k}$ durch seinen Mittelwert
+\cite[Kap.~2.2]{lmr}. % S. 115
+Das ist die Aussage aus Beispiel~\ref{bsp:haar-mittelung}.
+ 
+\begin{Proposition}[Approximationseigenschaft, {\cite[Bem.~2.2.2\,(a)]{lmr}}] % S. 112--113
 \label{prop:approximation}
 Für jedes $f \in \LZwei$ gilt
 \[
@@ -1928,155 +1284,22 @@ Für jedes $f \in \LZwei$ gilt
   \text{(b)}\;\; \lim_{j\to+\infty} \norm{P_j f} = 0 .
 \]
 \end{Proposition}
-
-Aussage (a) folgt aus (M3), da $P_j f$ die beste Näherung von $f$ in
-$V_j \supset V_{j_0}$ ist; Aussage (b) folgt aus (M2)
-\cite[Prop.~(5.1)]{blatter}. % S. 108, Blatter
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): Meta-Satz + ausgeführter Beweis von
-% Proposition~\ref{prop:approximation}.
-% ---------------------------------------------------------------------------
-% Louis, Maa\ss{} und Rieder geben beide Grenzübergänge ohne Beweis als
-% Präzisierung der Anschauung an, dass die Räume $V_m$ für $m \to -\infty$ immer
-% kleinere Strukturen enthalten und für $m \to +\infty$ immer breiter werden
-% \cite[Bem.~2.2.2\,(a)]{lmr}. % S. 112--113, LMR
-% Der folgende Beweis von (b) folgt dem Aufbau von Blatters Beweis der
-% Proposition~(5.1) \cite[Prop.~(5.1)]{blatter}. % S. 108, Blatter
-%
-% \begin{proof}
-% (a) Sei $\varepsilon > 0$. Nach (M3) \cite[Kap.~5.1, Gl.~(3)]{blatter} % S. 106, Blatter
-% gibt es ein $j_0 \in \Z$ und ein $g \in V_{j_0}$ mit $\norm{f - g} < \varepsilon$.
-% Für jedes $j \le j_0$ ist $V_{j_0} \subset V_j$ nach (M1), also $g \in V_j$. Da
-% $P_j f$ die Bestapproximation von $f$ in $V_j$ ist
-% \cite[Satz~25.12]{serov}, % S. 254, Serov
-% folgt
-% \[
-%   \norm{f - P_j f} \;\le\; \norm{f - g} \;<\; \varepsilon
-%   \qquad\text{für alle } j \le j_0 .
-% \]
-%
-% (b) \textbf{Schritt 1 (Cauchy-Folge).} Wir setzen $h_n := P_n f$ für $n \in \N$.
-% Nach Lemma~\ref{lem:projektionen}\,(b) mit $i = m \ge j = n$ gilt
-% \begin{equation}
-% \label{eq:pn-cauchy}
-%   \norm{h_n - h_m}^2 \;=\; \norm{h_n}^2 - \norm{h_m}^2
-%   \qquad\text{für alle } m \ge n ,
-% \end{equation}
-% und die Folge $\bigl(\norm{h_n}^2\bigr)_{n}$ ist monoton fallend und durch $0$
-% nach unten beschränkt, also konvergent. Nach \eqref{eq:pn-cauchy} ist $(h_n)$
-% damit eine Cauchy-Folge \cite[Def.~25.5]{serov}, % S. 251, Serov
-% und da $\LZwei$ vollständig ist \cite[Kap.~25]{serov}, % S. 253--254, Serov
-% besitzt sie einen Grenzwert $h$. Für die analoge Aussage über monotone Folgen
-% von Projektoren vgl.\ \cite[Übung~27.1]{serov}. % S. 282, Serov
-%
-% \textbf{Schritt 2 (Der Grenzwert liegt in allen $V_j$).} Sei $j \in \Z$ fest. Für
-% alle $n \ge \max(j,0)$ ist $h_n \in V_n \subset V_j$ nach (M1). Da $V_j$
-% abgeschlossen ist \cite[Kap.~5.1, (a)]{blatter}, % S. 106, Blatter
-% folgt $h \in V_j$. Weil $j$ beliebig war, ist $h \in \bigcap_{j\in\Z} V_j$,
-% nach (M2) \cite[Kap.~5.1, Gl.~(2)]{blatter} % S. 106, Blatter
-% also $h = 0$; dieselben zwei Schlüsse stehen in Blatters Beweis von
-% Proposition~(5.1) \cite[Prop.~(5.1)]{blatter}. % S. 108, Blatter
-%
-% \textbf{Schritt 3 (Schluss).} Es gilt $\norm{P_n f} = \norm{h_n} \to \norm{h} = 0$
-% für $n \to \infty$.
-% \end{proof}
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): Energie-Absatz. Wird in Abschnitt 3.4 durch
-% (eq:energie-skalen) abgedeckt. Den letzten Satz (Details der Ausdehnung
-% 2^j/sqrt2, Blatter S. 109) ggf. hinter die Definition von Q_j in 3.4 setzen.
-% ---------------------------------------------------------------------------
-% Die Funktion $j \mapsto \norm{P_j f}^2$ fällt also monoton von $\norm{f}^2$ für
-% $j \to -\infty$ auf $0$ für $j \to +\infty$. Die Energie von $f$ wird
-% schrittweise über die Skalen abgebaut, und der beim Übergang von $j-1$ zu $j$
-% verlorene Betrag $\norm{P_{j-1}f}^2 - \norm{P_j f}^2 = \norm{P_{j-1}f - P_j f}^2$
-% ist die Energie des Details auf der Skala $j$
-% (Abschnitt~\ref{sec:detailraeume}). Diese Differenz $P_{j-1}f - P_j f$ enthält
-% nach Blatter die Details von $f$ mit einer zeitlichen Ausdehnung um
-% $2^{j}/\sqrt2$ \cite[Kap.~5.1]{blatter}. % S. 109, Blatter
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): Beispiel haar-energie mit Tabelle. Die Energiebilanz
-% zeigt Beispiel~\ref{bsp:haar-wavelet-koeff} in 3.4 (81+9+2+2=94); der
-% Punkt "Mittelwert zerfliesst -> bei endlichem J abbrechen" wandert als
-% ein Satz hinter (eq:l2-zerlegung-endlich).
-% ACHTUNG: bsp:haar-energie und tab:haar-energie werden in 3.4 noch zitiert.
-% ---------------------------------------------------------------------------
-% \begin{Beispiel}[Fortsetzung von Beispiel~\ref{bsp:haar-mittelung}]
-% \label{bsp:haar-energie}
-% Wir verfolgen die Treppenfunktion $f = (4,2,5,7) \in V_0$ der Haar-MSA über alle
-% Skalen. Für $j \le 0$ ist $f \in V_0 \subset V_j$, also $P_j f = f$; Aussage (a)
-% von Proposition~\ref{prop:approximation} ist hier sogar ab $j = 0$ exakt
-% erfüllt. Für $j = 1$ und $j = 2$ liefert die Mittelung die Werte aus
-% Beispiel~\ref{bsp:haar-mittelung}, in normierten Koeffizienten
-% $a_{1,0} = (4+2)/\sqrt2 = 3\sqrt2$, $a_{1,1} = (5+7)/\sqrt2 = 6\sqrt2$ und
-% $a_{2,0} = 18/2 = 9$.
-%
-% Für $j \ge 2$ enthält $I_{j,0} = [0,2^{j}[$ den ganzen Träger $[0,4[$ von $f$,
-% alle anderen $I_{j,k}$ treffen ihn nicht. Mit $\int_\R f = 18$ folgt
-% \[
-%   P_j f \;=\; \frac{18}{2^{j}}\,\mathbf 1_{[0,2^{j}[},
-%   \qquad
-%   \norm{P_j f}^2 \;=\; \Bigl(\frac{18}{2^{j}}\Bigr)^{2} 2^{j}
-%   \;=\; \frac{324}{2^{j}}
-%   \qquad (j \ge 2).
-% \]
-% Mit jedem Schritt halbiert sich die Höhe, die Breite verdoppelt sich, und die
-% Energie halbiert sich -- Aussage (b) von Proposition~\ref{prop:approximation}
-% in expliziter Form (Tabelle~\ref{tab:haar-energie}).
-%
-% \begin{table}[htbp]
-%   \centering
-%   \begin{tabular}{@{}llll@{}}
-%     \toprule
-%     $j$ & $P_j f$ & $\norm{P_j f}^2$ & $\norm{P_{j-1}f - P_j f}^2$ \\
-%     \midrule
-%     $\le 0$ & $(4,\,2,\,5,\,7)$            & $94$   & $0$ \\
-%     $1$     & $(3,\,3,\,6,\,6)$            & $90$   & $4$ \\
-%     $2$     & $4{,}5$ auf $[0,4[$           & $81$   & $9$ \\
-%     $3$     & $2{,}25$ auf $[0,8[$          & $40{,}5$ & $40{,}5$ \\
-%     $4$     & $1{,}125$ auf $[0,16[$        & $20{,}25$ & $20{,}25$ \\
-%     $j \ge 3$ & $18 \cdot 2^{-j}$ auf $[0,2^{j}[$ & $324\cdot 2^{-j}$ & $324\cdot 2^{-j}$ \\
-%     \bottomrule
-%   \end{tabular}
-%   \caption[Energie der Haar-Approximationen]{Die Approximationen der
-%     Treppenfunktion $f = (4,2,5,7)$ aus Beispiel~\ref{bsp:haar-mittelung} und
-%     ihre Energien. Die letzte Spalte ist nach \eqref{eq:pythagoras-pj} die
-%     Differenz zweier aufeinanderfolgender Einträge der dritten Spalte.}
-%   \label{tab:haar-energie}
-% \end{table}
-%
-% Die verlorenen Energien summieren sich wieder zur Gesamtenergie:
-% \[
-%   4 + 9 + \sum_{j\ge3} \frac{324}{2^{j}}
-%   \;=\; 13 + 81 \;=\; 94 \;=\; \norm{f}^2 .
-% \]
-% Das nimmt \eqref{eq:energie-skalen} aus Abschnitt~\ref{sec:detailraeume}
-% vorweg. Auffällig ist, dass $81$ der $94$ Energieeinheiten in unendlich vielen
-% Beiträgen der Skalen $j \ge 3$ stecken, obwohl
-% Beispiel~\ref{bsp:haar-mittelung} mit vier Koeffizienten auskam: Dort wurde bei
-% $j = 2$ angehalten und der Mittelwert als grobe Approximation $P_2 f$ behalten,
-% also die endliche Zerlegung \eqref{eq:l2-zerlegung-endlich} mit $J = 2$
-% verwendet \cite[Gl.~(2.2.12)]{lmr}. % S. 114, LMR
-% Ein nichtverschwindender Mittelwert lässt sich auf keiner festen Skala
-% erledigen, er wird nur immer weiter auseinandergezogen. In der Anwendung bricht
-% man deshalb stets bei einer endlichen gröbsten Skala $J$ ab und behält $P_J f$.
-% \end{Beispiel}
+ 
+Aussage (a) folgt aus (M3) und Eigenschaft (iii). Aussage (b) folgt aus (M2)
+\cite[Prop.~(5.1)]{blatter}. % S. 108
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Detailräume \texorpdfstring{$W_j$}{Wj} und die Zerlegung von \texorpdfstring{$L^2(\R)$}{L2(R)}}
 \label{sec:detailraeume}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Die Basen $\{\varphi_{j,k}\}_k$ der einzelnen $V_j$ lassen sich nicht zu einer
-Orthonormalbasis von $\LZwei$ vereinigen, denn wegen $V_j \subset V_{j-1}$ sind
-sie über die Skalen hinweg nicht orthogonal. Man betrachtet deshalb nur den
-Zuwachs beim Übergang zur nächstfeineren Skala \cite[Kap.~5.1]{blatter}. % S. 107, Blatter
-
-\begin{Definition}[Detailräume, {\cite[Kap.~5.1, Gl.~(8)]{blatter}}] % S. 107, Blatter
+ 
+Wegen $V_j \subset V_{j-1}$ sind die Basen verschiedener $V_j$ nicht
+zueinander orthogonal. Man betrachtet deshalb nur den Zuwachs beim Übergang
+zur nächstfeineren Skala \cite[Kap.~5.1]{blatter}. % S. 107
+ 
+\begin{Definition}[Detailräume, {\cite[Kap.~5.1, Gl.~(8)]{blatter}}] % S. 107
 \label{def:detailraeume}
 Für $j \in \Z$ sei $W_j$ das orthogonale Komplement von $V_j$ in $V_{j-1}$,
-also
 \begin{equation}
 \label{eq:vw-zerlegung}
   V_{j-1} \;=\; V_j \oplus W_j,
@@ -2084,96 +1307,37 @@ also
 \end{equation}
 und $Q_j := P_{j-1} - P_j$.
 \end{Definition}
-
-$Q_j$ ist die Orthogonalprojektion auf $W_j$
-\cite[Kap.~5.1]{blatter}, % S. 109, Blatter
-\cite[Gl.~(2.2.9)]{lmr}: % S. 113, LMR
-Es ist $Q_j f = (f - P_j f) - (f - P_{j-1} f) \in V_{j-1}$, und beide Klammern
-stehen senkrecht auf $V_j$; also liegt $Q_j f$ in $W_j$, und
-$f - Q_j f = (f - P_{j-1}f) + P_j f$ steht senkrecht auf $W_j$.
-
-Zwei weitere Eigenschaften folgen unmittelbar. Da $D_{2^j}$ unitär ist und nach
-\eqref{eq:vj-d2j} $V_0$ auf $V_j$ sowie $V_{-1}$ auf $V_{j-1}$ abbildet, gilt
+ 
+$Q_j$ ist die Orthogonalprojektion auf $W_j$ \cite[Kap.~5.1]{blatter}, % S. 109
+\cite[Gl.~(2.2.9)]{lmr}. % S. 113
+Denn $Q_j f = (f - P_j f) - (f - P_{j-1} f)$ liegt in $V_{j-1}$, und beide
+Klammern stehen senkrecht auf $V_j$. Also liegt $Q_j f$ in $W_j$. Ferner steht
+$f - Q_j f = (f - P_{j-1}f) + P_j f$ senkrecht auf $W_j$.
+ 
+Da $D_{2^j}$ unitär ist und nach \eqref{eq:vj-d2j} $V_0$ auf $V_j$ und
+$V_{-1}$ auf $V_{j-1}$ abbildet, gilt
 \begin{equation}
 \label{eq:wj-d2j}
   W_j \;=\; D_{2^{j}}(W_0) \qquad\text{für alle } j \in \Z
 \end{equation}
-\cite[Kap.~5.1, Gl.~(9)]{blatter}. % S. 107, Blatter
-Für $i > j$ ist au\ss{}erdem $W_i \subset V_{i-1} \subset V_j \perp W_j$; die
-Detailräume sind also paarweise orthogonal \cite[Prop.~(5.1)]{blatter}. % S. 108, Blatter
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): alter Absatz zur Wohldefiniertheit von Q_j (Projektions-
-% satz), Lemma wj-eigenschaften mit Meta-Absatz und Beweis. Inhalt steckt jetzt
-% in der Definition Q_j := P_{j-1} - P_j und den beiden Absätzen darüber.
-% ---------------------------------------------------------------------------
-% Der Raum $W_j = V_{j-1} \cap V_j^{\perp}$ ist als Schnitt zweier
-% abgeschlossener Teilräume abgeschlossen \cite[Bem.~25.11]{serov}, % S. 254, Serov
-% sodass $Q_j$ nach dem Projektionssatz wohldefiniert ist
-% \cite[Satz~25.12]{serov}. % S. 254, Serov
-%
-% \begin{Lemma}[Elementare Eigenschaften]
-% \label{lem:wj-eigenschaften}
-% Für eine MSA $(V_j)_{j\in\Z}$ gilt:
-% \begin{enumerate}
-% \item[(a)] $W_{j+1} = D_2(W_j)$ für alle $j \in \Z$;
-% \item[(b)] $Q_j = P_{j-1} - P_j$;
-% \item[(c)] die Räume $W_j$, $j \in \Z$, sind paarweise orthogonal.
-% \end{enumerate}
-% \end{Lemma}
-%
-% Aussage (a) steht bei Blatter als Gl.~(9), der Beweis wird dort dem Leser
-% überlassen \cite[Kap.~5.1, Gl.~(9)]{blatter}; % S. 107, Blatter
-% Louis, Maa\ss{} und Rieder formulieren sie als Vererbung der
-% Skalierungseigenschaft auf die $W_m$ \cite[Kap.~2.2]{lmr}. % S. 114, LMR
-% Aussage (b) folgt nach Blatter aus \eqref{eq:vw-zerlegung}
-% \glqq nach allgemeinen Prinzipien\grqq{} \cite[Kap.~5.1]{blatter}, % S. 109, Blatter
-% Aussage (c) ist der erste Teil von Blatters Proposition~(5.1)
-% \cite[Prop.~(5.1)]{blatter}. % S. 108, Blatter
-%
-% \begin{proof}
-% (a) $D_2$ ist unitär \cite[Kap.~1.2]{lmr}, % S. 27, LMR
-% erhält also Skalarprodukte und damit Orthogonalität
-% \cite[Bem.~27.8]{serov}, % S. 282, Serov
-% und bildet nach (M4) \cite[Kap.~5.1, Gl.~(4)]{blatter} % S. 106, Blatter
-% $V_j$ auf $V_{j+1}$ sowie $V_{j-1}$ auf $V_j$ ab. Folglich bildet $D_2$ das
-% orthogonale Komplement von $V_j$ in $V_{j-1}$ auf das orthogonale Komplement von
-% $V_{j+1}$ in $V_j$ ab, und das ist $W_{j+1}$.
-%
-% (b) Sei $f \in \LZwei$ und $g := P_{j-1}f - P_j f$. Es ist $g \in V_{j-1}$, und
-% nach Lemma~\ref{lem:projektionen}\,(a) ist $g \perp V_j$; also $g \in W_j$.
-% Ferner steht $f - g = (f - P_{j-1}f) + P_j f$ senkrecht auf $W_j$, denn der
-% erste Summand steht senkrecht auf $V_{j-1} \supset W_j$, der zweite liegt in
-% $V_j \perp W_j$. Nach der Eindeutigkeit im Projektionssatz
-% \cite[Satz~25.12]{serov} % S. 254, Serov
-% ist $g = Q_j f$.
-%
-% (c) Sei $i > j$. Nach (M1) \cite[Kap.~5.1, Gl.~(1)]{blatter} % S. 106, Blatter
-% ist $W_i \subset V_{i-1} \subset V_j$, und nach Definition ist $W_j \perp V_j$.
-% Also steht $W_i$ senkrecht auf $W_j$; das ist Blatters Argument
-% \cite[Prop.~(5.1)]{blatter}. % S. 108, Blatter
-% \end{proof}
-%
-% Die Detailräume sind also paarweise orthogonal. Dass sie zusammen den ganzen
-% Raum ausschöpfen, folgt nun aus Proposition~\ref{prop:approximation}, in der
-% die Axiome (M2) und (M3) bereits verarbeitet sind; Blatter benötigt für
-% denselben Schluss ebenfalls genau diese beiden Axiome
-% \cite[Prop.~(5.1)]{blatter}. % S. 108, Blatter
-
-\begin{Satz}[Zerlegung von $\LZwei$ in Detailräume, {\cite[Prop.~(5.1)]{blatter}}] % S. 108, Blatter
+\cite[Kap.~5.1, Gl.~(9)]{blatter}. % S. 107
+Für $i > j$ ist $W_i \subset V_{i-1} \subset V_j \perp W_j$. Die Detailräume
+sind also paarweise orthogonal \cite[Prop.~(5.1)]{blatter}. % S. 108
+ 
+\begin{Satz}[Zerlegung von $\LZwei$ in Detailräume, {\cite[Prop.~(5.1)]{blatter}}] % S. 108
 \label{satz:zerlegung}
 Sei $(V_j)_{j\in\Z}$ eine MSA mit Detailräumen $W_j$. Dann gilt
 \begin{equation}
 \label{eq:l2-zerlegung}
   \LZwei \;=\; \bigoplus_{j\in\Z} W_j
 \end{equation}
-als orthogonale direkte Summe, und für jedes $f \in \LZwei$ ist
-$f = \sum_{j\in\Z} Q_j f$ mit
+als orthogonale direkte Summe. Für jedes $f \in \LZwei$ ist
+$f = \sum_{j\in\Z} Q_j f$ und
 \begin{equation}
 \label{eq:energie-skalen}
   \norm{f}^2 \;=\; \sum_{j\in\Z} \norm{Q_j f}^2 .
 \end{equation}
-Ferner gilt für jedes feste $J \in \Z$
+Für jedes feste $J \in \Z$ gilt ferner
 \begin{equation}
 \label{eq:l2-zerlegung-endlich}
   \LZwei \;=\; V_J \oplus \bigoplus_{j \le J} W_j,
@@ -2181,131 +1345,41 @@ Ferner gilt für jedes feste $J \in \Z$
   f \;=\; P_J f + \sum_{j \le J} Q_j f .
 \end{equation}
 \end{Satz}
-
-Die Orthogonalität ist eben gezeigt. Nach Definition von $Q_j$ ist
-$\sum_{j=J_1+1}^{J_2} Q_j f = P_{J_1} f - P_{J_2} f$ eine Teleskopsumme, die
-nach Proposition~\ref{prop:approximation} für $J_1 \to -\infty$,
-$J_2 \to +\infty$ gegen $f$ strebt; mit $J_2 = J$ ergibt sich
+ 
+Nach Definition von $Q_j$ ist
+$\sum_{j=J_1+1}^{J_2} Q_j f = P_{J_1} f - P_{J_2} f$. Nach
+Proposition~\ref{prop:approximation} strebt das für $J_1 \to -\infty$ und
+$J_2 \to +\infty$ gegen $f$. Mit $J_2 = J$ folgt
 \eqref{eq:l2-zerlegung-endlich}. Die Energiegleichung folgt aus der
-Orthogonalität der Summanden \cite[Prop.~(5.1)]{blatter}, % S. 108--109, Blatter
-\cite[Gl.~(2.2.11), (2.2.12)]{lmr}. % S. 114, LMR
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): Meta-Absatz + ausgeführter Teleskop-Beweis.
-% ---------------------------------------------------------------------------
-% Bei Louis, Maa\ss{} und Rieder stehen \eqref{eq:l2-zerlegung} und
-% \eqref{eq:l2-zerlegung-endlich} als Gleichungen (2.2.11) und (2.2.12), dort ohne
-% Beweis \cite[Gl.~(2.2.11), (2.2.12)]{lmr}. % S. 114, LMR
-% Blatter beweist \eqref{eq:l2-zerlegung} direkt über eine absteigende Kette in
-% $V_0 \supset V_1 \supset \cdots$ \cite[Prop.~(5.1)]{blatter}; % S. 108--109, Blatter
-% der folgende Beweis verlagert diese Arbeit in
-% Proposition~\ref{prop:approximation} und bleibt dadurch kurz.
-%
-% \begin{proof}
-% Die paarweise Orthogonalität ist Lemma~\ref{lem:wj-eigenschaften}\,(c).
-%
-% \textbf{Schritt 1 (Teleskopsumme).} Für ganze Zahlen $J_1 < J_2$ ist nach
-% Lemma~\ref{lem:wj-eigenschaften}\,(b)
-% \begin{equation}
-% \label{eq:teleskop}
-%   \sum_{j=J_1+1}^{J_2} Q_j f
-%   \;=\; \sum_{j=J_1+1}^{J_2} \bigl(P_{j-1}f - P_j f\bigr)
-%   \;=\; P_{J_1} f - P_{J_2} f .
-% \end{equation}
-%
-% \textbf{Schritt 2 (Grenzübergang).} Mit \eqref{eq:teleskop} und
-% Proposition~\ref{prop:approximation} folgt
-% \[
-%   \Bigl\lVert f - \sum_{j=J_1+1}^{J_2} Q_j f \Bigr\rVert
-%   \;\le\; \norm{f - P_{J_1} f} + \norm{P_{J_2} f}
-%   \;\xrightarrow[J_1\to-\infty,\;J_2\to+\infty]{}\; 0 ,
-% \]
-% also $f = \sum_{j\in\Z} Q_j f$ mit $Q_j f \in W_j$; das ist
-% \eqref{eq:l2-zerlegung}. Da die Summanden paarweise orthogonal sind, liefert der
-% Satz des Pythagoras \cite[Übung~25.1]{serov} % S. 250, Serov
-% für die Partialsummen, zusammen mit der Stetigkeit der Norm,
-% \eqref{eq:energie-skalen}.
-%
-% \textbf{Schritt 3 (Endliche Fassung).} Setzt man in \eqref{eq:teleskop}
-% $J_2 = J$ und lässt nur $J_1 \to -\infty$ gehen, so folgt
-% $f - P_J f = \sum_{j \le J} Q_j f$ mit $P_J f \in V_J$; das ist
-% \eqref{eq:l2-zerlegung-endlich}.
-% \end{proof}
-
-In der Anwendung wird stets die endliche Fassung
-\eqref{eq:l2-zerlegung-endlich} benutzt: $P_J f$ entspricht einem Tiefpass, die
-$Q_j f$ den Anteilen von $f$ in verschiedenen Frequenzbändern
-\cite[Kap.~2.2]{lmr}. % S. 114, LMR
-Der Abbruch bei einer endlichen gröbsten Skala $J$ ist dabei nötig, denn ein
-nichtverschwindender Mittelwert wird durch $P_j$ nicht beseitigt, sondern nur
-immer weiter auseinandergezogen; für die Treppenfunktion aus
+Orthogonalität der Summanden \cite[Prop.~(5.1)]{blatter}, % S. 108--109
+\cite[Gl.~(2.2.11), (2.2.12)]{lmr}. % S. 114
+ 
+In der Anwendung wird die endliche Fassung \eqref{eq:l2-zerlegung-endlich}
+benutzt \cite[Kap.~2.2]{lmr}. % S. 114
+Ein Mittelwert ungleich null verschwindet durch $P_j$ nämlich nicht, er wird nur
+auseinandergezogen. Für die Treppenfunktion aus
 Beispiel~\ref{bsp:haar-mittelung} ist etwa
-$P_j f = 18\cdot 2^{-j}\,\mathbf 1_{[0,2^{j}[}$ für alle $j \ge 2$. Am EKG
-beobachten Louis, Maa\ss{} und Rieder, dass die feinste Detailstufe fast das
-gesamte Rauschen aufnimmt, während die gröberen Stufen den Signalverlauf tragen
-\cite[Kap.~3.1.2]{lmr}. % S. 239--240, LMR
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): alter Absatz nach dem Satz (Trend/Fluktuation bei
-% Hanke-Bourgeois, Verweis auf bsp:haar-energie).
-% ---------------------------------------------------------------------------
-% Die endliche Fassung \eqref{eq:l2-zerlegung-endlich} ist die Form, in der die
-% Zerlegung benutzt wird: $P_J f$ entspricht der Anwendung eines Tiefpassfilters,
-% die $Q_j f$ den Anteilen von $f$ in verschiedenen Frequenzbändern
-% \cite[Kap.~2.2]{lmr}. % S. 114, LMR
-% Hanke-Bourgeois nennt den Anteil in $V_J$ den Trend, den Anteil in den
-% Detailräumen die Fluktuation \cite[§~56]{hankebourgeois}. % S. 437, Hanke-Bourgeois
-% Dass man bei einer endlichen Skala $J$ abbrechen muss, hat
-% Beispiel~\ref{bsp:haar-energie} gezeigt. In Kapitel~\ref{chapter:denoising}
-% wird genau diese Zerlegung bearbeitet. Am EKG beobachten Louis, Maa\ss{} und
-% Rieder, dass die feinste Detailstufe fast das gesamte Rauschen aufnimmt, während
-% die gröberen Stufen tiefpassgefilterte Versionen des Signals und
-% bandpassgefilterte Details wie den Herzklappenrhythmus tragen
-% \cite[Kap.~3.1.2]{lmr}. % S. 239--240, LMR
-
+$P_j f = 18\cdot 2^{-j}\,\mathbf 1_{[0,2^{j}[}$ für alle $j \ge 2$. In
+Kapitel~\ref{chapter:anwendung} wird $P_J f$ dagegen gezielt entfernt, weil dort
+die Basisliniendrift liegt (Abschnitt~\ref{sec:ein-schritt}).
+ 
 %-------------------------------------------------------------------------------
 \subsection{Die Wavelet-Basis}
 \label{subsec:konstruktionsziel}
 %-------------------------------------------------------------------------------
-
-Satz~\ref{satz:zerlegung} sagt noch nichts darüber, wie eine Basis von $W_j$
-aussieht. Da $V_{-1}$ zwei Basisfunktionen pro Zeiteinheit besitzt und $V_0$
-eine, liegt es nahe, $W_0$ ebenfalls durch die ganzzahligen Verschiebungen einer
-einzigen Funktion $\psi$ aufzuspannen \cite[Kap.~5.1]{blatter}. % S. 109, Blatter
-Dass es ein solches $\psi$ gibt, wird in Kapitel~\ref{chapter:dwt} gezeigt
-\cite[Satz~2.2.10]{lmr}; % S. 122, LMR
-im Haar-Fall ist es $\psi^{\mathrm H}$, wie Beispiel~\ref{bsp:haar-mittelung}
-bereits nahelegt \cite[Kap.~2.2]{lmr}. % S. 116, LMR
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): alte Motivation mit Zitaten (Milchmädchenrechnung,
-% Traum, kleines Wunder).
-% ---------------------------------------------------------------------------
-% Satz~\ref{satz:zerlegung} sagt noch nichts darüber, wie eine Basis der
-% einzelnen $W_j$ aussieht. Da $V_{-1}$ zwei Basisfunktionen pro Zeiteinheit
-% besitzt und $V_0$ eine, liegt es nahe, auch für $W_0$ eine Basis aus den
-% ganzzahligen Translaten einer einzigen Funktion zu suchen
-% \cite[Kap.~5.1]{blatter}. % S. 109, Blatter
-% Diese Abzählung ist kein Beweis -- Blatter nennt sie selbst eine
-% Milchmädchenrechnung \cite[Kap.~5.1]{blatter} % S. 109, Blatter
-% und das Ziel einen Traum \cite[Kap.~5.1]{blatter}, % S. 110, Blatter
-% Louis, Maa\ss{} und Rieder ein kleines Wunder \cite[Gl.~(2.2.13)]{lmr}. % S. 114, LMR
-% Die Existenz einer solchen Funktion wird erst in Kapitel~\ref{chapter:dwt}
-% gesichert \cite[Satz~2.2.10]{lmr}. % S. 122, LMR
-% Im Haar-Fall legt Beispiel~\ref{bsp:haar-mittelung} die Antwort bereits nahe:
-% Die dort bei der Mittelung verlorenen Details waren Vielfache gestreckter und
-% verschobener Haar-Wavelets $\psi^{\mathrm H}$, und tatsächlich leistet
-% $\psi^{\mathrm H}$ das Gewünschte, weil die Träger der $\varphi_{0,k}$ nicht
-% überlappen \cite[Kap.~5.1]{blatter}, % S. 110, Blatter
-% \cite[Kap.~2.2]{lmr}. % S. 116, LMR
-%
-% Wir halten fest, was aus der Existenz einer solchen Funktion folgt.
-
-\begin{Korollar}[Wavelet-Basis, {\cite[Kap.~5.1]{blatter}}] % S. 109--110, Blatter
+ 
+$V_{-1}$ besitzt zwei Basisfunktionen pro Zeiteinheit, $V_0$ eine. Es liegt
+daher nahe, $W_0$ durch die ganzzahligen Verschiebungen einer einzigen
+Funktion $\psi$ aufzuspannen \cite[Kap.~5.1]{blatter}. % S. 109
+Dass es ein solches $\psi$ gibt, zeigt Kapitel~\ref{chapter:dwt}
+\cite[Satz~2.2.10]{lmr}. % S. 122
+Im Haar-Fall ist es $\psi^{\mathrm H}$ \cite[Kap.~2.2]{lmr}. % S. 116
+ 
+\begin{Korollar}[Wavelet-Basis, {\cite[Kap.~5.1]{blatter}}] % S. 109--110
 \label{kor:wavelet-basis}
 Sei $(V_j)_{j\in\Z}$ eine MSA, und sei $\psi \in \LZwei$ so, dass
 $\{\psi(\,\cdot-k) : k \in \Z\}$ eine Orthonormalbasis von $W_0$ ist. Mit
-$\psi_{j,k}$ wie in \eqref{eq:dyadische-familie} gilt dann:
+$\psi_{j,k}$ wie in \eqref{eq:dyadische-familie} gilt:
 \begin{enumerate}
 \item[(i)] Für jedes feste $j \in \Z$ ist $\{\psi_{j,k} : k \in \Z\}$ eine
   Orthonormalbasis von $W_j$.
@@ -2327,143 +1401,56 @@ $\psi_{j,k}$ wie in \eqref{eq:dyadische-familie} gilt dann:
   \end{equation}
 \end{enumerate}
 \end{Korollar}
-
-Aussage (i) folgt wie Satz~\ref{satz:onb-vj} aus \eqref{eq:wj-d2j}. Nach (i) ist
-$Q_j f = \sum_k d_{j,k}\,\psi_{j,k}$, und damit folgen (ii) und (iii) aus
-Satz~\ref{satz:zerlegung} und \eqref{eq:pj} \cite[Kap.~5.1]{blatter}, % S. 109--110, Blatter
-\cite[Gl.~(2.2.13)]{lmr}. % S. 114, LMR
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): Meta-Satz + Beweis des Korollars.
-% ---------------------------------------------------------------------------
-% Aussage (i) mit der Formel $Q_j f = \sum_k \scal{f}{\psi_{j,k}}\psi_{j,k}$ und
-% Aussage (ii) stehen bei Blatter ohne Beweis \cite[Kap.~5.1]{blatter}, % S. 109--110, Blatter
-% bei Louis, Maa\ss{} und Rieder als Gleichung~(2.2.13) \cite[Gl.~(2.2.13)]{lmr}. % S. 114, LMR
-%
-% \begin{proof}
-% (i) Aus Lemma~\ref{lem:wj-eigenschaften}\,(a) folgt wie in Schritt~2 des Beweises
-% von Satz~\ref{satz:onb-vj} $W_j = D_{2^{j}}(W_0)$. Nach
-% Lemma~\ref{lem:unitaer-onb} ist daher $\{D_{2^{j}}\psi(\,\cdot-k)\}_k$ eine
-% Orthonormalbasis von $W_j$, und wie in Schritt~4 dort ist
-% $D_{2^{j}}\psi(\,\cdot-k) = \psi_{j,k}$.
-%
-% (ii) Innerhalb einer Skala sind die $\psi_{j,k}$ nach (i) orthonormal, zwischen
-% verschiedenen Skalen nach Lemma~\ref{lem:wj-eigenschaften}\,(c) orthogonal. Steht
-% $g \in \LZwei$ auf allen $\psi_{j,k}$ senkrecht, so nach (i) auf allen $W_j$,
-% also ist $Q_j g = 0$ für alle $j$ und nach Satz~\ref{satz:zerlegung}
-% $g = \sum_j Q_j g = 0$. Damit ist das Orthonormalsystem vollständig
-% \cite[Satz~25.18]{serov}. % S. 257, Serov
-%
-% (iii) Nach (i) ist $Q_j f = \sum_k d_{j,k}\psi_{j,k}$ und
-% $\norm{Q_j f}^2 = \sum_k\lvert d_{j,k}\rvert^2$
-% \cite[Prop.~27.2\,(5)]{serov}, % S. 279--281, Serov
-% \cite[Satz~25.18\,(3),\,(5)]{serov}. % S. 257--258, Serov
-% Einsetzen in \eqref{eq:l2-zerlegung-endlich} und \eqref{eq:pj} liefert die
-% Darstellung; die Energiegleichung folgt, weil alle Summanden paarweise
-% orthogonal sind \cite[Übung~25.1]{serov}. % S. 250, Serov
-% \end{proof}
-
+ 
+Aussage (i) folgt wie Satz~\ref{satz:onb-vj} aus \eqref{eq:wj-d2j}. Nach (i)
+ist $Q_j f = \sum_k d_{j,k}\,\psi_{j,k}$. Damit folgen (ii) und (iii) aus
+Satz~\ref{satz:zerlegung} und \eqref{eq:pj} \cite[Kap.~5.1]{blatter}, % S. 109--110
+\cite[Gl.~(2.2.13)]{lmr}. % S. 114
+ 
 \begin{Beispiel}[Wavelet-Koeffizienten der Treppenfunktion]
 \label{bsp:haar-wavelet-koeff}
-Wir zerlegen die Treppenfunktion $f = (4,2,5,7)$ aus
-Beispiel~\ref{bsp:haar-mittelung} in der Haar-Wavelet-Basis, also mit
-$\psi = \psi^{\mathrm H}$ \cite[Kap.~2.2]{lmr}. % S. 116, LMR
-Da $\psi_{j,k}$ auf der linken Hälfte von $I_{j,k} = [k2^{j},(k+1)2^{j}[$ den
-Wert $2^{-j/2}$ und auf der rechten den Wert $-2^{-j/2}$ annimmt, ist $d_{j,k}$
-das $2^{-j/2}$-Fache der Differenz der Integrale von $f$ über die beiden
-Hälften. Für $J = 2$ erhält man
-\[
-  a_{2,0} = \tfrac12(4+2+5+7) = 9, \qquad
-  d_{2,0} = \tfrac12\bigl((4+2)-(5+7)\bigr) = -3, \qquad
-  d_{1,0} = \tfrac{4-2}{\sqrt2} = \sqrt2, \qquad
-  d_{1,1} = \tfrac{5-7}{\sqrt2} = -\sqrt2 ;
-\]
-alle übrigen Koeffizienten mit $j \le 2$ verschwinden, weil ihre Träger $f$
-nicht treffen oder $f$ dort konstant ist. Nach
-\eqref{eq:zerlegung-koeffizienten} ist also
+Wir zerlegen $f = (4,2,5,7)$ aus Beispiel~\ref{bsp:haar-mittelung} in der
+Haar-Wavelet-Basis \cite[Kap.~2.2]{lmr}. % S. 116
+Die Funktion $\psi_{j,k}$ ist auf der linken Hälfte von $I_{j,k}$ gleich
+$2^{-j/2}$ und auf der rechten gleich $-2^{-j/2}$. Daher ist $d_{j,k}$ das
+$2^{-j/2}$-Fache der Differenz der Integrale von $f$ über die beiden Hälften.
+Für $J = 2$ erhält man
+\begin{align*}
+  a_{2,0} &= \tfrac12(4+2+5+7) = 9, &
+  d_{2,0} &= \tfrac12\bigl((4+2)-(5+7)\bigr) = -3,\\
+  d_{1,0} &= \tfrac{1}{\sqrt2}(4-2) = \sqrt2, &
+  d_{1,1} &= \tfrac{1}{\sqrt2}(5-7) = -\sqrt2 .
+\end{align*}
+Alle übrigen Koeffizienten mit $j \le 2$ verschwinden. Nach
+\eqref{eq:zerlegung-koeffizienten} ist
 \[
   f \;=\; 9\,\varphi_{2,0} \;-\; 3\,\psi_{2,0} \;+\; \sqrt2\,\psi_{1,0} \;-\; \sqrt2\,\psi_{1,1},
   \qquad
   \norm{f}^2 \;=\; 81 + 9 + 2 + 2 \;=\; 94 .
 \]
-Bis auf den Normierungsfaktor $2^{j/2}$ sind das die Zahlen $4{,}5$, $-1{,}5$,
-$1$ und $-1$ aus Beispiel~\ref{bsp:haar-mittelung}.
-
-Zwei Beobachtungen verbinden das Beispiel mit dem Rest der Arbeit. Erstens ist
-nach Definition~\ref{def:dyadisch}
-$d_{j,k} = \scal{f}{\psi_{2^j,\,k2^j}} = W_\psi f(2^{j}, k2^{j})$: Die
-Detailkoeffizienten sind die Werte der CWT auf dem dyadischen Gitter, aber ohne
-deren Redundanz (Bemerkung~\ref{bem:redundanz}) -- vier Funktionswerte ergeben
-vier Koeffizienten. Zweitens: Setzt man die beiden betragskleinsten
-Koeffizienten $d_{1,0}$ und $d_{1,1}$ auf null, so bleibt
-$9\,\varphi_{2,0} - 3\,\psi_{2,0} = P_1 f = (3,3,6,6)$, und nach der
-Energiegleichung ist der Fehler genau die Summe der Quadrate der gestrichenen
-Koeffizienten, $\norm{f - P_1 f}^2 = 2 + 2 = 4$. Welche Koeffizienten man
-streicht, lässt sich also allein im Koeffizientenraum entscheiden; darauf
-beruht die Entrauschung in Kapitel~\ref{chapter:denoising}.
+Bis auf den Faktor $2^{j/2}$ sind das die Zahlen $4{,}5$, $-1{,}5$, $1$ und $-1$
+aus Beispiel~\ref{bsp:haar-mittelung}.
+ 
+Zwei Beobachtungen verbinden das Beispiel mit den folgenden Kapiteln. Erstens
+ist $d_{j,k} = W_\psi f(2^{j}, k2^{j})$. Die Detailkoeffizienten sind also
+Werte der CWT auf dem dyadischen Gitter, aber ohne Redundanz. Zweitens bleibt
+$9\,\varphi_{2,0} - 3\,\psi_{2,0} = P_1 f = (3,3,6,6)$, wenn man die beiden
+betragskleinsten Koeffizienten $d_{1,0}$ und $d_{1,1}$ auf null setzt. Nach
+der Energiegleichung ist der Fehler
+$\norm{f - P_1 f}^2 = 2 + 2 = 4$, die Summe der Quadrate der gestrichenen
+Koeffizienten. Welche Koeffizienten man streicht, lässt sich also im
+Koeffizientenraum entscheiden. Darauf beruht die Entrauschung in
+Kapitel~\ref{chapter:denoising}.
 \end{Beispiel}
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): Tabelle tab:haar-koeff und Beobachtung "Zweitens"
-% (Energieverteilung aus tab:haar-energie, die in 3.3 gestrichen ist).
-% ---------------------------------------------------------------------------
-% \begin{table}[htbp]
-%   \centering
-%   \begin{tabular}{@{}lllll@{}}
-%     \toprule
-%     Koeffizient & Skala & Bedeutung & Wert & Wert in Bsp.~\ref{bsp:haar-mittelung} \\
-%     \midrule
-%     $a_{2,0}$ & $j = 2$ & Mittelwert auf $[0,4[$         & $9$         & $4{,}5$ \\
-%     $d_{2,0}$ & $j = 2$ & linke gegen rechte Hälfte       & $-3$        & $-1{,}5$ \\
-%     $d_{1,0}$ & $j = 1$ & $[0,1[$ gegen $[1,2[$           & $\sqrt2$    & $1$ \\
-%     $d_{1,1}$ & $j = 1$ & $[2,3[$ gegen $[3,4[$           & $-\sqrt2$   & $-1$ \\
-%     \bottomrule
-%   \end{tabular}
-%   \caption[Haar-Koeffizienten der Treppenfunktion]{Die Koeffizienten von
-%     $f = (4,2,5,7)$ in der Haar-Wavelet-Basis für $J = 2$. Die Quadrate der
-%     Werte summieren sich zu $\norm{f}^2 = 94$.}
-%   \label{tab:haar-koeff}
-% \end{table}
-%
-% Zweitens bilden die Koeffizienten die Energieverteilung aus
-% Tabelle~\ref{tab:haar-energie} ab: $\lvert d_{1,0}\rvert^2 + \lvert d_{1,1}\rvert^2 = 4$
-% ist die beim Schritt $j = 0 \to 1$ verlorene Energie, $\lvert d_{2,0}\rvert^2 = 9$
-% die beim Schritt $j = 1 \to 2$ verlorene.
-
-Gleichung~\eqref{eq:zerlegung-koeffizienten} ist der Ausgangspunkt der beiden
+ 
+Gleichung~\eqref{eq:zerlegung-koeffizienten} ist der Ausgangspunkt der
 folgenden Kapitel. Kapitel~\ref{chapter:dwt} konstruiert $\psi$ und berechnet
-die Koeffizienten allein durch Filteroperationen aus denen der feinsten Skala;
-der Schlüssel ist die Inklusion $\varphi \in V_0 \subset V_{-1}$, die auf die
-Skalierungsgleichung führt \cite[Lemma~2.2.3]{lmr}, % S. 113, LMR
-\cite[Satz~(5.3)]{blatter}. % S. 111, Blatter
-Kapitel~\ref{chapter:denoising} nutzt, dass $f \mapsto (a_{J,k}, d_{j,k})$ nach
-der Energiegleichung eine Isometrie ist.
-
-% ---------------------------------------------------------------------------
-% GESTRICHEN (Platz): alter Schlussabsatz (u.a. Blatter "sozusagen alles").
-% ---------------------------------------------------------------------------
-% Gleichung \eqref{eq:zerlegung-koeffizienten} ist der Ausgangspunkt der beiden
-% folgenden Kapitel. Kapitel~\ref{chapter:dwt} konstruiert $\psi$ und berechnet die
-% Koeffizienten $a_{J,k}$ und $d_{j,k}$ allein durch Filteroperationen aus den
-% Koeffizienten der feinsten Skala, sodass die Skalarprodukte nicht auf jeder
-% Stufe durch Integration neu berechnet werden müssen
-% \cite[Kap.~5]{blatter}; % S. 105, Blatter
-% Kapitel~\ref{chapter:denoising} nutzt, dass die Abbildung
-% $f \mapsto (a_{J,k}, d_{j,k})$ nach der Energiegleichung eine Isometrie ist. Der
-% Schlüssel zur Konstruktion liegt in der Inklusion
-% $\varphi \in V_0 \subset V_{-1}$: Sie erzwingt eine Darstellung von $\varphi$ in
-% der Basis des feineren Raumes, die Skalierungsgleichung
-% \cite[Lemma~2.2.3]{lmr}, % S. 113, LMR
-% \cite[Satz~(5.3)]{blatter}, % S. 111, Blatter
-% mit der Kapitel~\ref{chapter:dwt} beginnt. Ihre Koeffizienten bestimmen nach
-% Blatter \glqq sozusagen alles\grqq{}: Bei der numerischen Arbeit werden weder
-% $\varphi$ noch $\psi$ selbst benötigt \cite[Kap.~5.2]{blatter}. % S. 111, Blatter
-
-\anmerkung{Die Energiegleichung \eqref{eq:zerlegung-koeffizienten} ist das, was
-Abschnitt~\ref{sec:onb-invarianz} braucht: Die Wavelet-Koeffizienten sind
-Koordinaten bezüglich einer Orthonormalbasis.}
-
-
+die Koeffizienten allein durch Filteroperationen. Der Schlüssel ist die
+Inklusion $\varphi \in V_0 \subset V_{-1}$ \cite[Lemma~2.2.3]{lmr}, % S. 113
+\cite[Satz~(5.3)]{blatter}. % S. 111
+Kapitel~\ref{chapter:denoising} nutzt, dass $f \mapsto (a_{J,k}, d_{j,k})$
+nach \eqref{eq:zerlegung-koeffizienten} eine Isometrie ist
+(Definition~\ref{def:isometrie}).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Konstruktion der diskreten Wavelet-Transformation}
@@ -4900,14 +3887,51 @@ Bewertung müssen aber gemessene Aufzeichnungen tragen
 \chapter{Ergänzende Rechnungen}
 \label{chapter:anhang-rechnungen}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+ 
+%-------------------------------------------------------------------------------
+\section{Zulässigkeitskonstante des Haar-Wavelets}
+\label{anh:haar-konstante}
+%-------------------------------------------------------------------------------
+ 
+Wir berechnen $C_{\psi^{\mathrm H}}$ aus \eqref{eq:haar-fourier}. Für
+$\omega \neq 0$ ist $\sin(\omega/4)\operatorname{sinc}(\omega/4) = 4\sin^2(\omega/4)/\omega$,
+also
+\[
+  \bigl\lvert\widehat{\psi^{\mathrm{H}}}(\omega)\bigr\rvert^{2}
+  = \frac{16\sin^{4}(\omega/4)}{2\pi\,\omega^{2}} .
+\]
+Dieser Ausdruck ist gerade in $\omega$. Mit der Substitution $u = \omega/4$
+folgt
+\[
+  C_{\psi^{\mathrm H}}
+  = 2\pi \cdot 2 \int_0^\infty \frac{16\sin^{4}(\omega/4)}{2\pi\,\omega^{3}}\,d\omega
+  = 32\int_0^\infty \frac{\sin^{4}(\omega/4)}{\omega^{3}}\,d\omega
+  = 2\int_0^\infty \frac{\sin^{4}u}{u^{3}}\,du .
+\]
+Zur Auswertung schreiben wir $8\sin^4 u = g(u)$ mit
+$g(u) := 3 - 4\cos(2u) + \cos(4u)$. Die Taylorentwicklung liefert
+$g(u) = 8u^4 + O(u^6)$ für $u \to 0$. Zweimalige partielle Integration ist
+daher ohne Randterme möglich und ergibt
+\[
+  \int_0^\infty \frac{g(u)}{u^{3}}\,du
+  = \frac12\int_0^\infty \frac{g''(u)}{u}\,du
+  = 8\int_0^\infty \frac{\cos(2u) - \cos(4u)}{u}\,du
+  = 8\ln 2 .
+\]
+Im letzten Schritt wurde das Frullani-Integral
+$\int_0^\infty \bigl(\cos(\alpha u) - \cos(\beta u)\bigr)/u\,du = \ln(\beta/\alpha)$
+für $\alpha,\beta > 0$ verwendet. Also ist
+$\int_0^\infty \sin^4(u)/u^3\,du = \ln 2$ und
+$C_{\psi^{\mathrm H}} = 2\ln 2$, in Übereinstimmung mit
+\cite[Kap.~1.1, Beispiel~(1)]{lmr}. % S. 18--19
+ 
 %-------------------------------------------------------------------------------
 \section{Fourier-Transformierte des Testsignals}
 \label{anh:fourier-testsignal}
 %-------------------------------------------------------------------------------
-
-Wir leiten \eqref{eq:ft-testsignal} aus Beispiel~\ref{bsp:testsignal} her.
-Wegen $f\in L^1(\R)$ ist $\hat f$ punktweise durch das Integral gegeben; in
+ 
+Wir berechnen $\hat f$ für das Testsignal aus Beispiel~\ref{bsp:testsignal}.
+Wegen $f\in L^1(\R)$ ist $\hat f$ punktweise durch das Integral gegeben. In
 der Konvention aus Bemerkung~\ref{bem:fourier-konvention} ist
 \[
   \hat f(\omega)
@@ -4922,7 +3946,7 @@ $\cos x=\tfrac12\bigl(e^{ix}+e^{-ix}\bigr)$ und
   \int_\alpha^\beta e^{ct}\,dt=\frac{1}{c}\bigl(e^{c\beta}-e^{c\alpha}\bigr),
   \qquad c\in\C\setminus\{0\}.
 \end{equation}
-
+ 
 \paragraph{Die langsame Komponente.}
 Mit $q_1:=1-e^{-3i\omega}$ zerlegen wir
 \[
@@ -4930,99 +3954,85 @@ Mit $q_1:=1-e^{-3i\omega}$ zerlegen wir
   =\underbrace{\int_0^3 e^{-i\omega t}\,dt}_{=:A_1}
    -\underbrace{\int_0^3 \cos(2\pi t)\,e^{-i\omega t}\,dt}_{=:B_1}.
 \]
-Nach \eqref{eq:stammfunktion-exp} mit $c=-i\omega$ ist
-\[
-  A_1=\frac{e^{-3i\omega}-1}{-i\omega}=\frac{q_1}{i\omega}.
-\]
+Nach \eqref{eq:stammfunktion-exp} mit $c=-i\omega$ ist $A_1 = q_1/(i\omega)$.
 Für $B_1$ schreiben wir
-$\cos(2\pi t)e^{-i\omega t}=\tfrac12\bigl(e^{i(2\pi-\omega)t}+e^{-i(2\pi+\omega)t}\bigr)$
-und erhalten nach \eqref{eq:stammfunktion-exp}
+$\cos(2\pi t)e^{-i\omega t}=\tfrac12\bigl(e^{i(2\pi-\omega)t}+e^{-i(2\pi+\omega)t}\bigr)$.
+Nach \eqref{eq:stammfunktion-exp} ist
 \[
   B_1=\frac{e^{3i(2\pi-\omega)}-1}{2i(2\pi-\omega)}
      +\frac{e^{-3i(2\pi+\omega)}-1}{-2i(2\pi+\omega)}.
 \]
-Da auf $[0,3]$ genau drei volle Perioden liegen, ist
-$e^{\pm 6\pi i}=1$ und damit
-$e^{3i(2\pi-\omega)}=e^{-3i(2\pi+\omega)}=e^{-3i\omega}$. Beide Zähler
-werden zu $-q_1$, und
+Auf $[0,3]$ liegen genau drei volle Perioden. Daher ist $e^{\pm 6\pi i}=1$ und
+$e^{3i(2\pi-\omega)}=e^{-3i(2\pi+\omega)}=e^{-3i\omega}$. Beide Zähler werden
+zu $-q_1$, und es folgt
 \[
   B_1=\frac{q_1}{2i}\left(\frac{1}{2\pi+\omega}-\frac{1}{2\pi-\omega}\right)
-     =\frac{q_1}{2i}\cdot\frac{2\omega}{\omega^2-4\pi^2}
-     =\frac{q_1\,\omega}{i\,(\omega^2-4\pi^2)}.
+     =\frac{q_1\,\omega}{i\,(\omega^2-4\pi^2)} .
 \]
-Mit $1/i=-i$ folgt
+Mit $1/i=-i$ ergibt sich
 \[
   A_1-B_1
   =\frac{q_1}{i}\left(\frac1\omega-\frac{\omega}{\omega^2-4\pi^2}\right)
-  =\frac{q_1}{i}\cdot\frac{-4\pi^2}{\omega(\omega^2-4\pi^2)}
   =\frac{i\,4\pi^2\,q_1}{\omega\,(\omega^2-4\pi^2)} .
 \]
-
+ 
 \paragraph{Die schnelle Komponente.}
-Mit $q_2:=e^{-4i\omega}-e^{-5i\omega}$ verläuft die Rechnung wörtlich
-gleich, nun mit $10\pi$ statt $2\pi$ und den Grenzen $4$ und $5$. An die
-Stelle von $e^{\pm6\pi i}=1$ treten $e^{\pm40\pi i}=e^{\pm50\pi i}=1$, und
-man erhält
+Mit $q_2:=e^{-4i\omega}-e^{-5i\omega}$ verläuft die Rechnung gleich, mit
+$10\pi$ statt $2\pi$ und den Grenzen $4$ und $5$. An die Stelle von
+$e^{\pm6\pi i}=1$ treten $e^{\pm40\pi i}=e^{\pm50\pi i}=1$. Mit dem
+Amplitudenfaktor $\tfrac12$ erhält man
 \[
-  A_2=\int_4^5 e^{-i\omega t}\,dt=\frac{q_2}{i\omega},
-  \qquad
-  B_2=\int_4^5 \cos(10\pi t)\,e^{-i\omega t}\,dt=\frac{q_2\,\omega}{i\,(\omega^2-100\pi^2)},
-\]
-also mit dem Amplitudenfaktor $\tfrac12$
-\[
-  \frac12\bigl(A_2-B_2\bigr)
-  =\frac{q_2}{2i}\cdot\frac{-100\pi^2}{\omega(\omega^2-100\pi^2)}
+  \frac12\left(\int_4^5 e^{-i\omega t}\,dt - \int_4^5 \cos(10\pi t)\,e^{-i\omega t}\,dt\right)
   =\frac{i\,50\pi^2\,q_2}{\omega\,(\omega^2-100\pi^2)} .
 \]
+ 
+\paragraph{Ergebnis.}
 Addition beider Anteile und der Vorfaktor $(2\pi)^{-1/2}$ ergeben
-\eqref{eq:ft-testsignal}.
-
-\paragraph{Die Ausnahmestellen.}
+\begin{equation}\label{eq:ft-testsignal}
+  \hat f(\omega)
+  =\frac{i}{\sqrt{2\pi}\,\omega}
+   \left[
+     \frac{4\pi^{2}\bigl(1-e^{-3i\omega}\bigr)}{\omega^{2}-4\pi^{2}}
+     +\frac{50\pi^{2}\bigl(e^{-4i\omega}-e^{-5i\omega}\bigr)}{\omega^{2}-100\pi^{2}}
+   \right].
+\end{equation}
 Da $\hat f$ als Fourier-Transformierte einer $L^1$-Funktion stetig ist
 \cite[Satz~12.1]{serov}, gilt \eqref{eq:ft-testsignal} an den Stellen
-$\omega\in\{0,\pm2\pi,\pm10\pi\}$ im Sinne des Grenzwerts; dort
-verschwinden jeweils auch die Zähler, etwa $q_1=1-e^{-6\pi i}=0$ für
-$\omega=2\pi$. Die Werte lassen sich einfacher direkt aus dem Integral
-bestimmen. Für $\omega=0$ ist
-$\hat f(0)=(2\pi)^{-1/2}\int_\R f=(2\pi)^{-1/2}\bigl(3+\tfrac12\bigr)$.
-Für $\omega=2\pi$ zerfällt der Integrand in Exponentialterme
-$e^{i\nu t}$; alle mit $\nu\neq0$ integrieren sich über $[0,3]$ bzw.\
-$[4,5]$ zu null, da $\nu$ jeweils ein ganzzahliges Vielfaches von $2\pi$
-ist. Übrig bleibt allein der konstante Term
-$-\tfrac12e^{2\pi it}e^{-2\pi it}=-\tfrac12$ im ersten Integral, also
-$\hat f(2\pi)=-\tfrac32(2\pi)^{-1/2}$. Ebenso ist
-$\hat f(10\pi)=\tfrac12\cdot\bigl(-\tfrac12\bigr)(2\pi)^{-1/2}$, und wegen
-$\hat f(-\omega)=\overline{\hat f(\omega)}$ folgt
+$\omega\in\{0,\pm2\pi,\pm10\pi\}$ im Sinne des Grenzwerts. Direkt aus dem
+Integral folgen
 \[
-  |\hat f(0)|=\frac{7}{2\sqrt{2\pi}}\approx 1{,}396,\qquad
-  |\hat f(\pm2\pi)|=\frac{3}{2\sqrt{2\pi}}\approx 0{,}598,\qquad
-  |\hat f(\pm10\pi)|=\frac{1}{4\sqrt{2\pi}}\approx 0{,}0997 .
+  |\hat f(0)|=\frac{7}{2\sqrt{2\pi}},\qquad
+  |\hat f(\pm2\pi)|=\frac{3}{2\sqrt{2\pi}},\qquad
+  |\hat f(\pm10\pi)|=\frac{1}{4\sqrt{2\pi}} .
 \]
-Die in Beispiel~\ref{bsp:testsignal} angegebenen Lagen der Maxima,
-$\omega\approx1{,}90\pi$ mit $|\hat f|\approx0{,}629$ und
-$\omega\approx9{,}73\pi$ mit $|\hat f|\approx0{,}102$, wurden numerisch aus
-\eqref{eq:ft-testsignal} bestimmt; zur Kontrolle wurde
-\eqref{eq:ft-testsignal} an mehreren Stellen mit numerischer Quadratur des
-definierenden Integrals verglichen (Anhang~\ref{chapter:anhang-code}).
-
+Zur Kontrolle wurde \eqref{eq:ft-testsignal} an mehreren Stellen mit
+numerischer Quadratur des Integrals verglichen
+(Anhang~\ref{anh:code-testsignal}).
+ 
 %-------------------------------------------------------------------------------
 \section{Stammfunktion des Testsignals}
 \label{anh:stammfunktion-testsignal}
 %-------------------------------------------------------------------------------
-
-Für $0\le t\le3$ ist
-$F(t)=\int_0^t\bigl(1-\cos(2\pi s)\bigr)ds=t-\frac{\sin(2\pi t)}{2\pi}$,
-insbesondere $F(3)=3$ wegen $\sin(6\pi)=0$. Auf $[3,4]$ verschwindet $f$,
-also $F\equiv3$. Für $4\le t\le5$ ist
+ 
+Für die Stammfunktion $F(t):=\int_{-\infty}^{t}f(s)\,ds$ des Testsignals gilt
+\[
+  F(t)=
+  \begin{cases}
+    0, & t<0,\\[2pt]
+    t-\dfrac{\sin(2\pi t)}{2\pi}, & 0\le t\le 3,\\[4pt]
+    3, & 3\le t\le 4,\\[2pt]
+    3+\dfrac{t-4}{2}-\dfrac{\sin(10\pi t)}{20\pi}, & 4\le t\le 5,\\[4pt]
+    \dfrac72, & t>5.
+  \end{cases}
+\]
+Auf $[0,3]$ folgt das durch direkte Integration. Wegen $\sin(6\pi)=0$ ist
+$F(3)=3$. Auf $[3,4]$ verschwindet $f$. Auf $[4,5]$ ist
 \[
   F(t)=3+\frac12\int_4^t\bigl(1-\cos(10\pi s)\bigr)ds
-      =3+\frac{t-4}{2}-\frac{\sin(10\pi t)-\sin(40\pi)}{20\pi}
       =3+\frac{t-4}{2}-\frac{\sin(10\pi t)}{20\pi},
 \]
-und wegen $\sin(50\pi)=0$ ist $F(5)=\tfrac72=\int_\R f$, in
-Übereinstimmung mit $\hat f(0)=(2\pi)^{-1/2}\cdot\tfrac72$. Da $f$ stetig
-ist -- an allen vier Trägerrändern hat $1-\cos x=2\sin^2(x/2)$ eine
-doppelte Nullstelle --, ist $F$ stetig differenzierbar mit $F'=f$.
+da $\sin(40\pi)=0$ ist. Wegen $\sin(50\pi)=0$ ist $F(5)=\tfrac72=\int_\R f$.
+Das passt zu $\hat f(0)=(2\pi)^{-1/2}\cdot\tfrac72$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Python-Code}
