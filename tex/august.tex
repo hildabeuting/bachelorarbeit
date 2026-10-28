@@ -886,7 +886,7 @@ Sei $\psi$ ein Wavelet mit Zulässigkeitskonstante $C_\psi$ gemä\ss{}
 \begin{equation}
 \label{eq:plancherel-cwt}
   \int_{\R^*_\square} \lvert W_\psi f(a,b)\rvert^2\,\frac{da\,db}{a^2}
-  \;=\; C_\psi\,\norm{f}^2 .
+  \;=\; C_\psi\,\norm{f}_{\LZwei}^2 .
 \end{equation}
 \end{Satz}
 
@@ -925,42 +925,44 @@ Koeffizienten bezüglich einer Orthonormalbasis \cite[Kap.~11.2]{mallat}. % S. 5
 Gesucht ist daher eine abzählbare Auswahl von Parametern $(a,b)$, für die
 $\{\psi_{a,b}\}$ eine Orthonormalbasis von $\LZwei$ ist.
 \end{Bemerkung}
- 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Das dyadische Gitter und die Multiskalenanalyse}
 \label{sec:mra-axiome}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
-Einen Ma\ss{}stab für die Auswahl liefert \eqref{eq:plancherel-cwt} mit
-$g = f$:
-\[
-  \norm{f}^2 \;=\; \frac{1}{C_\psi}\int_{\R^*_\square}
-  \lvert W_\psi f(a,b)\rvert^2\,\frac{da}{a}\,\frac{db}{a}.
-\]
-Das Ma\ss{} $da/a$ zählt jede Verdopplung der Skala gleich. Das Ma\ss{}
-$db/a$ misst die Zeit in Vielfachen der Wavelet-Breite $a$. Gitterpunkte, die
-Zellen gleichen Inhalts vertreten, können daher gleich gewichtet werden
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Einen Anhaltspunkt für die Wahl der Punkte gibt die Plancherel-Formel
+\eqref{eq:plancherel-cwt}. Dort geht jeder Punkt $(a,b)$ mit dem Gewicht
+$a^{-2}$ ein. Ersetzt man das Integral durch eine Summe über Gitterpunkte,
+sollte jeder Gitterpunkt eine Zelle mit gleichem Gewicht vertreten
 \cite[Kap.~4.3]{blatter}. % S. 91--93
-Für $c > 0$ und $b_1 \in \R$ ist
+
+Das leistet das Gitter $a = 2^j$, $b = k2^j$ mit $j,k \in \Z$. Der Punkt
+$(2^j, k2^j)$ vertritt die Zelle
 \[
-  \int_{b_1}^{b_1+c}\int_{c}^{2c} \frac{da\,db}{a^2}
-  \;=\; c\,\Bigl(\frac1c - \frac1{2c}\Bigr) \;=\; \frac12 .
+  Z_{j,k} := [2^j,\,2^{j+1}] \times [k2^j,\,(k+1)2^j] .
 \]
-Das führt auf das Gitter $a = 2^{j}$, $b = k\,2^{j}$. Allgemeiner liefert jedes
-Gitter $(a_0^{j},\, k\,b_0 a_0^{j})$ Zellen gleichen Inhalts. Dabei ist
-$a_0 > 1$ der Skalenschritt und $b_0 > 0$ der Verschiebungsschritt
-\cite[Kap.~2.1.1]{lmr}. % S. 88
-Üblich ist $a_0 = 2$, $b_0 = 1$ \cite[Kap.~5]{blatter}. % S. 105
- 
+In $a$ reicht sie über eine Verdopplung der Skala, in $b$ über die Länge
+$2^j$. Für ihr Gewicht gilt
+\begin{equation}
+\label{eq:zellengewicht}
+  \int_{k2^j}^{(k+1)2^j}\int_{2^j}^{2^{j+1}} \frac{da\,db}{a^2}
+  \;=\; 2^j\Bigl(\frac{1}{2^j} - \frac{1}{2^{j+1}}\Bigr)
+  \;=\; \frac12 .
+\end{equation}
+Das Gewicht hängt weder von $j$ noch von $k$ ab
+(Abbildung~\ref{fig:dyadisches-gitter}). Ob die zugehörigen Funktionen
+$\psi_{2^j,k2^j}$ eine Orthonormalbasis bilden, hängt aber von $\psi$ ab. Das
+klärt die Multiskalenanalyse in Definition~\ref{def:msa}.
+
 \begin{Definition}[Dyadische Wavelet-Familie, {\cite[Kap.~5.1]{blatter}}] % S. 106
 \label{def:dyadisch}
 Sei $\psi$ ein Wavelet. Auf dem dyadischen Gitter
 $\{(2^{j},k2^{j}) : j,k\in\Z\}$ sei
 \begin{equation}
 \label{eq:dyadische-familie}
-  \psi_{j,k} \;:=\; \psi_{2^{j},\,k2^{j}},
-  \qquad\text{also}\qquad
-  \psi_{j,k}(t) \;=\; 2^{-j/2}\,\psi\!\left(\frac{t}{2^{j}} - k\right),
+  \psi_{j,k}(t) \;:=\; \psi_{2^{j},\,k2^{j}}(t)
+  \;=\; 2^{-j/2}\,\psi\!\left(\frac{t}{2^{j}} - k\right),
   \qquad j,k \in \Z .
 \end{equation}
 Kleineres $j$ gehört zur feineren Skala.\footnote{Diese Konvention folgt
@@ -998,17 +1000,15 @@ Blatter und Louis/Maa\ss{}/Rieder. Hanke-Bourgeois zählt umgekehrt
     \foreach \j in {-1,0,1,2}
       \node[right] at (8.1,\j+0.5) {\small $j=\j$};
   \end{tikzpicture}
-  \caption{Das dyadische Gitter $(2^j, k\,2^j)$. Die Skala $a$ ist
-  logarithmisch aufgetragen. Jeder Gitterpunkt vertritt die Zelle
-  $[2^j,2^{j+1}]\times[k\,2^j,(k+1)\,2^j]$ rechts oberhalb von ihm. Bezüglich
-  $da\,db/a^2$ hat jede Zelle den Inhalt $\tfrac12$. Hervorgehoben sind die
-  Zellen $[\tfrac12,1]\times[0,\tfrac12]$ und $[4,8]\times[4,8]$. Ihre
-  gewöhnlichen Flächen sind $\tfrac14$ und $16$.}
+  \caption{Das dyadische Gitter. Die Skala $a$ ist logarithmisch aufgetragen.
+  Dabei zählt $j$ die Skala und $k$ die Position auf dieser Skala. Jeder Punkt
+  $(2^j,k2^j)$ vertritt die Zelle $Z_{j,k}$ rechts oberhalb von ihm.
+  Hervorgehoben sind $Z_{-1,0} = [\tfrac12,1]\times[0,\tfrac12]$ und
+  $Z_{2,1} = [4,8]\times[4,8]$. Ihre gewöhnlichen Flächen sind $\tfrac14$ und
+  $16$. Ihr Gewicht ist nach \eqref{eq:zellengewicht} in beiden Fällen
+  $\tfrac12$.}
   \label{fig:dyadisches-gitter}
 \end{figure}
- 
-\subsection{Die Axiome}
-\label{subsec:mra-axiome}
  
 Gesucht ist ein Wavelet $\psi$, für das $\{\psi_{j,k}\}$ eine Orthonormalbasis
 von $\LZwei$ ist. Direkt lässt sich ein solches $\psi$ schwer finden. Die
@@ -1016,20 +1016,20 @@ Multiskalenanalyse beschreibt deshalb zuerst, wie ein Signal auf verschiedenen
 Skalen vergröbert wird. Das Wavelet ergibt sich aus dem Übergang zwischen zwei
 benachbarten Skalen \cite[Kap.~5.1]{blatter}. % S. 106
 Das folgende Beispiel zeigt das am Haar-Wavelet.
- 
+
 \begin{Beispiel}[Mittelwerte und Details, {\cite[Kap.~2.2.1]{lmr}}] % S. 110--111
 \label{bsp:haar-mittelung}
-Sei $V_j$ der Raum der Funktionen in $\LZwei$, die auf jedem Intervall
-$[k2^{j},(k+1)2^{j}[$ konstant sind. Die Orthogonalprojektion $P_j$ auf $V_j$
-ersetzt eine Funktion auf jedem dieser Intervalle durch ihren Mittelwert
-\cite[Satz~43.1]{hankebourgeois}. % S. 356
+Sei $V_j \subset \LZwei$ der Raum der Funktionen, die auf jedem Intervall
+$I_{j,k} := [k2^{j},(k+1)2^{j}[$ konstant sind. Die Orthogonalprojektion $P_j$
+auf $V_j$ ersetzt $f$ auf jedem $I_{j,k}$ durch den Mittelwert
+$2^{-j}\int_{I_{j,k}} f(t)\,dt$ \cite[Satz~43.1]{hankebourgeois}. % S. 356
 Wir betrachten die Treppenfunktion
 \[
   f \;=\; 4\cdot\mathbf 1_{[0,1[} + 2\cdot\mathbf 1_{[1,2[}
         + 5\cdot\mathbf 1_{[2,3[} + 7\cdot\mathbf 1_{[3,4[} \;\in\; V_0
 \]
 und schreiben kurz $f = (4,2,5,7)$ (Abbildung~\ref{fig:haar-mittelung}).
- 
+
 \begin{figure}[htbp]
   \centering
   \begin{tikzpicture}[x=0.6cm,y=0.32cm,font=\scriptsize]
@@ -1088,7 +1088,7 @@ und schreiben kurz $f = (4,2,5,7)$ (Abbildung~\ref{fig:haar-mittelung}).
   denselben vertikalen Ma\ss{}stab.}
   \label{fig:haar-mittelung}
 \end{figure}
- 
+
 Mittelung über je zwei benachbarte Intervalle liefert $P_1 f = (3,3,6,6)$.
 Dabei geht $f - P_1 f = (1,-1,-1,1)$ verloren. Mit dem Haar-Wavelet ist das
 \[
@@ -1106,7 +1106,11 @@ $4{,}5$, ein grobes Detail $-1{,}5$ und zwei feine Details $1$ und $-1$. Aus
 ihnen lässt sich $f$ exakt zurückgewinnen. Die Normierungsfaktoren $2^{-j/2}$
 aus \eqref{eq:dyadische-familie} sind hier weggelassen.
 \end{Beispiel}
- 
+
+Im Beispiel liegen die Räume $V_j$ ineinander und gehen durch Mittelung
+auseinander hervor. Die folgende Definition fasst die Eigenschaften zusammen,
+auf die es dabei ankommt.
+
 \begin{Definition}[Multiskalenanalyse, {\cite[Kap.~5.1, (a)--(c)]{blatter}}] % S. 106
 \label{def:msa}
 Eine Multiskalenanalyse (MSA) von $\LZwei$ ist eine Folge $(V_j)_{j\in\Z}$
@@ -1118,36 +1122,36 @@ abgeschlossener Teilräume von $\LZwei$ mit folgenden Eigenschaften:
   $\;\displaystyle\bigcap_{j\in\Z} V_j = \{0\}$,
 \item[(M3)] (Vollständigkeit)
   $\;\displaystyle\overline{\bigcup_{j\in\Z} V_j} = \LZwei$,
-\item[(M4)] (Skalierung)
-  $\;f \in V_j \iff f(2^{j}\,\cdot\,) \in V_0$ für alle $j \in \Z$,
+\item[(M4)] (Skalierung) Für alle $j \in \Z$ gilt: $f \in V_j$ genau dann, wenn
+  die Funktion $t \mapsto f(2^{j}t)$ in $V_0$ liegt,
 \item[(M5)] (Erzeugende Funktion) Es gibt ein
   $\varphi \in \LZwei \cap L^1(\R)$,\footnote{Die Forderung
   $\varphi \in L^1(\R)$ folgt Blatter. Sie sichert, dass $\hat\varphi$ stetig
-  ist. Das wird in Abschnitt~\ref{sec:skalierungsgleichung} an der Stelle
-  $\omega = 0$ gebraucht.} sodass $\{\varphi(\,\cdot - k) : k \in \Z\}$ eine
-  Orthonormalbasis von $V_0$ ist.
+  ist. Das wird für \eqref{eq:H0} gebraucht.} sodass die Funktionen
+  $t \mapsto \varphi(t - k)$, $k \in \Z$, eine Orthonormalbasis von $V_0$ bilden.
 \end{enumerate}
 Die Funktion $\varphi$ hei\ss{}t Skalierungsfunktion der MSA.
 \end{Definition}
- 
+
 \begin{Bemerkung}[Zu den Axiomen, {\cite[Kap.~5.1]{blatter}}] % S. 106--107
 \label{bem:msa-axiome}
 \begin{enumerate}
-\item[(a)] Je kleiner $j$, desto feinere Strukturen enthält $V_j$. Nach (M3)
-  lässt sich jedes Signal für $j \to -\infty$ beliebig genau annähern. Nach
-  (M2) bleibt für $j \to +\infty$ nur die Null übrig \cite[Bem.~2.2.2]{lmr}. % S. 112--113
-\item[(b)] Nach (M4) sind die $V_j$ skalierte Kopien desselben Raumes $V_0$.
-  Deshalb genügt eine einzige Funktion $\varphi$, um alle $V_j$ festzulegen.
-\item[(c)] Axiom (M5) liefert eine Orthonormalbasis, allerdings nur für den
-  Grundraum $V_0$ \cite[Kap.~5.1, (c)]{blatter}. % S. 106
+\item[(a)] (M1)--(M3): Je kleiner $j$, desto feinere Strukturen enthält $V_j$.
+  Anschaulich geht $V_j$ für $j \to -\infty$ gegen ganz $\LZwei$ und für
+  $j \to +\infty$ gegen $\{0\}$. Genau formuliert wird das durch (M3) und (M2)
+  \cite[Bem.~2.2.2]{lmr}. % S. 112--113
+\item[(b)] (M4): Die $V_j$ sind skalierte Kopien desselben Raumes $V_0$.
+  Deshalb genügt eine einzige Skalierungsfunktion $\varphi$, um alle $V_j$ festzulegen.
+\item[(c)] (M5): Das Axiom liefert eine Orthonormalbasis, allerdings nur für
+  den Grundraum $V_0$ \cite[Kap.~5.1, (c)]{blatter}. % S. 106
   Zusammen mit (M4) überträgt sie sich auf alle $V_j$
   (Satz~\ref{satz:onb-vj}).\footnote{Louis, Maa\ss{} und Rieder verlangen in
   (M5) nur eine Riesz-Basis \cite[Def.~2.2.1]{lmr}. % S. 111
   Wir folgen Blatter und fordern eine Orthonormalbasis.}
 \end{enumerate}
 \end{Bemerkung}
- 
-\begin{Beispiel}[Die Haar-MSA, {\cite[Kap.~5.1, Beispiel~\textcircled{1}]{blatter}}] % S. 107
+
+\begin{Beispiel}[Die Haar-MSA, {\cite[Kap.~5.1, Beispiel~1]{blatter}}] % S. 107
 \label{bsp:haar-msa}
 Die Räume $V_j$ aus Beispiel~\ref{bsp:haar-mittelung} bilden eine MSA mit der
 Skalierungsfunktion $\varphi := \mathbf 1_{[0,1[}$. Die Skalierungsfunktion ist
@@ -1159,21 +1163,27 @@ einzeln prüfen.
 \item (M2): Liegt $f$ in allen $V_j$, so ist $f$ auf $[0,2^j[$ für jedes $j$
   konstant, also auf $[0,\infty[$. In $\LZwei$ geht das nur für $f = 0$.
   Dasselbe gilt auf $]-\infty,0[$.
-\item (M3): Treppenfunktionen mit dyadischen Sprungstellen liegen dicht in
+\item (M3): Treppenfunktionen mit Sprungstellen der Form $k2^j$ liegen dicht in
   $\LZwei$ \cite[Kap.~5.1]{blatter}. % S. 107
-  So liegt $\mathbf 1_{[0,1/3[}$ in keinem $V_j$. Die Funktion
-  $\mathbf 1_{[0,5/16[} \in V_{-4}$ nähert sie aber mit Fehlerquadrat
-  $\tfrac13 - \tfrac5{16} = \tfrac1{48}$ an.
+  Ein Beispiel: $\mathbf 1_{[0,1/3[}$ springt bei $\tfrac13$ und liegt daher in
+  keinem $V_j$. Die Funktion $\mathbf 1_{[0,5/16[}$ springt bei
+  $\tfrac5{16} = 5\cdot2^{-4}$ und liegt in $V_{-4}$. Der Fehler ist
+  \[
+    \norm{\mathbf 1_{[0,1/3[} - \mathbf 1_{[0,5/16[}}_{\LZwei}^2
+    = \int_{5/16}^{1/3} 1\,dt = \tfrac13 - \tfrac5{16} = \tfrac1{48} .
+  \]
+  Mit feineren Stufen wird er beliebig klein.
 \item (M4): $f$ ist genau dann auf allen Intervallen $[k2^j,(k+1)2^j[$
-  konstant, wenn $f(2^j\,\cdot)$ auf allen Intervallen $[k,k+1[$ konstant ist.
-  Etwa ist $\mathbf 1_{[0,2[} \in V_1$ und
-  $\mathbf 1_{[0,2[}(2\,\cdot) = \mathbf 1_{[0,1[} \in V_0$.
-\item (M5): Die Verschiebungen $\varphi(\,\cdot - k) = \mathbf 1_{[k,k+1[}$ sind
-  orthonormal. Etwa ist
-  $f = 4\varphi + 2\varphi(\,\cdot-1) + 5\varphi(\,\cdot-2) + 7\varphi(\,\cdot-3)$.
+  konstant, wenn $t \mapsto f(2^j t)$ auf allen Intervallen $[k,k+1[$ konstant
+  ist. Etwa ist $f = \mathbf 1_{[0,2[} \in V_1$. Für $g(t) := f(2t)$ gilt
+  $g(t) = 1$ genau für $0 \le 2t < 2$, also für $0 \le t < 1$. Somit ist
+  $g = \mathbf 1_{[0,1[} \in V_0$.
+\item (M5): Die Verschiebungen $\varphi(t - k) = \mathbf 1_{[k,k+1[}(t)$ haben
+  disjunkte Träger und Norm $1$. Sie sind also orthonormal. Etwa ist
+  $f(t) = 4\varphi(t) + 2\varphi(t-1) + 5\varphi(t-2) + 7\varphi(t-3)$.
 \end{itemize}
 \end{Beispiel}
- 
+
 In Beispiel~\ref{bsp:haar-mittelung} entsteht jede gröbere Näherung
 $P_{j+1} f$ durch Mittelung aus $P_j f$. Das entspricht der Schachtelung (M1).
 Was bei der Mittelung verloren geht, sind Vielfache gestreckter und
