@@ -383,9 +383,6 @@ Isometrie hei\ss{}t unitär.
  
 Eine Isometrie erhält auch Skalarprodukte, also
 $\scal{Ux}{Uy} = \scal{x}{y}$ für alle $x,y$ \cite[Übung~27.2]{serov}. % S. 282
-Serov formuliert die Definition für $\mathcal H_1 = \mathcal H_2$. Wir
-brauchen sie auch für verschiedene Räume, etwa für die Abbildung von $\LZwei$
-in den Bildraum der Wavelet-Transformation (Satz~\ref{satz:plancherel-cwt}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Fourier-Transformation und Satz von Plancherel}
@@ -422,6 +419,23 @@ einer Quelle ist deshalb zuerst deren Konvention nachzusehen.
 \end{Bemerkung}
 
 \anmerkung{das vll besser erst später}
+
+\begin{Satz}[Plancherel-Formel für die Fourier-Transformation, {\cite[Satz~(2.11)]{blatter}}] % S. 36
+\label{satz:plancherel-ft}
+Die Fourier-Transformation lässt sich von $L^1(\R) \cap \LZwei$ zu einer
+bijektiven Abbildung $\LZwei \to \LZwei$ fortsetzen. Für alle
+$f, g \in \LZwei$ gilt
+\begin{equation}
+\label{eq:plancherel-ft}
+  \scal{\hat f}{\hat g} \;=\; \scal{f}{g},
+  \qquad\text{insbesondere}\qquad
+  \norm{\hat f}_{\LZwei} \;=\; \norm{f}_{\LZwei} .
+\end{equation}
+\end{Satz}
+
+Die Fourier-Transformation ist also unitär (Definition~\ref{def:isometrie}).
+Für $f \in \LZwei \setminus L^1(\R)$ ist $\hat f$ nur als Element von
+$\LZwei$ erklärt, also nur bis auf Nullmengen \cite[Kap.~2.2]{blatter}. % S. 36
 
 \section{Die gefensterte Fourier-Transformation}
 \label{sec:wft}
@@ -501,9 +515,14 @@ ganz $\R$ konstanten Betrag. Sie zerlegt daher nur entlang der Frequenzachse
 Wann eine Frequenz auftritt, ist an $\lvert\hat f\rvert$ nicht abzulesen
 \cite[Kap.~1.2--1.3]{blatter}. % S. 7--8
  
-Beim EKG ist das ungünstig. Der QRS-Komplex ist kurz und breitbandig. P- und
-T-Welle sind lang und schmalbandig \cite[Kap.~2.3.1]{rebstadt}. % S. 16--17
+Beim EKG ist das ungünstig. P- und T-Welle sind niederfrequent. Der
+QRS-Komplex enthält zusätzlich hochfrequente, zeitlich lokalisierte Anteile
+\cite[Kap.~2.3]{rebstadt}. % S. 16--17
 Eine geeignete Analyse muss beide Anteile zugleich auflösen.
+
+\anmerkung{Rebstadt S.~16--17 sagt nicht „breit-/schmalbandig“, sondern:
+P-/T-Welle niederfrequent (1--6 bzw. 1--20~Hz), QRS zusätzlich hochfrequent
+und zeitlokalisiert. Satz anpassen, Abschnittsnummer prüfen (2.3 statt 2.3.1?).}
  
 Die gefensterte Fourier-Transformation (Abschnitt~\ref{sec:wft}) bestimmt den
 Frequenzgehalt eines Ausschnitts. Die Fensterbreite ist dabei für alle
@@ -875,9 +894,8 @@ Dieser Abschnitt zeigt, dass bei der CWT keine Information verloren geht, sie
 aber viel mehr Werte liefert als nötig. Das begründet den Übergang zum
 dyadischen Gitter in Abschnitt~\ref{sec:mra-axiome}.
 
-Für die Fourier-Transformation gilt $\norm{\hat f} = \norm{f}$
-(Bemerkung~\ref{bem:fourier-konvention}). Für die CWT gilt eine ähnliche
-Formel.
+Für die Fourier-Transformation gilt $\norm{\hat f}_{\LZwei} = \norm{f}_{\LZwei}$
+(Satz~\ref{satz:plancherel-ft}). Für die CWT gilt eine ähnliche Formel.
 
 \begin{Satz}[Plancherel-Formel für die CWT, {\cite[Satz~(3.3)]{blatter}}] % S. 62
 \label{satz:plancherel-cwt}
@@ -895,13 +913,13 @@ Sei $\psi$ ein Wavelet mit Zulässigkeitskonstante $C_\psi$ gemä\ss{}
 Der Beweis steht bei \cite[Satz~(3.3)]{blatter}. % S. 62--63
 Links steht das Integral über $\lvert W_\psi f\rvert^2$ auf der
 $(a,b)$-Ebene, gewichtet mit $a^{-2}$. Es ist bis auf den Faktor $C_\psi$
-gleich $\norm{f}^2$. Das Gewicht $a^{-2}$ wird in
+gleich $\norm{f}_{\LZwei}^2$. Das Gewicht $a^{-2}$ wird in
 Abschnitt~\ref{sec:mra-axiome} erklärt.
 
 Daraus folgt, dass $f$ durch $W_\psi f$ eindeutig bestimmt ist
 \cite[Satz~(3.3)]{blatter}. % S. 62
 Ist nämlich $W_\psi f = W_\psi g$, so ist $W_\psi(f-g) = 0$. Nach
-\eqref{eq:plancherel-cwt} folgt $\norm{f-g} = 0$, also $f = g$.
+\eqref{eq:plancherel-cwt} folgt $\norm{f-g}_{\LZwei} = 0$, also $f = g$.
 
 \begin{Bemerkung}[Redundanz der CWT]
 \label{bem:redundanz}
@@ -952,8 +970,7 @@ $2^j$. Für ihr Gewicht gilt
 \end{equation}
 Das Gewicht hängt weder von $j$ noch von $k$ ab
 (Abbildung~\ref{fig:dyadisches-gitter}). Ob die zugehörigen Funktionen
-$\psi_{2^j,k2^j}$ eine Orthonormalbasis bilden, hängt aber von $\psi$ ab. Das
-klärt die Multiskalenanalyse in Definition~\ref{def:msa}.
+$\psi_{2^j,k2^j}$ eine Orthonormalbasis bilden, hängt aber von $\psi$ ab.
 
 \begin{Definition}[Dyadische Wavelet-Familie, {\cite[Kap.~5.1]{blatter}}] % S. 106
 \label{def:dyadisch}
@@ -972,7 +989,7 @@ Blatter und Louis/Maa\ss{}/Rieder. Hanke-Bourgeois zählt umgekehrt
  
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[x=1.2cm,y=1.0cm]
+  \begin{tikzpicture}[x=1.2cm,y=1.0cm] 
     \foreach \j/\w in {-1/0.5, 0/1, 1/2, 2/4}{
       \pgfmathtruncatemacro{\n}{8/\w - 1}
       \foreach \k in {0,...,\n}
@@ -1010,8 +1027,8 @@ Blatter und Louis/Maa\ss{}/Rieder. Hanke-Bourgeois zählt umgekehrt
   \label{fig:dyadisches-gitter}
 \end{figure}
  
-Gesucht ist ein Wavelet $\psi$, für das $\{\psi_{j,k}\}$ eine Orthonormalbasis
-von $\LZwei$ ist. Direkt lässt sich ein solches $\psi$ schwer finden. Die
+Ein Wavelet $\psi$, für das $\{\psi_{j,k}\}$ eine Orthonormalbasis von $\LZwei$
+ist, lässt sich direkt schwer finden. Die 
 Multiskalenanalyse beschreibt deshalb zuerst, wie ein Signal auf verschiedenen
 Skalen vergröbert wird. Das Wavelet ergibt sich aus dem Übergang zwischen zwei
 benachbarten Skalen \cite[Kap.~5.1]{blatter}. % S. 106
@@ -1055,7 +1072,7 @@ und schreiben kurz $f = (4,2,5,7)$ (Abbildung~\ref{fig:haar-mittelung}).
     \end{scope}
     \begin{scope}[xshift=4.4cm]
       \ObenAchsen
-      \node[anchor=south west] at (-0.3,9.4) {\small $P_1 f$ (Stufenbreite $2$)};
+      \node[anchor=south west] at (-0.3,9.4) {\small $P_1 f$ (Stufenbreite $2$)}; 
       \draw[uhh_blue, line width=1.1pt] (0,3) -- (2,3) -- (2,6) -- (4,6);
       \node[above] at (1,3) {$3$};
       \node[above] at (3,6) {$6$};
@@ -1082,7 +1099,7 @@ und schreiben kurz $f = (4,2,5,7)$ (Abbildung~\ref{fig:haar-mittelung}).
       \node[above] at (3,1.5) {$1{,}5$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Die Treppenfunktion $f=(4,2,5,7)$ aus Beispiel~\ref{bsp:haar-mittelung}
+  \caption{Die Treppenfunktion $f=(4,2,5,7)$ aus Beispiel~\ref{bsp:haar-mittelung} 
   und ihre Mittelungen $P_1 f$ und $P_2 f$ (oben). Darunter das Detail, das
   beim Übergang zu der jeweiligen Mittelung verloren geht. Alle Panels haben
   denselben vertikalen Ma\ss{}stab.}
@@ -1108,7 +1125,7 @@ aus \eqref{eq:dyadische-familie} sind hier weggelassen.
 \end{Beispiel}
 
 Im Beispiel liegen die Räume $V_j$ ineinander und gehen durch Mittelung
-auseinander hervor. Die folgende Definition fasst die Eigenschaften zusammen,
+auseinander hervor. Die folgende Definition fasst die Eigenschaften zusammen, 
 auf die es dabei ankommt.
 
 \begin{Definition}[Multiskalenanalyse, {\cite[Kap.~5.1, (a)--(c)]{blatter}}] % S. 106
@@ -1138,7 +1155,7 @@ Die Funktion $\varphi$ hei\ss{}t Skalierungsfunktion der MSA.
 \begin{enumerate}
 \item[(a)] (M1)--(M3): Je kleiner $j$, desto feinere Strukturen enthält $V_j$.
   Anschaulich geht $V_j$ für $j \to -\infty$ gegen ganz $\LZwei$ und für
-  $j \to +\infty$ gegen $\{0\}$. Genau formuliert wird das durch (M3) und (M2)
+  $j \to +\infty$ gegen $\{0\}$. Genau formuliert wird das durch (M3) und (M2) 
   \cite[Bem.~2.2.2]{lmr}. % S. 112--113
 \item[(b)] (M4): Die $V_j$ sind skalierte Kopien desselben Raumes $V_0$.
   Deshalb genügt eine einzige Skalierungsfunktion $\varphi$, um alle $V_j$ festzulegen.
@@ -1153,7 +1170,7 @@ Die Funktion $\varphi$ hei\ss{}t Skalierungsfunktion der MSA.
 
 \begin{Beispiel}[Die Haar-MSA, {\cite[Kap.~5.1, Beispiel~1]{blatter}}] % S. 107
 \label{bsp:haar-msa}
-Die Räume $V_j$ aus Beispiel~\ref{bsp:haar-mittelung} bilden eine MSA mit der
+Die Räume $V_j$ aus Beispiel~\ref{bsp:haar-mittelung} bilden eine MSA mit der 
 Skalierungsfunktion $\varphi := \mathbf 1_{[0,1[}$. Die Skalierungsfunktion ist
 also eine einzelne Stufe und nicht das Haar-Wavelet. Die Axiome lassen sich
 einzeln prüfen.
@@ -1196,29 +1213,45 @@ ist also frei von der Redundanz aus Bemerkung~\ref{bem:redundanz}.
 \section{Skalierungsfunktion und Orthonormalbasis der Räume \texorpdfstring{$V_j$}{Vj}}
 \label{sec:skalierungsfunktion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
+
 In diesem Abschnitt wird die Basis aus (M5) auf alle Skalen übertragen
 (Satz~\ref{satz:onb-vj}). Au\ss{}erdem wird gezeigt, dass die
 Orthogonalprojektionen $P_j$ für $j \to -\infty$ gegen die Identität und für
 $j \to +\infty$ gegen null streben (Proposition~\ref{prop:approximation}).
 Normen ohne Index sind im Folgenden Normen in $\LZwei$.
- 
+
 %-------------------------------------------------------------------------------
 \subsection{Die Orthonormalbasis auf allen Skalen}
 \label{subsec:onb-alle-skalen}
 %-------------------------------------------------------------------------------
- 
-Sei $D_a f := \lvert a\rvert^{-1/2} f(\,\cdot/a)$ der Dilatationsoperator,
-$a \in \R^*$. Nach (M4) liegt $f$ genau dann in $V_j$, wenn
-$f = h(\,\cdot/2^{j})$ mit einem $h \in V_0$ ist. Da $V_j$ ein linearer Raum ist,
-spielt der Vorfaktor keine Rolle. Es folgt
+
+\begin{Definition}[Dilatationsoperator, {\cite[Kap.~1.2]{lmr}}] % S. 26
+\label{def:dilatation}
+Für $a \in \R^*$ hei\ss{}t $D_a \colon \LZwei \to \LZwei$,
+\[
+  (D_a f)(t) \;:=\; \lvert a\rvert^{-1/2}\, f\!\left(\frac ta\right),
+  \qquad t \in \R ,
+\]
+der Dilatationsoperator.
+\end{Definition}
+
+$D_a$ ist linear. Mit der Substitution aus Bemerkung~\ref{bem:normierung} für
+$b = 0$ folgt $\norm{D_a f}_{\LZwei} = \norm{f}_{\LZwei}$ für alle
+$f \in \LZwei$. Au\ss{}erdem ist $D_a$ surjektiv. Für $g \in \LZwei$ ist nämlich
+$(D_{1/a}\,g)(t) = \lvert a\rvert^{1/2}\,g(at)$ und daher
+$D_a(D_{1/a}\,g) = g$. Also ist $D_a$ unitär (Definition~\ref{def:isometrie})
+\cite[Kap.~1.2]{lmr}. % S. 27
+
+Nach (M4) liegt $h$ genau dann in $V_0$, wenn die Funktion
+$t \mapsto h(t/2^j)$ in $V_j$ liegt. Der Faktor $2^{-j/2}$ in $D_{2^j}$ ändert
+daran nichts, da $V_0$ und $V_j$ Teilräume sind. Daher gilt
 \begin{equation}
 \label{eq:vj-d2j}
-  V_j \;=\; D_{2^{j}}(V_0) \qquad\text{für alle } j \in \Z
+  V_j \;=\; D_{2^{j}}(V_0) \;=\; \{D_{2^j}h : h \in V_0\}
+  \qquad\text{für alle } j \in \Z
 \end{equation}
 \cite[Kap.~5.1, (b)]{blatter}. % S. 106
-Der Operator $D_{2^j}$ ist unitär \cite[Kap.~1.2]{lmr}. % S. 27
- 
+
 \begin{Satz}[Orthonormalbasis von $V_j$, {\cite[Kap.~5.1]{blatter}}] % S. 107
 \label{satz:onb-vj}
 Sei $(V_j)_{j\in\Z}$ eine MSA mit Skalierungsfunktion $\varphi$. Mit
@@ -1230,22 +1263,25 @@ Sei $(V_j)_{j\in\Z}$ eine MSA mit Skalierungsfunktion $\varphi$. Mit
 ist $\{\varphi_{j,k} : k \in \Z\}$ für jedes feste $j \in \Z$ eine
 Orthonormalbasis von $V_j$.
 \end{Satz}
- 
-Ein unitärer Operator erhält Skalarprodukte. Er bildet daher eine
-Orthonormalbasis eines abgeschlossenen Teilraums auf eine Orthonormalbasis des
-Bildes ab \cite[Def.~27.7, Satz~25.18]{serov}. % S. 282, 257--258
-Nach \eqref{eq:vj-d2j} bildet $D_{2^j}$ die Basis $\{\varphi(\,\cdot-k)\}_k$
-von $V_0$ auf $\{\varphi_{j,k}\}_k$ ab. Das beweist den Satz.
- 
-\anmerkung{Der rote Faden: Die gesamte Konstruktion liefert Orthonormalbasen.
-In Abschnitt~\ref{sec:onb-invarianz} ist es die Orthogonalität der DWT
-(Lemma~\ref{lem:dwt-orthogonal}), die das Rauschen invariant lässt.}
- 
+
+Ein unitärer Operator erhält Skalarprodukte \cite[Übung~27.2]{serov}. % S. 282
+Für die Basisfunktionen von $V_0$ gilt
+\[
+  D_{2^j}\bigl[\varphi(t - k)\bigr]
+  \;=\; 2^{-j/2}\,\varphi\!\left(\frac{t}{2^j} - k\right)
+  \;=\; \varphi_{j,k}(t) .
+\]
+Nach \eqref{eq:vj-d2j} bildet $D_{2^j}$ den Raum $V_0$ bijektiv auf $V_j$ ab.
+Daher geht die Orthonormalbasis $\{\varphi(t-k)\}_k$ von $V_0$ in eine
+Orthonormalbasis $\{\varphi_{j,k}\}_k$ von $V_j$ über
+\cite[Def.~27.7, Satz~25.18]{serov}. % S. 282, 257--258
+Das beweist den Satz.
+
 %-------------------------------------------------------------------------------
 \subsection{Die Approximationsoperatoren}
 \label{subsec:approximationsoperatoren}
 %-------------------------------------------------------------------------------
- 
+
 \begin{Definition}[Approximationsoperator, {\cite[Bem.~2.2.2\,(a)]{lmr}}] % S. 113
 \label{def:projektion-pj}
 Für $f \in \LZwei$ und $j \in \Z$ hei\ss{}en
@@ -1258,55 +1294,68 @@ $P_j \colon \LZwei \to V_j$,
 \end{equation}
 hei\ss{}t Approximationsoperator.
 \end{Definition}
- 
-Wir halten drei Eigenschaften fest.
-\begin{enumerate}
-\item[(i)] Da $\{\varphi_{j,k}\}_k$ eine Orthonormalbasis von $V_j$ ist,
-  konvergiert \eqref{eq:pj} in $\LZwei$, und es gilt
-  $\norm{P_j f}^2 = \sum_{k} \lvert a_{j,k}\rvert^2$
-  \cite[Satz~25.18]{serov}. % S. 257--258
-\item[(ii)] Für alle $l \in \Z$ ist
-  $\scal{f - P_j f}{\varphi_{j,l}} = a_{j,l} - a_{j,l} = 0$. Also steht
-  $f - P_j f$ senkrecht auf $V_j$, und $P_j$ ist die Orthogonalprojektion auf
-  $V_j$.
-\item[(iii)] Aus (ii) und dem Satz des Pythagoras folgt
-  $\norm{f - g} \ge \norm{f - P_j f}$ für alle $g \in V_j$. Also ist $P_j f$
-  die beste Näherung von $f$ in $V_j$
-  \cite[Satz~31.6]{hankebourgeois}. % S. 281
-\end{enumerate}
- 
+
+Da $\{\varphi_{j,k}\}_k$ eine Orthonormalbasis von $V_j$ ist, konvergiert
+\eqref{eq:pj} in $\LZwei$, und es gilt
+$\norm{P_j f}_{\LZwei}^2 = \sum_{k} \lvert a_{j,k}\rvert^2$
+\cite[Satz~25.18]{serov}. % S. 257--258
+
+Au\ss{}erdem steht der Fehler $f - P_j f$ senkrecht auf jeder Basisfunktion
+$\varphi_{j,l}$. Wegen der Orthonormalität ist nämlich
+\[
+  \scal{f - P_j f}{\varphi_{j,l}}
+  \;=\; \scal{f}{\varphi_{j,l}} - \sum_{k\in\Z} a_{j,k}\,\scal{\varphi_{j,k}}{\varphi_{j,l}}
+  \;=\; a_{j,l} - a_{j,l} \;=\; 0 .
+\]
+Also ist $P_j$ die Orthogonalprojektion auf $V_j$. Daher ist $P_j f$ die beste
+Näherung von $f$ in $V_j$, das hei\ss{}t
+$\norm{f - P_j f}_{\LZwei} \le \norm{f - g}_{\LZwei}$ für alle $g \in V_j$
+\cite[Satz~31.6]{hankebourgeois}. % S. 281
+
+\begin{Beispiel}[Approximation in der Haar-MSA, {\cite[Kap.~2.2]{lmr}}] % S. 115
+\label{bsp:haar-pj}
 Für die Haar-MSA ist $\varphi_{j,k} = 2^{-j/2}\,\mathbf 1_{I_{j,k}}$ mit
 $I_{j,k} := [k2^{j},(k+1)2^{j}[$. Dann ist
+$a_{j,k} = \scal{f}{\varphi_{j,k}} = 2^{-j/2}\int_{I_{j,k}} f(t)\,dt$, also
 \[
   a_{j,k}\,\varphi_{j,k}
+  \;=\; 2^{-j/2}\int_{I_{j,k}} f(t)\,dt \cdot 2^{-j/2}\,\mathbf 1_{I_{j,k}}
   \;=\; \Bigl(\frac{1}{2^{j}}\int_{I_{j,k}} f(t)\,dt\Bigr)\,\mathbf 1_{I_{j,k}} .
 \]
-$P_j$ ersetzt $f$ also auf jedem $I_{j,k}$ durch seinen Mittelwert
-\cite[Kap.~2.2]{lmr}. % S. 115
-Das ist die Aussage aus Beispiel~\ref{bsp:haar-mittelung}.
- 
+Da $I_{j,k}$ die Länge $2^j$ hat, steht in der Klammer der Mittelwert von $f$
+auf $I_{j,k}$. $P_j$ ersetzt $f$ also auf jedem $I_{j,k}$ durch diesen
+Mittelwert. Das ist die Aussage aus Beispiel~\ref{bsp:haar-mittelung}.
+\end{Beispiel}
+
 \begin{Proposition}[Approximationseigenschaft, {\cite[Bem.~2.2.2\,(a)]{lmr}}] % S. 112--113
 \label{prop:approximation}
 Für jedes $f \in \LZwei$ gilt
 \[
-  \text{(a)}\;\; \lim_{j\to-\infty} \norm{P_j f - f} = 0
+  \text{(a)}\;\; \lim_{j\to-\infty} \norm{P_j f - f}_{\LZwei} = 0
   \qquad\text{und}\qquad
-  \text{(b)}\;\; \lim_{j\to+\infty} \norm{P_j f} = 0 .
+  \text{(b)}\;\; \lim_{j\to+\infty} \norm{P_j f}_{\LZwei} = 0 .
 \]
 \end{Proposition}
- 
-Aussage (a) folgt aus (M3) und Eigenschaft (iii). Aussage (b) folgt aus (M2)
-\cite[Prop.~(5.1)]{blatter}. % S. 108
+
+Aussage (a) bedeutet: Auf immer feineren Skalen nähert $P_j f$ jedes Signal
+beliebig genau an. Aussage (b) bedeutet: Auf immer gröberen Skalen bleibt von
+jedem Signal nichts übrig. Aussage (a) folgt aus (M3) und daraus, dass $P_j f$
+die beste Näherung von $f$ in $V_j$ ist. Nach (M3) gibt es zu jedem
+$\varepsilon > 0$ ein $j_0$ und ein $g \in V_{j_0}$ mit
+$\norm{f - g}_{\LZwei} < \varepsilon$. Wegen (M1) liegt $g$ auch in jedem
+$V_j$ mit $j \le j_0$, also ist dort
+$\norm{f - P_j f}_{\LZwei} \le \norm{f - g}_{\LZwei} < \varepsilon$.
+Aussage (b) folgt aus (M2) \cite[Prop.~(5.1)]{blatter}. % S. 108
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Detailräume \texorpdfstring{$W_j$}{Wj} und die Zerlegung von \texorpdfstring{$L^2(\R)$}{L2(R)}}
 \label{sec:detailraeume}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
+
 Wegen $V_j \subset V_{j-1}$ sind die Basen verschiedener $V_j$ nicht
 zueinander orthogonal. Man betrachtet deshalb nur den Zuwachs beim Übergang
 zur nächstfeineren Skala \cite[Kap.~5.1]{blatter}. % S. 107
- 
+
 \begin{Definition}[Detailräume, {\cite[Kap.~5.1, Gl.~(8)]{blatter}}] % S. 107
 \label{def:detailraeume}
 Für $j \in \Z$ sei $W_j$ das orthogonale Komplement von $V_j$ in $V_{j-1}$,
@@ -1317,13 +1366,13 @@ Für $j \in \Z$ sei $W_j$ das orthogonale Komplement von $V_j$ in $V_{j-1}$,
 \end{equation}
 und $Q_j := P_{j-1} - P_j$.
 \end{Definition}
- 
+
 $Q_j$ ist die Orthogonalprojektion auf $W_j$ \cite[Kap.~5.1]{blatter}, % S. 109
 \cite[Gl.~(2.2.9)]{lmr}. % S. 113
 Denn $Q_j f = (f - P_j f) - (f - P_{j-1} f)$ liegt in $V_{j-1}$, und beide
 Klammern stehen senkrecht auf $V_j$. Also liegt $Q_j f$ in $W_j$. Ferner steht
 $f - Q_j f = (f - P_{j-1}f) + P_j f$ senkrecht auf $W_j$.
- 
+
 Da $D_{2^j}$ unitär ist und nach \eqref{eq:vj-d2j} $V_0$ auf $V_j$ und
 $V_{-1}$ auf $V_{j-1}$ abbildet, gilt
 \begin{equation}
@@ -1331,9 +1380,11 @@ $V_{-1}$ auf $V_{j-1}$ abbildet, gilt
   W_j \;=\; D_{2^{j}}(W_0) \qquad\text{für alle } j \in \Z
 \end{equation}
 \cite[Kap.~5.1, Gl.~(9)]{blatter}. % S. 107
-Für $i > j$ ist $W_i \subset V_{i-1} \subset V_j \perp W_j$. Die Detailräume
-sind also paarweise orthogonal \cite[Prop.~(5.1)]{blatter}. % S. 108
- 
+Für $i > j$ ist $W_i \subset V_{i-1}$ nach \eqref{eq:vw-zerlegung} und
+$V_{i-1} \subset V_j$ nach (M1). Da $V_j \perp W_j$ gilt,
+folgt $W_i \perp W_j$. Die Detailräume sind also paarweise orthogonal
+\cite[Prop.~(5.1)]{blatter}. % S. 108
+
 \begin{Satz}[Zerlegung von $\LZwei$ in Detailräume, {\cite[Prop.~(5.1)]{blatter}}] % S. 108
 \label{satz:zerlegung}
 Sei $(V_j)_{j\in\Z}$ eine MSA mit Detailräumen $W_j$. Dann gilt
@@ -1345,50 +1396,45 @@ als orthogonale direkte Summe. Für jedes $f \in \LZwei$ ist
 $f = \sum_{j\in\Z} Q_j f$ und
 \begin{equation}
 \label{eq:energie-skalen}
-  \norm{f}^2 \;=\; \sum_{j\in\Z} \norm{Q_j f}^2 .
+  \norm{f}_{\LZwei}^2 \;=\; \sum_{j\in\Z} \norm{Q_j f}_{\LZwei}^2 .
 \end{equation}
 Für jedes feste $J \in \Z$ gilt ferner
 \begin{equation}
 \label{eq:l2-zerlegung-endlich}
-  \LZwei \;=\; V_J \oplus \bigoplus_{j \le J} W_j,
+  \LZwei \;=\; V_J \oplus \Bigl(\bigoplus_{j \le J} W_j\Bigr),
   \qquad
   f \;=\; P_J f + \sum_{j \le J} Q_j f .
 \end{equation}
 \end{Satz}
- 
+
 Nach Definition von $Q_j$ ist
 $\sum_{j=J_1+1}^{J_2} Q_j f = P_{J_1} f - P_{J_2} f$. Nach
 Proposition~\ref{prop:approximation} strebt das für $J_1 \to -\infty$ und
 $J_2 \to +\infty$ gegen $f$. Mit $J_2 = J$ folgt
-\eqref{eq:l2-zerlegung-endlich}. Die Energiegleichung folgt aus der
-Orthogonalität der Summanden \cite[Prop.~(5.1)]{blatter}, % S. 108--109
+\eqref{eq:l2-zerlegung-endlich}. Gleichung~\eqref{eq:energie-skalen} folgt aus
+der Orthogonalität der Summanden \cite[Prop.~(5.1)]{blatter}, % S. 108--109
 \cite[Gl.~(2.2.11), (2.2.12)]{lmr}. % S. 114
- 
+
 In der Anwendung wird die endliche Fassung \eqref{eq:l2-zerlegung-endlich}
 benutzt \cite[Kap.~2.2]{lmr}. % S. 114
-Ein Mittelwert ungleich null verschwindet durch $P_j$ nämlich nicht, er wird nur
-auseinandergezogen. Für die Treppenfunktion aus
-Beispiel~\ref{bsp:haar-mittelung} ist etwa
-$P_j f = 18\cdot 2^{-j}\,\mathbf 1_{[0,2^{j}[}$ für alle $j \ge 2$. In
-Kapitel~\ref{chapter:anwendung} wird $P_J f$ dagegen gezielt entfernt, weil dort
-die Basisliniendrift liegt (Abschnitt~\ref{sec:ein-schritt}).
  
 %-------------------------------------------------------------------------------
 \subsection{Die Wavelet-Basis}
 \label{subsec:konstruktionsziel}
 %-------------------------------------------------------------------------------
- 
-$V_{-1}$ besitzt zwei Basisfunktionen pro Zeiteinheit, $V_0$ eine. Es liegt
-daher nahe, $W_0$ durch die ganzzahligen Verschiebungen einer einzigen
-Funktion $\psi$ aufzuspannen \cite[Kap.~5.1]{blatter}. % S. 109
-Dass es ein solches $\psi$ gibt, zeigt Kapitel~\ref{chapter:dwt}
-\cite[Satz~2.2.10]{lmr}. % S. 122
-Im Haar-Fall ist es $\psi^{\mathrm H}$ \cite[Kap.~2.2]{lmr}. % S. 116
- 
+
+Nach Satz~\ref{satz:zerlegung} ist $\LZwei$ die orthogonale Summe der $W_j$.
+Für eine Orthonormalbasis von $\LZwei$ braucht man also eine Orthonormalbasis
+jedes $W_j$. Wegen \eqref{eq:wj-d2j} genügt eine Orthonormalbasis von $W_0$.
+Sie soll wie in (M5) aus den Verschiebungen einer einzigen Funktion $\psi$
+bestehen \cite[Kap.~5.1]{blatter}. % S. 109
+Dass es ein solches $\psi$ gibt, wird später in Satz~\ref{satz:wavelet-aus-h} gezeigt. Im
+Haar-Fall ist es $\psi^{\mathrm H}$ (Beispiel~\ref{bsp:haar-mittelung}).
+
 \begin{Korollar}[Wavelet-Basis, {\cite[Kap.~5.1]{blatter}}] % S. 109--110
 \label{kor:wavelet-basis}
-Sei $(V_j)_{j\in\Z}$ eine MSA, und sei $\psi \in \LZwei$ so, dass
-$\{\psi(\,\cdot-k) : k \in \Z\}$ eine Orthonormalbasis von $W_0$ ist. Mit
+Sei $(V_j)_{j\in\Z}$ eine MSA, und sei $\psi \in \LZwei$ so, dass die Funktionen
+$t \mapsto \psi(t-k)$, $k \in \Z$, $t \in \R$, eine Orthonormalbasis von $W_0$ bilden. Mit
 $\psi_{j,k}$ wie in \eqref{eq:dyadische-familie} gilt:
 \begin{enumerate}
 \item[(i)] Für jedes feste $j \in \Z$ ist $\{\psi_{j,k} : k \in \Z\}$ eine
@@ -1403,20 +1449,21 @@ $\psi_{j,k}$ wie in \eqref{eq:dyadische-familie} gilt:
   für jedes $f \in \LZwei$ und jedes $J \in \Z$
   \begin{equation}
   \label{eq:zerlegung-koeffizienten}
-    f \;=\; \sum_{k\in\Z} a_{J,k}\,\varphi_{J,k}
-         \;+\; \sum_{j\le J}\sum_{k\in\Z} d_{j,k}\,\psi_{j,k},
-    \qquad
-    \norm{f}^2 \;=\; \sum_{k\in\Z}\lvert a_{J,k}\rvert^2
+  \begin{aligned}
+    f &\;=\; \sum_{k\in\Z} a_{J,k}\,\varphi_{J,k}
+         \;+\; \sum_{j\le J}\sum_{k\in\Z} d_{j,k}\,\psi_{j,k},\\
+    \norm{f}_{\LZwei}^2 &\;=\; \sum_{k\in\Z}\lvert a_{J,k}\rvert^2
                  \;+\; \sum_{j\le J}\sum_{k\in\Z}\lvert d_{j,k}\rvert^2 .
+  \end{aligned}
   \end{equation}
 \end{enumerate}
 \end{Korollar}
- 
+
 Aussage (i) folgt wie Satz~\ref{satz:onb-vj} aus \eqref{eq:wj-d2j}. Nach (i)
 ist $Q_j f = \sum_k d_{j,k}\,\psi_{j,k}$. Damit folgen (ii) und (iii) aus
 Satz~\ref{satz:zerlegung} und \eqref{eq:pj} \cite[Kap.~5.1]{blatter}, % S. 109--110
 \cite[Gl.~(2.2.13)]{lmr}. % S. 114
- 
+
 \begin{Beispiel}[Wavelet-Koeffizienten der Treppenfunktion]
 \label{bsp:haar-wavelet-koeff}
 Wir zerlegen $f = (4,2,5,7)$ aus Beispiel~\ref{bsp:haar-mittelung} in der
@@ -1431,36 +1478,41 @@ Für $J = 2$ erhält man
   d_{1,0} &= \tfrac{1}{\sqrt2}(4-2) = \sqrt2, &
   d_{1,1} &= \tfrac{1}{\sqrt2}(5-7) = -\sqrt2 .
 \end{align*}
-Alle übrigen Koeffizienten mit $j \le 2$ verschwinden. Nach
+Alle übrigen Koeffizienten mit $j \le 2$ verschwinden. Für $j \le 0$ liegt
+$I_{j,k}$ in einem Intervall $[n,n+1[$, auf dem $f$ konstant ist. Das Integral
+von $\psi_{j,k}$ über einer Konstanten ist null. Für $j = 1$ und $j = 2$ trifft
+$I_{j,k}$ nur für die angegebenen $k$ das Intervall $[0,4[$. Nach
 \eqref{eq:zerlegung-koeffizienten} ist
 \[
   f \;=\; 9\,\varphi_{2,0} \;-\; 3\,\psi_{2,0} \;+\; \sqrt2\,\psi_{1,0} \;-\; \sqrt2\,\psi_{1,1},
   \qquad
-  \norm{f}^2 \;=\; 81 + 9 + 2 + 2 \;=\; 94 .
+  \norm{f}_{\LZwei}^2 \;=\; 81 + 9 + 2 + 2 \;=\; 94 .
 \]
 Bis auf den Faktor $2^{j/2}$ sind das die Zahlen $4{,}5$, $-1{,}5$, $1$ und $-1$
 aus Beispiel~\ref{bsp:haar-mittelung}.
- 
+
 Zwei Beobachtungen verbinden das Beispiel mit den folgenden Kapiteln. Erstens
-ist $d_{j,k} = W_\psi f(2^{j}, k2^{j})$. Die Detailkoeffizienten sind also
-Werte der CWT auf dem dyadischen Gitter, aber ohne Redundanz. Zweitens bleibt
-$9\,\varphi_{2,0} - 3\,\psi_{2,0} = P_1 f = (3,3,6,6)$, wenn man die beiden
-betragskleinsten Koeffizienten $d_{1,0}$ und $d_{1,1}$ auf null setzt. Nach
-der Energiegleichung ist der Fehler
-$\norm{f - P_1 f}^2 = 2 + 2 = 4$, die Summe der Quadrate der gestrichenen
-Koeffizienten. Welche Koeffizienten man streicht, lässt sich also im
+ist nach Definition~\ref{def:dyadisch} $\psi_{j,k} = \psi_{2^j,k2^j}$, also
+nach \eqref{eq:cwt}
+\[
+  d_{j,k} \;=\; \scal{f}{\psi_{2^j,k2^j}} \;=\; W_\psi f(2^{j}, k2^{j}) .
+\]
+Die Detailkoeffizienten sind also Werte der CWT auf dem dyadischen Gitter,
+aber ohne Redundanz.
+
+Zweitens bleibt $9\,\varphi_{2,0} - 3\,\psi_{2,0} = P_1 f = (3,3,6,6)$, wenn man
+die beiden betragskleinsten Koeffizienten $d_{1,0}$ und $d_{1,1}$ auf null
+setzt. Nach \eqref{eq:zerlegung-koeffizienten} ist der Fehler
+$\norm{f - P_1 f}_{\LZwei}^2 = 2 + 2 = 4$, die Summe der Quadrate der gestrichenen
+Koeffizienten. Allgemein ist der Fehler die Summe der Quadrate der Änderungen.
+Welche Koeffizienten man streicht oder verändert, lässt sich also im
 Koeffizientenraum entscheiden. Darauf beruht die Entrauschung in
 Kapitel~\ref{chapter:denoising}.
 \end{Beispiel}
- 
+
 Gleichung~\eqref{eq:zerlegung-koeffizienten} ist der Ausgangspunkt der
 folgenden Kapitel. Kapitel~\ref{chapter:dwt} konstruiert $\psi$ und berechnet
-die Koeffizienten allein durch Filteroperationen. Der Schlüssel ist die
-Inklusion $\varphi \in V_0 \subset V_{-1}$ \cite[Lemma~2.2.3]{lmr}, % S. 113
-\cite[Satz~(5.3)]{blatter}. % S. 111
-Kapitel~\ref{chapter:denoising} nutzt, dass $f \mapsto (a_{J,k}, d_{j,k})$
-nach \eqref{eq:zerlegung-koeffizienten} eine Isometrie ist
-(Definition~\ref{def:isometrie}).
+die Koeffizienten allein durch Filteroperationen.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Konstruktion der diskreten Wavelet-Transformation}
