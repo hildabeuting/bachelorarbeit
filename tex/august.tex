@@ -20,16 +20,14 @@
 \usepackage{subcaption}     
 
 \usepackage{algorithm}
-\usepackage{algpseudocode}
+\usepackage[noend]{algpseudocode}
 \floatname{algorithm}{Algorithmus}
 \renewcommand{\listalgorithmname}{Algorithmenverzeichnis}
 \algrenewcommand\algorithmicrequire{\textbf{Eingabe:}}
 \algrenewcommand\algorithmicensure{\textbf{Ausgabe:}}
 \algrenewcommand\algorithmicfor{\textbf{für}}
-\algrenewcommand\algorithmicdo{\textbf{tue}}
-\algrenewcommand\algorithmicend{\textbf{Ende}}
+\algrenewcommand\algorithmicdo{}
 \algrenewcommand\algorithmicreturn{\textbf{Rückgabe}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ARBEITSHILFE: QUELLENBLOCK
 %
@@ -1513,81 +1511,88 @@ Kapitel~\ref{chapter:denoising}.
 Gleichung~\eqref{eq:zerlegung-koeffizienten} ist der Ausgangspunkt der
 folgenden Kapitel. Kapitel~\ref{chapter:dwt} konstruiert $\psi$ und berechnet
 die Koeffizienten allein durch Filteroperationen.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Konstruktion der diskreten Wavelet-Transformation}
 \label{chapter:dwt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Kapitel~\ref{chapter:mra} endete mit einer bedingten Aussage: Gibt es eine
-Funktion $\psi$, deren um ganze Zahlen verschobene Kopien $\psi(\cdot-k)$,
-$k\in\Z$, eine Orthonormalbasis von $W_0$ bilden, so ist $\{\psi_{j,k}\}$ eine
-Orthonormalbasis von $\LZwei$ (Korollar~\ref{kor:wavelet-basis}). Dieses Kapitel
-konstruiert ein solches $\psi$ und beantwortet dabei drei Fragen: Wie erhält man
-$\psi$ aus $\varphi$? Wie berechnet man die Koeffizienten $a_{j,k}$ und
-$d_{j,k}$, ohne ein einziges Integral auszuwerten? Und welche Wavelets eignen
-sich für Signale wie das EKG? Alle drei Antworten stecken in einer einzigen
-Zahlenfolge $(h_k)_{k\in\Z}$. Begleitet wird das Kapitel von zwei Beispielen:
-dem Haar-Wavelet aus Kapitel~\ref{chapter:mra} und dem Daubechies-Wavelet mit
-vier Koeffizienten, das in Kapitel~\ref{chapter:anwendung} verwendet wird.
+Kapitel~\ref{chapter:mra} endete mit einer bedingten Aussage. Bilden die
+Verschiebungen $\psi_{0,k}(t) = \psi(t-k)$, $k\in\Z$, einer Funktion $\psi$
+eine Orthonormalbasis von $W_0$, so ist $\{\psi_{j,k} : j,k\in\Z\}$ eine
+Orthonormalbasis von $\LZwei$ (Korollar~\ref{kor:wavelet-basis}). Dieses
+Kapitel konstruiert ein solches Wavelet $\psi$ und beantwortet dabei drei
+Fragen.
+\begin{enumerate}
+\item Wie erhält man $\psi$ aus der Skalierungsfunktion $\varphi$?
+  (Abschnitte~\ref{sec:skalierungsgleichung} und~\ref{sec:filter})
+\item Wie berechnet man die Koeffizienten $a_{j,k}$ und $d_{j,k}$, ohne für
+  jeden ein eigenes Integral auszuwerten? (Abschnitt~\ref{sec:mallat})
+\item Nach welchen Kriterien wählt man das Wavelet?
+  (Abschnitt~\ref{sec:daubechies})
+\end{enumerate}
+Abschnitt~\ref{sec:fourier-bedingungen} deutet die Filter au\ss{}erdem im
+Frequenzbereich. Damit ordnet Kapitel~\ref{chapter:anwendung} den Stufen der
+Transformation Frequenzbänder zu. Als Beispiele dienen das Haar-Wavelet aus
+Kapitel~\ref{chapter:mra}, das Daubechies-Wavelet mit vier Koeffizienten, mit
+dem Kapitel~\ref{chapter:denoising} rechnet, und das Daubechies-Wavelet mit
+zwölf Koeffizienten, das Kapitel~\ref{chapter:anwendung} verwendet.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Die Skalierungsgleichung}
 \label{sec:skalierungsgleichung}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\quellen{LMR, Lemma~2.2.3, S.~113 [bestätigt]; LMR, Gl.~(2.2.23), (2.2.24)
-und Satz~2.2.9, S.~121 [bestätigt]; LMR, Anhang, S.~314 [bestätigt]; Serov,
-Satz~25.18, S.~257--258 [bestätigt]; Blatter, Kap.~5.2, Gl.~(1), S.~110
-[bestätigt], bewiesen in Satz~(5.8) [Seite nachtragen]; Blatter, Satz~(5.3),
-S.~111 [bestätigt].}
-
 In diesem Abschnitt wird die Skalierungsfunktion $\varphi$ durch eine
-Zahlenfolge $(h_k)$ beschrieben, und es werden zwei Bedingungen an diese Folge
-hergeleitet. Alles Weitere in diesem Kapitel wird nur noch mit den $h_k$
-rechnen; die Funktionen $\varphi$ und $\psi$ selbst werden dafür nicht mehr
-benötigt.
+Zahlenfolge $(h_k)$ beschrieben. Wir betrachten nur reellwertige
+Skalierungsfunktionen.
 
 Nach (M1) ist $\varphi \in V_0 \subset V_{-1}$, und nach
 Satz~\ref{satz:onb-vj} bilden die Funktionen
 $\varphi_{-1,k}(t) = \sqrt2\,\varphi(2t-k)$ eine Orthonormalbasis von $V_{-1}$.
 Also lässt sich $\varphi$ in dieser Basis darstellen:
 \[
-  \varphi = \sum_{k\in\Z} \langle \varphi, \varphi_{-1,k}\rangle\,
-  \varphi_{-1,k}.
+  \varphi = \sum_{k\in\Z} \scal{\varphi}{\varphi_{-1,k}}\,\varphi_{-1,k}.
 \]
-Rechts steht eine gewichtete Summe der Funktionen $\varphi(2t-k)$. Jede davon
-ist eine Kopie von $\varphi$, die um den Faktor $2$ zusammengedrückt und um
-$k/2$ verschoben ist, denn $\varphi(2t-k) = \varphi\bigl(2(t-k/2)\bigr)$. Die
-Skalierungsfunktion lässt sich also aus schmaleren Kopien ihrer selbst
-zusammensetzen.
+Wegen $\varphi(2t-k) = \varphi\bigl(2(t-k/2)\bigr)$ ist jede Funktion
+$\varphi(2t-k)$ eine um den Faktor $2$ gestauchte und um $k/2$ verschobene
+Kopie von $\varphi$. Die Skalierungsfunktion setzt sich also aus schmaleren
+Kopien ihrer selbst zusammen.
 
-\begin{Satz}[Skalierungsgleichung, vgl.\ {\cite[Lemma~2.2.3]{lmr}}]
+\begin{Satz}[Skalierungsgleichung, vgl.\ {\cite[Lemma~2.2.3]{lmr}}] % S. 113
 \label{satz:skalierungsgleichung}
-Sei $(V_j)_{j\in\Z}$ eine MSA mit Skalierungsfunktion $\varphi$. Mit
-$h_k := \scal{\varphi}{\varphi_{-1,k}}$ gilt
+Sei $(V_j)_{j\in\Z}$ eine MSA mit Skalierungsfunktion $\varphi$, und sei
+$h_k := \scal{\varphi}{\varphi_{-1,k}}$. Dann gilt
+$\varphi = \sum_{k\in\Z} h_k\,\varphi_{-1,k}$ mit Konvergenz in $\LZwei$, also
 \begin{equation}
 \label{eq:skalierungsgleichung}
   \varphi(t) \;=\; \sqrt2 \sum_{k\in\Z} h_k\,\varphi(2t-k)
-  \quad\text{für fast alle } t\in\R
-  \qquad\text{und}\qquad
-  \sum_{k\in\Z}\lvert h_k\rvert^2 \;=\; 1 ,
+  \quad\text{für fast alle } t\in\R ,
+  \qquad
+  \sum_{k\in\Z} h_k^2 \;=\; 1 .
 \end{equation}
-wobei die Reihe in $\LZwei$ konvergiert.
 Die Folge $(h_k)$ hei\ss{}t Skalierungsfolge oder Tiefpassfilter der MSA.
 \end{Satz}
 
 \begin{proof}
 Nach (M1) liegt $\varphi$ in $V_{-1}$, und $\{\varphi_{-1,k}\}_k$ ist nach
-Satz~\ref{satz:onb-vj} eine Orthonormalbasis von $V_{-1}$. Die
-Fourier-Entwicklung in dieser Basis \cite[Satz~25.18\,(3)]{serov} lautet
-$\varphi = \sum_k h_k\,\varphi_{-1,k}$ mit
-$h_k\,\varphi_{-1,k}(t) = \sqrt2\,h_k\,\varphi(2t-k)$. Nach der
-Parseval-Gleichung \cite[Satz~25.18\,(5)]{serov} ist
-$\sum_k\lvert h_k\rvert^2 = \norm{\varphi}^2 = 1$, denn $\varphi$ ist nach (M5)
-selbst Element der Orthonormalbasis $\{\varphi(\,\cdot-k)\}_k$ von $V_0$.
+Satz~\ref{satz:onb-vj} eine Orthonormalbasis von $V_{-1}$. Die Entwicklung in
+dieser Basis \cite[Satz~25.18\,(3)]{serov} % S. 257--258
+lautet $\varphi = \sum_k h_k\,\varphi_{-1,k}$. Nach der Parseval-Gleichung
+\cite[Satz~25.18\,(5)]{serov} % S. 257--258
+ist $\sum_k h_k^2 = \norm{\varphi}^2 = 1$, denn nach (M5) ist
+$\varphi = \varphi_{0,0}$ selbst Element der Orthonormalbasis
+$\{\varphi_{0,k}\}_k$ von $V_0$.
 \end{proof}
+
+Au\ss{}erdem gilt
+\begin{equation}
+\label{eq:H0}
+  \sum_{k\in\Z} h_k \;=\; \sqrt2
+\end{equation}
+\cite[Satz~2.2.9]{lmr}. % S. 121, dort als H(0) = 1
 
 \begin{Beispiel}[Haar]
 \label{bsp:haar-skalierung}
@@ -1600,97 +1605,64 @@ also aus zwei Stufen der Breite $\tfrac12$:
   \;=\; \sqrt2\Bigl(\tfrac{1}{\sqrt2}\,\varphi(2t) + \tfrac{1}{\sqrt2}\,\varphi(2t-1)\Bigr).
 \]
 Der Vergleich mit \eqref{eq:skalierungsgleichung} liefert
-$h_0 = h_1 = \tfrac{1}{\sqrt2}$ und $h_k = 0$ sonst, in Übereinstimmung mit
-$h_0 = \scal{\varphi}{\varphi_{-1,0}} = \sqrt2\cdot\tfrac12$ und
-$\sum_k\lvert h_k\rvert^2 = 1$.
+$h_0 = h_1 = \tfrac{1}{\sqrt2}$ und $h_k = 0$ sonst. Es ist
+$\sum_k h_k^2 = \tfrac12 + \tfrac12 = 1$ und
+$\sum_k h_k = \tfrac{2}{\sqrt2} = \sqrt2$.
 \end{Beispiel}
-
-Aus der Skalierungsgleichung folgt eine zweite Bedingung an $(h_k)$, die man im
-Frequenzbereich sieht; dabei sei $\sum_k\lvert h_k\rvert<\infty$, was für
-endliche Filter stets gilt. Nach den Rechenregeln der Fourier-Transformation für
-Stauchung und Verschiebung \cite[Anhang]{lmr} ist
-$\widehat{\varphi_{-1,k}}(\omega) = \tfrac{1}{\sqrt2}\,e^{-ik\omega/2}\,
-\hat\varphi\bigl(\tfrac\omega2\bigr)$. Transformiert man
-$\varphi = \sum_k h_k\,\varphi_{-1,k}$ gliedweise und zieht den von $k$
-unabhängigen Faktor $\hat\varphi(\omega/2)$ vor die Summe, so wird die
-Skalierungsgleichung mit dem $2\pi$-periodischen Fourier-Filter
-\begin{equation}
-\label{eq:symbol-H}
-  H(\omega) \;:=\; \frac{1}{\sqrt2}\sum_{k\in\Z} h_k\,e^{-ik\omega}
-\end{equation}
-zu einem Produkt \cite[Gl.~(2.2.23)]{lmr}:
-\begin{equation}
-\label{eq:skalierung-fourier}
-  \hat\varphi(\omega) \;=\; H\bigl(\tfrac\omega2\bigr)\,\hat\varphi\bigl(\tfrac\omega2\bigr),
-  \qquad \omega\in\R .
-\end{equation}
-Für die hier betrachteten MSA ist $\lvert\hat\varphi(0)\rvert = (2\pi)^{-1/2}$,
-insbesondere $\hat\varphi(0)\neq 0$ \cite[Kap.~5.2]{blatter}. Da beide Seiten
-von \eqref{eq:skalierung-fourier} stetig sind, darf man $\omega = 0$ einsetzen;
-Division durch $\hat\varphi(0)$ ergibt
-\begin{equation}
-\label{eq:H0}
-  H(0) \;=\; 1, \qquad\text{das hei\ss{}t}\qquad \sum_{k\in\Z} h_k \;=\; \sqrt2 ,
-\end{equation}
-im Haar-Fall $\tfrac{1}{\sqrt2}+\tfrac{1}{\sqrt2} = \sqrt2$; vgl.\
-\cite[Satz~2.2.9]{lmr}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Filterkoeffizienten: Tiefpass und Hochpass}
 \label{sec:filter}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\quellen{LMR, Lemma~2.2.8, Gl.~(2.2.22) [Seite nachtragen, vermutl.\
-S.~120--121]; LMR, Satz~2.2.10, S.~122, Beweis S.~122--123 [bestätigt]; LMR,
-Beispiel S.~169 und Tabelle~2.3, S.~170 [bestätigt], dort umgekehrte
-Reihenfolge wegen $e^{+ik\omega}$; Serov, Satz~25.18, S.~257--258 [bestätigt];
-Blatter, Kap.~5.2, S.~110--116 [bestätigt].}
-
 Bisher wurde die Folge $(h_k)$ aus einer gegebenen Skalierungsfunktion
-gewonnen. Für die Konstruktion neuer Wavelets geht man umgekehrt vor: Man wählt
-die Zahlen $h_k$ und erhält $\varphi$ und $\psi$ daraus. Dafür muss man wissen,
-welche Bedingungen eine Folge erfüllen muss, um zu einer MSA zu gehören.
-Neben \eqref{eq:H0} übersetzt sich auch die Orthonormalität der Verschiebungen
-$\varphi(\,\cdot-k)$ aus (M5) in eine Bedingung an die Folge selbst.
+gewonnen. Für die Konstruktion neuer Wavelets geht man umgekehrt vor und gibt
+die Zahlen $h_k$ vor. Dafür muss man wissen, welche Bedingungen eine solche
+Folge erfüllt. Neben \eqref{eq:H0} übersetzt sich auch die Orthonormalität der
+Funktionen $\varphi_{0,k}(t) = \varphi(t-k)$ aus (M5) in eine Bedingung an die
+Folge.
 
-\begin{Lemma}[Orthogonalität der Filterkoeffizienten, vgl.\ {\cite[Lemma~2.2.8]{lmr}}]
+\begin{Lemma}[Orthogonalität der Filterkoeffizienten, {\cite[Lemma~2.2.8]{lmr}}] % S. 120
 \label{lem:h-orthogonal}
-Die Skalierungsfolge einer MSA erfüllt
+Die Skalierungsfolge $(h_k)$ aus Satz~\ref{satz:skalierungsgleichung} erfüllt
 \begin{equation}
 \label{eq:h-orthogonal}
-  \sum_{n\in\Z} h_n\,\overline{h_{n-2m}} \;=\; \delta_{m,0}
+  \sum_{k\in\Z} h_k\,h_{k+2m} \;=\; \delta_{0,m}
   \qquad\text{für alle } m\in\Z .
 \end{equation}
 \end{Lemma}
 
-\begin{proof}
-Ersetzt man in \eqref{eq:skalierungsgleichung} $t$ durch $t-m$ und setzt
-$n = k+2m$, so wird
-$\varphi(t-m) = \sqrt2\sum_k h_k\,\varphi(2t-2m-k) = \sum_n h_{n-2m}\,\varphi_{-1,n}(t)$.
-Die Vollständigkeitsrelation in $V_{-1}$ \cite[Satz~25.18\,(4)]{serov} und (M5)
-liefern
-$\delta_{m,0} = \scal{\varphi}{\varphi(\,\cdot-m)} = \sum_n h_n\,\overline{h_{n-2m}}$.
-\end{proof}
+Der Beweis steht bei \cite[Lemma~2.2.8]{lmr}. % S. 120--121
 
-Anschaulich: Die Basisfunktionen $\varphi_{-1,n}$ liegen im Abstand
-$\tfrac12$. Verschiebt man $\varphi$ um $1$, so rückt ihr Koeffizientenvektor
-$(h_n)$ deshalb um zwei Stellen weiter. Die Orthogonalität der verschobenen
-Funktionen wird so zur Orthogonalität des Vektors $(h_n)$ zu seinen um gerade
-Schrittweiten verschobenen Kopien. Für das Haar-Filter ist das trivial, denn
-für $m \neq 0$ überlappen $(h_n)$ und $(h_{n-2m})$ nicht.
+%\begin{proof}
+%Ersetzt man in \eqref{eq:skalierungsgleichung} $t$ durch $t-m$ und setzt
+%$\ell = k+2m$, so folgt
+%\[
+%  \varphi_{0,m}(t)
+%  = \sqrt2\sum_{k} h_k\,\varphi(2t-2m-k)
+%  = \sqrt2\sum_{\ell} h_{\ell-2m}\,\varphi(2t-\ell)
+%  = \sum_{\ell} h_{\ell-2m}\,\varphi_{-1,\ell}(t).
+%\]
+%In der Orthonormalbasis $\{\varphi_{-1,\ell}\}_\ell$ hat $\varphi_{0,0}$ also
+%die Koeffizienten $(h_\ell)_\ell$ und $\varphi_{0,m}$ die Koeffizienten
+%$(h_{\ell-2m})_\ell$. Mit (M5) und \cite[Satz~25.18\,(4)]{serov} % S. 257--258
+%folgt
+%$\delta_{m,0} = \scal{\varphi_{0,0}}{\varphi_{0,m}} = \sum_\ell h_\ell\,h_{\ell-2m}$.
+%\end{proof}
 
 \begin{Beispiel}[Ein Filter der Länge vier]
 \label{bsp:db2-filter}
-Gesucht seien reelle $h_0,\dots,h_3$, alle übrigen null. Die Bedingungen
-\eqref{eq:H0} und \eqref{eq:h-orthogonal} lauten
+Gesucht seien reelle $h_0,\dots,h_3$ mit $h_k = 0$ für $k\notin\{0,\dots,3\}$.
+Für $\lvert m\rvert\ge2$ ist \eqref{eq:h-orthogonal} dann automatisch erfüllt.
+Es bleiben
 \[
-  h_0+h_1+h_2+h_3 = \sqrt2, \qquad
-  h_0^2+h_1^2+h_2^2+h_3^2 = 1, \qquad
-  h_0h_2+h_1h_3 = 0 ;
+  \underbrace{h_0+h_1+h_2+h_3 = \sqrt2}_{\eqref{eq:H0}}, \qquad
+  \underbrace{h_0^2+h_1^2+h_2^2+h_3^2 = 1}_{m=0}, \qquad
+  \underbrace{h_0h_2+h_1h_3 = 0}_{m=\pm1} .
 \]
-für $\lvert m\rvert\ge2$ überlappen die Folgen nicht. Drei Gleichungen für vier
-Unbekannte lassen eine einparametrige Lösungsschar, zu der auch das Haar-Filter
-$(\tfrac{1}{\sqrt2},\tfrac1{\sqrt2},0,0)$ gehört. Eine weitere Lösung ist
+Drei Gleichungen für vier Unbekannte lassen eine einparametrige Lösungsschar,
+zu der auch das Haar-Filter $(\tfrac{1}{\sqrt2},\tfrac1{\sqrt2},0,0)$ gehört.
+Eine weitere Lösung ist
 \begin{equation}
 \label{eq:db2-koeff}
   h_0 = \tfrac{1+\sqrt3}{4\sqrt2},\qquad
@@ -1698,39 +1670,39 @@ $(\tfrac{1}{\sqrt2},\tfrac1{\sqrt2},0,0)$ gehört. Eine weitere Lösung ist
   h_2 = \tfrac{3-\sqrt3}{4\sqrt2},\qquad
   h_3 = \tfrac{1-\sqrt3}{4\sqrt2}
 \end{equation}
-\cite[Tabelle~2.3]{lmr}, dort in umgekehrter Reihenfolge. Zur Probe: Die Zähler summieren sich zu $8$, also
-$\sum h_k = 8/(4\sqrt2) = \sqrt2$. Die quadrierten Zähler ergeben
+\cite[Tabelle~2.3]{lmr}, % S. 170
+dort in umgekehrter Reihenfolge. Zur Probe: Die Zähler summieren sich zu $8$,
+also $\sum h_k = 8/(4\sqrt2) = \sqrt2$. Die quadrierten Zähler ergeben
 $(4+2\sqrt3)+(12+6\sqrt3)+(12-6\sqrt3)+(4-2\sqrt3) = 32 = (4\sqrt2)^2$, also
 $\sum h_k^2 = 1$. Schlie\ss{}lich ist
 $(1+\sqrt3)(3-\sqrt3)+(3+\sqrt3)(1-\sqrt3) = 2\sqrt3-2\sqrt3 = 0$. Warum gerade
-diese Lösung aus der Schar ausgewählt wird, klärt
-Abschnitt~\ref{sec:daubechies}.
+diese Lösung ausgewählt wird, klärt Abschnitt~\ref{sec:daubechies}.
 \end{Beispiel}
 
-Im Haar-Fall haben die Zahlen $h_k$ eine einfache Bedeutung: Mit
-$h_0 = h_1 = \tfrac{1}{\sqrt2}$ bildet $(h_k)$ aus zwei benachbarten Werten
-deren (normierten) Mittelwert, wie in Beispiel~\ref{bsp:haar-mittelung}.
-Konstante Signale bleiben dabei erhalten, rasche Schwankungen werden
-geglättet; daher der Name Tiefpass. Das Gegenstück, das in
-Beispiel~\ref{bsp:haar-mittelung} die verlorenen Details liefert, ist die
-Differenz benachbarter Werte. Sie verschwindet für konstante Signale und
-hei\ss{}t Hochpass. Für allgemeine $(h_k)$ gewinnt man die Hochpassfolge
-durch Umkehren der Reihenfolge und alternierende Vorzeichen.
+%Im Haar-Fall bildet $(h_k)$ aus zwei benachbarten Werten $a$, $b$ die Zahl
+%$(a+b)/\sqrt2$, bis auf den Faktor $\sqrt2$ also deren Mittelwert, wie in
+%Beispiel~\ref{bsp:haar-mittelung}. Konstante Signale bleiben konstant, rasche
+%Schwankungen werden geglättet. Daher der Name Tiefpass. Das Gegenstück ist
+%$(a-b)/\sqrt2$. Es liefert in Beispiel~\ref{bsp:haar-mittelung} die verlorenen
+%Details, verschwindet für konstante Signale und hei\ss{}t Hochpass. Für
+%allgemeine $(h_k)$ gewinnt man die Hochpassfolge durch Umkehren der Reihenfolge
+%und alternierende Vorzeichen.
 
-\begin{Satz}[Wavelet aus der Skalierungsfolge, vgl.\ {\cite[Satz~2.2.10]{lmr}}]
+\begin{Satz}[Wavelet aus der Skalierungsfolge, vgl.\ {\cite[Satz~2.2.10]{lmr}}] % S. 122
 \label{satz:wavelet-aus-h}
-Sei $(V_j)$ eine MSA mit Skalierungsfolge $(h_k)$. Setzt man
+Sei $(V_j)$ eine MSA mit Skalierungsfunktion $\varphi$ und Skalierungsfolge
+$(h_k)$. Setzt man
 \begin{equation}
 \label{eq:g-aus-h}
-  g_k \;:=\; (-1)^k\,\overline{h_{1-k}}, \qquad
+  g_k \;:=\; (-1)^k\,h_{1-k}, \qquad
   \psi(t) \;:=\; \sqrt2\sum_{k\in\Z} g_k\,\varphi(2t-k),
 \end{equation}
-so ist $\{\psi(\,\cdot-k) : k\in\Z\}$ eine Orthonormalbasis von $W_0$. Nach
+so ist $\{\psi_{0,k} : k\in\Z\}$ eine Orthonormalbasis von $W_0$. Nach
 Korollar~\ref{kor:wavelet-basis} ist dann $\{\psi_{j,k} : j,k\in\Z\}$ eine
 Orthonormalbasis von $\LZwei$.
 \end{Satz}
 
-Der vollständige Beweis steht bei \cite[Satz~2.2.10]{lmr}.
+Der Beweis steht bei \cite[Satz~2.2.10]{lmr}. % S. 122--123
 
 \begin{Beispiel}[Haar, Fortsetzung]
 \label{bsp:haar-g}
@@ -1746,118 +1718,27 @@ Beispiel~\ref{bsp:haar-mittelung} nahegelegt hatte. Für die Folge
 $(g_{-2},g_{-1},g_0,g_1) = (h_3,-h_2,h_1,-h_0)$.
 \end{Beispiel}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Bedingungen im Fourier-Bereich}
-\label{sec:fourier-bedingungen}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Die Folge $(g_k)$ hei\ss{}t Hochpassfolge. Die Namen Tief- und Hochpass
+begründet Abschnitt~\ref{sec:fourier-bedingungen}.
 
-\quellen{LMR, Satz~2.2.9, S.~121 [bestätigt]; LMR, Korollar~2.2.12, S.~123
-[bestätigt]; LMR, Bem.~2.4.19, S.~165 [bestätigt]; LMR, Kap.~2.4.2,
-S.~145--164 [bestätigt].}
-
-In Abschnitt~\ref{sec:filter} wurden die Namen Tiefpass und Hochpass nur am
-Haar-Filter begründet. Für beliebige Filter liefert das Fourier-Filter $H$ aus
-\eqref{eq:symbol-H} die Begründung. Es gibt an, wie stark der Filter eine
-Schwingung der Frequenz $\omega$ durchlässt: Für $x_n = e^{i\omega n}$ ist
-$\sum_k h_k\,x_{n-k} = \sqrt2\,H(\omega)\,x_n$. Für $\omega = 0$ ist $x_n = 1$ konstant, für $\omega = \pi$ ist
-$x_n = (-1)^n$, die Folge wechselt also bei jedem Schritt das Vorzeichen.
-Schneller kann eine abgetastete Schwingung nicht oszillieren, da
-$e^{i(\omega+2\pi)n} = e^{i\omega n}$ gilt. Wie in Abschnitt~\ref{sec:skalierungsgleichung} sei
-$\sum_k\lvert h_k\rvert<\infty$.
-
-\begin{Satz}[Bedingungen an das Fourier-Filter, {\cite[Satz~2.2.9]{lmr}}]
-\label{satz:qmf}
-Das Fourier-Filter \eqref{eq:symbol-H} einer MSA erfüllt
-\begin{equation}
-\label{eq:qmf}
-  H(0) = 1 \qquad\text{und}\qquad
-  \lvert H(\omega)\rvert^2 + \lvert H(\omega+\pi)\rvert^2 = 1
-  \quad\text{für alle } \omega\in\R .
-\end{equation}
-\end{Satz}
-
-Die erste Gleichung ist \eqref{eq:H0}. Die zweite ist
-Lemma~\ref{lem:h-orthogonal}, in den Frequenzbereich übersetzt: Die unendlich
-vielen Gleichungen für die Zahlen $h_k$ werden zu einer einzigen Gleichung
-für die Funktion $H$. Umgekehrt liefert jede endliche Folge mit \eqref{eq:qmf},
-deren Fourier-Filter auf $[-\pi/2,\pi/2]$ keine Nullstelle hat, eine Lösung
-$\varphi$ der Skalierungsgleichung mit orthonormalen Verschiebungen
-$\varphi(\,\cdot-k)$ \cite[Satz~2.4.7]{lmr}.
-
-Für die Hochpassfolge $(g_k)$ aus \eqref{eq:g-aus-h} setzt man analog
-$G(\omega) := 2^{-1/2}\sum_k g_k e^{-ik\omega}$. Die Substitution $n = 1-k$
-ergibt
-\begin{equation}
-\label{eq:G-aus-H}
-  G(\omega) \;=\; -e^{-i\omega}\,\overline{H(\omega+\pi)},
-  \qquad
-  \hat\psi(\omega) \;=\; G\bigl(\tfrac\omega2\bigr)\,\hat\varphi\bigl(\tfrac\omega2\bigr)
-\end{equation}
-\cite[Korollar~2.2.12]{lmr}, also $\lvert G(\omega)\rvert = \lvert H(\omega+\pi)\rvert$.
-Aus \eqref{eq:qmf} und \eqref{eq:G-aus-H} folgen drei Aussagen:
-\begin{enumerate}
-\item[(a)] $H(0) = 1$ und $H(\pi) = 0$: $(h_k)$ lässt konstante Signale
-  vollständig durch und löscht die schnellste Schwingung aus. Das ist ein Tiefpass.
-\item[(b)] $G(0) = 0$ und $\lvert G(\pi)\rvert = 1$: $(g_k)$ verhält sich
-  genau umgekehrt. Das ist ein Hochpass. Wegen $\hat\psi(0) = G(0)\,\hat\varphi(0) = 0$
-  hat $\psi$ Mittelwert null, wie es Satz~\ref{satz:zulaessigkeit-mittelwert}
-  von einem zulässigen Wavelet verlangt; zulässig ist $\psi$ tatsächlich stets
-  \cite[Satz~2.2.10\,(iii)]{lmr}.
-\item[(c)] $\lvert H(\omega)\rvert^2 + \lvert G(\omega)\rvert^2 = 1$: Jede
-  Frequenz wird vollständig auf die beiden Filter aufgeteilt, es geht nichts
-  verloren. In der Signalverarbeitung hei\ss{}en solche Filterpaare
-  Conjugate Quadrature Filter \cite[Bem.~2.4.19]{lmr}.
-\end{enumerate}
-
-Abbildung~\ref{fig:tief-hochpass} zeigt beide Filter. Beim Haar-Filter ist
-$\lvert H(\omega)\rvert = \lvert\cos(\omega/2)\rvert$ und die Nullstelle bei
-$\omega=\pi$ einfach. Für \eqref{eq:db2-koeff} ist
-$\lvert H(\omega)\rvert^2 = \cos^4(\omega/2)\,\bigl(1+2\sin^2(\omega/2)\bigr)$,
-vgl.\ \cite[Kap.~2.4.3]{lmr}, die Nullstelle also doppelt, und die Kurven
-verlaufen an den Rändern flacher. Abschnitt~\ref{sec:daubechies} zeigt, dass
-genau diese Ordnung der Nullstelle bestimmt, wie gut sich ein Wavelet für
-glatte Signalabschnitte eignet.
-
-\begin{figure}[htbp]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-        width=0.62\textwidth, height=3.9cm,
-        domain=0:pi, samples=120, xmin=0, xmax=pi, ymin=0, ymax=1.08,
-        xtick={0,pi/2,pi}, xticklabels={$0$,$\pi/2$,$\pi$},
-        ytick={0,0.5,1}, tick label style={font=\footnotesize},
-        xlabel={$\omega$}, xlabel style={font=\footnotesize},
-        legend style={font=\footnotesize, at={(1.03,0.5)}, anchor=west, draw=none},
-        legend cell align=left]
-      \addplot[uhh_blue, line width=0.9pt, dashed] {abs(cos(deg(x/2)))};
-      \addplot[uhh_red, line width=0.9pt, dashed] {abs(sin(deg(x/2)))};
-      \addplot[uhh_blue, line width=1.1pt] {cos(deg(x/2))^2*sqrt(1+2*sin(deg(x/2))^2)};
-      \addplot[uhh_red, line width=1.1pt] {sin(deg(x/2))^2*sqrt(1+2*cos(deg(x/2))^2)};
-      \legend{$\lvert H\rvert$ Haar, $\lvert G\rvert$ Haar,
-              $\lvert H\rvert$ (4 Koeff.), $\lvert G\rvert$ (4 Koeff.)}
-    \end{axis}
-  \end{tikzpicture}
-  \caption[Tiefpass und Hochpass]{Betrag der Fourier-Filter $H$ (Tiefpass) und $G$
-  (Hochpass) für das Haar-Filter (gestrichelt) und das Filter
-  \eqref{eq:db2-koeff} (durchgezogen) auf $[0,\pi]$. In beiden Fällen ist
-  $\lvert H\rvert^2 + \lvert G\rvert^2 = 1$.}
-  \label{fig:tief-hochpass}
-\end{figure}
+Damit ist die erste Frage der Einleitung beantwortet. Das Wavelet $\psi$
+entsteht nach \eqref{eq:g-aus-h} aus $\varphi$ und der Hochpassfolge
+$g_k = (-1)^k h_{1-k}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Der Mallat-Algorithmus}
 \label{sec:mallat}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\quellen{Blatter, Kap.~5.4, S.~130--136 [bestätigt], insb.\ Skalierungs-
-gleichungen 5.4.(1)/(2), S.~130 [bestätigt], Zwei-Skalen-Relation
-5.4.(3)/(4) mit Herleitung, S.~131 [bestätigt], Analyseformeln
-(eingerahmt, unnummeriert), S.~132--133 [bestätigt]; LMR, Kap.~2.3,
-S.~132--141 [bestätigt], insb.\ Analyseformeln (unnummeriert, mit Verweis
-auf Skalierungsgl.~(2.2.8)/(2.2.27)), S.~133 [bestätigt],
-Gl.~(2.3.1)/(2.3.2), S.~133 [bestätigt], Abb.~2.8, S.~134 [bestätigt];
-Aufwand: Blatter, Kap.~5.4, S.~133--135 [bestätigt], Hanke-Bourgeois,
-§~56, S.~438 [bestätigt]; LMR, Kap.~3.1.1, S.~237--238 [bestätigt].}
+%\quellen{Blatter, Kap.~5.4, S.~130--136 [bestätigt], insb.\ Skalierungs-
+%gleichungen 5.4.(1)/(2), S.~130 [bestätigt], Zwei-Skalen-Relation
+%5.4.(3)/(4) mit Herleitung, S.~131 [bestätigt], Analyseformeln
+%(eingerahmt, unnummeriert), S.~132--133 [bestätigt]; LMR, Kap.~2.3,
+%S.~132--141 [bestätigt], insb.\ Analyseformeln (unnummeriert, mit Verweis
+%auf Skalierungsgl.~(2.2.8)/(2.2.27)), S.~133 [bestätigt],
+%Gl.~(2.3.1)/(2.3.2), S.~133 [bestätigt], Abb.~2.8, S.~134 [bestätigt];
+%Aufwand: Blatter, Kap.~5.4, S.~133--135 [bestätigt], Hanke-Bourgeois,
+%§~56, S.~438 [bestätigt]; LMR, Kap.~3.1.1, S.~237--238 [bestätigt].}
 
 Bisher erfordert jeder Koeffizient
 \[
@@ -1866,13 +1747,15 @@ Bisher erfordert jeder Koeffizient
   d_{j,k} = \scal{f}{\psi_{j,k}} = \int_{\R} f(t)\,\psi_{j,k}(t)\,dt
 \]
 (Definition~\ref{def:projektion-pj}, Korollar~\ref{kor:wavelet-basis}) ein
-eigenes Integral. Nach \cite[Kap.~5.4]{blatter} und
-\cite[Kap.~2.3, Abb.~2.8]{lmr} lassen sich $a_{j,\cdot}$ und $d_{j,\cdot}$
-jedoch allein aus $a_{j-1,\cdot}$ und den Filtern $h$, $g$ berechnen.
-Grundlage dafür ist die folgende Darstellung der Basisfunktionen der Skala
-$j$ durch die der feineren Skala $j-1$.
+eigenes Integral. Wir fassen die Koeffizienten einer Skala zu Folgen
+$a_j := (a_{j,k})_{k\in\Z}$ und $d_j := (d_{j,k})_{k\in\Z}$ zusammen. Nach
+\cite[Kap.~5.4]{blatter} % S. 132--133
+und \cite[Kap.~2.3, Abb.~2.8]{lmr} % S. 133--134
+lassen sich $a_j$ und $d_j$ allein aus $a_{j-1}$ und den Filtern $h$, $g$
+berechnen. Grundlage dafür ist die folgende Darstellung der Basisfunktionen der
+Skala $j$ durch die der feineren Skala $j-1$.
 
-\begin{Lemma}[Zwei-Skalen-Relation, {\cite[Kap.~5.4, (3), (4)]{blatter}}]
+\begin{Lemma}[Zwei-Skalen-Relation, {\cite[Kap.~5.4, (3), (4)]{blatter}}] % S. 131
 \label{lem:zwei-skalen}
 Für alle $j,k\in\Z$ gilt
 \begin{equation}
@@ -1883,13 +1766,13 @@ Für alle $j,k\in\Z$ gilt
 \end{equation}
 \end{Lemma}
 
-Für einen Beweis siehe \cite[Kap.~5.4]{blatter}. Bildet man in
-\eqref{eq:zwei-skalen} das Skalarprodukt mit $f$, so überträgt sich die
-Relation auf die Koeffizienten.
+Für einen Beweis siehe \cite[Kap.~5.4]{blatter}. % S. 131
+Bildet man in \eqref{eq:zwei-skalen} das Skalarprodukt mit $f$, so überträgt
+sich die Relation auf die Koeffizienten.
 
-\begin{Satz}[Analyseschritt, {\cite[Kap.~5.4]{blatter}}]
+\begin{Satz}[Analyseschritt, {\cite[Kap.~5.4]{blatter}}] % S. 132--133
 \label{satz:analyse}
-Für reelle Filter $h,g$ und alle $j,k\in\Z$ gilt
+Für alle $j,k\in\Z$ gilt
 \begin{equation}
 \label{eq:analyse}
   a_{j,k} \;=\; \sum_{n\in\Z} h_{n-2k}\,a_{j-1,n},
@@ -1899,10 +1782,10 @@ Für reelle Filter $h,g$ und alle $j,k\in\Z$ gilt
 \end{Satz}
 
 \begin{proof}
-Vgl.\ \cite[Kap.~5.4]{blatter}. Die Reihe in \eqref{eq:zwei-skalen}
-konvergiert in $L^2(\R)$, da $(h_n)\in\ell^2(\Z)$ und
-$\{\varphi_{j-1,n}\}_{n\in\Z}$ orthonormal ist. Wegen der Stetigkeit des
-Skalarprodukts und $h_n\in\R$ folgt
+Vgl.\ \cite[Kap.~5.4]{blatter}. % S. 132--133
+Die Reihe in \eqref{eq:zwei-skalen} konvergiert in $\LZwei$, da
+$(h_{n-2k})_{n\in\Z}\in\ellZwei$ und $\{\varphi_{j-1,n}\}_{n\in\Z}$
+orthonormal ist. Wegen der Stetigkeit des Skalarprodukts und $h_n\in\R$ folgt
 \[
   a_{j,k}
   = \Big\langle f,\, \sum_{n} h_{n-2k}\,\varphi_{j-1,n}\Big\rangle
@@ -1912,39 +1795,49 @@ Skalarprodukts und $h_n\in\R$ folgt
 Analog für $d_{j,k}$ mit $g$.
 \end{proof}
 
+\anmerkung{klein l defiiniern.}
+
 Die Koeffizienten der Skala $j$ sind also gewichtete Summen der
-Approximationskoeffizienten der Skala $j-1$; Integrale treten nur noch bei der
-Berechnung der Startwerte $a_{0,\cdot}$ auf.
+Approximationskoeffizienten der Skala $j-1$. Integrale treten nur noch bei der
+Berechnung der Startwerte $a_0$ auf.
 
-Haben $h$ und $g$ jeweils höchstens $L$ von Null verschiedene Einträge%
-%(für die Daubechies-Filter ist $L=2N$)
-, so sind die Summen in \eqref{eq:analyse}
-endlich: Jeder Koeffizient $a_{j,k}$ bzw.\ $d_{j,k}$ erfordert höchstens $L$
-Multiplikationen, vgl.\ \cite[Kap.~5.4]{blatter}. % S. 134
-Da die Gewichte mit
-$k\mapsto k+1$ um zwei Indizes weiterrücken, halbiert sich zudem die Anzahl
-der Koeffizienten von Skala zu Skala bis auf einen Randterm der Größe $L-2$,
-vgl.\ \cite[Kap.~5.4, (7)]{blatter}. % S. 133 (Gl. (7)), Längenschranke S. 134
+Haben $h$ und $g$ jeweils höchstens $L$ von null verschiedene Einträge, so sind
+die Summen in \eqref{eq:analyse} endlich. Jeder Koeffizient $a_{j,k}$ bzw.\
+$d_{j,k}$ erfordert dann höchstens $L$ Multiplikationen
+\cite[Kap.~5.4]{blatter}. % S. 134
+Da die Gewichte mit $k\mapsto k+1$ um zwei Indizes weiterrücken, halbiert sich
+zudem die Anzahl der Koeffizienten von Skala zu Skala bis auf einen festen
+Randterm. Hat $a_0$ die Länge $2^J$, so haben $a_j$ und $d_j$ höchstens
+$2^{J-j} + L - 2$ Einträge \cite[Kap.~5.4]{blatter}. % S. 134, aus (7) auf S. 133; dort L = 2N
 
+Wendet man \eqref{eq:analyse} Stufe für Stufe an, so erhält man aus den
+Startwerten $a_0$ alle Folgen $a_1,\dots,a_J$ und $d_1,\dots,d_J$ bis zu einer
+Tiefe $J$. Das ist die schnelle Wavelet-Transformation
+(Algorithmus~\ref{alg:mallat}, Abbildung~\ref{fig:mallat-schema}).
 
 \begin{algorithm}[H]
 \caption[Schnelle Wavelet-Transformation]{Schnelle Wavelet-Transformation,
 vgl.\ \cite[Kap.~5.4]{blatter}, \cite[Kap.~2.3, Abb.~2.8]{lmr}}
 % Blatter S. 132--133; LMR S. 134
 \label{alg:mallat}
+\algrenewcommand\algorithmicfor{\textbf{für}}
+\algrenewcommand\algorithmicdo{}
+\algrenewcommand\algorithmicrequire{\textbf{Eingabe:}}
+\algrenewcommand\algorithmicensure{\textbf{Ausgabe:}}
+\algrenewcommand\algorithmicreturn{\textbf{Rückgabe}}
+\algtext*{EndFor}
 \begin{algorithmic}[1]
-\Require Startfolge $a_{0,\cdot}$, Filter $h$, $g$, Tiefe $J\in\N$
-\Ensure Detailfolgen $d_{1,\cdot},\dots,d_{J,\cdot}$ und Approximation $a_{J,\cdot}$
+\Require Startfolge $a_0$, Filter $h$, $g$, Tiefe $J\in\N$
+\Ensure Detailfolgen $d_1,\dots,d_J$ und Approximation $a_J$
 \For{$j = 1,\dots,J$}
   \For{alle $k$}
     \State $a_{j,k} \gets \sum_{n} h_{n-2k}\,a_{j-1,n}$
     \State $d_{j,k} \gets \sum_{n} g_{n-2k}\,a_{j-1,n}$
   \EndFor
 \EndFor
-\State \Return $d_{1,\cdot},\dots,d_{J,\cdot},\;a_{J,\cdot}$
+\State \Return $d_1,\dots,d_J,\;a_J$
 \end{algorithmic}
 \end{algorithm}
-
 
 \begin{figure}[htbp]
   \centering
@@ -1967,7 +1860,7 @@ vgl.\ \cite[Kap.~5.4]{blatter}, \cite[Kap.~2.3, Abb.~2.8]{lmr}}
     \draw[pf] (a3) -- node[below left, font=\scriptsize] {$g$} (dJ);
   \end{tikzpicture}
   \caption[Schema des Mallat-Algorithmus]{Ablauf von
-  Algorithmus~\ref{alg:mallat}, in Anlehnung an \cite[Kap.~5.4, (6)]{blatter};
+  Algorithmus~\ref{alg:mallat}, in Anlehnung an \cite[Kap.~5.4, (6)]{blatter},
   vgl.\ auch \cite[Abb.~2.8]{lmr}. Jeder
   Pfeil ist ein Rechenschritt nach \eqref{eq:analyse} mit dem Filter $h$ bzw.\
   $g$ und halbiert die Anzahl der Werte. Nur die Approximationskoeffizienten
@@ -1978,7 +1871,7 @@ vgl.\ \cite[Kap.~5.4]{blatter}, \cite[Kap.~2.3, Abb.~2.8]{lmr}}
 \begin{Beispiel}[Haar, Fortsetzung von Beispiel~\ref{bsp:haar-wavelet-koeff}]
 \label{bsp:mallat-haar}
 Für das Haar-Filter $h_0=h_1=\tfrac{1}{\sqrt2}$ liefert \eqref{eq:g-aus-h}
-$g_0=\tfrac{1}{\sqrt2}$, $g_1=-\tfrac{1}{\sqrt2}$; alle übrigen $h_k$, $g_k$
+$g_0=\tfrac{1}{\sqrt2}$ und $g_1=-\tfrac{1}{\sqrt2}$. Alle übrigen $h_k$, $g_k$
 verschwinden. In \eqref{eq:analyse} bleiben daher nur die Summanden
 $n=2k$ und $n=2k+1$:
 \[
@@ -1991,8 +1884,8 @@ Für die Treppenfunktion $f=(4,2,5,7)$ der Haar-MSA ist $a_{0,k} = f(k)$. Die
 erste Stufe liefert
 $a_1 = (\tfrac{6}{\sqrt2},\tfrac{12}{\sqrt2}) = (3\sqrt2,6\sqrt2)$ und
 $d_1 = (\sqrt2,-\sqrt2)$, die zweite $a_{2,0} = 9$ und $d_{2,0} = -3$. Das sind
-genau die Koeffizienten aus Beispiel~\ref{bsp:haar-wavelet-koeff}, nun ohne ein
-einziges Integral berechnet.
+genau die Koeffizienten aus Beispiel~\ref{bsp:haar-wavelet-koeff}, nun ohne
+Integral berechnet.
 \end{Beispiel}
 
 Der Aufwand ist gering. Hat der Filter die Länge $L$, kostet eine Stufe mit $N$
@@ -2000,13 +1893,10 @@ Eingangswerten etwa $LN$ Multiplikationen. Da sich die Anzahl der Werte von
 Stufe zu Stufe ungefähr halbiert, sind es insgesamt etwa
 $L\,(N + N/2 + N/4 + \cdots) \approx 2LN$, also $O(N)$ Operationen
 \cite[Kap.~5.4]{blatter}. % S. 134--135
-Die schnelle Fourier-Transformation braucht dagegen $O(N\log N)$
-\cite[§~53]{hankebourgeois}. % S. 405
 
 Jeder Schritt lässt sich exakt rückgängig machen.
 
-\begin{Satz}[Rekonstruktion, {\cite[Kap.~5.4]{blatter}}]
-% S. 134--135
+\begin{Satz}[Rekonstruktion, {\cite[Kap.~5.4]{blatter}}] % S. 134--135
 \label{satz:rekonstruktion}
 Für alle $j,n\in\Z$ gilt
 \begin{equation}
@@ -2026,55 +1916,33 @@ Im Haar-Fall wird daraus
 $a_{j-1,2k} = (a_{j,k}+d_{j,k})/\sqrt2$ und
 $a_{j-1,2k+1} = (a_{j,k}-d_{j,k})/\sqrt2$, im Beispiel
 $(3\sqrt2\pm\sqrt2)/\sqrt2 = 4$ bzw.\ $2$. Auch die Rekonstruktion kostet nur
-$O(N)$ Operationen, bleibt also weiterhin linear \cite[Kap.~5.4]{blatter}. % S. 135
+$O(N)$ Operationen \cite[Kap.~5.4]{blatter}. % S. 135
 
-\begin{Bemerkung}
-\label{bem:mallat-orthogonal}
-Jeder Schritt $a_{j-1,\cdot}\mapsto(a_{j,\cdot},d_{j,\cdot})$ von
-Algorithmus~\ref{alg:mallat} ersetzt die Orthonormalbasis
-$\{\varphi_{j-1,n}\}_n$ von $V_{j-1}$ durch die Orthonormalbasis
-$\{\varphi_{j,k}\}_k\cup\{\psi_{j,k}\}_k$ \cite[Kap.~5.4]{blatter}. % S. 134
-Die Parseval-Gleichung \cite[Satz~25.18\,(5)]{serov}, angewandt auf
-$P_{j-1}f$ in beiden Basen, liefert
-\[
-  \sum_n \lvert a_{j-1,n}\rvert^2
-  \;=\; \norm{P_{j-1}f}^2
-  \;=\; \sum_k \lvert a_{j,k}\rvert^2 + \sum_k \lvert d_{j,k}\rvert^2 ,
-\]
-im Beispiel $4^2+2^2 = 20 = (3\sqrt2)^2 + (\sqrt2)^2$. Ein Schritt ist also eine
-orthogonale Abbildung der Koeffizientenfolgen; genau diese Eigenschaft wird in
-Abschnitt~\ref{sec:onb-invarianz} gebraucht.
-\end{Bemerkung}
-
-In der Anwendung ist $f$ nicht bekannt, sondern nur durch Abtastwerte gegeben.
-Diese werden als Koeffizienten $a_{0,k}$ der feinsten Skala verwendet
-\cite[Kap.~5.4]{blatter}; % S. 131
-wie ein endliches Signal dabei am Rand fortgesetzt wird, beschreibt
+Damit ist die zweite Frage der Einleitung beantwortet. Ein Integral braucht man
+nur noch für die Startwerte $a_0$, alle weiteren Koeffizienten liefert
+Algorithmus~\ref{alg:mallat}. In der Anwendung ist $f$ nicht bekannt, sondern
+nur durch Abtastwerte gegeben. Man setzt dann $a_{0,k} := f(k)$. Wegen
+$\int_\R\varphi(t)\,dt = 1$ ist das eine brauchbare Näherung, besonders wenn
+$\varphi$ einen schmalen Träger hat und sich benachbarte Werte $f(k)$ wenig
+unterscheiden \cite[Kap.~5.4]{blatter}. % S. 131
+Wie ein endliches Signal dabei am Rand fortgesetzt wird, beschreibt
 Abschnitt~\ref{sec:onb-invarianz}.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Daubechies-Wavelets}
 \label{sec:daubechies}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\quellen{Blatter, Kap.~3.5, S.~74 [bestätigt]; LMR, Lemma~2.4.30, S.~176
-[bestätigt]; LMR, Satz~2.4.9, S.~153 [bestätigt]; LMR, Kap.~2.4.4,
-S.~173--175 [bestätigt], insb.\ Satz~2.4.28 (Momente), S.~174, Träger von
-$\psi_N$, S.~175, Regularität $H^{\alpha N}$, $\alpha>0{,}2$, S.~173;
-Blatter, Kap.~6.2, S.~146--151 [bestätigt]; Blatter, Kap.~6.3, S.~158
-[bestätigt]; Rebstadt, Kap.~2.3.1, S.~16--20 [bestätigt].}
+Die Formeln des Mallat-Algorithmus gelten für die Skalierungsfolge jeder MSA.
+Offen ist, welche man wählen soll. Das Haar-Filter erzeugt selbst auf glatten
+Signalabschnitten von null verschiedene Detailkoeffizienten
+(Beispiel~\ref{bsp:momente}). Für Approximationsprobleme ist es oft wichtig,
+dass die ersten Momente des Wavelets verschwinden \cite[Kap.~2.4.4]{lmr}. % S. 173
 
-Die Formeln des Mallat-Algorithmus gelten für die Skalierungsfolge jeder MSA;
-offen ist aber, welche man wählen soll. Das Haar-Filter erzeugt selbst auf glatten Signalabschnitten von null
-verschiedene Detailkoeffizienten. Gesucht
-sind daher kurze Filter, deren Wavelet glatte Abschnitte möglichst nicht
-sieht. Die dafür entscheidende Eigenschaft ist die folgende.
-
-\begin{Definition}[Verschwindende Momente, vgl.\ {\cite[Kap.~3.5]{blatter}}]
+\begin{Definition}[Verschwindende Momente, vgl.\ {\cite[Kap.~3.5]{blatter}}] % S. 74 (dort "Ordnung N" mit M_N != 0)
 \label{def:momente}
-% Blatter S. 74 (dort "Ordnung N" mit M_N != 0)
 Ein Wavelet $\psi$ mit kompaktem Träger hat $p$ verschwindende
-Momente,\footnote{Wie bei Mallat bezeichnet $p$ die Zahl der Momente; $N$
+Momente,\footnote{Wie bei Mallat bezeichnet $p$ die Zahl der Momente. $N$
   bleibt der Signallänge vorbehalten.} falls
 \[
   \int_\R t^m\,\psi(t)\,dt \;=\; 0 \qquad\text{für } m = 0,1,\dots,p-1 .
@@ -2083,14 +1951,14 @@ Momente,\footnote{Wie bei Mallat bezeichnet $p$ die Zahl der Momente; $N$
 
 Das Moment $m=0$ ist die Zulässigkeitsbedingung aus
 Satz~\ref{satz:zulaessigkeit-mittelwert}. Allgemein ist
-$\int_\R q(t)\,\psi_{j,k}(t)\,dt = 0$ für jedes Polynom $q$ vom Grad $<p$: Das
-Wavelet sieht Polynome niedrigen Grades nicht. Wie sich das im
+$\int_\R q(t)\,\psi_{j,k}(t)\,dt = 0$ für jedes Polynom $q$ vom Grad $<p$. Das
+Wavelet sieht Polynome niedrigen Grades also nicht. Wie sich das im
 Mallat-Algorithmus auswirkt, zeigt das folgende Beispiel.
 
 \begin{Beispiel}[Ein lineares Signal]
 \label{bsp:momente}
-Nach \eqref{eq:analyse} liefert die linear ansteigende Folge $a_{0,n} = n$ die
-Detailkoeffizienten
+Nach \eqref{eq:analyse} liefert die linear ansteigende Folge $a_{0,n} = n$ mit
+$m = n-2k$ die Detailkoeffizienten
 \[
   d_{1,k} \;=\; \sum_m g_m\,(m+2k) \;=\; \sum_m m\,g_m + 2k\sum_m g_m .
 \]
@@ -2104,53 +1972,49 @@ $(g_{-2},g_{-1},g_0,g_1) = (h_3,-h_2,h_1,-h_0)$, und es gilt
   4\sqrt2\,\sum_m g_m &\;=\; (1-\sqrt3)-(3-\sqrt3)+(3+\sqrt3)-(1+\sqrt3) \;=\; 0,\\
   4\sqrt2\,\sum_m m\,g_m &\;=\; -2(1-\sqrt3)+(3-\sqrt3)-(1+\sqrt3) \;=\; 0,
 \end{align*}
-also $d_{1,k} = 0$: Lineare Abschnitte landen vollständig in den
+also $d_{1,k} = 0$. Lineare Abschnitte landen vollständig in den
 Approximationskoeffizienten, vgl.\ \cite[Lemma~2.4.29]{lmr}. % S. 174--175: Polynome vom Grad < N liegen in V_0; im Beweis (S. 175 unten): d_k^j = 0
-Damit ist auch die Frage aus Beispiel~\ref{bsp:db2-filter} beantwortet: Die
+Damit ist auch die Frage aus Beispiel~\ref{bsp:db2-filter} beantwortet. Die
 Folge \eqref{eq:db2-koeff} ist das Daubechies-Filter mit zwei verschwindenden
 Momenten \cite[Kap.~6.3]{blatter}, % S. 158
 das Haar-Filter aus derselben Schar hat nur eines.
 \end{Beispiel}
-\label{bsp:rampe}
 
-Für glatte, nicht polynomiale Signale gilt das näherungsweise, umso besser,
-je feiner die Skala ist.
-
-\begin{Lemma}[Abklingen der Detailkoeffizienten, vgl.\ {\cite[Beweis von Lemma~2.4.30]{lmr}}]
+\begin{Lemma}[Abklingen der Detailkoeffizienten, vgl.\ {\cite[Beweis von Lemma~2.4.30]{lmr}}] % S. 176; dort f global glatt (C_0^k), Maximum über R, k statt p, l statt j
 \label{lem:abklingen}
-% LMR S. 176 unten (dort mit k statt p, l statt j)
 Sei $\psi$ ein Wavelet mit $p$ verschwindenden Momenten und
-$\supp\psi = [\alpha,\beta] \ni 0$. Ist $f$ auf $I_{j,k} := \supp\psi_{j,k}$ $p$-mal stetig
-differenzierbar mit $\lvert f^{(p)}\rvert \le M_{j,k}$, so gilt
+$\supp\psi = [\alpha,\beta]$ mit $\alpha\le0\le\beta$. Ist $f$ auf $\supp\psi_{j,k}$ $p$-mal stetig differenzierbar
+mit $\lvert f^{(p)}\rvert \le M$, so gilt
 \[
-  \lvert d_{j,k}\rvert \;\le\; 2^{j(p+1/2)}\,\frac{M_{j,k}}{p!}\int_\R \lvert t^p\,\psi(t)\rvert\,dt .
+  \lvert d_{j,k}\rvert \;\le\; C_\psi\,M\,2^{j(p+1/2)},
+  \qquad
+  C_\psi := \frac{1}{p!}\int_\R \lvert t^p\,\psi(t)\rvert\,dt .
 \]
 \end{Lemma}
 
-\begin{proof}
-Die Substitution $x = 2^j(t+k)$ ergibt
-$d_{j,k} = 2^{j/2}\int_\R f(2^jk + 2^jt)\,\psi(t)\,dt$. Nach Taylor
-\cite[(2.4.20)]{lmr} ist $f(2^jk + 2^jt) = q(t) + R(t)$ mit einem Polynom $q$
-vom Grad $<p$ und dem Rest
-$R(t) = \tfrac{1}{p!}f^{(p)}(\eta_t)\,(2^jt)^p$, $\eta_t \in I_{j,k}$. Wegen
-der verschwindenden Momente ist $\int_\R q\,\psi\,dt = 0$, also
-$d_{j,k} = 2^{j/2}\int_\R R(t)\,\psi(t)\,dt$, und
-$\lvert R(t)\rvert \le \tfrac{M_{j,k}}{p!}\,2^{jp}\,\lvert t\rvert^p$ liefert
-die Behauptung.
-\end{proof}
+Der Beweis verläuft wie bei \cite[Beweis von Lemma~2.4.30]{lmr}, % S. 176
+dort für global glattes $f$. Man entwickelt $f$ nach Taylor. Der Polynomanteil
+vom Grad $<p$ trägt wegen der verschwindenden Momente nichts zu $d_{j,k}$ bei,
+es bleibt nur das Restglied. Wegen $\alpha\le0\le\beta$ liegt die
+Zwischenstelle des Restglieds in $\supp\psi_{j,k}$, sodass dort die Schranke
+$M$ genügt.
 
-Nach Lemma~\ref{lem:abklingen} werden die Detailkoeffizienten glatter
-Abschnitte auf feinen Skalen ($j \to -\infty$) also schnell klein, umso
-schneller, je grö\ss{}er $p$ ist. An Sprüngen oder steilen Spitzen ist die
-Voraussetzung des Lemmas verletzt, und die Koeffizienten bleiben dort gro\ss{}.
+Die Konstante $C_\psi$ hängt nur vom Wavelet ab. Geht man eine Skala feiner,
+also von $j$ zu $j-1$, so verkleinert sich die Schranke um den Faktor
+$2^{-(p+1/2)}$. Für Haar ($p=1$) ist das $2^{-3/2}\approx0{,}35$, für
+\eqref{eq:db2-koeff} ($p=2$) $2^{-5/2}\approx0{,}18$ und für $\psi_6$
+($p=6$) $2^{-13/2}\approx0{,}011$. Auf glatten Abschnitten werden die
+Detailkoeffizienten zu feinen Skalen hin also schnell klein, umso schneller,
+je grö\ss{}er $p$ ist. An Sprüngen oder steilen Spitzen ist die Voraussetzung
+verletzt, und die Koeffizienten bleiben dort gro\ss{}.
 
-Für den Mallat-Algorithmus braucht man zugleich kurze Filter, denn er ist nur
-mit endlichen Filtern exakt ausführbar. Viele verschwindende Momente und kurze
-Filter verbinden die Daubechies-Wavelets.
+Viele verschwindende Momente allein genügen aber nicht. Der Mallat-Algorithmus
+ist nur mit endlichen Filtern exakt ausführbar. Die Daubechies-Wavelets
+verbinden beides. Zu $p$ verschwindenden Momenten gehört ein Filter der
+Länge $2p$.
 
-\begin{Satz}[Daubechies-Wavelets, {\cite[Kap.~6.2]{blatter}}, {\cite[Kap.~2.4.4]{lmr}}]
+\begin{Satz}[Daubechies-Wavelets, {\cite[Satz~2.4.22, Bem.~2.4.25, Satz~2.4.28]{lmr}}] % S. 168 (Grad 2N-1, also 2N Koeffizienten), 172, 174; Träger S. 175
 \label{satz:daubechies}
-% Blatter S. 146--151; LMR S. 174--175 (Momente: Satz 2.4.28, S. 174)
 Zu jedem $p\in\N$ gibt es eine reelle Skalierungsfolge $h_0,\dots,h_{2p-1}$
 einer MSA mit
 \[
@@ -2159,14 +2023,17 @@ einer MSA mit
 und das zugehörige Wavelet $\psi_p$ besitzt $p$ verschwindende Momente.
 \end{Satz}
 
-\anmerkung{bruach ich dafür nen beweis??}
-
-Der Träger von $\psi_p$ folgt aus \eqref{eq:g-aus-h}, da dort nur
-$g_{2-2p},\dots,g_1$ von null verschieden sind, vgl.\ \cite[Kap.~2.4.4]{lmr}. % S. 175
-Für $p=1$ entsteht das Haar-Wavelet, für $p=2$ die Folge \eqref{eq:db2-koeff}
+Die Konstruktion steht bei \cite[Kap.~2.4.3]{lmr}, % S. 165--170, vier Schritte S. 168
+die Momente bei \cite[Satz~2.4.28]{lmr}, % S. 174
+vgl.\ auch \cite[Kap.~6.2]{blatter}. % S. 146--151
+Ein Filter $h_0,\dots,h_{2p-1}$ liefert $\supp\varphi_p\subset[0,2p-1]$
+\cite[Satz~2.4.9]{lmr}. % S. 153, zitiert auf S. 165
+Der Träger von $\psi_p$ folgt dann aus \eqref{eq:g-aus-h}, da dort nur
+$g_{2-2p},\dots,g_1$ von null verschieden sind \cite[Gl.~(2.4.13)]{lmr}. % S. 165 Für $p=1$ entsteht das
+Haar-Wavelet, für $p=2$ die Folge \eqref{eq:db2-koeff}
 \cite[Kap.~6.3]{blatter} % S. 158
 mit $\varphi_2$ und $\psi_2$ aus Abbildung~\ref{fig:db2}. In PyWavelets
-\cite{pywavelets} hei\ss{}t $\psi_p$ \texttt{db}$p$; das Wavelet mit vier
+\cite{pywavelets} hei\ss{}t $\psi_p$ \texttt{db}$p$. Das Wavelet mit vier
 Koeffizienten ist also \texttt{db2}, nicht \texttt{db4}.
 \anmerkung{Bib-Eintrag pywavelets anlegen und über DOI prüfen.}
 
@@ -2187,16 +2054,14 @@ aber dreimal so breit. Allgemein wird $\psi_p$ mit wachsendem $p$ glatter,
 nämlich $\psi_p \in H^{\alpha p}(\R)$ mit $\alpha > 0{,}2$
 \cite[Kap.~2.4.4]{lmr}, % S. 173, Text nach Satz 2.4.26
 zugleich wächst aber die Trägerlänge $2p-1$.
-Bei der Wahl von $p$ muss man daher abwägen. Viele Momente sind gut für die
-ruhigen, langsam verlaufenden Teile des EKG wie P- und T-Welle: Dort werden die
-Detailkoeffizienten fast null (Lemma~\ref{lem:abklingen}). Ein breiter Träger
-ist dagegen schlecht für den steilen QRS-Komplex
-\cite[Kap.~2.3.1]{rebstadt}, % S. 16--17
-denn dessen Spitze wird dann von mehreren Wavelets gleichzeitig erfasst und
-verteilt sich auf mehrere Koeffizienten. Insgesamt bleibt das Bild aber
-dasselbe: Wenige gro\ss{}e Koeffizienten tragen die Spitzen, fast alle übrigen
-sind klein \cite[Beispiel~56.3]{hankebourgeois}. % S. 440, dort mit Haar
-Auf dieser Dünnbesetztheit baut Abschnitt~\ref{sec:duennbesetztheit} auf.
+Bei der Wahl von $p$ muss man daher abwägen. Viele Momente machen die
+Detailkoeffizienten glatter Abschnitte klein (Lemma~\ref{lem:abklingen}). Ein
+breiter Träger verteilt dagegen jede steile Spitze auf mehrere Koeffizienten.
+Wegen $\supp\psi_{j,k} = 2^j[1-p+k,\,p+k]$ liegt ein fester Punkt $t_0$ nämlich
+in den Trägern von bis zu $2p$ Wavelets jeder Skala $j$.
+Insgesamt tragen wenige gro\ss{}e Koeffizienten die Spitzen
+\cite[Beispiel~56.3]{hankebourgeois}. % S. 440, dort mit Haar
+Darauf baut Abschnitt~\ref{sec:duennbesetztheit} auf.
 
 \begin{Beispiel}[Das Daubechies-Wavelet mit $p = 6$]
 \label{bsp:db6}
@@ -2213,25 +2078,25 @@ $h_0,\dots,h_{11}$, gerundet auf sechs Stellen
 \end{equation}
 mit $\supp\varphi_6 = [0, 11]$ und $\supp\psi_6 = [-5, 6]$. Blatter verweist
 für die Werte bis $p = 10$ auf die Tabelle bei Daubechies
-\cite[Kap.~6.2]{blatter}; % S. 151
-die Werte oben stammen aus PyWavelets \cite{pywavelets}, wo $\psi_6$
+\cite[Kap.~6.2]{blatter}. % S. 151
+Die Werte oben stammen aus PyWavelets \cite{pywavelets}, wo $\psi_6$
 \texttt{db6} hei\ss t. Sie erfüllen \eqref{eq:H0} und \eqref{eq:h-orthogonal}
-bis auf Rundungsfehler, und für die Hochpassfolge
-$g_k = (-1)^k h_{1-k}$, $k = -10,\dots,1$, aus \eqref{eq:g-aus-h} gilt wie in
-Beispiel~\ref{bsp:momente}
+bis auf Rundungsfehler. Für die Hochpassfolge $g_k = (-1)^k h_{1-k}$,
+$k = -10,\dots,1$, aus \eqref{eq:g-aus-h} gilt
 \[
-  \sum_k k^m\,g_k = 0 \qquad\text{für } m = 0,\dots,5 ;
+  \sum_k k^m\,g_k = 0 \qquad\text{für } m = 0,\dots,5
 \]
-das sind die sechs verschwindenden Momente von $\psi_6$ in der Form, in der sie
-im Mallat-Algorithmus wirken. Abbildung~\ref{fig:db6} zeigt $\varphi_6$ und
-$\psi_6$. Gegenüber $\psi_2$ ist der Träger fast viermal so lang, und $\psi_6$
-ist glatter, $\psi_6 \in H^{6\alpha}(\R)$ mit $\alpha > 0{,}2$
-\cite[Kap.~2.4.4]{lmr}. % S. 173
+\cite[Lemma~2.4.27]{lmr}. % S. 174
+Das sind die sechs verschwindenden Momente von $\psi_6$ in der Form, in der sie
+im Mallat-Algorithmus wirken, wie in Beispiel~\ref{bsp:momente}.
+Abbildung~\ref{fig:db6} zeigt $\varphi_6$ und $\psi_6$. Gegenüber $\psi_2$ ist
+der Träger fast viermal so lang, und $\psi_6$ ist glatter,
+$\psi_6 \in H^{6\alpha}(\R)$ mit $\alpha > 0{,}2$ \cite[Kap.~2.4.4]{lmr}. % S. 173
 Castillo et al.\ verwenden $\psi_6$ für EKG-Signale, weil es einem echten EKG
-ähnelt \cite[Abschn.~3.1.1]{castillo}; % S. 4
-wir übernehmen es in Kapitel~\ref{chapter:anwendung}.
+ähnelt \cite[Abschn.~3.1.1]{castillo}. % S. 4
+Wir übernehmen es in Kapitel~\ref{chapter:anwendung}.
 \end{Beispiel}
- 
+
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.9\textwidth]{abb4_db6.pdf}
@@ -2241,13 +2106,119 @@ wir übernehmen es in Kapitel~\ref{chapter:anwendung}.
   \eqref{eq:skalierungsgleichung} (Code in Anhang~\ref{anh:code-db6}).}
   \label{fig:db6}
 \end{figure}
- 
 
-Damit liegen die drei Eigenschaften vor, die Kapitel~\ref{chapter:denoising}
-voraussetzt: Die diskrete Wavelet-Transformation ist orthogonal
-(Bemerkung~\ref{bem:mallat-orthogonal}), in $O(N)$ Operationen berechenbar
-(Algorithmus~\ref{alg:mallat}) und stellt stückweise glatte Signale
-dünnbesetzt dar (Lemma~\ref{lem:abklingen}).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Die Filter im Frequenzbereich}
+\label{sec:fourier-bedingungen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Abschnitt~\ref{sec:frequenzbaender} ordnet jeder Stufe der Transformation ein
+Frequenzband zu. Dafür beschreiben wir die Filter im Frequenzbereich.
+
+\begin{Definition}[Fourier-Filter, {\cite[Gl.~(2.2.24)]{lmr}}] % S. 121, dort nur H, G analog wie im Beweis von Korollar 2.2.12 (S. 123--124)
+\label{def:fourier-filter}
+Seien $(h_k)$ und $(g_k)$ die Filter aus Abschnitt~\ref{sec:filter} mit
+$\sum_k\lvert h_k\rvert<\infty$. Die $2\pi$-periodischen Funktionen
+\begin{equation}
+\label{eq:symbol-H}
+  H(\omega) \;:=\; \frac{1}{\sqrt2}\sum_{k\in\Z} h_k\,e^{-ik\omega},
+  \qquad
+  G(\omega) \;:=\; \frac{1}{\sqrt2}\sum_{k\in\Z} g_k\,e^{-ik\omega},
+  \qquad \omega\in\R,
+\end{equation}
+hei\ss{}en Fourier-Filter von $(h_k)$ bzw.\ $(g_k)$.
+\end{Definition}
+
+Wendet man den Analyseschritt \eqref{eq:analyse} auf die Schwingung
+$a_{j-1,n} = e^{i\omega n}$ an, so folgt mit $m = n-2k$
+\[
+  a_{j,k} \;=\; \sum_{n\in\Z} h_{n-2k}\,e^{i\omega n}
+  \;=\; e^{i\omega\cdot 2k}\sum_{m\in\Z} h_m\,e^{i\omega m}
+  \;=\; \sqrt2\,\overline{H(\omega)}\,e^{i\omega\cdot 2k} ,
+\]
+analog $d_{j,k} = \sqrt2\,\overline{G(\omega)}\,e^{i\omega\cdot 2k}$. Die
+Filter verstärken die Schwingung also um die Faktoren
+$\sqrt2\,\lvert H(\omega)\rvert$ bzw.\ $\sqrt2\,\lvert G(\omega)\rvert$. Für
+$\omega = 0$ ist sie konstant, für $\omega = \pi$ wechselt
+$e^{i\pi n} = (-1)^n$ bei jedem Schritt das Vorzeichen.
+
+\begin{Satz}[vgl.\ {\cite[Satz~2.2.9, Korollar~2.2.12]{lmr}}] % S. 121, 123--124. Korollar 2.2.12 sagt das für psi-Dach, die Formel für G steht im Beweis (S. 124) mit derselben Konvention e^{-ik omega}. In Kap. 2.4 (S. 168, 174) nutzt LMR e^{+ik omega}
+\label{satz:qmf}
+Für alle $\omega\in\R$ gilt
+\begin{equation}
+\label{eq:qmf}
+  H(0) = 1, \qquad
+  \lvert H(\omega)\rvert^2 + \lvert H(\omega+\pi)\rvert^2 = 1
+\end{equation}
+und
+\begin{equation}
+\label{eq:G-aus-H}
+  G(\omega) \;=\; -e^{-i\omega}\,\overline{H(\omega+\pi)} .
+\end{equation}
+\end{Satz}
+
+Die Gleichung $H(0) = 1$ ist \eqref{eq:H0}, die zweite Gleichung in
+\eqref{eq:qmf} ist Lemma~\ref{lem:h-orthogonal} im Frequenzbereich. Aus
+\eqref{eq:qmf} und \eqref{eq:G-aus-H} folgt:
+\begin{enumerate}
+\item[(a)] $H(0) = 1$ und $H(\pi) = 0$. Der Filter $(h_k)$ lässt konstante
+  Signale vollständig durch und löscht die schnellste Schwingung aus. Er ist ein
+  Tiefpass.
+\item[(b)] $G(0) = 0$ und $\lvert G(\pi)\rvert = 1$. Der Filter $(g_k)$ ist ein
+  Hochpass. Insbesondere ist $\sum_k g_k = \sqrt2\,G(0) = 0$.
+\item[(c)] $\lvert H(\omega)\rvert^2 + \lvert G(\omega)\rvert^2 = 1$. Jede
+  Frequenz wird vollständig auf beide Filter aufgeteilt
+  \cite[Bem.~2.4.19]{lmr}. % S. 165
+\end{enumerate}
+
+Abbildung~\ref{fig:tief-hochpass} zeigt $\lvert H\rvert$ und $\lvert G\rvert$.
+In allen Fällen ist $\lvert H\rvert$ auf $[0,\pi/2]$ gro\ss{} und auf
+$[\pi/2,\pi]$ klein, $\lvert G\rvert$ umgekehrt. Mit wachsendem $p$ wird der
+Übergang steiler \cite[Lemma~2.4.32]{lmr}. % S. 177; Kurven nach Lemma 2.4.21 (S. 167) mit N = 1, 2, 6; db2 explizit im Beispiel S. 169
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+        width=0.62\textwidth, height=4.2cm,
+        domain=0:pi, samples=160, xmin=0, xmax=pi, ymin=0, ymax=1.08,
+        xtick={0,pi/2,pi}, xticklabels={$0$,$\pi/2$,$\pi$},
+        ytick={0,0.5,1}, tick label style={font=\footnotesize},
+        xlabel={$\omega$}, xlabel style={font=\footnotesize},
+        legend style={font=\footnotesize, at={(1.03,0.5)}, anchor=west, draw=none},
+        legend cell align=left,
+        declare function={c(\x)=cos(deg(\x/2))^2; s(\x)=sin(deg(\x/2))^2;
+          P(\y)=1+6*\y+21*\y^2+56*\y^3+126*\y^4+252*\y^5;}]
+      % |H|^2 = q_N aus LMR Lemma 2.4.21 (S. 167), ausmultipliziert; db6: c^6 P(s), gegen PyWavelets geprüft
+      \addplot[uhh_blue, line width=0.9pt, dotted] {sqrt(c(x))};
+      \addplot[uhh_red,  line width=0.9pt, dotted] {sqrt(s(x))};
+      \addplot[uhh_blue, line width=0.9pt, dashed] {c(x)*sqrt(1+2*s(x))};
+      \addplot[uhh_red,  line width=0.9pt, dashed] {s(x)*sqrt(1+2*c(x))};
+      \addplot[uhh_blue, line width=1.1pt] {sqrt(c(x)^6*P(s(x)))};
+      \addplot[uhh_red,  line width=1.1pt] {sqrt(s(x)^6*P(c(x)))};
+      \legend{$\lvert H\rvert$ Haar, $\lvert G\rvert$ Haar,
+              $\lvert H\rvert$ db2, $\lvert G\rvert$ db2,
+              $\lvert H\rvert$ db6, $\lvert G\rvert$ db6}
+    \end{axis}
+  \end{tikzpicture}
+  \caption[Tiefpass und Hochpass]{Betrag der Fourier-Filter $H$ (Tiefpass, blau)
+  und $G$ (Hochpass, rot) für das Haar-Filter (gepunktet), das Filter
+  \eqref{eq:db2-koeff} (gestrichelt) und das Filter \eqref{eq:db6-koeff}
+  (durchgezogen) auf $[0,\pi]$. In allen Fällen ist
+  $\lvert H\rvert^2 + \lvert G\rvert^2 = 1$.}
+  \label{fig:tief-hochpass}
+\end{figure}
+
+Damit sind die drei Fragen vom Anfang beantwortet. Das Wavelet $\psi$ entsteht
+aus der Skalierungsfolge $(h_k)$ über die Hochpassfolge $(g_k)$
+(Satz~\ref{satz:wavelet-aus-h}). Der Mallat-Algorithmus berechnet alle
+Koeffizienten aus den Startwerten $a_0$ und den Filtern $h$ und $g$
+(Algorithmus~\ref{alg:mallat}). Bei der Wahl des Wavelets wägt man
+verschwindende Momente gegen die Trägerlänge ab (Abschnitt~\ref{sec:daubechies}).
+Für das EKG folgen wir Castillo et al.\ und verwenden $\psi_6$
+(Kapitel~\ref{chapter:anwendung}). Für Kapitel~\ref{chapter:denoising} ist entscheidend, dass die Transformation in
+$O(N)$ Operationen berechenbar ist und stückweise glatte Signale dünnbesetzt
+darstellt (Lemma~\ref{lem:abklingen}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
