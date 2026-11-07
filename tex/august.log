@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  6 NOV 2026 19:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.29)  7 NOV 2026 14:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1090,115 +1090,127 @@ Package pdftex.def Info: abbildungen/abb6_2_datensaetze.pdf  used on input line 
  [46 <./abbildungen/abb6_2_datensaetze.pdf>] [47] [48]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 3511.
+(hyperref)                removing `math shift' on input line 3504.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 3511.
+(hyperref)                removing `math shift' on input line 3504.
 
 [49]
-Overfull \hbox (9.62889pt too wide) in paragraph at lines 3528--3534
+Overfull \hbox (9.62889pt too wide) in paragraph at lines 3521--3527
 \T1/cmss/m/n/10.95 wobei $[]$ auf die nächs-te gan-ze Zahl run-det [[], Ab-schn. 3.1.2, Gl. (9)], [[], Kap. 15.2.4].
  []
 
 
-Overfull \hbox (2.0303pt too wide) detected at line 3558
+Overfull \hbox (2.0303pt too wide) detected at line 3551
 \OML/cmm/m/it/10.95 J \OT1/cmr/m/n/10.95 = [][[][] 360] = 8 ([][] 360 \OMS/cmsy/m/n/10.95 ^^Y \OT1/cmr/m/n/10.95 8[]49)\OML/cmm/m/it/10.95 ;  \OT1/cmr/m/n/10.95 0[]3 []  \OML/cmm/m/it/10.95 <  [] [] \OMS/cmsy/m/n/10.95 ^^Y \OT1/cmr/m/n/10.95 0[]70 []  \OML/cmm/m/it/10.95 <  \OT1/cmr/m/n/10.95 0[]88 []\OML/cmm/m/it/10.95 ;
  []
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 3571.
+(hyperref)                removing `math shift' on input line 3564.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 3571.
+(hyperref)                removing `subscript' on input line 3564.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 3571.
+(hyperref)                removing `math shift' on input line 3564.
 
 [50] [51] [52]
-<abbildungen/abb6_3_testsignal.pdf, id=1559, 455.30101pt x 260.17201pt>
+<abbildungen/abb6_3_testsignal.pdf, id=1556, 455.30101pt x 260.17201pt>
 File: abbildungen/abb6_3_testsignal.pdf Graphic file (type pdf)
 <use abbildungen/abb6_3_testsignal.pdf>
-Package pdftex.def Info: abbildungen/abb6_3_testsignal.pdf  used on input line 3757.
+Package pdftex.def Info: abbildungen/abb6_3_testsignal.pdf  used on input line 3749.
 (pdftex.def)             Requested size: 431.05931pt x 246.32831pt.
-<abbildungen/abb6_4_test.pdf, id=1568, 455.30101pt x 158.99399pt>
+ [53 <./abbildungen/abb6_3_testsignal.pdf>]
+<abbildungen/abb6_4_test.pdf, id=1611, 455.30101pt x 158.99399pt>
 File: abbildungen/abb6_4_test.pdf Graphic file (type pdf)
 <use abbildungen/abb6_4_test.pdf>
-Package pdftex.def Info: abbildungen/abb6_4_test.pdf  used on input line 3800.
+Package pdftex.def Info: abbildungen/abb6_4_test.pdf  used on input line 3793.
 (pdftex.def)             Requested size: 431.05931pt x 150.53395pt.
-<abbildungen/abb6_5_test_schlag.pdf, id=1573, 455.30101pt x 187.902pt>
+<abbildungen/abb6_5_test_schlag.pdf, id=1616, 455.30101pt x 187.902pt>
 File: abbildungen/abb6_5_test_schlag.pdf Graphic file (type pdf)
 <use abbildungen/abb6_5_test_schlag.pdf>
-Package pdftex.def Info: abbildungen/abb6_5_test_schlag.pdf  used on input line 3809.
+Package pdftex.def Info: abbildungen/abb6_5_test_schlag.pdf  used on input line 3802.
 (pdftex.def)             Requested size: 431.05931pt x 177.90378pt.
-<abbildungen/abb6_6_test_fehler.pdf, id=1578, 455.30101pt x 158.99399pt>
-File: abbildungen/abb6_6_test_fehler.pdf Graphic file (type pdf)
-<use abbildungen/abb6_6_test_fehler.pdf>
-Package pdftex.def Info: abbildungen/abb6_6_test_fehler.pdf  used on input line 3818.
-(pdftex.def)             Requested size: 431.05931pt x 150.53395pt.
-<abbildungen/abb6_7_zerlegung_f.pdf, id=1583, 455.30101pt x 534.79799pt>
+<abbildungen/abb6_7_zerlegung_f.pdf, id=1621, 455.30101pt x 534.79799pt>
 File: abbildungen/abb6_7_zerlegung_f.pdf Graphic file (type pdf)
 <use abbildungen/abb6_7_zerlegung_f.pdf>
-Package pdftex.def Info: abbildungen/abb6_7_zerlegung_f.pdf  used on input line 3826.
+Package pdftex.def Info: abbildungen/abb6_7_zerlegung_f.pdf  used on input line 3811.
 (pdftex.def)             Requested size: 431.05931pt x 506.34152pt.
-<abbildungen/abb6_7_zerlegung_Y.pdf, id=1588, 455.30101pt x 534.79799pt>
+<abbildungen/abb6_7_zerlegung_Y.pdf, id=1626, 455.30101pt x 534.79799pt>
 File: abbildungen/abb6_7_zerlegung_Y.pdf Graphic file (type pdf)
 <use abbildungen/abb6_7_zerlegung_Y.pdf>
-Package pdftex.def Info: abbildungen/abb6_7_zerlegung_Y.pdf  used on input line 3836.
+Package pdftex.def Info: abbildungen/abb6_7_zerlegung_Y.pdf  used on input line 3821.
 (pdftex.def)             Requested size: 431.05931pt x 506.34152pt.
-<abbildungen/abb6_7_zerlegung_fhat.pdf, id=1593, 455.30101pt x 534.79799pt>
+<abbildungen/abb6_7_zerlegung_fhat.pdf, id=1631, 455.30101pt x 534.79799pt>
 File: abbildungen/abb6_7_zerlegung_fhat.pdf Graphic file (type pdf)
 <use abbildungen/abb6_7_zerlegung_fhat.pdf>
-Package pdftex.def Info: abbildungen/abb6_7_zerlegung_fhat.pdf  used on input line 3845.
+Package pdftex.def Info: abbildungen/abb6_7_zerlegung_fhat.pdf  used on input line 3830.
 (pdftex.def)             Requested size: 431.05931pt x 506.34152pt.
- [53 <./abbildungen/abb6_3_testsignal.pdf>] [54 <./abbildungen/abb6_4_test.pdf> <./abbildungen/abb6_5_test_schlag.pdf>] [55 <./abbildungen/abb6_6_test_fehler.pdf>] [56 <./abbildungen/abb6_7_zerlegung_f.pdf>] [57 <./abbildungen/abb6_7_zerlegung_Y.pdf>] [58 <./abbildungen/abb6_7_zerlegung_fhat.pdf>]
-<abbildungen/abb6_10_vergleich.pdf, id=1983, 455.30101pt x 361.35pt>
+ [54 <./abbildungen/abb6_4_test.pdf>] [55 <./abbildungen/abb6_5_test_schlag.pdf>] [56 <./abbildungen/abb6_7_zerlegung_f.pdf>] [57 <./abbildungen/abb6_7_zerlegung_Y.pdf>] [58 <./abbildungen/abb6_7_zerlegung_fhat.pdf>]
+<abbildungen/abb6_10_test_d3.pdf, id=1929, 455.30101pt x 332.44202pt>
+File: abbildungen/abb6_10_test_d3.pdf Graphic file (type pdf)
+<use abbildungen/abb6_10_test_d3.pdf>
+Package pdftex.def Info: abbildungen/abb6_10_test_d3.pdf  used on input line 3932.
+(pdftex.def)             Requested size: 431.05931pt x 314.75285pt.
+<abbildungen/abb6_10_vergleich.pdf, id=1937, 455.30101pt x 361.35pt>
 File: abbildungen/abb6_10_vergleich.pdf Graphic file (type pdf)
 <use abbildungen/abb6_10_vergleich.pdf>
-Package pdftex.def Info: abbildungen/abb6_10_vergleich.pdf  used on input line 3928.
+Package pdftex.def Info: abbildungen/abb6_10_vergleich.pdf  used on input line 3960.
 (pdftex.def)             Requested size: 431.05931pt x 342.12267pt.
- [59] [60 <./abbildungen/abb6_10_vergleich.pdf>] [61]
+ [59] [60 <./abbildungen/abb6_10_test_d3.pdf>] [61 <./abbildungen/abb6_10_vergleich.pdf>] [62]
 chapter 7.
-[62
+[63
 
 
 ]
 chapter A.
-[63
+[64
 
 
-] [64] [65]
+] [65] [66]
 chapter B.
-(./code/BeispielCWT.py [66
+(./code/BeispielCWT.py [67
 
 
-]) [67] (./code/kap4_db2.py) (./code/kap4_db6.py [68]) (./code/kap5_sinus.py [69]) (./code/kap5_signal.py [70]) (./code/kap5_koeffizienten.py [71]) (./code/kap5_koeffizienten_Y.py [72]) (./code/kap5_entrauscht.py [73]) [74] (./code/kap6_verfahren.py) (./code/kap6_abb_muster.py) (./code/kap6_abb_datensaetze.py [75]) (./code/kap6_herzfrequenz.py) [76] (./code/kap6_abb_vergleich.py) (./code/kap6_test.py [77] [78]) (./code/kap6_abb_testsignal.py [79]) (./code/kap6_abb_test.py) (./code/kap6_abb_test_schlag.py) [80] (./code/kap6_abb_test_fehler.py) (./code/kap6_abb_zerlegung.py [81]) (./august.bbl [82]
+]) [68] (./code/kap4_db2.py) (./code/kap4_db6.py [69]) (./code/kap5_sinus.py [70]) (./code/kap5_signal.py [71]) (./code/kap5_koeffizienten.py [72]) (./code/kap5_koeffizienten_Y.py [73]) (./code/kap5_entrauscht.py [74]) [75] (./code/kap6_verfahren.py) (./code/kap6_abb_muster.py) [76] (./code/kap6_abb_datensaetze.py) (./code/kap6_herzfrequenz.py) [77] (./code/kap6_abb_vergleich.py) (./code/kap6_test.py [78] [79]) (./code/kap6_abb_testsignal.py [80]) (./code/kap6_abb_test.py) (./code/kap6_abb_test_schlag.py [81])
+
+LaTeX Warning: Reference `fig:test-fehler' on page 82 undefined on input line 4389.
+
+
+LaTeX Warning: Reference `fig:test-fehler' on page 82 undefined on input line 4389.
+
+(./code/kap6_abb_test_fehler.py) (./code/kap6_abb_zerlegung.py [82]) (./august.bbl [83]
 chapter without number
-[83
+[84
 
 
-]) [84] (./august.aux)
+]) [85] (./august.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 43115 strings out of 467525
- 965220 string characters out of 5418982
- 2362703 words of memory out of 5000000
- 70272 multiletter control sequences out of 15000+600000
+ 43131 strings out of 467525
+ 965423 string characters out of 5418982
+ 2379728 words of memory out of 5000000
+ 70276 multiletter control sequences out of 15000+600000
  659000 words of font info for 119 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,19n,107p,11270b,2283s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsi1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0800.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfss1728.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfsx2074.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt0900.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on august.pdf (87 pages, 2756086 bytes).
+Output written on august.pdf (88 pages, 2768098 bytes).
 PDF statistics:
- 3564 PDF objects out of 3580 (max. 8388607)
- 2842 compressed objects within 29 object streams
- 1076 named destinations out of 1200 (max. 500000)
+ 3593 PDF objects out of 4296 (max. 8388607)
+ 2865 compressed objects within 29 object streams
+ 1088 named destinations out of 1200 (max. 500000)
  614 words of extra memory for PDF output out of 10000 (max. 10000000)
 

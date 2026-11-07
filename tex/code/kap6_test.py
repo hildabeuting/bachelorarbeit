@@ -47,6 +47,7 @@ varianten = [("J = 8, J_S = 2, Soft", dict()),
              ("Hard", dict(modus="hard")),
              ("J_S = 1", dict(JS=1)),
              ("J_S = 3", dict(JS=3)),
+             ("d_3 mit 0,2 T", dict(JH=1, faktor=0.2)),
              ("nur Drift (J_S = 0)", dict(JS=0)),
              ("J = 7", dict(J=7)),
              ("J = 9", dict(J=9))]
@@ -63,10 +64,16 @@ if __name__ == "__main__":
     cy = pywt.wavedec(y, "db6", mode="periodization", level=8)
     T = np.median(np.abs(cy[-1])) / 0.6745 * np.sqrt(2 * np.log(len(y)))   # Schwelle wie im Verfahren
     print(f"T = {T:.3f}")
-    print("Energie je Stufe (f, sigma^2 N/2^j, Verlust sum min(|f|,T)^2 beim Schwellen):")
+    print("Energie je Stufe (f, sigma^2 N/2^j) und Fehler je Stufe (Verfahren, J_S = 3, d_3 mit 0,2 T):")
+    fehler = [pywt.wavedec(entrauschen(y, **arg) - f, "db6", mode="periodization", level=8)[::-1]
+              for arg in (dict(), dict(JS=3), dict(JH=1, faktor=0.2))]
     for j in range(1, 5):
         print(f"  d_{j}: {np.sum(c[j - 1] ** 2):7.1f} {SIGMA ** 2 * len(f) / 2 ** j:7.1f}"
-              f" {np.sum(np.minimum(np.abs(c[j - 1]), T) ** 2):7.1f}")
+              + "".join(f" {np.sum(e[j - 1] ** 2):7.1f}" for e in fehler))
+    print(f"  a_8: {np.sum(c[-1] ** 2):7.1f}" + "".join(f" {np.sum(e[-1] ** 2):7.1f}" for e in fehler))
+    print("d_3 mit faktor * T (faktor: Fehlerenergie):")
+    for faktor in np.arange(0, 1.01, 0.05):
+        print(f"  {faktor:4.2f}: {fehlerenergie(f, entrauschen(y, JH=1, faktor=faktor)):7.1f}")
     # Kontrolle: Schwankung der Fehlerenergie über KONTROLLE Realisierungen
     print("Kontrolle (min, max, max. relative Abweichung von Seed 0):")
     for name, arg in [("vorher (Messung Y)", None)] + varianten:
@@ -74,10 +81,11 @@ if __name__ == "__main__":
              for s in range(KONTROLLE)]
         print(f"  {name:22s} {min(e):8.1f} {max(e):8.1f} {max(abs(x - e[0]) for x in e) / e[0]:6.1%}")
     # Abhängigkeit vom Rauschpegel: J_S = 2 gegen J_S = 3 bei derselben Realisierung Z
-    print("Rauschpegel (sigma in mV: J_S = 2, J_S = 3):")
+    print("Rauschpegel (sigma in mV: J_S = 2, J_S = 3, d_3 mit 0,2 T):")
     t = np.arange(len(f)) / fs
     b = DRIFT[0] * np.sin(2 * np.pi * DRIFT[1] * t)
     z = np.random.default_rng(SEED).standard_normal(len(f))
     for s in [0.01, 0.025, 0.05, 0.1]:
         y_s = f + b + s * z
-        print(f"  {s:5.3f}: " + "  ".join(f"{fehlerenergie(f, entrauschen(y_s, JS=js)):7.1f}" for js in (2, 3)))
+        print(f"  {s:5.3f}: " + "  ".join(f"{fehlerenergie(f, entrauschen(y_s, JS=js)):7.1f}" for js in (2, 3))
+              + f"  {fehlerenergie(f, entrauschen(y_s, JH=1, faktor=0.2)):7.1f}")

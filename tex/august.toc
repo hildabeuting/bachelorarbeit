@@ -61,28 +61,29 @@
 \contentsline {subsection}{\numberline {6.4.4}Schwelle}{51}{subsection.6.4.4}%
 \contentsline {paragraph}{\nonumberline Zusammenfassung.}{52}{paragraph*.41}%
 \contentsline {section}{\numberline {6.5}Test an einem künstlichen EKG}{52}{section.6.5}%
-\contentsline {paragraph}{\nonumberline Gütema\ss .}{53}{paragraph*.43}%
-\contentsline {paragraph}{\nonumberline Ergebnis.}{55}{paragraph*.51}%
+\contentsline {paragraph}{\nonumberline Gütema\ss .}{54}{paragraph*.43}%
+\contentsline {paragraph}{\nonumberline Ergebnis.}{54}{paragraph*.50}%
+\contentsline {paragraph}{\nonumberline Kleinere Schwelle auf $d_3$.}{59}{paragraph*.51}%
 \contentsline {section}{\numberline {6.6}Anwendung auf die Datensätze 100 und 103}{59}{section.6.6}%
 \contentsline {section}{\numberline {6.7}Diskussion}{59}{section.6.7}%
-\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{62}{chapter.7}%
+\contentsline {chapter}{\numberline {7}Fazit und Ausblick}{63}{chapter.7}%
 \def \@chapapp {\appendixname }
-\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{63}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Zulässigkeitskonstante des Haar-Wavelets}{63}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Fourier-Transformierte des Testsignals}{63}{section.A.2}%
-\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{63}{paragraph*.53}%
-\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{64}{paragraph*.54}%
-\contentsline {paragraph}{\nonumberline Ergebnis.}{64}{paragraph*.55}%
-\contentsline {section}{\numberline {A.3}Stammfunktion des Testsignals}{64}{section.A.3}%
-\contentsline {chapter}{\numberline {B}Python-Code}{66}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{66}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{68}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{68}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{69}{section.B.4}%
-\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{70}{section.B.5}%
-\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{71}{section.B.6}%
-\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{72}{section.B.7}%
-\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{73}{section.B.8}%
-\contentsline {section}{\numberline {B.9}Anwendung auf EKG-Signale}{74}{section.B.9}%
-\contentsline {chapter}{\nonumberline Literaturverzeichnis}{83}{chapter*.56}%
+\contentsline {chapter}{\numberline {A}Ergänzende Rechnungen}{64}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Zulässigkeitskonstante des Haar-Wavelets}{64}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Fourier-Transformierte des Testsignals}{64}{section.A.2}%
+\contentsline {paragraph}{\nonumberline Die langsame Komponente.}{64}{paragraph*.54}%
+\contentsline {paragraph}{\nonumberline Die schnelle Komponente.}{65}{paragraph*.55}%
+\contentsline {paragraph}{\nonumberline Ergebnis.}{65}{paragraph*.56}%
+\contentsline {section}{\numberline {A.3}Stammfunktion des Testsignals}{65}{section.A.3}%
+\contentsline {chapter}{\numberline {B}Python-Code}{67}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{67}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{69}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{69}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{70}{section.B.4}%
+\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{71}{section.B.5}%
+\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{72}{section.B.6}%
+\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{73}{section.B.7}%
+\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{74}{section.B.8}%
+\contentsline {section}{\numberline {B.9}Anwendung auf EKG-Signale}{75}{section.B.9}%
+\contentsline {chapter}{\nonumberline Literaturverzeichnis}{84}{chapter*.57}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

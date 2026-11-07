@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex august"] 1793988189.40078 "august.aux" "august.bbl" "august" 1793988193.84134 0
+["bibtex august"] 1794059623.15838 "august.aux" "august.bbl" "august" 1794059761.26026 0
   "./literature.bib" 1792425527.22435 8596 59eb3fe2b76fe6bf580e08e1e9bbc7b5 ""
   "/usr/local/texlive/2026/texmf-dist/bibtex/bst/base/alpha.bst" 1292289607 23907 a5f93555796fb564b924339521f10a7c ""
-  "august.aux" 1793988193.56074 76291 48936b5bc844e84419ab2619c668f55f "pdflatex"
+  "august.aux" 1794059760.97375 76468 d7374fba332c39f48c970a263a73731c "pdflatex"
   (generated)
   "august.bbl"
   "august.blg"
   (rewritten before read)
-["pdflatex"] 1793988189.51024 "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" "august.pdf" "august" 1793988193.84158 0
-  "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" 1793988184.58458 209405 4955d536046872a0ed1effd6eea1da01 ""
+["pdflatex"] 1794059756.99756 "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" "august.pdf" "august" 1794059761.26045 0
+  "/Users/hildabeuting/Desktop/bachelorarbeit-hilda-beuting/tex/august.tex" 1794059756.78985 211013 c92c4fc8bda598a0b03e7198b081642b ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -315,21 +315,21 @@
   "abbildungen/abb5_2a_koeffizienten_f.pdf" 1793962167.02231 35110 f072fa28ad93f4237d70543641b1d1f8 ""
   "abbildungen/abb5_2b_koeffizienten_Y.pdf" 1793962280.09597 41010 8934953f8ec2024ade5d4ba44e4e5e72 ""
   "abbildungen/abb5_3_entrauscht.pdf" 1793962250.93072 51047 c9450501d3b0d75a7ec1de9565358f7c ""
+  "abbildungen/abb6_10_test_d3.pdf" 1794058811.91404 27022 c3d469f24bfb9762a19f7e65926e6436 ""
   "abbildungen/abb6_10_vergleich.pdf" 1792935980.00862 53209 466af94259c023e96be75acc0661aea2 ""
   "abbildungen/abb6_1_muster.pdf" 1792403331.89668 5717 99af32bd32b46aba1beb250c654565d6 ""
   "abbildungen/abb6_2_datensaetze.pdf" 1791893155 40411 0463db0889a2aa5cb7382be6e5256449 ""
   "abbildungen/abb6_3_testsignal.pdf" 1792937353.0999 30248 76b8d1aa0dcaa3decda20f7e78e87da5 ""
   "abbildungen/abb6_4_test.pdf" 1792937359.73246 23554 aa23171824a307d2944be3c5d6b2735f ""
   "abbildungen/abb6_5_test_schlag.pdf" 1792937368.68229 17785 e8ea6d0755490ee723c534e9e48db918 ""
-  "abbildungen/abb6_6_test_fehler.pdf" 1792937372.44769 17520 463a0686fa7874bb16ea68c4174fbc17 ""
   "abbildungen/abb6_7_zerlegung_Y.pdf" 1792937380.50883 35679 cd81155ffbbd646edfd1140e29868a51 ""
   "abbildungen/abb6_7_zerlegung_f.pdf" 1792937376.60026 31796 ddec21c34de433f78d151c17c5cbf5ec ""
   "abbildungen/abb6_7_zerlegung_fhat.pdf" 1792937384.59189 30163 f0e448aad7acb526f634017daf5f6eab ""
   "abbildungen/bsp_5.5.pdf" 1791281505.014 28138 ca4b9aa0a14cb627d8a578e8685e7389 ""
-  "august.aux" 1793988193.56074 76291 48936b5bc844e84419ab2619c668f55f "pdflatex"
-  "august.bbl" 1793988189.5069 5547 3cd2838689d246f1b29bbb21e41ee48f "bibtex august"
-  "august.tex" 1793988184.58458 209405 4955d536046872a0ed1effd6eea1da01 ""
-  "august.toc" 1793988193.56925 7686 5c993fe1da721df75f76c4edec6d2cdf "pdflatex"
+  "august.aux" 1794059760.97375 76468 d7374fba332c39f48c970a263a73731c "pdflatex"
+  "august.bbl" 1794059623.26291 5547 3cd2838689d246f1b29bbb21e41ee48f "bibtex august"
+  "august.tex" 1794059756.78985 211013 c92c4fc8bda598a0b03e7198b081642b ""
+  "august.toc" 1794059760.98172 7776 bd4496fb9ba9117263e279493e4a68b2 "pdflatex"
   "code/BeispielCWT.py" 1791282387.20013 2475 21aecf9df72b888e838f56d1b3cd2c8b ""
   "code/kap4_db2.py" 1791289382.93161 612 f24d56d1df8ebe2f13f67d9bc4e5feed ""
   "code/kap4_db6.py" 1791900291.94706 706 4b8d4d1a6addb4c8ea00051d62e7151a ""
@@ -347,8 +347,8 @@
   "code/kap6_abb_vergleich.py" 1792935945.53091 1392 7d6473cfc22515394ec8b34e3e3b79c2 ""
   "code/kap6_abb_zerlegung.py" 1792935941.55463 2179 56c0fa13b7448af1db23139f86e82a2f ""
   "code/kap6_herzfrequenz.py" 1792427607.46936 930 57539f245ab0fd1f071339707efa5c14 ""
-  "code/kap6_test.py" 1792937337.2868 3898 2a6f317226a47ab8509f2a03767cb47b ""
-  "code/kap6_verfahren.py" 1792935910.34432 633 6002ce18e6e106b922aec00a9d336939 ""
+  "code/kap6_test.py" 1794058797.71949 4539 e434dc5cff95959b0e5616b747efe0ae ""
+  "code/kap6_verfahren.py" 1794058802.33171 743 d38bc1c4a133289ce42cd3643b5fb057 ""
   "uhh-logo.png" 1730735493 166378 baeba9eac46e611cf8b926c484438ddd ""
   (generated)
   "august.aux"

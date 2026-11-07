@@ -9,7 +9,7 @@ J = 8
 JS = 2
 
 
-def entrauschen(y, modus="soft", a_null=True, J=J, JS=JS):
+def entrauschen(y, modus="soft", a_null=True, J=J, JS=JS, JH=0, faktor=1.0):
     c = pywt.wavedec(y, wavelet, mode="periodization", level=J)
     sigma = np.median(np.abs(c[-1])) / 0.6745
     T = sigma * np.sqrt(2 * np.log(len(y)))
@@ -17,6 +17,8 @@ def entrauschen(y, modus="soft", a_null=True, J=J, JS=JS):
     for i, d in enumerate(c[1:]):
         if J - i <= JS:
             neu.append(pywt.threshold(d, T, modus))
+        elif J - i <= JS + JH:
+            neu.append(pywt.threshold(d, faktor * T, modus))
         else:
             neu.append(d)
     return pywt.waverec(neu, wavelet, mode="periodization")

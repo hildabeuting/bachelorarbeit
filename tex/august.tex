@@ -3333,13 +3333,6 @@ aus \eqref{eq:symbol-H} und \eqref{eq:G-aus-H} sind nach
 Abschnitt~\ref{sec:fourier-bedingungen} ein Tief- und ein Hochpass:
 $\lvert H\rvert$ ist auf $[0,\pi/2]$ gro\ss{} und auf $[\pi/2,\pi]$ klein,
 $\lvert G\rvert$ umgekehrt (Abbildung~\ref{fig:tief-hochpass}).
-\anmerkung{Abbildung~\ref{fig:tief-hochpass} zeigt nur Haar und db2, nicht
-das hier verwendete $\psi_6$. Empfehlung: beim Beispiel~\ref{bsp:db6} in
-Kapitel~\ref{chapter:dwt} eine Teilabbildung mit $\lvert H\rvert$ und
-$\lvert G\rvert$ für $\psi_6$ ergänzen und hier darauf verweisen. Werte zum
-Vergleich: $\lvert H(\pi/4)\rvert = 0{,}924$ / $0{,}971$ / $0{,}999$ und
-$\lvert H(3\pi/4)\rvert = 0{,}383$ / $0{,}241$ / $0{,}048$ für Haar / db2 /
-db6.}
 Eine Stufe der DWT wendet nach \eqref{eq:analyse} beide auf $a_{i-1}$ an und
 behält jeden zweiten Wert: $a_i$ entsteht durch den Tiefpass und erhält die
 untere Hälfte des Bandes von $a_{i-1}$, $d_i$ entsteht durch den Hochpass und
@@ -3576,12 +3569,11 @@ Nach Lemma~\ref{lem:rauschen-invariant} hat jeder Koeffizient von
 $\sigma AZ$ den Erwartungswert $0$ und die Varianz $\sigma^2$. 
 Die erwartete Energie des Rauschens ist damit
 \[
-  \mathbb E\,\norm{\sigma AZ}^2
+  \mathbb E\bigl[\norm{\sigma AZ}^2\bigr]
   = \sum_{m=0}^{N-1} \mathbb E\bigl[(\sigma AZ)_m^2\bigr]
   = \sigma^2 N ,
 \]
-und auf $d_j$ mit
-\anmerkung{normen konventinnen überarbeiten hier euklidisch aber in 3 ist ja L2..}
+und auf $d_j$ mit 
 $N/2^j$ Koeffizienten entfällt der Teil $\sigma^2 N/2^j$. In den unveränderten Stufen 
 $d_{J_S+1}$ bis $d_J$ bleibt damit im Mittel der Anteil
 \begin{align*}
@@ -3685,7 +3677,7 @@ Datensätze 100 und 103 an (Abschnitt~\ref{sec:ergebnisse}).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Bei echten Aufzeichnungen ist $f$ unbekannt, und ein quantitatives Gütema\ss{}
-lässt sich nur schwer angeben; Castillo et al.\ bewerten ihr Verfahren deshalb
+lässt sich nur schwer angeben. Castillo et al.\ bewerten ihr Verfahren deshalb
 an künstlichen EKG \cite[Abschn.~4]{castillo}. % S. 10
 Wir gehen ebenso vor.
 
@@ -3694,8 +3686,8 @@ Modell von McSharry et al.\ \cite{mcsharry}, berechnet mit der Funktion
 \texttt{ecg\_simulate} (Methode \texttt{ecgsyn}) aus NeuroKit2
 \cite{neurokit2} für $f_s = 360$\,Hz, eine Herzfrequenz von $70$ Schlägen
 pro Minute und $N = 2^{16}$ Abtastwerte, also etwa $3$\,min. Das Modell
-enthält von sich aus eine Atmungsdrift \cite[Abschn.~IV, Gl.~(2)]{mcsharry}; % S. 291
-diese haben wir abgeschaltet, damit das Test-EKG selbst keine Drift enthält.
+enthält von sich aus eine Atmungsdrift \cite[Abschn.~IV, Gl.~(2)]{mcsharry}. % S. 291
+Diese haben wir abgeschaltet, damit das Test-EKG selbst keine Drift enthält.
 
 Für $x\in\R^N$ sei $\bar x = \frac1N\sum_{n=0}^{N-1} x_n$ der Mittelwert und
 $\mathbf 1 = (1,\dots,1)\in\R^N$, also $\scal{x}{\mathbf 1} = N\bar x$.
@@ -3729,7 +3721,7 @@ Teil $a_J$ null ist. Damit ist
 \]
 \end{proof}
 
-Einen konstanten Versatz kann das Verfahren also nicht wiedergeben; er ist
+Einen konstanten Versatz kann das Verfahren also nicht wiedergeben. Er ist
 für das EKG ohne Bedeutung, da dessen Grö\ss en gegenüber der isoelektrischen
 Linie gemessen werden (Abschnitt~\ref{sec:ekg}). Als Test-EKG wählen wir
 deshalb das mittelwertfreie
@@ -3737,19 +3729,19 @@ deshalb das mittelwertfreie
   f := f_{\mathrm{syn}} - \bar f_{\mathrm{syn}}\,\mathbf 1
 \]
 (eigene Festlegung). Wie Castillo et al.\ verwenden wir eine sinusförmige
-Drift und Gauß'sches weißes Rauschen, addieren beide aber gemeinsam
+Drift und Gau\ss 'sches wei\ss es Rauschen, addieren beide aber gemeinsam
 (vgl.\ \cite[Abschn.~4]{castillo}): % S. 10--11; dort Drift und Rauschen getrennt
 \[
   Y = f + b + \sigma Z, \qquad b(t) = 0{,}5\,\mathrm{mV}\cdot\sin(2\pi\cdot 0{,}25\,\mathrm{Hz}\cdot t),
 \]
-mit $\sigma = 0{,}025$\,mV; mit diesem Wert bilden McSharry et al.\ das
+mit $\sigma = 0{,}025$\,mV. Mit diesem Wert bilden McSharry et al.\ das
 Messrauschen eines echten EKG nach \cite[Abschn.~V]{mcsharry}. % S. 292: "normally distributed measurement errors with mean zero and standard deviation 0.025 mV"
 Dabei ist $Z\in\R^N$ eine feste
 Realisierung, also ein Vektor mit $N$ standardnormalverteilten Einträgen.
 Abbildung~\ref{fig:testsignal} zeigt einen Ausschnitt von $4$\,s: oben das
 Test-EKG $f$, unten die Messung $Y$. Die Drift $b$ verschiebt $Y$ langsam
 nach oben und unten und durchläuft im Ausschnitt genau eine Periode
-($1/0{,}25\,\mathrm{Hz} = 4$\,s); das Rauschen $\sigma Z$ macht die Kurve
+($1/0{,}25\,\mathrm{Hz} = 4$\,s). Das Rauschen $\sigma Z$ macht die Kurve
 unruhig, die R-Zacken bleiben aber erkennbar.
 
 \begin{figure}[htbp]
@@ -3768,27 +3760,28 @@ Definition~\ref{def:verfahren} für die Messung $Y$ ist. Sie hängt von der
 Realisierung $Z$ ab, wegen der gro\ss en Länge $N$ aber kaum: Für $10$
 verschiedene Realisierungen weichen alle Werte in Tabelle~\ref{tab:test}
 um höchstens $2\,\%$ von denen für unser $Z$ ab, und die Reihenfolge der
-Varianten bleibt gleich (eigene Rechnung, Listing~\ref{lst:kap6-test}).
+Varianten bleibt gleich (eigene Rechnung, Code im Anhang~\ref{lst:kap6-test}).
 
 \begin{table}[htbp]
   \centering
   \small
   \begin{tabular}{@{}lr@{}}
     \toprule
-    Variante & $\norm{\hat f - f}^2$ \\
+    Variante & $\norm{\hat f - f}^2$ in mV$^2$ \\
     \midrule
     vorher (Messung $Y$)                 & $8236{,}4$ \\
     $J = 8$, $J_S = 2$, Soft (Verfahren) & $18{,}1$ \\
     Hard statt Soft                      & $18{,}1$ \\
     $J_S = 1$                            & $28{,}2$ \\
     $J_S = 3$                            & $24{,}1$ \\
+    $d_3$ mit $0{,}2\,T$                 & $15{,}2$ \\
     nur Drift entfernt ($J_S = 0$)       & $48{,}7$ \\
     $J = 7$                              & $269{,}4$ \\
     $J = 9$                              & $521{,}2$ \\
     \bottomrule
   \end{tabular}
   \caption[Fehlerenergie am Test-EKG]{Fehlerenergie $\norm{\hat f - f}^2$
-  am Test-EKG; zum Vergleich $\norm{f}^2 \approx 3823$. In der Zeile
+  am Test-EKG, zum Vergleich $\norm{f}^2 \approx 3823$. In der Zeile
   \glqq vorher\grqq{} ist $\hat f = Y$. In jeder Zeile ist nur der genannte
   Parameter gegenüber dem Verfahren geändert ($J = 8$, $J_S = 2$, Soft, db6,
   universelle Schwelle). Code in Anhang~\ref{anh:code-kap6}.}
@@ -3813,20 +3806,12 @@ Varianten bleibt gleich (eigene Rechnung, Listing~\ref{lst:kap6-test}).
   \label{fig:test-schlag}
 \end{figure}
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=\textwidth]{abb6_6_test_fehler.pdf}
-  \caption[Fehler am Test-EKG]{Fehler $\hat f - f$ für den Herzschlag aus
-  Abbildung~\ref{fig:test-schlag}. Code in Anhang~\ref{anh:code-kap6}.}
-  \label{fig:test-fehler}
-\end{figure}
-
 \begin{figure}[p]
   \centering
   \includegraphics[width=\textwidth]{abb6_7_zerlegung_f.pdf}
   \caption[Zerlegung des Test-EKG]{Koeffizienten $d_1$ (oben) bis $d_8$ und
-  $a_8$ (unten) von $f$ im Ausschnitt aus Abbildung~\ref{fig:testsignal};
-  gestrichelt $\pm T$ auf den geschwellten Stufen. Code in
+  $a_8$ (unten) von $f$ in mV im Ausschnitt aus Abbildung~\ref{fig:testsignal}.
+  Gestrichelt $\pm T$ auf den geschwellten Stufen. Code in
   Anhang~\ref{anh:code-kap6}.}
   \label{fig:zerlegung-f}
 \end{figure}
@@ -3835,7 +3820,7 @@ Varianten bleibt gleich (eigene Rechnung, Listing~\ref{lst:kap6-test}).
   \centering
   \includegraphics[width=\textwidth]{abb6_7_zerlegung_Y.pdf}
   \caption[Zerlegung der Messung]{Wie Abbildung~\ref{fig:zerlegung-f}, für
-  die Messung $Y$; Ma\ss stab je Stufe gleich. Code in
+  die Messung $Y$, Ma\ss stab je Stufe gleich. Code in
   Anhang~\ref{anh:code-kap6}.}
   \label{fig:zerlegung-Y}
 \end{figure}
@@ -3844,7 +3829,7 @@ Varianten bleibt gleich (eigene Rechnung, Listing~\ref{lst:kap6-test}).
   \centering
   \includegraphics[width=\textwidth]{abb6_7_zerlegung_fhat.pdf}
   \caption[Zerlegung des Ergebnisses]{Wie Abbildung~\ref{fig:zerlegung-f},
-  für $\hat f$; Ma\ss stab je Stufe gleich. Code in
+  für $\hat f$, Ma\ss stab je Stufe gleich. Code in
   Anhang~\ref{anh:code-kap6}.}
   \label{fig:zerlegung-fhat}
 \end{figure}
@@ -3854,10 +3839,8 @@ Abbildung~\ref{fig:test} zeigt denselben Ausschnitt wie
 Abbildung~\ref{fig:testsignal}, nun $f$ und die Schätzung $\hat f$: Die Drift
 ist vollständig entfernt, und $\hat f$ folgt $f$ in allen vier Herzschlägen
 eng. Abbildung~\ref{fig:test-schlag} vergrö\ss ert einen Schlag: P-Welle,
-QRS-Komplex und T-Welle bleiben in Form und Lage erhalten; $\hat f$ ist nur
-leicht unruhiger als $f$. Abbildung~\ref{fig:test-fehler} zeigt den Fehler
-$\hat f - f$: Er bleibt hier unter $0{,}05$\,mV und ist über den ganzen Schlag
-verteilt. Er besteht vor allem aus dem Rauschen in den unveränderten Stufen
+QRS-Komplex und T-Welle bleiben in Form und Lage erhalten. $\hat f$ ist nur
+leicht unruhiger als $f$. Der Fehler $\hat f - f$ besteht vor allem aus dem Rauschen in den unveränderten Stufen
 $d_3$ bis $d_8$, dessen erwartete Energie nach
 Abschnitt~\ref{sec:verfahren}
 $(2^{-2} - 2^{-8})\,\sigma^2 N \approx 0{,}246 \cdot 40{,}96 \approx 10{,}1$
@@ -3869,11 +3852,11 @@ hinterlässt im Fehler ein kurzes Wavelet $\psi_{j,m}$
 Auf $d_1$ und $d_2$ hat $f$ aber kaum solche Koeffizienten.
 
 Das zeigen die Abbildungen~\ref{fig:zerlegung-f} bis~\ref{fig:zerlegung-fhat}
-mit den Koeffizienten von $f$, $Y$ und $\hat f$ im selben Ausschnitt; die
+mit den Koeffizienten von $f$, $Y$ und $\hat f$ im selben Ausschnitt. Die
 Energien sind über das ganze Signal gerechnet (eigene Rechnung,
 Listing~\ref{lst:kap6-test}):
 \begin{itemize}
-\item In $a_8$ liegt bei $Y$ die Drift, bei $f$ fast nichts; in $\hat f$ ist
+\item In $a_8$ liegt bei $Y$ die Drift, bei $f$ fast nichts. In $\hat f$ ist
   $a_8$ null.
 \item Auf $d_1$ und $d_2$ hat $f$ fast keine Energie ($0{,}2$ und $0{,}5$),
   $Y$ dort also fast nur Rauschen mit erwarteter Energie $\sigma^2 N/2^j$
@@ -3889,12 +3872,12 @@ Listing~\ref{lst:kap6-test}):
 \item Auch $d_4$ bis $d_8$ bleiben unverändert, mit dem kleinen Rauschanteil.
 \end{itemize}
 Der Code steht in Listing~\ref{lst:kap6-test} (Tabelle~\ref{tab:test}) sowie
-in den Listings~\ref{lst:kap6-abb-test}, \ref{lst:kap6-abb-test-schlag},
-\ref{lst:kap6-abb-test-fehler} und~\ref{lst:kap6-abb-zerlegung}
+in den Listings~\ref{lst:kap6-abb-test}, \ref{lst:kap6-abb-test-schlag}
+und~\ref{lst:kap6-abb-zerlegung}
 (Abbildungen) im Anhang.
 Aus Tabelle~\ref{tab:test} folgt:
 \begin{itemize}
-\item $J = 8$ ist deutlich besser als $J = 7$ und $J = 9$; das bestätigt
+\item $J = 8$ ist deutlich besser als $J = 7$ und $J = 9$. Das bestätigt
   \eqref{eq:j-bedingung}: Mit $J = 7$ wird ein Teil des EKG gelöscht, mit
   $J = 9$ bleibt Drift stehen.
 \item Das Thresholding von $d_1$ und $d_2$ senkt die Fehlerenergie gegenüber
@@ -3902,17 +3885,66 @@ Aus Tabelle~\ref{tab:test} folgt:
   Drittel.
 \item $J_S = 1$ ist deutlich schlechter, weil das Rauschen auf $d_2$
   stehen bleibt. Auch $J_S = 3$ ist schlechter, weil das Schwellen von $d_3$
-  mehr vom EKG entfernt als vom Rauschen: Der Unterschied
-  $24{,}1 - 18{,}1 = 6{,}0$ passt zur Bilanz $11{,}3 - 5{,}1 = 6{,}2$ von oben.
-  Das bestätigt die Wahl $J_S = 2$ aus Abschnitt~\ref{sec:verfahren}.
+  mehr vom EKG entfernt als vom Rauschen. Da $A$ orthogonal ist, gilt
+  \[
+    \norm{\hat f - f}^2 = \norm{a_8(\hat f) - a_8(f)}^2
+    + \sum_{j=1}^{8} \norm{d_j(\hat f) - d_j(f)}^2 ,
+  \]
+  und beide Varianten unterscheiden sich nur auf $d_3$. Dort ist der Fehler
+  $5{,}1$, wenn $d_3$ unverändert bleibt, und $11{,}1$ nach dem Schwellen. Das
+  ergibt genau $24{,}1 - 18{,}1 = 6{,}0$ (eigene Rechnung,
+  Listing~\ref{lst:kap6-test}). Das bestätigt die Wahl $J_S = 2$ aus
+  Abschnitt~\ref{sec:verfahren}.
 \item Hard- und Soft-Thresholding liefern dieselbe Fehlerenergie
   ($18{,}1$). Soft-Thresholding verkleinert zwar auch die gro\ss en
   Koeffizienten um $T$ und braucht deshalb für ähnliche Ergebnisse oft etwa
-  die halbe Schwelle \cite[Kap.~11.2.2]{mallat}; % S. 556 "it is often necessary to reduce by two the threshold of the soft thresholding"
-  auf $d_1$ und $d_2$ hat $f$ aber kaum gro\ss e Koeffizienten. Wir bleiben
+  die halbe Schwelle \cite[Kap.~11.2.2]{mallat}. % S. 556 "it is often necessary to reduce by two the threshold of the soft thresholding"
+  Auf $d_1$ und $d_2$ hat $f$ aber kaum gro\ss e Koeffizienten. Wir bleiben
   wie Castillo et al.\ bei der universellen Schwelle mit Soft-Thresholding,
   das keine Unstetigkeiten erzeugt \cite[Abschn.~3.1.6, 4]{castillo}. % S. 8, 12
 \end{itemize}
+
+\paragraph{Kleinere Schwelle auf $d_3$.}
+Nach den Abbildungen~\ref{fig:zerlegung-f} und~\ref{fig:zerlegung-Y} liegt
+auf $d_3$ neben den gro\ss en Koeffizienten des QRS-Komplexes auch Rauschen,
+das das Verfahren unverändert lässt. Mit der universellen Schwelle
+$T \approx 0{,}118$\,mV entfernt das Schwellen von $d_3$ aber mehr vom EKG
+als vom Rauschen. Da am Test-EKG $f$
+bekannt ist, probieren wir aus, ob sich $f$ mit einer kleineren Schwelle auf
+$d_3$ noch besser rekonstruieren lässt. Wir schwellen $d_3$ dazu mit $cT$ für 
+$c$ von $0$ bis $1$ in Schritten von $0{,}05$ und wählen das $c$ mit der
+kleinsten Fehlerenergie. Das ist $c = 0{,}2$, also die Schwelle 
+$0{,}2\,T \approx 0{,}024$\,mV, und das Ergebnis ist
+\[ 
+  \hat f_3 = A^\top\bigl(0,\; d_8, \dots, d_4,\;
+  \rho^{\mathrm S}_{0{,}2T}(d_3),\; \rho^{\mathrm S}_T(d_2),\;
+  \rho^{\mathrm S}_T(d_1)\bigr).
+\]
+Die Fehlerenergie sinkt von $18{,}1$ auf $15{,}2$. Der Fehler auf $d_3$ fällt
+von $5{,}1$ auf $2{,}2$, alle anderen Stufen bleiben gleich (eigene Rechnung,
+Listing~\ref{lst:kap6-test}). Abbildung~\ref{fig:test-d3} zeigt denselben
+Herzschlag wie Abbildung~\ref{fig:test-schlag}. Oben ist $\hat f_3$ vor und
+nach dem QRS-Komplex etwas glatter als $\hat f$. Unten sieht man, dass der 
+Fehler im QRS-Komplex gleich bleibt und vor und nach ihm kleiner wird.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{abb6_10_test_d3.pdf}
+  \caption[Herzschlag mit kleinerer Schwelle auf $d_3$]{Der Herzschlag aus
+  Abbildung~\ref{fig:test-schlag}: oben $f$ (grau), $\hat f$ (blau) und
+  $\hat f_3$ mit Schwelle $0{,}2\,T$ auf $d_3$ (rot gestrichelt), unten die
+  Fehler $\hat f - f$ und $\hat f_3 - f$. Code in Anhang~\ref{anh:code-kap6}.}
+  \label{fig:test-d3}
+\end{figure}
+
+Bei echten Aufzeichnungen lässt sich das nicht umsetzen. Die Schwelle
+$0{,}2\,T$ haben wir mit Kenntnis von $f$ gewählt, und bei echten
+Aufzeichnungen ist $f$ unbekannt. Zudem hängt die beste Schwelle vom
+Rauschen ab. 
+%Bei $\sigma = 0{,}05$ und $0{,}1$\,mV liegt sie bei $0{,}25\,T$
+%und $0{,}3\,T$ (eigene Rechnung, Listing~\ref{lst:kap6-test}). 
+Wir bleiben
+deshalb beim Verfahren aus Definition~\ref{def:verfahren}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Anwendung auf die Datensätze 100 und 103}

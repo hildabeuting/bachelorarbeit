@@ -513,10 +513,6 @@ INPUT ./abbildungen/abb6_5_test_schlag.pdf
 INPUT ./abbildungen/abb6_5_test_schlag.pdf
 INPUT ./abbildungen/abb6_5_test_schlag.pdf
 INPUT ./abbildungen/abb6_5_test_schlag.pdf
-INPUT ./abbildungen/abb6_6_test_fehler.pdf
-INPUT ./abbildungen/abb6_6_test_fehler.pdf
-INPUT ./abbildungen/abb6_6_test_fehler.pdf
-INPUT ./abbildungen/abb6_6_test_fehler.pdf
 INPUT ./abbildungen/abb6_7_zerlegung_f.pdf
 INPUT ./abbildungen/abb6_7_zerlegung_f.pdf
 INPUT ./abbildungen/abb6_7_zerlegung_f.pdf
@@ -529,6 +525,10 @@ INPUT ./abbildungen/abb6_7_zerlegung_fhat.pdf
 INPUT ./abbildungen/abb6_7_zerlegung_fhat.pdf
 INPUT ./abbildungen/abb6_7_zerlegung_fhat.pdf
 INPUT ./abbildungen/abb6_7_zerlegung_fhat.pdf
+INPUT ./abbildungen/abb6_10_test_d3.pdf
+INPUT ./abbildungen/abb6_10_test_d3.pdf
+INPUT ./abbildungen/abb6_10_test_d3.pdf
+INPUT ./abbildungen/abb6_10_test_d3.pdf
 INPUT ./abbildungen/abb6_10_vergleich.pdf
 INPUT ./abbildungen/abb6_10_vergleich.pdf
 INPUT ./abbildungen/abb6_10_vergleich.pdf
