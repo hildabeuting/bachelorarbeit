@@ -11,6 +11,13 @@
 \usepackage{psfrag}
 \usepackage{tikz, pgfplots}
 
+\pgfplotsset{compat=1.18,
+  ba/.style={width=\textwidth, height=4.5cm, axis lines=left,
+    tick label style={font=\footnotesize}, label style={font=\small},
+    /pgf/number format/use comma,
+    cycle list={{uhh_blue, no marks}},
+    every axis plot/.append style={uhh_blue, line width=0.8pt}}}
+
 \usepackage[T1]{fontenc}
 \renewcommand{\familydefault}{cmss} % Schriftart
 
@@ -409,11 +416,11 @@ verwendet. Mit ihr ist die Fourier-Transformation ein unitärer Operator auf
 $\LZwei$, und die Plancherel-Formel gilt ohne Vorfaktor:
 $\scal{f}{g} = \scal{\hat f}{\hat g}$.
 
-Die Literatur normiert uneinheitlich, und die Konstanten der folgenden Kapitel
-hängen von der Wahl ab: Der Faktor $2\pi$ in der Zulässigkeitsbedingung
-\eqref{eq:zulaessigkeit} und der Wert $\lvert\hat\varphi(0)\rvert = (2\pi)^{-1/2}$ in
-Abschnitt~\ref{sec:skalierungsgleichung} gelten nur für diese Normierung. Beim Vergleich mit
-einer Quelle ist deshalb zuerst deren Konvention nachzusehen.
+Die Literatur normiert uneinheitlich, und die Konstanten der folgenden
+Kapitel hängen von der Wahl ab. Der Faktor $2\pi$ in der
+Zulässigkeitsbedingung \eqref{eq:zulaessigkeit} gilt nur für diese
+Normierung. Beim Vergleich mit einer Quelle ist deshalb zuerst deren
+Konvention nachzusehen.
 \end{Bemerkung}
 
 \anmerkung{das vll besser erst später}
@@ -589,10 +596,6 @@ Beim EKG ist das ungünstig. P- und T-Welle sind niederfrequent. Der
 QRS-Komplex enthält zusätzlich hochfrequente, zeitlich lokalisierte Anteile
 \cite[Kap.~2.3]{rebstadt}. % S. 16--17
 Eine geeignete Analyse muss beide Anteile zugleich auflösen.
-
-\anmerkung{Rebstadt S.~16--17 sagt nicht „breit-/schmalbandig“, sondern:
-P-/T-Welle niederfrequent (1--6 bzw. 1--20~Hz), QRS zusätzlich hochfrequent
-und zeitlokalisiert. Satz anpassen, Abschnittsnummer prüfen (2.3 statt 2.3.1?).}
  
 Die gefensterte Fourier-Transformation (Abschnitt~\ref{sec:wft}) bestimmt den
 Frequenzgehalt eines Ausschnitts. Die Fensterbreite ist dabei für alle
@@ -894,7 +897,16 @@ Fourier- und Wavelet-Transformation über $f$ aussagen.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=1\textwidth]{abb1_signal.png}
+  \begin{tikzpicture}
+    \begin{axis}[ba, xmin=-0.6, xmax=5.6, ymin=-0.1, ymax=2.2,
+        xtick={0,...,5}, xlabel={$t$}, ylabel={$f(t)$}]
+      \addplot[domain=-0.6:0, samples=2] {0};
+      \addplot[domain=0:3, samples=300] {1-cos(deg(2*pi*x))};
+      \addplot[domain=3:4, samples=2] {0};
+      \addplot[domain=4:5, samples=300] {(1-cos(deg(10*pi*x)))/2};
+      \addplot[domain=5:5.6, samples=2] {0};
+    \end{axis}
+  \end{tikzpicture}
   \caption{Das Signal $f$ aus Beispiel~\ref{bsp:testsignal}.}
   \label{fig:signal}
 \end{figure}
@@ -908,7 +920,18 @@ $\lvert\hat f\rvert$ nicht zu entnehmen.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb2_fourier.png}
+  \begin{tikzpicture}
+    \begin{axis}[ba, xmin=-50, xmax=50, ymin=0, ymax=1.5,
+        xtick={-10*pi,-2*pi,0,2*pi,10*pi},
+        xticklabels={$-10\pi$,$-2\pi$,$0$,$2\pi$,$10\pi$},
+        xlabel={$\omega$}, ylabel={$\lvert\hat f(\omega)\rvert$}]
+      \draw[gray, dashed] (axis cs:-10*pi,0) -- (axis cs:-10*pi,1.5);
+      \draw[gray, dashed] (axis cs:-2*pi,0) -- (axis cs:-2*pi,1.5);
+      \draw[gray, dashed] (axis cs:2*pi,0) -- (axis cs:2*pi,1.5);
+      \draw[gray, dashed] (axis cs:10*pi,0) -- (axis cs:10*pi,1.5);
+      \addplot table[x=omega, y=betrag] {abbildungen/kap3_fourier.dat};
+    \end{axis}
+  \end{tikzpicture}
   \caption{Betragsspektrum $\lvert\hat f(\omega)\rvert$ des Testsignals.
     Gestrichelt die Stellen $\pm2\pi$ und $\pm10\pi$.}
   \label{fig:fourier}
@@ -941,7 +964,19 @@ Abbildung~\ref{fig:cwt} zeigt ihren Betrag.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb3_cwt_haar.png}
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=0.85\textwidth, height=6cm, ymode=log,
+        enlargelimits=false, axis on top,
+        xmin=-0.6, xmax=5.6, ymin=0.02, ymax=3,
+        xtick={0,...,5}, ytick={0.02,0.1,1,3}, log ticks with fixed point,
+        xlabel={$b$}, ylabel={$a$},
+        colormap/viridis, colorbar, point meta min=0, point meta max=0.9369,
+        colorbar style={/pgf/number format/use comma,
+          ylabel={$\lvert W_{\psi^{\mathrm H}}f(a,b)\rvert$}}]
+      \addplot graphics[xmin=-0.6, xmax=5.6, ymin=0.02, ymax=3]
+        {abbildungen/kap3_cwt.png};
+    \end{axis}
+  \end{tikzpicture}
   \caption{Betrag $\lvert W_{\psi^{\mathrm H}}f(a,b)\rvert$ des Testsignals nach
     \eqref{eq:cwt-haar-exakt}. Waagerecht ist die Verschiebung $b$ aufgetragen,
     senkrecht die Skala $a$ in logarithmischer Teilung. Die Farbe gibt den
@@ -977,14 +1012,11 @@ Sei $\psi$ ein Wavelet mit Zulässigkeitskonstante $C_\psi$ gemä\ss{}
   \;=\; C_\psi\,\norm{f}_{\LZwei}^2 .
 \end{equation}
 \end{Satz}
-
-\anmerkung{hab ich das mit R kästchen schon definert?}
-
 Der Beweis steht bei \cite[Satz~(3.3)]{blatter}. % S. 62--63
 Links steht das Integral über $\lvert W_\psi f\rvert^2$ auf der
 $(a,b)$-Ebene, gewichtet mit $a^{-2}$. Es ist bis auf den Faktor $C_\psi$
 gleich $\norm{f}_{\LZwei}^2$. Das Gewicht $a^{-2}$ wird in
-Abschnitt~\ref{sec:mra-axiome} erklärt.
+Abschnitt~\ref{sec:mra-axiome} aufgegriffen.
 
 Daraus folgt, dass $f$ durch $W_\psi f$ eindeutig bestimmt ist
 \cite[Satz~(3.3)]{blatter}. % S. 62
@@ -1637,11 +1669,10 @@ Kopien ihrer selbst zusammen.
 \label{satz:skalierungsgleichung}
 Sei $(V_j)_{j\in\Z}$ eine MSA mit Skalierungsfunktion $\varphi$, und sei
 $h_k := \scal{\varphi}{\varphi_{-1,k}}$. Dann gilt
-$\varphi = \sum_{k\in\Z} h_k\,\varphi_{-1,k}$ mit Konvergenz in $\LZwei$, also
+$\varphi = \sum_{k\in\Z} h_k\,\varphi_{-1,k}$, also
 \begin{equation}
 \label{eq:skalierungsgleichung}
-  \varphi(t) \;=\; \sqrt2 \sum_{k\in\Z} h_k\,\varphi(2t-k)
-  \quad\text{für fast alle } t\in\R ,
+  \varphi(t) \;=\; \sqrt2 \sum_{k\in\Z} h_k\,\varphi(2t-k),
   \qquad
   \sum_{k\in\Z} h_k^2 \;=\; 1 .
 \end{equation}
@@ -1993,8 +2024,8 @@ $O(N)$ Operationen \cite[Kap.~5.4]{blatter}. % S. 135
 Damit ist die zweite Frage der Einleitung beantwortet. Ein Integral braucht man
 nur noch für die Startwerte $a_0$, alle weiteren Koeffizienten liefert
 Algorithmus~\ref{alg:mallat}. In der Anwendung ist $f$ nicht bekannt, sondern
-nur durch Abtastwerte gegeben. Man setzt dann $a_{0,k} := f(k)$. Wegen
-$\int_\R\varphi(t)\,dt = 1$ ist das eine brauchbare Näherung, besonders wenn
+nur durch Abtastwerte gegeben. Man setzt dann $a_{0,k} := f(k)$. Das ist 
+eine brauchbare Näherung, besonders wenn
 $\varphi$ einen schmalen Träger hat und sich benachbarte Werte $f(k)$ wenig
 unterscheiden \cite[Kap.~5.4]{blatter}. % S. 131
 Wie ein endliches Signal dabei am Rand fortgesetzt wird, beschreibt
@@ -2128,12 +2159,9 @@ nämlich $\psi_p \in H^{\alpha p}(\R)$ mit $\alpha > 0{,}2$
 zugleich wächst aber die Trägerlänge $2p-1$.
 Bei der Wahl von $p$ muss man daher abwägen. Viele Momente machen die
 Detailkoeffizienten glatter Abschnitte klein (Lemma~\ref{lem:abklingen}). Ein
-breiter Träger verteilt dagegen jede steile Spitze auf mehrere Koeffizienten.
+breiter Träger verteilt dagegen jede steile Spitze auf mehr Koeffizienten.
 Wegen $\supp\psi_{j,k} = 2^j[1-p+k,\,p+k]$ liegt ein fester Punkt $t_0$ nämlich
 in den Trägern von bis zu $2p$ Wavelets jeder Skala $j$.
-Insgesamt tragen wenige gro\ss{}e Koeffizienten die Spitzen
-\cite[Beispiel~56.3]{hankebourgeois}. % S. 440, dort mit Haar
-Darauf baut Abschnitt~\ref{sec:duennbesetztheit} auf.
 
 \begin{Beispiel}[Das Daubechies-Wavelet mit $p = 6$]
 \label{bsp:db6}
@@ -2467,8 +2495,6 @@ Indizes. Das Beispiel oben ist $H = H_8$.
  
 \begin{Lemma}[{\cite[Kap.~3.6.2, Gl.~(3.6.18)--(3.6.20)]{lmr}}] % S. 289
 \label{lem:dwt-orthogonal}
-% PRÜFEN: setzt LMR M >= Filterlänge voraus? Für db2 und M = 2 (S_2 im Beispiel
-% N = 8, J = 3) gilt die Aussage trotzdem, da h_0+h_2 = h_1+h_3 = 1/sqrt(2).
 Für die Filter $h$, $g$ aus Kapitel~\ref{chapter:dwt} gilt
 $H_MH_M^\top = G_MG_M^\top = I$, $H_MG_M^\top = 0$ und
 $H_M^\top H_M + G_M^\top G_M = I$. Die Matrix $S_M$ ist also orthogonal
@@ -3046,8 +3072,9 @@ Schwelle nach \cite[Kap.~11.2--11.3]{mallat}}
 \end{algorithm}
  
 Satz~\ref{satz:donoho-johnstone} setzt das wahre $\sigma$ voraus. Mit dem
-geschätzten $\hat\sigma$ ist die Schranke \eqref{eq:donoho-johnstone} nur ein
-Anhaltspunkt. Ferner werden in Zeile~3 auch die Approximationskoeffizienten
+geschätzten $\hat\sigma$ hängt $T$ von allen Koeffizienten $d_{1,k}$ ab. Der
+Schätzer ist dann streng genommen nicht mehr diagonal, und die Schranke
+\eqref{eq:donoho-johnstone} ist nur ein Anhaltspunkt. Ferner werden in Zeile~3 auch die Approximationskoeffizienten
 $a_J$ geschwellt. Sie tragen den glatten, groben Anteil des Signals und sind
 meist gro\ss. Soft-Thresholding verkleinert jeden von ihnen um $T$ und
 verschiebt so den glatten Anteil, wie schon in Beispiel~\ref{bsp:diagonal} den
@@ -3124,9 +3151,9 @@ auf reale EKG-Aufzeichnungen der MIT-BIH Arrhythmia Database angewandt. Ziel
 ist, die Störungen zu entfernen, die in diesen Aufzeichnungen bereits enthalten
 sind. Wir folgen dabei Castillo et al.\ \cite{castillo} und Alessio
 \cite[Kap.~15.2.4]{alessio}, % S. 728--734
-die beide EKG-Signale mit der DWT von Drift und Rauschen befreien; Alessio
+die beide EKG-Signale mit der DWT von Drift und Rauschen befreien, Alessio
 stellt dort das Verfahren von Castillo et al.\ als Beispiel dar.
-Ein ungestörtes Vergleichssignal gibt es für reale Aufzeichnungen nicht; wir
+Ein ungestörtes Vergleichssignal gibt es für reale Aufzeichnungen nicht, wir
 testen das Verfahren deshalb zuerst an einem künstlichen EKG, bei dem es
 bekannt ist, und beurteilen die realen Aufzeichnungen nach Augenschein.
 
@@ -3148,13 +3175,13 @@ Repolarisation \cite[Abb.~2.1]{gacek}, % S. 24--25
   \centering
   \includegraphics[width=0.8\textwidth]{abb6_1_muster.pdf}
   \caption[Schematischer Herzschlag]{Schematischer Herzschlag mit P-, Q-, R-,
-  S- und T-Welle in Anlehnung an \cite[Abb.~2.2]{rebstadt}; Amplituden und
+  S- und T-Welle in Anlehnung an \cite[Abb.~2.2]{rebstadt}, Amplituden und
   Dauern frei gewählt (Code in Anhang~\ref{anh:code-kap6}).}
   \label{fig:muster}
 \end{figure}
 
 Ein gemessenes EKG enthält neben dem Signal des Herzens Störungen
-\cite[Abschn.~1]{castillo}; % S. 1
+\cite[Abschn.~1]{castillo}, % S. 1
 Tabelle~\ref{tab:stoerungen} fasst die wichtigsten zusammen. Wir nehmen an,
 dass sie sich zum EKG addieren. Rebstadt beschreibt die Artefakte als additive Funktionen im
 gestörten Signal \cite[Kap.~2.3.1]{rebstadt}, % S. 16
@@ -3184,24 +3211,24 @@ und auch Alessio und Castillo et al.\ gehen von additivem Rauschen aus
    \caption[Störungen im EKG]{Störungen im EKG nach
   \cite[Kap.~6.5]{sornmo}, % S. 441
   \cite[Kap.~2.3, 2.4.3]{gacek} % S. 25, 32--33
-  und \cite[Kap.~2.1]{rebstadt}; % S. 9--11
+  und \cite[Kap.~2.1]{rebstadt}, % S. 9--11
   Zusammenstellung eigen.}
   \label{tab:stoerungen}
 \end{table}
 
 Grö\ss en wie die Höhe einer Zacke werden gegenüber der isoelektrischen Linie
-gemessen, der Nulllinie des EKG; sie wird in den meisten Rhythmen am besten
+gemessen, der Nulllinie des EKG, sie wird in den meisten Rhythmen am besten
 durch die PQ-Strecke zwischen P-Welle und QRS-Komplex dargestellt
 \cite[Kap.~7.1.3]{sornmo}. % S. 470
 Solange Drift vorhanden ist, ist diese Linie nicht bestimmt, und damit lassen
 sich auch die Grö\ss en nicht bestimmen, die gegen sie gemessen werden
-\cite[Kap.~6.5]{sornmo}; % S. 441
+\cite[Kap.~6.5]{sornmo}, % S. 441
 deshalb muss die Drift entfernt werden.
 Elektrodenbewegung und Muskelrauschen überlappen mit dem EKG:
 Elektrodenartefakte werden manchmal für QRS-Komplexe gehalten, und
 Muskelrauschen lässt sich nur schwer entfernen, ohne das EKG zu verzerren
 \cite[Kap.~6.5]{sornmo}. % S. 441--442
-Das wei\ss e Rauschen $\sigma Z$ dagegen verteilt sich auf alle Frequenzen;
+Das wei\ss e Rauschen $\sigma Z$ dagegen verteilt sich auf alle Frequenzen,
 für dieses Rauschen ist das Thresholding aus Kapitel~\ref{chapter:denoising}
 gedacht (Abschnitt~\ref{sec:ein-schritt}).
 
@@ -3250,7 +3277,7 @@ kennzeichnen die Annotationen Abschnitte mit starkem Rauschen
 
 \paragraph{Datensätze 100 und 103.}
 Zwischen welchen zwei Punkten des Körpers ein EKG-Signal die Spannung misst
-(Abschnitt~\ref{sec:ekg}), legt die \emph{Ableitung} fest; die Ableitung~II
+(Abschnitt~\ref{sec:ekg}), legt die \emph{Ableitung} fest, die Ableitung~II
 misst sie zwischen rechtem Arm und linkem Bein
 \cite[Kap.~2.1, Tab.~2.1]{rebstadt}. % S. 9
 Wir verwenden die Datensätze $100$ und $103$, jeweils das obere der beiden
@@ -3263,7 +3290,7 @@ also Schläge der
 Form aus Abbildung~\ref{fig:muster} \cite[Kap.~2.1, Abb.~2.2]{rebstadt}. % S. 9--10: S. 9 "anhand eines Sinusrhythmus erläutert, welcher in Abbildung 2.2 dargestellt wird"; Abb. 2.2 auf S. 10
 Bei Datensatz~$100$ ist kein Abschnitt des oberen
 Signals als stark verrauscht markiert, bei Datensatz~$103$ ein Abschnitt von
-etwa $9$\,s \cite[Abschn.~Records]{mitdbdir}; % Record 100: "Both clean 1 30:06"; Record 103: "Upper noisy 1 0:09"
+etwa $9$\,s \cite[Abschn.~Records]{mitdbdir}, % Record 100: "Both clean 1 30:06"; Record 103: "Upper noisy 1 0:09"
 nach der Annotationsdatei liegt er zwischen $1089{,}8$ und $1098{,}4$\,s
 (Code in Anhang~\ref{anh:code-kap6}).
 
@@ -3289,10 +3316,10 @@ steigt danach langsam wieder an.
 \paragraph{Länge.}
 Wir transformieren jede Aufzeichnung als Ganzes. Das ist möglich, weil
 Langzeit-EKG erst ausgewertet werden, nachdem die Aufzeichnung abgeschlossen
-ist \cite[Kap.~6.6.3]{sornmo}; % S. 445
+ist \cite[Kap.~6.6.3]{sornmo}, % S. 445
 das Verfahren muss also nicht schon während der Messung arbeiten. Damit die
 periodisierte DWT der Tiefe $J$ definiert ist, muss $2^J$ die Länge $N$
-teilen (Abschnitt~\ref{sec:onb-invarianz}); wir verwenden die ersten
+teilen (Abschnitt~\ref{sec:onb-invarianz}), wir verwenden die ersten
 $N = 2^{19} = 524\,288$ Abtastwerte, also
 $N/f_s = 524\,288/(360\,\mathrm{Hz}) \approx 1456\,\mathrm{s}$, das sind
 $24$\,min $16$\,s.
@@ -3315,12 +3342,10 @@ ist ein mit der Rate $f_s$ abgetastetes Signal nur bis zur Frequenz
 \[
   F_{\max} = \frac{f_s}{2}
 \]
-eindeutig darstellbar \cite[Abschn.~3.1.2]{castillo}; % S. 5
-eine Schwingung der Frequenz $f > F_{\max}$ hat an den Abtastzeiten
-$n/f_s$ dieselben Werte wie eine der Frequenz $f_s - f < F_{\max}$.
+eindeutig darstellbar \cite[Abschn.~3.1.2]{castillo}. % S. 5
 In der Variablen $\omega = 2\pi f/f_s$ der Filter aus
 Kapitel~\ref{chapter:dwt} entspricht $[0,F_{\max}]$ dem Intervall $[0,\pi]$.
-Damit liegt das gesamte Signal $Y$ im Band $[0,F_{\max}]$; dieses Band
+Damit liegt das gesamte Signal $Y$ im Band $[0,F_{\max}]$, dieses Band
 verteilt die DWT im Folgenden auf die Stufen.
 
 \paragraph{Halbierung des Bandes.}
@@ -3373,24 +3398,25 @@ ergibt \eqref{eq:frequenzbaender} Tabelle~\ref{tab:baender}.
     von (Hz) & $90$ & $45$ & $22{,}5$ & $11{,}3$ & $5{,}6$ & $2{,}8$ & $1{,}4$ & $0{,}70$ & $0$ \\
     bis (Hz) & $180$ & $90$ & $45$ & $22{,}5$ & $11{,}3$ & $5{,}6$ & $2{,}8$ & $1{,}4$ & $0{,}70$ \\
     \midrule
-    P- und T-Welle         &   &   &   & ($\bullet$) & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ &  \\
+    P- und T-Welle         &   &   &   & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ &  \\
     Herzfrequenz           &   &   &   &   &   &   &   & $\bullet$ &  \\
     Basisliniendrift       &   &   &   &   &   &   &   & ($\bullet$) & $\bullet$ \\
     Bandmechanik           &   &   &   &   &   &   &   &   & $\bullet$ \\
-    Elektrodenbewegung     &   &   &   &   & ($\bullet$) & $\bullet$ & $\bullet$ & ($\bullet$) &  \\
+    Elektrodenbewegung     &   &   &   &   & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ &  \\
     Netzbrummen ($60$\,Hz) &   & $\bullet$ &   &   &   &   &   &   &  \\
     Muskelrauschen         &   & $\bullet$ & $\bullet$ & ($\bullet$) &   &   &   &   &  \\
     \bottomrule
   \end{tabular}
   \caption[Frequenzbänder der DWT bei 360 Hz]{Frequenzbänder der
   Koeffizienten nach \eqref{eq:frequenzbaender} für $f_s = 360$\,Hz und
-  $J = 8$. Darunter die Bänder von: P- und T-Welle, $1$ bis $20$\,Hz
-  \cite[Kap.~2.3.1]{rebstadt}; % S. 17
-  Herzfrequenz, über $0{,}88$\,Hz (Abschnitt~\ref{sec:tiefe-J});
-  Drift, Elektrodenbewegung, Netzbrummen und Muskelrauschen nach
-  Tabelle~\ref{tab:stoerungen}; Bandmechanik, $0{,}042$ bis $0{,}54$\,Hz
-  (Abschnitt~\ref{sec:daten}). Die Zuordnung zu den Stufen ist eigen; in
-  Klammern Stufen, die nur am Rand getroffen werden.}
+  $J = 8$. Darunter die Bänder der Wellen und Störungen. P- und T-Welle:
+  $1$ bis $20$\,Hz \cite[Kap.~2.3.1]{rebstadt}. % S. 17
+  Herzfrequenz: über $0{,}88$\,Hz (Abschnitt~\ref{sec:tiefe-J}).
+  Drift, Elektrodenbewegung, Netzbrummen und Muskelrauschen: nach
+  Tabelle~\ref{tab:stoerungen}. Bandmechanik: $0{,}042$ bis $0{,}54$\,Hz
+  (Abschnitt~\ref{sec:daten}). Die Zuordnung zu den Stufen ist eigen. Ein
+  Punkt in Klammern bedeutet, dass weniger als die Hälfte des Bandes der
+  Stufe getroffen wird.}
   \label{tab:baender}
 \end{table}
 
@@ -3981,10 +4007,11 @@ Am Test-EKG sinkt die Fehlerenergie von $8236{,}4$ auf $18{,}1$, und $J = 8$ ist
 \eqref{eq:j-bedingung} erwarten lässt (Tabelle~\ref{tab:test}). An den
 Datensätzen $100$ und $103$ ist die Drift sichtbar entfernt, die Form der
 Schläge bleibt erhalten (Abbildung~\ref{fig:vergleich}). Dazu braucht es beide
-Bausteine: Das Thresholding aus Kapitel~\ref{chapter:denoising} erreicht die
-Drift nicht, denn ihre Energie steckt in den Approximationskoeffizienten
-$a_J$, und die lässt das Thresholding unverändert; erst die Wahl von $J$ nach
-den Frequenzen von Drift und Herzschlag erlaubt, $a_J$ gezielt zu entfernen.
+Bausteine: Das Thresholding aus Kapitel~\ref{chapter:denoising} entfernt die Drift
+nicht. Ihre Energie steckt in wenigen gro\ss en Koeffizienten von $a_J$,
+und gro\ss e Koeffizienten bleiben beim Thresholding erhalten.
+Erst die Wahl von $J$ nach den Frequenzen von Drift und Herzschlag erlaubt,
+$a_J$ gezielt zu entfernen.
 Beides geschieht in einer einzigen Zerlegung (Abschnitt~\ref{sec:verfahren}).
 
 Die Ergebnisse haben folgende Grenzen.
@@ -4036,7 +4063,7 @@ Die Ergebnisse haben folgende Grenzen.
 \end{itemize}
 
 Simulierte Signale, bei denen das wahre Signal bekannt ist, erlauben eine
-Genauigkeitsaussage wie in Abschnitt~\ref{sec:test}; den Hauptteil der
+Genauigkeitsaussage wie in Abschnitt~\ref{sec:test}, den Hauptteil der
 Bewertung müssen aber gemessene Aufzeichnungen tragen
 \cite[Kap.~1.4.2]{sornmo}. % S. 21--22
 
@@ -4185,10 +4212,7 @@ Integral folgen
   |\hat f(0)|=\frac{7}{2\sqrt{2\pi}},\qquad
   |\hat f(\pm2\pi)|=\frac{3}{2\sqrt{2\pi}},\qquad
   |\hat f(\pm10\pi)|=\frac{1}{4\sqrt{2\pi}} .
-\]
-Zur Kontrolle wurde \eqref{eq:ft-testsignal} an mehreren Stellen mit
-numerischer Quadratur des Integrals verglichen
-(Anhang~\ref{anh:code-testsignal}).
+\] 
  
 %-------------------------------------------------------------------------------
 \section{Stammfunktion des Testsignals}
@@ -4233,15 +4257,17 @@ alle Abbildungen dieses Kapitels dieselbe Realisierung des Rauschens zeigen.
 \section{Beispiel zur kontinuierlichen Wavelet-Transformation}
 \label{anh:code-testsignal}
 
-Der folgende Code erzeugt die Abbildungen~\ref{fig:signal},
-\ref{fig:fourier} und \ref{fig:cwt}. Die Wavelet-Transformierte wird nicht
-durch numerische Quadratur, sondern exakt nach \eqref{eq:cwt-haar-exakt}
-aus der Stammfunktion $F$ berechnet.
+Der folgende Code berechnet die Daten der Abbildungen~\ref{fig:fourier}
+und~\ref{fig:cwt}. Die Fourier-Transformierte wird nach
+\eqref{eq:ft-testsignal} berechnet, die Wavelet-Transformierte nicht durch
+numerische Quadratur, sondern exakt nach \eqref{eq:cwt-haar-exakt} aus der
+Stammfunktion $F$. Abbildung~\ref{fig:signal} zeichnet pgfplots direkt aus
+der Definition von $f$.
 
-\IfFileExists{code/BeispielCWT.py}{%
+\IfFileExists{code/kap3_cwt.py}{%
   \lstinputlisting[caption={Testsignal aus Beispiel~\ref{bsp:testsignal}},
-    label={lst:testsignal}]{code/BeispielCWT.py}}{%
-  \anmerkung{Datei \texttt{code/BeispielCWT.py} fehlt noch.}}
+    label={lst:testsignal}]{code/kap3_cwt.py}}{%
+  \anmerkung{Datei \texttt{code/kap3\_cwt.py} fehlt noch.}}
 
 \section{Daubechies-Wavelet}
 \label{anh:code-db2}
@@ -4384,9 +4410,9 @@ Test aus Abschnitt~\ref{sec:test}.
 \IfFileExists{code/kap6_abb_test_schlag.py}{%
   \lstinputlisting[caption={Abbildung~\ref{fig:test-schlag}},label={lst:kap6-abb-test-schlag}]{code/kap6_abb_test_schlag.py}}{%
   \anmerkung{Datei \texttt{code/kap6\_abb\_test\_schlag.py} fehlt noch.}}
-\IfFileExists{code/kap6_abb_test_fehler.py}{%
-  \lstinputlisting[caption={Abbildung~\ref{fig:test-fehler}},label={lst:kap6-abb-test-fehler}]{code/kap6_abb_test_fehler.py}}{%
-  \anmerkung{Datei \texttt{code/kap6\_abb\_test\_fehler.py} fehlt noch.}}
+\IfFileExists{code/kap6_abb_test_d3.py}{%
+  \lstinputlisting[caption={Abbildung~\ref{fig:test-d3}},label={lst:kap6-abb-test-d3}]{code/kap6_abb_test_d3.py}}{%
+  \anmerkung{Datei \texttt{code/kap6\_abb\_test\_d3.py} fehlt noch.}}
 \IfFileExists{code/kap6_abb_zerlegung.py}{%
   \lstinputlisting[caption={Abbildungen~\ref{fig:zerlegung-f} bis~\ref{fig:zerlegung-fhat}},label={lst:kap6-abb-zerlegung}]{code/kap6_abb_zerlegung.py}}{%
   \anmerkung{Datei \texttt{code/kap6\_abb\_zerlegung.py} fehlt noch.}}

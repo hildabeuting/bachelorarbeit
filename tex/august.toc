@@ -18,11 +18,11 @@
 \contentsline {subsection}{\numberline {3.1.1}Wavelets und die Zulässigkeitsbedingung}{7}{subsection.3.1.1}%
 \contentsline {subsection}{\numberline {3.1.2}Die Wavelet-Familie und die Transformation}{9}{subsection.3.1.2}%
 \contentsline {paragraph}{\nonumberline Fourier-Transformierte.}{10}{paragraph*.6}%
-\contentsline {paragraph}{\nonumberline Wavelet-Transformierte.}{12}{paragraph*.8}%
-\contentsline {subsection}{\numberline {3.1.3}Die Plancherel-Formel}{13}{subsection.3.1.3}%
+\contentsline {paragraph}{\nonumberline Wavelet-Transformierte.}{11}{paragraph*.8}%
+\contentsline {subsection}{\numberline {3.1.3}Die Plancherel-Formel}{12}{subsection.3.1.3}%
 \contentsline {section}{\numberline {3.2}Das dyadische Gitter und die Multiskalenanalyse}{13}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Skalierungsfunktion und Orthonormalbasis der Räume $V_j$}{17}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Die Orthonormalbasis auf allen Skalen}{17}{subsection.3.3.1}%
+\contentsline {section}{\numberline {3.3}Skalierungsfunktion und Orthonormalbasis der Räume $V_j$}{16}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Die Orthonormalbasis auf allen Skalen}{16}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Die Approximationsoperatoren}{17}{subsection.3.3.2}%
 \contentsline {section}{\numberline {3.4}Detailräume $W_j$ und die Zerlegung von $L^2(\mathbb {R})$}{18}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Die Wavelet-Basis}{19}{subsection.3.4.1}%
@@ -77,13 +77,13 @@
 \contentsline {section}{\numberline {A.3}Stammfunktion des Testsignals}{65}{section.A.3}%
 \contentsline {chapter}{\numberline {B}Python-Code}{67}{appendix.B}%
 \contentsline {section}{\numberline {B.1}Beispiel zur kontinuierlichen Wavelet-Transformation}{67}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{69}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{69}{section.B.3}%
-\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{70}{section.B.4}%
-\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{71}{section.B.5}%
-\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{72}{section.B.6}%
-\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{73}{section.B.7}%
-\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{74}{section.B.8}%
+\contentsline {section}{\numberline {B.2}Daubechies-Wavelet}{68}{section.B.2}%
+\contentsline {section}{\numberline {B.3}Daubechies-Wavelet mit zwölf Koeffizienten}{68}{section.B.3}%
+\contentsline {section}{\numberline {B.4}Verrauschter Sinus}{69}{section.B.4}%
+\contentsline {section}{\numberline {B.5}Sinus mit Spitzen}{70}{section.B.5}%
+\contentsline {section}{\numberline {B.6}Detailkoeffizienten des Testsignals}{71}{section.B.6}%
+\contentsline {section}{\numberline {B.7}Detailkoeffizienten der Messwerte}{72}{section.B.7}%
+\contentsline {section}{\numberline {B.8}Entrauschtes Testsignal}{73}{section.B.8}%
 \contentsline {section}{\numberline {B.9}Anwendung auf EKG-Signale}{75}{section.B.9}%
 \contentsline {chapter}{\nonumberline Literaturverzeichnis}{84}{chapter*.57}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
