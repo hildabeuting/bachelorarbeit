@@ -10,11 +10,13 @@
 \graphicspath{{abbildungen/}{../abbildungen/}{./}}
 \usepackage{psfrag}
 \usepackage{tikz, pgfplots}
+\usepgfplotslibrary{groupplots}
 
 \pgfplotsset{compat=1.18,
   ba/.style={width=\textwidth, height=4.5cm, axis lines=left,
     tick label style={font=\footnotesize}, label style={font=\small},
-    /pgf/number format/use comma,
+    /pgf/number format/use comma, typeset ticklabels with strut,
+    title style={text height=2.2ex, text depth=0.6ex},
     cycle list={{uhh_blue, no marks}},
     every axis plot/.append style={uhh_blue, line width=0.8pt}}}
 
@@ -140,32 +142,30 @@
 \recalctypearea % berechne Satzspiegel neu
 
 %haar beispiel 
-\newcommand{\haarplot}[3]{% #1 = a > 0, #2 = b, #3 = Beschriftung
-  \pgfmathsetmacro{\haaramp}{1/sqrt(abs(#1))}
-  \pgfmathsetmacro{\haarxO}{#2}
-  \pgfmathsetmacro{\haarxM}{#2+0.5*(#1)}
-  \pgfmathsetmacro{\haarxE}{#2+(#1)}
-  \draw[gray!45, dashed, line width=0.4pt] (-1,1) -- (3.6,1);
-  \draw[gray!45, dashed, line width=0.4pt] (-1,-1) -- (3.6,-1);
-  \draw[-latex, line width=0.5pt] (-1,0) -- (3.8,0)
-        node[below right, font=\footnotesize] {$t$};
-  \draw[-latex, line width=0.5pt] (0,-1.9) -- (0,1.9);
-  \foreach \x in {1,2,3} \draw (\x,0.07) -- (\x,-0.07)
-        node[below, font=\scriptsize] {$\x$};
-  \draw[uhh_blue, line width=1.1pt] (-1,0) -- (\haarxO,0);
-  \draw[uhh_blue, line width=1.1pt] (\haarxE,0) -- (3.8,0);
-  \draw[uhh_blue, line width=1.1pt] (\haarxO,\haaramp) -- (\haarxM,\haaramp);
-  \draw[uhh_blue, line width=1.1pt] (\haarxM,-\haaramp) -- (\haarxE,-\haaramp);
-  \draw[uhh_blue, dotted] (\haarxO,0) -- (\haarxO,\haaramp);
-  \draw[uhh_blue, dotted] (\haarxM,\haaramp) -- (\haarxM,-\haaramp);
-  \draw[uhh_blue, dotted] (\haarxE,-\haaramp) -- (\haarxE,0);
-  \fill[uhh_blue] (\haarxO,\haaramp) circle (1.3pt);
-  \draw[uhh_blue, fill=white] (\haarxM,\haaramp) circle (1.3pt);
-  \fill[uhh_blue] (\haarxM,-\haaramp) circle (1.3pt);
-  \draw[uhh_blue, fill=white] (\haarxE,-\haaramp) circle (1.3pt);
-  \node[font=\small, anchor=north] at (1.4,-2.15) {#3};
-}
-
+\newcommand{\haarplot}[3]{% #1 = a > 0, #2 = b, #3 = Titel
+  \pgfmathsetmacro{\haaramp}{1/sqrt(#1)}%
+  \pgfmathsetmacro{\haarxM}{#2+0.5*(#1)}%
+  \pgfmathsetmacro{\haarxE}{#2+(#1)}%
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=0.5\textwidth, height=4cm, xmin=-1, xmax=3.6,
+        ymin=-1.6, ymax=1.6, xtick={0,...,3}, ytick={-1,0,1},
+        xlabel={$t$}, title={#3}]
+      \draw[gray, dashed] (axis cs:-1,1) -- (axis cs:3.6,1);
+      \draw[gray, dashed] (axis cs:-1,-1) -- (axis cs:3.6,-1);
+      \draw[gray] (axis cs:#2,0) -- (axis cs:\haarxE,0);
+      \addplot coordinates {(-1,0) (#2,0)};
+      \addplot coordinates {(#2,\haaramp) (\haarxM,\haaramp)};
+      \addplot coordinates {(\haarxM,-\haaramp) (\haarxE,-\haaramp)};
+      \addplot coordinates {(\haarxE,0) (3.6,0)};
+      \addplot[dotted] coordinates {(#2,0) (#2,\haaramp)};
+      \addplot[dotted] coordinates {(\haarxM,\haaramp) (\haarxM,-\haaramp)};
+      \addplot[dotted] coordinates {(\haarxE,-\haaramp) (\haarxE,0)};
+      \addplot[only marks, mark=*, mark size=1.3pt]
+        coordinates {(#2,\haaramp) (\haarxM,-\haaramp) (\haarxE,0)};
+      \addplot[only marks, mark=*, mark size=1.3pt, mark options={fill=white}]
+        coordinates {(#2,0) (\haarxM,\haaramp) (\haarxE,-\haaramp)};
+    \end{axis}
+  \end{tikzpicture}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -326,6 +326,12 @@ Abgrenzung gegenüber konkurrierenden Verfahren, die nur benannt werden.}
 
 \anmerkung{Block A. Kapiteleinleitung: Ziel ist der funktionalanalytische
 Rahmen, in dem die Wavelet-Transformation als unitäre Abbildung erscheint.}
+
+\anmerkung{davor support definieren - in grundlagen ist der träger einfach...}
+\anmerkung{davor auf jeden fall l2 norm definienren}
+\anmerkung{wenn heisenbergunschärfe geschirieben dann richtigen verweis einfügen...}
+
+\anmerkung{klein l defiiniern.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Der Hilbertraum \texorpdfstring{$L^2(\R)$}{L2(R)}}
@@ -608,8 +614,6 @@ Frequenz. Hohe Frequenzen werden mit kurzen Fenstern untersucht, tiefe mit
 langen \cite[Kap.~1.3.2]{lmr}. % S. 36--37
 Abbildung~\ref{fig:zeit-frequenz-kachelung} zeigt das schematisch.
  
-\anmerkung{wenn heisenbergunschärfe geschirieben dann richtigen verweis einfügen...}
- 
 \begin{figure}[htbp]
   \centering
   \begin{tikzpicture}[
@@ -667,16 +671,13 @@ Abbildung~\ref{fig:zeit-frequenz-kachelung} zeigt das schematisch.
   \caption[Zeit-Frequenz-Auflösung im Vergleich]{Schematische
   Zeit-Frequenz-Auflösung. Jede Kachel steht für die kleinste Zelle, die die
   Transformation noch trennt. Alle Kacheln haben denselben Flächeninhalt. In (c)
-  sind die Kacheln bei hohen Frequenzen schmal und bei tiefen breit. Dieselbe
-  Einteilung in Oktavbänder tritt in Abschnitt~\ref{sec:frequenzbaender} bei der
-  diskreten Transformation auf. In Anlehnung an \cite[Figure 2.23]{bruntonkutz}.}
+  sind die Kacheln bei hohen Frequenzen schmal und bei tiefen breit. 
+  In Anlehnung an \cite[Fig. 2.23]{bruntonkutz}.}
   \label{fig:zeit-frequenz-kachelung}
 \end{figure}
  
 \subsection{Wavelets und die Zulässigkeitsbedingung}
 \label{subsec:zulaessigkeit}
- 
-\anmerkung{davor auf jeden fall l2 norm definienren}
  
 \begin{Definition}[Wavelet, {\cite[Kap.~3.1, Bedingungen (1) und (2)]{blatter}}] % S. 54
 \label{def:wavelet}
@@ -746,41 +747,29 @@ $\lvert\widehat{\psi^{\mathrm H}}\rvert$.
 \begin{figure}[htbp]
   \centering
   \begin{tikzpicture}
-    \begin{scope}[x=2.6cm, y=1.1cm]
-      \draw[-latex, line width=0.5pt] (-0.5,0) -- (1.6,0) node[below right, font=\footnotesize] {$t$};
-      \draw[-latex, line width=0.5pt] (0,-1.5) -- (0,1.6);
-      \draw (0.5,0.06) -- (0.5,-0.06) node[below, font=\footnotesize] {$\tfrac12$};
-      \draw (1,0.06) -- (1,-0.06) node[below, font=\footnotesize] {$1$};
-      \draw (0.02,1) -- (-0.02,1) node[left, font=\footnotesize] {$1$};
-      \draw (0.02,-1) -- (-0.02,-1) node[left, font=\footnotesize] {$-1$};
-      \draw[uhh_blue, line width=1.1pt] (-0.5,0) -- (0,0);
-      \draw[uhh_blue, line width=1.1pt] (0,1) -- (0.5,1);
-      \draw[uhh_blue, line width=1.1pt] (0.5,-1) -- (1,-1);
-      \draw[uhh_blue, line width=1.1pt] (1,0) -- (1.6,0);
-      \draw[uhh_blue, dotted] (0,0) -- (0,1);
-      \draw[uhh_blue, dotted] (0.5,1) -- (0.5,-1);
-      \draw[uhh_blue, dotted] (1,-1) -- (1,0);
-      \fill[uhh_blue] (0,1) circle (1.3pt);
-      \draw[uhh_blue, fill=white] (0.5,1) circle (1.3pt);
-      \fill[uhh_blue] (0.5,-1) circle (1.3pt);
-      \draw[uhh_blue, fill=white] (1,-1) circle (1.3pt);
-      \node[font=\small, anchor=north] at (0.55,-1.9) {(a) $\psi^{\mathrm{H}}$};
-    \end{scope}
-    \begin{scope}[shift={(8cm,-1.65cm)}]
-      \begin{axis}[
-          width=6.6cm, height=4.4cm,
-          axis lines=middle, xlabel={$\omega$},
-          xlabel style={font=\footnotesize, at={(ticklabel* cs:1)}, anchor=west},
-          domain=-22:22, samples=400, ymin=0, ymax=0.65, xmin=-23, xmax=23,
-          tick label style={font=\footnotesize}, xtick={-15,-4.66,4.66,15},
-          xticklabels={$-15$,$-\omega_0$,$\omega_0$,$15$}, ytick=\empty,
-          restrict y to domain=0:1, unbounded coords=jump]
-        \addplot[uhh_blue, line width=0.9pt, smooth]
-          {4*(sin(deg(x/4)))^2/(sqrt(2*pi)*abs(x))};
-      \end{axis}
-      \node[font=\small, anchor=north] at (3.3,-0.55)
-        {(b) $\lvert\widehat{\psi^{\mathrm{H}}}\rvert$};
-    \end{scope}
+    \begin{axis}[ba, width=0.5\textwidth, xmin=-0.5, xmax=1.5, ymin=-1.3, ymax=1.3,
+        xtick={0,0.5,1}, xticklabels={$0$,$\tfrac12$,$1$}, ytick={-1,0,1},
+        xlabel={$t$}, title={(a) $\psi^{\mathrm H}$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:1,0);
+      \addplot coordinates {(-0.5,0) (0,0)};
+      \addplot coordinates {(0,1) (0.5,1)};
+      \addplot coordinates {(0.5,-1) (1,-1)};
+      \addplot coordinates {(1,0) (1.5,0)};
+      \addplot[dotted] coordinates {(0,0) (0,1)};
+      \addplot[dotted] coordinates {(0.5,1) (0.5,-1)};
+      \addplot[dotted] coordinates {(1,-1) (1,0)};
+      \addplot[only marks, mark=*, mark size=1.3pt] coordinates {(0,1) (0.5,-1) (1,0)};
+      \addplot[only marks, mark=*, mark size=1.3pt, mark options={fill=white}]
+        coordinates {(0,0) (0.5,1) (1,-1)};
+    \end{axis}
+  \end{tikzpicture}\hfill
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=0.5\textwidth, xmin=-25, xmax=25, ymin=0, ymax=0.32,
+        xtick={-20,-4.6622,4.6622,20}, xticklabels={$-20$,$-\omega_0$,$\omega_0$,$20$},
+        ytick={0,0.1,0.2,0.3}, xlabel={$\omega$},
+        title={(b) $\lvert\widehat{\psi^{\mathrm H}}\rvert$}]
+      \addplot[domain=-25:25, samples=400] {4*sin(deg(x/4))^2/(sqrt(2*pi)*abs(x))};
+    \end{axis}
   \end{tikzpicture}
   \caption[Das Haar-Wavelet]{Das Haar-Wavelet $\psi^{\mathrm{H}}$ (a) und der
   Betrag seiner Fourier-Transformierten (b). Das globale Maximum liegt bei
@@ -839,8 +828,6 @@ dieselbe Rechnung $\lvert a\rvert^{1-2p}\,\norm{\psi}_{\LZwei}^2$. Die Norm
 hängt also genau für $p = \tfrac12$ nicht von $a$ ab \cite[Kap.~3.1]{blatter}. % S. 55
 \end{Bemerkung}
  
-\anmerkung{davor support definieren - in grundlagen ist der träger einfach...}
- 
 \begin{Bemerkung}[Bedeutung der beiden Parameter]
 \label{bem:parameter}
 Ist $\psi$ kompakt getragen, so gilt $\supp \psi_{a,b} = b + a\cdot\supp\psi$.
@@ -853,20 +840,10 @@ Abbildung~\ref{fig:haar-familie} zeigt beides am Haar-Wavelet.
  
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}
-    \begin{scope}[x=1.05cm, y=0.78cm]
-      \haarplot{1}{0}{(a) $\psi^{\mathrm{H}} = \psi^{\mathrm{H}}_{1,0}$}
-    \end{scope}
-    \begin{scope}[shift={(6.4cm,0cm)}, x=1.05cm, y=0.78cm]
-      \haarplot{1}{1.5}{(b) $\psi^{\mathrm{H}}_{1,\,3/2}$, verschoben}
-    \end{scope}
-    \begin{scope}[shift={(0cm,-4.3cm)}, x=1.05cm, y=0.78cm]
-      \haarplot{0.5}{0}{(c) $\psi^{\mathrm{H}}_{1/2,\,0}$, gestaucht}
-    \end{scope}
-    \begin{scope}[shift={(6.4cm,-4.3cm)}, x=1.05cm, y=0.78cm]
-      \haarplot{2}{1}{(d) $\psi^{\mathrm{H}}_{2,\,1}$, gestreckt und verschoben}
-    \end{scope}
-  \end{tikzpicture}
+  \haarplot{1}{0}{(a) $\psi^{\mathrm H} = \psi^{\mathrm H}_{1,0}$}\hfill
+  \haarplot{1}{1.5}{(b) $\psi^{\mathrm H}_{1,\,3/2}$, verschoben}\\[1ex]
+  \haarplot{0.5}{0}{(c) $\psi^{\mathrm H}_{1/2,\,0}$, gestaucht}\hfill
+  \haarplot{2}{1}{(d) $\psi^{\mathrm H}_{2,\,1}$, gestreckt und verschoben}
   \caption[Skalierung und Verschiebung des Haar-Wavelets]{Die Wavelet-Familie
   \eqref{eq:wavelet-familie} am Haar-Wavelet. In (b) liegt der Träger auf
   $[\tfrac32,\tfrac52]$. In (c) liegt er auf $[0,\tfrac12]$, die Amplitude ist
@@ -876,8 +853,6 @@ Abbildung~\ref{fig:haar-familie} zeigt beides am Haar-Wavelet.
   (Bemerkung~\ref{bem:normierung}).}
   \label{fig:haar-familie}
 \end{figure}
-
-\anmerkung{stört das die im index hier nicht als bruch sind?}
  
 \begin{Beispiel}[Ein Testsignal mit zwei Frequenzen]
 \label{bsp:testsignal}
@@ -932,8 +907,9 @@ $\lvert\hat f\rvert$ nicht zu entnehmen.
       \addplot table[x=omega, y=betrag] {abbildungen/kap3_fourier.dat};
     \end{axis}
   \end{tikzpicture}
-  \caption{Betragsspektrum $\lvert\hat f(\omega)\rvert$ des Testsignals.
-    Gestrichelt die Stellen $\pm2\pi$ und $\pm10\pi$.}
+  \caption[Betragsspektrum des Testsignals]{Betragsspektrum
+  $\lvert\hat f(\omega)\rvert$ des Testsignals. Gestrichelt die Stellen
+  $\pm2\pi$ und $\pm10\pi$ (Code in Anhang~\ref{anh:code-testsignal}).}
   \label{fig:fourier}
 \end{figure}
 
@@ -977,10 +953,11 @@ Abbildung~\ref{fig:cwt} zeigt ihren Betrag.
         {abbildungen/kap3_cwt.png};
     \end{axis}
   \end{tikzpicture}
-  \caption{Betrag $\lvert W_{\psi^{\mathrm H}}f(a,b)\rvert$ des Testsignals nach
-    \eqref{eq:cwt-haar-exakt}. Waagerecht ist die Verschiebung $b$ aufgetragen,
-    senkrecht die Skala $a$ in logarithmischer Teilung. Die Farbe gibt den
-    Betrag an.}
+  \caption[Haar-Wavelet-Transformierte des Testsignals]{Betrag
+  $\lvert W_{\psi^{\mathrm H}}f(a,b)\rvert$ des Testsignals nach
+  \eqref{eq:cwt-haar-exakt}. Waagerecht ist die Verschiebung $b$ aufgetragen,
+  senkrecht die Skala $a$ in logarithmischer Teilung. Die Farbe gibt den
+  Betrag an (Code in Anhang~\ref{anh:code-testsignal}).}
   \label{fig:cwt}
 \end{figure}
 
@@ -1091,41 +1068,41 @@ Blatter und Louis/Maa\ss{}/Rieder. Hanke-Bourgeois zählt umgekehrt
  
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[x=1.2cm,y=1.0cm] 
+  \begin{tikzpicture}[x=1.2cm,y=1.0cm]
     \foreach \j/\w in {-1/0.5, 0/1, 1/2, 2/4}{
       \pgfmathtruncatemacro{\n}{8/\w - 1}
       \foreach \k in {0,...,\n}
         \draw[fill=gray!10] ({\k*\w},{\j}) rectangle ({(\k+1)*\w},{\j+1});
     }
-    \draw[fill=blue!25] (0,-1) rectangle (0.5,0);
+    \draw[fill=uhh_blue!25] (0,-1) rectangle (0.5,0);
     \node at (0.25,-0.5) {\scriptsize$\tfrac12$};
-    \draw[fill=blue!25] (4,2) rectangle (8,3);
+    \draw[fill=uhh_blue!25] (4,2) rectangle (8,3);
     \node at (6,2.5) {\scriptsize$\tfrac12$};
     \foreach \j/\w in {-1/0.5, 0/1, 1/2, 2/4}{
       \pgfmathtruncatemacro{\n}{8/\w - 1}
       \foreach \k in {0,...,\n}
         \fill ({\k*\w},{\j}) circle (1.5pt);
     }
-    \draw[->] (-0.25,-1.3) -- (8.5,-1.3) node[right] {$b$};
-    \draw[->] (-0.25,-1.3) -- (-0.25,3.5) node[above] {$a$};
+    \draw[-latex] (-0.25,-1.3) -- (8.5,-1.3) node[right] {$b$};
+    \draw[-latex] (-0.25,-1.3) -- (-0.25,3.5) node[above] {$a$};
     \foreach \x in {0,...,8}{
       \draw (\x,-1.3) -- (\x,-1.38);
-      \node[below] at (\x,-1.38) {\small $\x$};
+      \node[below] at (\x,-1.38) {\footnotesize $\x$};
     }
     \foreach \j/\lab in {-1/\tfrac12, 0/1, 1/2, 2/4, 3/8}{
       \draw (-0.25,\j) -- (-0.33,\j);
-      \node[left] at (-0.33,\j) {\small $\lab$};
+      \node[left] at (-0.33,\j) {\footnotesize $\lab$};
     }
     \foreach \j in {-1,0,1,2}
       \node[right] at (8.1,\j+0.5) {\small $j=\j$};
   \end{tikzpicture}
-  \caption{Das dyadische Gitter. Die Skala $a$ ist logarithmisch aufgetragen.
-  Dabei zählt $j$ die Skala und $k$ die Position auf dieser Skala. Jeder Punkt
-  $(2^j,k2^j)$ vertritt die Zelle $Z_{j,k}$ rechts oberhalb von ihm.
-  Hervorgehoben sind $Z_{-1,0} = [\tfrac12,1]\times[0,\tfrac12]$ und
-  $Z_{2,1} = [4,8]\times[4,8]$. Ihre gewöhnlichen Flächen sind $\tfrac14$ und
-  $16$. Ihr Gewicht ist nach \eqref{eq:zellengewicht} in beiden Fällen
-  $\tfrac12$.}
+  \caption[Das dyadische Gitter]{Das dyadische Gitter. Die Skala $a$ ist
+  logarithmisch aufgetragen. Dabei zählt $j$ die Skala $a = 2^j$ und $k$ die
+  Verschiebung $b = k2^j$. Jeder Punkt $(2^j,k2^j)$ vertritt die Zelle
+  $Z_{j,k}$ rechts oberhalb von ihm. Hervorgehoben sind
+  $Z_{-1,0} = [\tfrac12,1]\times[0,\tfrac12]$ und $Z_{2,1} = [4,8]\times[4,8]$.
+  Ihre gewöhnlichen Flächen sind $\tfrac14$ und $16$. Ihr Gewicht ist nach
+  \eqref{eq:zellengewicht} in beiden Fällen $\tfrac12$.}
   \label{fig:dyadisches-gitter}
 \end{figure}
  
@@ -1151,60 +1128,56 @@ und schreiben kurz $f = (4,2,5,7)$ (Abbildung~\ref{fig:haar-mittelung}).
 
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[x=0.6cm,y=0.32cm,font=\scriptsize]
-    \newcommand{\ObenAchsen}{%
-      \draw[->] (0,0) -- (4.5,0) node[right] {$t$};
-      \draw[->] (0,0) -- (0,9.2);
-      \foreach \x in {0,...,4} \draw (\x,0) -- (\x,-0.25) node[below] {$\x$};
-      \foreach \y in {4,8} \draw (0,\y) -- (-0.12,\y) node[left] {$\y$};}
-    \newcommand{\UntenAchsen}{%
-      \draw[gray] (0,0) -- (4.5,0);
-      \draw[->] (0,-2.6) -- (4.5,-2.6) node[right] {$t$};
-      \draw[->] (0,-2.6) -- (0,2.9);
-      \foreach \x in {0,...,4} \draw (\x,-2.6) -- (\x,-2.85) node[below] {$\x$};
-      \foreach \y in {-2,0,2} \draw (0,\y) -- (-0.12,\y) node[left] {$\y$};}
-    \begin{scope}
-      \ObenAchsen
-      \node[anchor=south west] at (-0.3,9.4) {\small $f$ (Stufenbreite $1$)};
-      \draw[uhh_blue, line width=1.1pt] (0,4) -- (1,4) -- (1,2) -- (2,2) -- (2,5) -- (3,5) -- (3,7) -- (4,7);
-      \node[above] at (0.5,4) {$4$};
-      \node[above] at (1.5,2) {$2$};
-      \node[above] at (2.5,5) {$5$};
-      \node[above] at (3.5,7) {$7$};
-    \end{scope}
-    \begin{scope}[xshift=4.4cm]
-      \ObenAchsen
-      \node[anchor=south west] at (-0.3,9.4) {\small $P_1 f$ (Stufenbreite $2$)}; 
-      \draw[uhh_blue, line width=1.1pt] (0,3) -- (2,3) -- (2,6) -- (4,6);
-      \node[above] at (1,3) {$3$};
-      \node[above] at (3,6) {$6$};
-    \end{scope}
-    \begin{scope}[xshift=8.8cm]
-      \ObenAchsen
-      \node[anchor=south west] at (-0.3,9.4) {\small $P_2 f$ (Stufenbreite $4$)};
-      \draw[uhh_blue, line width=1.1pt] (0,4.5) -- (4,4.5);
-      \node[above] at (2,4.5) {$4{,}5$};
-    \end{scope}
-    \begin{scope}[xshift=4.4cm,yshift=-2.5cm]
-      \UntenAchsen
-      \node[anchor=south west] at (-0.3,3.0) {\small $f-P_1 f$ (verlorenes Detail)};
-      \draw[uhh_blue, line width=1.1pt] (0,1) -- (1,1) -- (1,-1) -- (3,-1) -- (3,1) -- (4,1);
-      \node[above] at (0.5,1) {$1$};
-      \node[below] at (2,-1) {$-1$};
-      \node[above] at (3.5,1) {$1$};
-    \end{scope}
-    \begin{scope}[xshift=8.8cm,yshift=-2.5cm]
-      \UntenAchsen
-      \node[anchor=south west] at (-0.3,3.0) {\small $P_1 f-P_2 f$ (verlorenes Detail)};
-      \draw[uhh_blue, line width=1.1pt] (0,-1.5) -- (2,-1.5) -- (2,1.5) -- (4,1.5);
-      \node[above] at (1,-1.5) {$-1{,}5$};
-      \node[above] at (3,1.5) {$1{,}5$};
-    \end{scope}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=3 by 2, horizontal sep=1.6cm,
+        vertical sep=2.3cm}, scale only axis, x=0.8cm, y=0.28cm, xmin=0, xmax=4.4,
+        xtick={0,...,4}, xlabel={$t$}, clip=false]
+    \nextgroupplot[ymin=0, ymax=8.5, ytick={0,4,8}, title={$f$}]
+      \addplot coordinates {(0,4) (1,4)};
+      \addplot coordinates {(1,2) (2,2)};
+      \addplot coordinates {(2,5) (3,5)};
+      \addplot coordinates {(3,7) (4,7)};
+      \addplot[dotted] coordinates {(1,4) (1,2)};
+      \addplot[dotted] coordinates {(2,2) (2,5)};
+      \addplot[dotted] coordinates {(3,5) (3,7)};
+      \node[above, font=\scriptsize] at (axis cs:0.5,4) {$4$};
+      \node[above, font=\scriptsize] at (axis cs:1.5,2) {$2$};
+      \node[above, font=\scriptsize] at (axis cs:2.5,5) {$5$};
+      \node[above, font=\scriptsize] at (axis cs:3.5,7) {$7$};
+    \nextgroupplot[ymin=0, ymax=8.5, ytick={0,4,8}, title={$P_1 f$}]
+      \addplot coordinates {(0,3) (2,3)};
+      \addplot coordinates {(2,6) (4,6)};
+      \addplot[dotted] coordinates {(2,3) (2,6)};
+      \node[above, font=\scriptsize] at (axis cs:1,3) {$3$};
+      \node[above, font=\scriptsize] at (axis cs:3,6) {$6$};
+    \nextgroupplot[ymin=0, ymax=8.5, ytick={0,4,8}, title={$P_2 f$}]
+      \addplot coordinates {(0,4.5) (4,4.5)};
+      \node[above, font=\scriptsize] at (axis cs:2,4.5) {$4{,}5$};
+    \nextgroupplot[group/empty plot]
+    \nextgroupplot[ymin=-3, ymax=3, ytick={-2,0,2}, title={$f-P_1 f$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:4.4,0);
+      \addplot coordinates {(0,1) (1,1)};
+      \addplot coordinates {(1,-1) (3,-1)};
+      \addplot coordinates {(3,1) (4,1)};
+      \addplot[dotted] coordinates {(1,1) (1,-1)};
+      \addplot[dotted] coordinates {(3,-1) (3,1)};
+      \node[above, font=\scriptsize] at (axis cs:0.5,1) {$1$};
+      \node[below, font=\scriptsize] at (axis cs:2,-1) {$-1$};
+      \node[above, font=\scriptsize] at (axis cs:3.5,1) {$1$};
+    \nextgroupplot[ymin=-3, ymax=3, ytick={-2,0,2}, title={$P_1 f-P_2 f$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:4.4,0);
+      \addplot coordinates {(0,-1.5) (2,-1.5)};
+      \addplot coordinates {(2,1.5) (4,1.5)};
+      \addplot[dotted] coordinates {(2,-1.5) (2,1.5)};
+      \node[below, font=\scriptsize] at (axis cs:1,-1.5) {$-1{,}5$};
+      \node[above, font=\scriptsize] at (axis cs:3,1.5) {$1{,}5$};
+    \end{groupplot}
   \end{tikzpicture}
-  \caption{Die Treppenfunktion $f=(4,2,5,7)$ aus Beispiel~\ref{bsp:haar-mittelung} 
-  und ihre Mittelungen $P_1 f$ und $P_2 f$ (oben). Darunter das Detail, das
-  beim Übergang zu der jeweiligen Mittelung verloren geht. Alle Panels haben
-  denselben vertikalen Ma\ss{}stab.}
+  \caption[Mittelungen und Details einer Treppenfunktion]{Die Treppenfunktion
+  $f=(4,2,5,7)$ aus Beispiel~\ref{bsp:haar-mittelung} mit Stufenbreite $1$
+  und ihre Mittelungen $P_1 f$ und $P_2 f$ mit Stufenbreite $2$ und $4$
+  (oben). Darunter das Detail, das beim Übergang zu der jeweiligen Mittelung
+  verloren geht. Alle Teilbilder haben denselben vertikalen Ma\ss{}stab.}
   \label{fig:haar-mittelung}
 \end{figure}
 
@@ -1898,8 +1871,6 @@ orthonormal ist. Wegen der Stetigkeit des Skalarprodukts und $h_n\in\R$ folgt
 Analog für $d_{j,k}$ mit $g$.
 \end{proof}
 
-\anmerkung{klein l defiiniern.}
-
 Die Koeffizienten der Skala $j$ sind also gewichtete Summen der
 Approximationskoeffizienten der Skala $j-1$. Integrale treten nur noch bei der
 Berechnung der Startwerte $a_0$ auf.
@@ -1963,8 +1934,8 @@ vgl.\ \cite[Kap.~5.4]{blatter}, \cite[Kap.~2.3, Abb.~2.8]{lmr}}
     \draw[pf] (a3) -- node[below left, font=\scriptsize] {$g$} (dJ);
   \end{tikzpicture}
   \caption[Schema des Mallat-Algorithmus]{Ablauf von
-  Algorithmus~\ref{alg:mallat}, in Anlehnung an \cite[Kap.~5.4, (6)]{blatter},
-  vgl.\ auch \cite[Abb.~2.8]{lmr}. Jeder
+  Algorithmus~\ref{alg:mallat}, in Anlehnung an \cite[Kap.~5.4, (6)]{blatter}, % S. 132
+  vgl.\ auch \cite[Abb.~2.8]{lmr}. Jeder % S. 134
   Pfeil ist ein Rechenschritt nach \eqref{eq:analyse} mit dem Filter $h$ bzw.\
   $g$ und halbiert die Anzahl der Werte. Nur die Approximationskoeffizienten
   werden weiter zerlegt.}
@@ -2138,19 +2109,30 @@ Haar-Wavelet, für $p=2$ die Folge \eqref{eq:db2-koeff}
 mit $\varphi_2$ und $\psi_2$ aus Abbildung~\ref{fig:db2}. In PyWavelets
 \cite{pywavelets} hei\ss{}t $\psi_p$ \texttt{db}$p$. Das Wavelet mit vier
 Koeffizienten ist also \texttt{db2}, nicht \texttt{db4}.
-\anmerkung{Bib-Eintrag pywavelets anlegen und über DOI prüfen.}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{abb4_db2.pdf}
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=0.5\textwidth, xmin=0, xmax=3, ymin=-1.5, ymax=2,
+        xtick={0,...,3}, xlabel={$t$}, title={(a) $\varphi_2$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:3,0);
+      \addplot table[x=t, y=phi] {abbildungen/kap4_db2.dat};
+    \end{axis}
+  \end{tikzpicture}\hfill
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=0.5\textwidth, xmin=-1, xmax=2, ymin=-1.5, ymax=2,
+        xtick={-1,...,2}, xlabel={$t$}, title={(b) $\psi_2$}]
+      \draw[gray] (axis cs:-1,0) -- (axis cs:2,0);
+      \addplot table[x=s, y=psi] {abbildungen/kap4_db2.dat};
+    \end{axis}
+  \end{tikzpicture}
   \caption[Das Daubechies-Wavelet mit vier Koeffizienten]{Skalierungsfunktion
   $\varphi_2$ auf $[0,3]$ (a) und Wavelet $\psi_2$ auf $[-1,2]$ (b) zur Folge
   \eqref{eq:db2-koeff}, berechnet durch Iteration der
-  Skalierungsgleichung \eqref{eq:skalierungsgleichung}.}
+  Skalierungsgleichung \eqref{eq:skalierungsgleichung}
+  (Code in Anhang~\ref{anh:code-db2}).}
   \label{fig:db2}
 \end{figure}
-
-\anmerkung{Python-Datei zur Abbildung richtig ablegen.}
 
 Gegenüber Haar ist $\psi_2$ stetig \cite[Satz~(6.11)]{blatter}, % S. 158, dort für \varphi_2; \psi_2 folgt mit (4.7)
 aber dreimal so breit. Allgemein wird $\psi_p$ mit wachsendem $p$ glatter,
@@ -2199,7 +2181,20 @@ Wir übernehmen es in Kapitel~\ref{chapter:anwendung}.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{abb4_db6.pdf}
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=0.5\textwidth, xmin=0, xmax=11, ymin=-1.2, ymax=1.2,
+        xtick={0,5,10}, xlabel={$t$}, title={(a) $\varphi_6$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:11,0);
+      \addplot table[x=t, y=phi] {abbildungen/kap4_db6.dat};
+    \end{axis}
+  \end{tikzpicture}\hfill
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=0.5\textwidth, xmin=-5, xmax=6, ymin=-1.2, ymax=1.2,
+        xtick={-5,0,5}, xlabel={$t$}, title={(b) $\psi_6$}]
+      \draw[gray] (axis cs:-5,0) -- (axis cs:6,0);
+      \addplot table[x=s, y=psi] {abbildungen/kap4_db6.dat};
+    \end{axis}
+  \end{tikzpicture}
   \caption[Das Daubechies-Wavelet mit zwölf Koeffizienten]{Skalierungsfunktion
   $\varphi_6$ auf $[0,11]$ (a) und Wavelet $\psi_6$ auf $[-5,6]$ (b) zur Folge
   \eqref{eq:db6-koeff}, berechnet durch Iteration der Skalierungsgleichung
@@ -2278,24 +2273,22 @@ $[\pi/2,\pi]$ klein, $\lvert G\rvert$ umgekehrt. Mit wachsendem $p$ wird der
 
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}
-    \begin{axis}[
-        width=0.62\textwidth, height=4.2cm,
+    \begin{tikzpicture}
+    \begin{axis}[ba, width=0.62\textwidth,
         domain=0:pi, samples=160, xmin=0, xmax=pi, ymin=0, ymax=1.08,
-        xtick={0,pi/2,pi}, xticklabels={$0$,$\pi/2$,$\pi$},
-        ytick={0,0.5,1}, tick label style={font=\footnotesize},
-        xlabel={$\omega$}, xlabel style={font=\footnotesize},
+        xtick={0,pi/2,pi}, xticklabels={$0$,$\pi/2$,$\pi$}, ytick={0,0.5,1},
+        xlabel={$\omega$},
         legend style={font=\footnotesize, at={(1.03,0.5)}, anchor=west, draw=none},
         legend cell align=left,
         declare function={c(\x)=cos(deg(\x/2))^2; s(\x)=sin(deg(\x/2))^2;
           P(\y)=1+6*\y+21*\y^2+56*\y^3+126*\y^4+252*\y^5;}]
       % |H|^2 = q_N aus LMR Lemma 2.4.21 (S. 167), ausmultipliziert; db6: c^6 P(s), gegen PyWavelets geprüft
-      \addplot[uhh_blue, line width=0.9pt, dotted] {sqrt(c(x))};
-      \addplot[uhh_red,  line width=0.9pt, dotted] {sqrt(s(x))};
-      \addplot[uhh_blue, line width=0.9pt, dashed] {c(x)*sqrt(1+2*s(x))};
-      \addplot[uhh_red,  line width=0.9pt, dashed] {s(x)*sqrt(1+2*c(x))};
-      \addplot[uhh_blue, line width=1.1pt] {sqrt(c(x)^6*P(s(x)))};
-      \addplot[uhh_red,  line width=1.1pt] {sqrt(s(x)^6*P(c(x)))};
+      \addplot[uhh_blue, dotted] {sqrt(c(x))};
+      \addplot[uhh_red,  dotted] {sqrt(s(x))};
+      \addplot[uhh_blue, dashed] {c(x)*sqrt(1+2*s(x))};
+      \addplot[uhh_red,  dashed] {s(x)*sqrt(1+2*c(x))};
+      \addplot[uhh_blue] {sqrt(c(x)^6*P(s(x)))};
+      \addplot[uhh_red] {sqrt(s(x)^6*P(c(x)))};
       \legend{$\lvert H\rvert$ Haar, $\lvert G\rvert$ Haar,
               $\lvert H\rvert$ db2, $\lvert G\rvert$ db2,
               $\lvert H\rvert$ db6, $\lvert G\rvert$ db6}
@@ -2304,7 +2297,8 @@ $[\pi/2,\pi]$ klein, $\lvert G\rvert$ umgekehrt. Mit wachsendem $p$ wird der
   \caption[Tiefpass und Hochpass]{Betrag der Fourier-Filter $H$ (Tiefpass, blau)
   und $G$ (Hochpass, rot) für das Haar-Filter (gepunktet), das Filter
   \eqref{eq:db2-koeff} (gestrichelt) und das Filter \eqref{eq:db6-koeff}
-  (durchgezogen) auf $[0,\pi]$. In allen Fällen ist
+  (durchgezogen) auf $[0,\pi]$, berechnet nach \cite[Lemma~2.4.21]{lmr} % S. 167
+  mit $p = 1, 2, 6$. In allen Fällen ist
   $\lvert H\rvert^2 + \lvert G\rvert^2 = 1$.}
   \label{fig:tief-hochpass}
 \end{figure}
@@ -2368,7 +2362,7 @@ Das Verfahren hat drei Schritte (Abbildung~\ref{fig:dreischritt}).
 \begin{figure}[htbp]
   \centering
   \begin{tikzpicture}[font=\small, box/.style={draw, rounded corners=2pt,
-      minimum height=7mm, inner sep=4pt}, >=stealth]
+        minimum height=7mm, inner sep=4pt}, >=latex]
     \node[align=center] (Y) at (0,0) {Messwerte\\$Y$};
     \node[box] (A) at (2.2,0) {DWT};
     \node[box] (R) at (5.4,0) {Schwelle};
@@ -2596,9 +2590,19 @@ nach Lemma~\ref{lem:rauschen-invariant} zu erwarten.
  
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{bsp_5.5.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 2, vertical sep=0.5cm,
+        x descriptions at=edge bottom}, width=0.9\textwidth, height=3.6cm,
+        xmin=0, xmax=8, ymin=-2.2, ymax=2.2, ytick={-2,0,2}, xlabel={$t$}]
+    \nextgroupplot[ylabel={$u$}]
+      \addplot table[x=t, y=u] {abbildungen/kap5_sinus.dat};
+    \nextgroupplot[ylabel={$Y$}]
+      \addplot[gray, line width=0.4pt] table[x=t, y=Y] {abbildungen/kap5_sinus.dat};
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Verrauschter Sinus]{Der Sinus $u$ aus Beispiel~\ref{bsp:sinus}
-  (oben) und die Messwerte $Y = u + 0{,}3\,Z$ (unten), $N = 2048$.}
+  (oben) und die Messwerte $Y = u + 0{,}3\,Z$ (unten), $N = 2048$
+  (Code in Anhang~\ref{anh:code-sinus}).}
   \label{fig:bsp-sinus}
 \end{figure}
  
@@ -2668,23 +2672,34 @@ und $\lambda_m = 0$ sonst.
  
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[x=0.55cm,y=0.55cm,font=\footnotesize]
-    \foreach \sx/\lab in {0/{(a) Hard-Thresholding}, 8/{(b) Soft-Thresholding}}{
-      \begin{scope}[xshift=\sx cm]
-        \draw[->] (-3.4,0) -- (3.6,0) node[right] {$x$};
-        \draw[->] (0,-3.4) -- (0,3.6);
-        \draw[gray, dashed] (-3.2,-3.2) -- (3.2,3.2);
-        \draw (1,0.1) -- (1,-0.1) node[below] {$T$};
-        \draw (-1,0.1) -- (-1,-0.1) node[below] {$-T$};
-        \node[anchor=north] at (0,-3.7) {\small\lab};
-      \end{scope}
-    }
-    \draw[uhh_blue, line width=1.1pt] (-3.2,-3.2) -- (-1,-1);
-    \draw[uhh_blue, line width=1.1pt] (-1,0) -- (1,0);
-    \draw[uhh_blue, line width=1.1pt] (1,1) -- (3.2,3.2);
-    \begin{scope}[xshift=8cm]
-      \draw[uhh_blue, line width=1.1pt] (-3.2,-2.2) -- (-1,0) -- (1,0) -- (3.2,2.2);
-    \end{scope}
+    \begin{tikzpicture}
+    \begin{axis}[ba, width=0.42\textwidth, height=0.42\textwidth, axis lines=middle,
+        xmin=-3.3, xmax=3.3, ymin=-3.3, ymax=3.3, xtick={-1,1},
+        xticklabels={}, ytick=\empty, axis equal image, xlabel={$x$},
+        title={(a) $\rho^{\mathrm H}_T$}]
+      \addplot[gray, dashed, thin] coordinates {(-3.2,-3.2) (3.2,3.2)};
+      \node[above, font=\footnotesize] at (axis cs:-1,0) {$-T$};
+      \node[below, font=\footnotesize] at (axis cs:1,0) {$T$};
+      \addplot coordinates {(-3.2,-3.2) (-1,-1)};
+      \addplot coordinates {(-1,0) (1,0)};
+      \addplot coordinates {(1,1) (3.2,3.2)};
+      \addplot[dotted] coordinates {(-1,-1) (-1,0)};
+      \addplot[dotted] coordinates {(1,0) (1,1)};
+      \addplot[only marks, mark=*, mark size=1.3pt] coordinates {(-1,0) (1,0)};
+      \addplot[only marks, mark=*, mark size=1.3pt, mark options={fill=white}]
+        coordinates {(-1,-1) (1,1)};
+    \end{axis}
+  \end{tikzpicture}\hspace{1cm}
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=0.42\textwidth, height=0.42\textwidth, axis lines=middle,
+        xmin=-3.3, xmax=3.3, ymin=-3.3, ymax=3.3, xtick={-1,1},
+        xticklabels={}, ytick=\empty, axis equal image, xlabel={$x$},
+        title={(b) $\rho^{\mathrm S}_T$}]
+      \addplot[gray, dashed, thin] coordinates {(-3.2,-3.2) (3.2,3.2)};
+      \node[above, font=\footnotesize] at (axis cs:-1,0) {$-T$};
+      \node[below, font=\footnotesize] at (axis cs:1,0) {$T$};
+      \addplot coordinates {(-3.2,-2.2) (-1,0) (1,0) (3.2,2.2)};
+    \end{axis}
   \end{tikzpicture}
   \caption[Hard- und Soft-Thresholding]{Die Funktionen $\rho^{\mathrm H}_T$ (a)
   und $\rho^{\mathrm S}_T$ (b), gestrichelt die Identität.}
@@ -2736,25 +2751,30 @@ Darin sind beide Schätzer diagonal (Definition~\ref{def:diagonal}).
  
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[x=0.4cm,y=0.4cm,font=\footnotesize]
-    \foreach \sx/\lab in {0/{(a) Messwerte $Y$}, 12/{(b) Hard-Thresholding}, 24/{(c) Soft-Thresholding}}{
-      \begin{scope}[xshift=\sx*0.4cm]
-        \draw[->] (0,0) -- (8.6,0) node[right] {$n$};
-        \draw[->] (0,0) -- (0,8);
-        \foreach \y in {2,4,6} \draw (0.1,\y) -- (-0.1,\y) node[left] {$\y$};
-        \foreach \n in {0,1,2,3} \node[below] at (2*\n+1,0) {$\n$};
-        \node[anchor=north] at (4,-1.1) {\small\lab};
-      \end{scope}
-    }
-    \draw[uhh_blue, line width=1.1pt] (0,4) -- (2,4) -- (2,2) -- (4,2) -- (4,5) -- (6,5) -- (6,7) -- (8,7);
-    \begin{scope}[xshift=4.8cm]
-      \draw[gray, dashed] (0,4) -- (2,4) -- (2,2) -- (4,2) -- (4,5) -- (6,5) -- (6,7) -- (8,7);
-      \draw[uhh_blue, line width=1.1pt] (0,3) -- (2,3) -- (2,3) -- (4,3) -- (4,6) -- (6,6) -- (6,6) -- (8,6);
-    \end{scope}
-    \begin{scope}[xshift=9.6cm]
-      \draw[gray, dashed] (0,4) -- (2,4) -- (2,2) -- (4,2) -- (4,5) -- (6,5) -- (6,7) -- (8,7);
-      \draw[uhh_blue, line width=1.1pt] (0,3) -- (2,3) -- (2,3) -- (4,3) -- (4,4) -- (6,4) -- (6,4) -- (8,4);
-    \end{scope}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=3 by 1, horizontal sep=1.2cm},
+        width=0.36\textwidth, height=4cm, xmin=0, xmax=4.3, ymin=0, ymax=8,
+        xtick={0.5,1.5,2.5,3.5}, xticklabels={$0$,$1$,$2$,$3$}, ytick={2,4,6},
+        xlabel={$n$}]
+    \nextgroupplot[title={(a) Messwerte $Y$}]
+      \addplot coordinates {(0,4) (1,4)};
+      \addplot coordinates {(1,2) (2,2)};
+      \addplot coordinates {(2,5) (3,5)};
+      \addplot coordinates {(3,7) (4,7)};
+      \addplot[dotted] coordinates {(1,4) (1,2)};
+      \addplot[dotted] coordinates {(2,2) (2,5)};
+      \addplot[dotted] coordinates {(3,5) (3,7)};
+    \nextgroupplot[title={(b) Hard-Thresholding}]
+      \addplot[gray, dashed, thin] coordinates {(0,4) (1,4) (1,2) (2,2) (2,5) (3,5) (3,7) (4,7)};
+      \addplot coordinates {(0,3) (2,3)};
+      \addplot coordinates {(2,6) (4,6)};
+      \addplot[dotted] coordinates {(2,3) (2,6)};
+    \nextgroupplot[title={(c) Soft-Thresholding}]
+      \addplot[gray, dashed, thin] coordinates {(0,4) (1,4) (1,2) (2,2) (2,5) (3,5) (3,7) (4,7)};
+      \addplot coordinates {(0,3) (2,3)};
+      \addplot coordinates {(2,4) (4,4)};
+      \addplot[dotted] coordinates {(2,3) (2,4)};
+    \end{groupplot}
   \end{tikzpicture}
   \caption[Hard- und Soft-Thresholding im Beispiel]{Die Messwerte
   $Y = (4,2,5,7)^\top$ aus Beispiel~\ref{bsp:diagonal} (a) und die Schätzungen
@@ -2873,7 +2893,16 @@ also drei Dreiecke der Höhe $3$ und halben Breite $0{,}03$
  
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.9\textwidth]{abb5_1_signal.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 2, vertical sep=0.5cm,
+        x descriptions at=edge bottom}, width=0.9\textwidth, height=3.6cm,
+        xmin=0, xmax=8, ymin=-2.2, ymax=4, ytick={-2,0,2,4}, xlabel={$t$}]
+    \nextgroupplot[ylabel={$f$}]
+      \addplot table[x=t, y=f] {abbildungen/kap5_signal.dat};
+    \nextgroupplot[ylabel={$Y$}]
+      \addplot[gray, line width=0.4pt] table[x=t, y=Y] {abbildungen/kap5_signal.dat};
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Testsignal des Kapitels]{Das Testsignal $f = u + s$ aus
   Beispiel~\ref{bsp:spitzen} (oben) und die Beobachtung $Y = f + 0{,}3\,Z$
   (unten), $N = 2048$ (Code in Anhang~\ref{code:kap5-signal}).}
@@ -2939,7 +2968,31 @@ $N\sigma^2 = 184{,}3$, also rund fünfzehnmal so gro\ss.
  
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.95\textwidth]{abb5_2a_koeffizienten_f.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 6, vertical sep=0.3cm,
+        x descriptions at=edge bottom}, width=0.95\textwidth, height=2.6cm,
+        xmin=0, xmax=8, xlabel={$t$}, ylabel style={rotate=-90},
+        unbounded coords=discard, every axis plot/.append style={ycomb, line width=0.6pt}]
+    \nextgroupplot[ymin=-6, ymax=6, ytick={-5,0,5}, ylabel={$a_5$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \addplot table[x=ta5, y=a5] {abbildungen/kap5_koeffizienten.dat};
+    \nextgroupplot[ymin=-2.5, ymax=2.5, ytick={-2,0,2}, ylabel={$d_5$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \addplot table[x=td5, y=d5] {abbildungen/kap5_koeffizienten.dat};
+    \nextgroupplot[ymin=-2.5, ymax=2.5, ytick={-2,0,2}, ylabel={$d_4$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \addplot table[x=td4, y=d4] {abbildungen/kap5_koeffizienten.dat};
+    \nextgroupplot[ymin=-2.5, ymax=2.5, ytick={-2,0,2}, ylabel={$d_3$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \addplot table[x=td3, y=d3] {abbildungen/kap5_koeffizienten.dat};
+    \nextgroupplot[ymin=-2.5, ymax=2.5, ytick={-2,0,2}, ylabel={$d_2$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \addplot table[x=td2, y=d2] {abbildungen/kap5_koeffizienten.dat};
+    \nextgroupplot[ymin=-2.5, ymax=2.5, ytick={-2,0,2}, ylabel={$d_1$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \addplot table[x=td1, y=d1] {abbildungen/kap5_koeffizienten.dat};
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Koeffizienten des Testsignals]{Approximationskoeffizienten $a_5$
   (oben, eigene Skala) und Detailkoeffizienten $d_5$ (grob) bis $d_1$ (unten,
   fein) des Testsignals $f = u + s$ aus Beispiel~\ref{bsp:spitzen},
@@ -3118,7 +3171,43 @@ darauf kommt Kapitel~\ref{chapter:anwendung} zurück.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb5_2b_koeffizienten_Y.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 6, vertical sep=0.3cm,
+        x descriptions at=edge bottom}, width=0.95\textwidth, height=2.6cm,
+        xmin=0, xmax=8, xlabel={$t$}, ylabel style={rotate=-90},
+        unbounded coords=discard, every axis plot/.append style={ycomb, line width=0.6pt}]
+    \nextgroupplot[ymin=-6, ymax=6, ytick={-5,0,5}, ylabel={$a_5$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \draw[gray, dashed] (axis cs:0,1.17) -- (axis cs:8,1.17);
+      \draw[gray, dashed] (axis cs:0,-1.17) -- (axis cs:8,-1.17);
+      \addplot table[x=ta5, y=a5] {abbildungen/kap5_koeffizienten_Y.dat};
+    \nextgroupplot[ymin=-2.5, ymax=2.5, ytick={-2,0,2}, ylabel={$d_5$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \draw[gray, dashed] (axis cs:0,1.17) -- (axis cs:8,1.17);
+      \draw[gray, dashed] (axis cs:0,-1.17) -- (axis cs:8,-1.17);
+      \addplot table[x=td5, y=d5] {abbildungen/kap5_koeffizienten_Y.dat};
+    \nextgroupplot[ymin=-2.5, ymax=2.5, ytick={-2,0,2}, ylabel={$d_4$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \draw[gray, dashed] (axis cs:0,1.17) -- (axis cs:8,1.17);
+      \draw[gray, dashed] (axis cs:0,-1.17) -- (axis cs:8,-1.17);
+      \addplot table[x=td4, y=d4] {abbildungen/kap5_koeffizienten_Y.dat};
+    \nextgroupplot[ymin=-2.5, ymax=2.5, ytick={-2,0,2}, ylabel={$d_3$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \draw[gray, dashed] (axis cs:0,1.17) -- (axis cs:8,1.17);
+      \draw[gray, dashed] (axis cs:0,-1.17) -- (axis cs:8,-1.17);
+      \addplot table[x=td3, y=d3] {abbildungen/kap5_koeffizienten_Y.dat};
+    \nextgroupplot[ymin=-2.5, ymax=2.5, ytick={-2,0,2}, ylabel={$d_2$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \draw[gray, dashed] (axis cs:0,1.17) -- (axis cs:8,1.17);
+      \draw[gray, dashed] (axis cs:0,-1.17) -- (axis cs:8,-1.17);
+      \addplot table[x=td2, y=d2] {abbildungen/kap5_koeffizienten_Y.dat};
+    \nextgroupplot[ymin=-2.5, ymax=2.5, ytick={-2,0,2}, ylabel={$d_1$}]
+      \draw[gray] (axis cs:0,0) -- (axis cs:8,0);
+      \draw[gray, dashed] (axis cs:0,1.17) -- (axis cs:8,1.17);
+      \draw[gray, dashed] (axis cs:0,-1.17) -- (axis cs:8,-1.17);
+      \addplot table[x=td1, y=d1] {abbildungen/kap5_koeffizienten_Y.dat};
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Koeffizienten der Messwerte]{Approximationskoeffizienten $a_5$
   (oben, eigene Skala) und Detailkoeffizienten $d_5$ bis $d_1$ (unten) der
   Messwerte $Y = f + 0{,}3\,Z$ aus Beispiel~\ref{bsp:mad-testsignal}, im selben
@@ -3129,7 +3218,34 @@ darauf kommt Kapitel~\ref{chapter:anwendung} zurück.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb5_3_entrauscht.pdf}
+  \begin{tikzpicture}
+    \begin{axis}[ba, name=links, width=0.62\textwidth, height=4.5cm,
+        xmin=0, xmax=8, ymin=-2.2, ymax=4, ytick={-2,0,2}, xlabel={$t$}]
+      \addplot[uhh_red, line width=0.6pt] table[x=t, y=weich] {abbildungen/kap5_entrauscht.dat};
+      \addplot table[x=t, y=hart] {abbildungen/kap5_entrauscht.dat};
+    \end{axis}
+        \begin{axis}[ba, at={(links.east)}, anchor=west, xshift=1cm,
+        width=0.38\textwidth, height=4.5cm, xmin=3.45, xmax=3.95,
+        ymin=-2.2, ymax=4, ytick={-2,0,2}, xtick={3.5,3.7,3.9},
+        xlabel={$t$},
+        legend style={font=\footnotesize, draw=none, at={(1,1)}, anchor=north east},
+        legend cell align=left, restrict x to domain=3.4:4]
+      \addplot[black, dotted, line width=0.8pt] table[x=t, y=f] {abbildungen/kap5_entrauscht.dat};
+      \addplot table[x=t, y=hart] {abbildungen/kap5_entrauscht.dat};
+      \addplot[uhh_red, line width=0.6pt] table[x=t, y=weich] {abbildungen/kap5_entrauscht.dat};
+      \legend{$f$, hart, weich}
+    \end{axis}
+  \end{tikzpicture}\\[2ex]
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=\textwidth, height=4.5cm, xmin=0, xmax=8, xtick={0,...,8},
+        ymin=-2.2, ymax=4, ytick={-2,0,2}, xlabel={$t$},
+        legend style={font=\footnotesize, draw=none, at={(1,1)}, anchor=north east},
+        legend columns=2, legend cell align=left]
+      \addplot[gray, line width=0.4pt] table[x=t, y=Y] {abbildungen/kap5_entrauscht.dat};
+      \addplot table[x=t, y=hart] {abbildungen/kap5_entrauscht.dat};
+      \legend{$Y$, hart}
+    \end{axis}
+  \end{tikzpicture}
   \caption[Entrauschtes Testsignal]{Schätzungen aus $Y$ mit
   Algorithmus~\ref{alg:visushrink}, $T = 1{,}17$. Oben links beide Schätzungen,
   oben rechts ein Ausschnitt um die mittlere Spitze mit dem wahren Signal $f$.
@@ -4244,17 +4360,15 @@ Das passt zu $\hat f(0)=(2\pi)^{-1/2}\cdot\tfrac72$.
 \label{chapter:anhang-code}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Alle Abbildungen und numerischen Werte dieser Arbeit wurden mit Python
-(NumPy, PyWavelets \cite{pywavelets}, Matplotlib) erzeugt.
+Alle numerischen Werte und die Daten der Abbildungen dieser Arbeit wurden mit
+Python (NumPy, PyWavelets \cite{pywavelets}) berechnet. Gezeichnet sind die
+Abbildungen mit pgfplots. Abgedruckt ist jeweils der rechnende Teil der
+Skripte, die Zeilen zum Speichern der Daten sind weggelassen.
 \anmerkung{Versionen angeben (\texttt{python --version},
-\texttt{pip show numpy matplotlib pywavelets}).}
-Die Skripte zu Kapitel~\ref{chapter:denoising} verwenden durchgehend den
-Filter \eqref{eq:db2-koeff}, die periodisierte Transformation
-(Abschnitt~\ref{sec:onb-invarianz}) mit $J = 5$ Stufen und $N = 2048$
-Abtastwerte. Der feste Startwert $93$ des Zufallsgenerators sorgt dafür, dass
-alle Abbildungen dieses Kapitels dieselbe Realisierung des Rauschens zeigen.
+\texttt{pip show numpy pywavelets}).}
 
-\section{Beispiel zur kontinuierlichen Wavelet-Transformation}
+%------------------------------------------------------------------------------
+\section{Kontinuierliche Wavelet-Transformation}
 \label{anh:code-testsignal}
 
 Der folgende Code berechnet die Daten der Abbildungen~\ref{fig:fourier}
@@ -4266,114 +4380,113 @@ der Definition von $f$.
 
 \IfFileExists{code/kap3_cwt.py}{%
   \lstinputlisting[caption={Testsignal aus Beispiel~\ref{bsp:testsignal}},
-    label={lst:testsignal}]{code/kap3_cwt.py}}{%
+    label={lst:testsignal}, linerange={1-1,3-3,7-25}]{code/kap3_cwt.py}}{%
   \anmerkung{Datei \texttt{code/kap3\_cwt.py} fehlt noch.}}
 
-\section{Daubechies-Wavelet}
+%------------------------------------------------------------------------------
+\section{Daubechies-Wavelets}
 \label{anh:code-db2}
-
-Der folgende Code erzeugt Abbildung~\ref{fig:db2}. PyWavelets berechnet
-$\varphi_2$ und $\psi_2$ durch Iteration der Skalierungsgleichung
-\eqref{eq:skalierungsgleichung} und legt $\psi_2$ auf $[0,3]$. Die
-Verschiebung um $1$ ergibt den Träger $[-1,2]$, der nach
-Satz~\ref{satz:daubechies} zur Wahl \eqref{eq:g-aus-h} gehört.
-
-\IfFileExists{code/kap4_db2.py}{%
-  \lstinputlisting[caption={Skalierungsfunktion $\varphi_2$ und Wavelet $\psi_2$ aus Satz~\ref{satz:daubechies}},
-    label={lst:db2}]{code/kap4_db2.py}}{%
-  \anmerkung{Datei \texttt{code/kap4\_db2.py} fehlt noch.}}
-
-
-\section{Daubechies-Wavelet mit zwölf Koeffizienten}
 \label{anh:code-db6}
- 
-Der folgende Code erzeugt Abbildung~\ref{fig:db6}. Wie in
-Anhang~\ref{anh:code-db2} legt PyWavelets $\psi_6$ auf $[0,11]$; die
-Verschiebung um $5$ ergibt den Träger $[-5,6]$ aus
-Satz~\ref{satz:daubechies}.
- 
-\IfFileExists{code/kap4_db6.py}{%
-  \lstinputlisting[caption={Skalierungsfunktion $\varphi_6$ und Wavelet $\psi_6$ aus Beispiel~\ref{bsp:db6}},
-    label={lst:db6}]{code/kap4_db6.py}}{%
-  \anmerkung{Datei \texttt{code/kap4\_db6.py} fehlt noch.}}
-  
-  
-\section{Verrauschter Sinus}
+
+Der folgende Code berechnet die Daten der Abbildungen~\ref{fig:db2}
+und~\ref{fig:db6}. PyWavelets berechnet $\varphi_p$ und $\psi_p$ durch
+Iteration der Skalierungsgleichung \eqref{eq:skalierungsgleichung} und legt
+$\psi_p$ auf $[0,2p-1]$. Die Verschiebung um $p-1$ ergibt den Träger
+$[1-p,\,p]$, der nach Satz~\ref{satz:daubechies} zur Wahl \eqref{eq:g-aus-h}
+gehört.
+
+\IfFileExists{code/kap4_daubechies.py}{%
+  \lstinputlisting[caption={Daubechies-Wavelets aus Satz~\ref{satz:daubechies}
+    und Beispiel~\ref{bsp:db6}}, label={lst:daubechies},
+    linerange={1-1,3-4,8-10}]{code/kap4_daubechies.py}}{%
+  \anmerkung{Datei \texttt{code/kap4\_daubechies.py} fehlt noch.}}
+
+%------------------------------------------------------------------------------
+\section{Entrauschung durch Thresholding}
+
+Die Skripte zu Kapitel~\ref{chapter:denoising} verwenden durchgehend den
+Filter \eqref{eq:db2-koeff}, die periodisierte Transformation
+(Abschnitt~\ref{sec:onb-invarianz}) mit $J = 5$ Stufen und $N = 2048$
+Abtastwerte. Der feste Startwert $93$ des Zufallsgenerators sorgt dafür, dass
+alle Abbildungen dieses Kapitels dieselbe Realisierung des Rauschens zeigen.
+
+\subsection{Verrauschter Sinus}
 \label{anh:code-sinus}
 
-Der folgende Code erzeugt Abbildung~\ref{fig:bsp-sinus} und die Zahlen aus
-Beispiel~\ref{bsp:sinus}: die Fehlerenergie $\norm{Y-u}^2$, ihren
-Erwartungswert $N\sigma^2$ sowie empirischen Mittelwert und empirische
+Der folgende Code berechnet die Daten von Abbildung~\ref{fig:bsp-sinus} und
+die Zahlen aus Beispiel~\ref{bsp:sinus}: die Fehlerenergie $\norm{Y-u}^2$,
+ihren Erwartungswert $N\sigma^2$ sowie empirischen Mittelwert und empirische
 Varianz von $\tilde Z = AZ$. Als Kontrolle von
 Lemma~\ref{lem:dwt-orthogonal} gibt das Skript zusätzlich
-$\norm{AZ} - \norm{Z}$ aus; der Wert verschwindet im Rahmen der
+$\norm{AZ} - \norm{Z}$ aus. Der Wert verschwindet im Rahmen der
 Rundungsgenauigkeit.
 
 \IfFileExists{code/kap5_sinus.py}{%
   \lstinputlisting[caption={Verrauschter Sinus aus Beispiel~\ref{bsp:sinus}},
-    label={lst:sinus}]{code/kap5_sinus.py}}{%
+    label={lst:sinus}, linerange={1-1,3-5,7-22}]{code/kap5_sinus.py}}{%
   \anmerkung{Datei \texttt{code/kap5\_sinus.py} fehlt noch.}}
 
-\section{Sinus mit Spitzen}
+\subsection{Sinus mit Spitzen}
 \label{code:kap5-signal}
 
-Der folgende Code erzeugt Abbildung~\ref{fig:bsp-signal} und die Zahlen aus
-Beispiel~\ref{bsp:spitzen}: für jede Stufe die Anzahl der Koeffizienten, den
-grö\ss ten Betrag beim Sinus und die Anzahl der Koeffizienten von $u$ und $f$
-mit Betrag mindestens $\sigma$, au\ss erdem $M$, die Summe
-$\sum_{\lvert\theta_m\rvert<\sigma}\theta_m^2$ der gelöschten Koeffizienten und
-das Risiko $r_{\mathrm{id}}$ der idealen Auswahl \eqref{eq:orakel}.
+Der folgende Code berechnet die Daten von Abbildung~\ref{fig:bsp-signal} und
+die Zahlen aus Beispiel~\ref{bsp:spitzen}: für jede Stufe die Anzahl der
+Koeffizienten, den grö\ss ten Betrag beim Sinus und die Anzahl der
+Koeffizienten von $u$ und $f$ mit Betrag mindestens $\sigma$, au\ss erdem
+$M$, die Summe $\sum_{\lvert\theta_m\rvert<\sigma}\theta_m^2$ der gelöschten
+Koeffizienten und das Risiko $r_{\mathrm{id}}$ der idealen Auswahl
+\eqref{eq:orakel}.
 
 \IfFileExists{code/kap5_signal.py}{%
   \lstinputlisting[caption={Sinus mit Spitzen aus Beispiel~\ref{bsp:spitzen}},
-    label={lst:kap5-signal}]{code/kap5_signal.py}}{%
+    label={lst:kap5-signal}, linerange={1-1,3-5,7-30},
+    showlines=true]{code/kap5_signal.py}}{%
   \anmerkung{Datei \texttt{code/kap5\_signal.py} fehlt noch.}}
 
-\section{Detailkoeffizienten des Testsignals}
+\subsection{Detailkoeffizienten des Testsignals}
 \label{anh:code-koeffizienten}
 
-Der folgende Code erzeugt Abbildung~\ref{fig:bsp-koeffizienten}. Der
-$k$-te Koeffizient der Stufe $j$ wird in der Mitte des Zeitabschnitts
+Der folgende Code berechnet die Daten von Abbildung~\ref{fig:bsp-koeffizienten}.
+Der $k$-te Koeffizient der Stufe $j$ wird in der Mitte des Zeitabschnitts
 $\bigl[k\,2^j/256,\ (k+1)\,2^j/256\bigr)$ eingezeichnet, für den er steht.
-Beträge über $2{,}5$ werden abgeschnitten.
 
 \IfFileExists{code/kap5_koeffizienten.py}{%
   \lstinputlisting[caption={Detailkoeffizienten des Testsignals aus Beispiel~\ref{bsp:spitzen}},
-    label={lst:koeffizienten}]{code/kap5_koeffizienten.py}}{%
+    label={lst:koeffizienten}, linerange={1-1,3-5,7-17},
+    showlines=true]{code/kap5_koeffizienten.py}}{%
   \anmerkung{Datei \texttt{code/kap5\_koeffizienten.py} fehlt noch.}}
 
-\section{Detailkoeffizienten der Messwerte}
+\subsection{Detailkoeffizienten der Messwerte}
 \label{anh:code-koeffizienten-Y}
 
-Der folgende Code erzeugt Abbildung~\ref{fig:bsp-koeffizienten-Y} und die
-Zahlen aus dem ersten Absatz von Beispiel~\ref{bsp:mad-testsignal}: den
-Schätzwert $\hat\sigma$ nach \eqref{eq:mad}, die Schwelle $T$, den grö\ss ten
-Rauschkoeffizienten $\max_m\lvert0{,}3\,\tilde Z_m\rvert$ und die Anzahl der
-Koeffizienten, die Hard-Thresholding behält.
+Der folgende Code berechnet die Daten von
+Abbildung~\ref{fig:bsp-koeffizienten-Y} und die Zahlen aus dem ersten Absatz
+von Beispiel~\ref{bsp:mad-testsignal}: den Schätzwert $\hat\sigma$ nach
+\eqref{eq:mad}, die Schwelle $T$, den grö\ss ten Rauschkoeffizienten
+$\max_m\lvert0{,}3\,\tilde Z_m\rvert$ und die Anzahl der Koeffizienten, die
+Hard-Thresholding behält.
 
 \IfFileExists{code/kap5_koeffizienten_Y.py}{%
   \lstinputlisting[caption={Detailkoeffizienten der Messwerte aus Beispiel~\ref{bsp:mad-testsignal}},
-    label={lst:koeffizienten-Y}]{code/kap5_koeffizienten_Y.py}}{%
-  \anmerkung{Datei \texttt{code/kap5\_koeffizienten\_Y.py} fehlt noch.}} 
-  
-  
-\section{Entrauschtes Testsignal}
+    label={lst:koeffizienten-Y}, linerange={1-1,3-5,7-29},
+    showlines=true]{code/kap5_koeffizienten_Y.py}}{%
+  \anmerkung{Datei \texttt{code/kap5\_koeffizienten\_Y.py} fehlt noch.}}
+
+\subsection{Entrauschtes Testsignal}
 \label{anh:code-entrauscht}
 
-Der folgende Code erzeugt Abbildung~\ref{fig:bsp-entrauscht} und die
-Fehlerenergien aus Beispiel~\ref{bsp:mad-testsignal}. Wie in
+Der folgende Code berechnet die Daten von Abbildung~\ref{fig:bsp-entrauscht}
+und die Fehlerenergien aus Beispiel~\ref{bsp:mad-testsignal}. Wie in
 Algorithmus~\ref{alg:visushrink} werden alle Koeffizienten mit der Schwelle
 $T$ bearbeitet, einschlie\ss lich der Approximation $a_5$.
 
 \IfFileExists{code/kap5_entrauscht.py}{%
   \lstinputlisting[caption={Entrauschen des Testsignals aus Beispiel~\ref{bsp:mad-testsignal}},
-    label={lst:entrauscht}]{code/kap5_entrauscht.py}}{%
-  \anmerkung{Datei \texttt{code/kap5\_entrauscht.py} fehlt noch.}}  
-
-
-
- 
-\section{Anwendung auf EKG-Signale}
+    label={lst:entrauscht}, linerange={1-1,3-5,7-28},
+    showlines=true]{code/kap5_entrauscht.py}}{%
+  \anmerkung{Datei \texttt{code/kap5\_entrauscht.py} fehlt noch.}}
+%------------------------------------------------------------------------------
+\section{Entrauschung von EKG-Signalen}
 \label{anh:code-kap6}
 
 Die Skripte zu Kapitel~\ref{chapter:anwendung} lesen die Datensätze $100$ und
@@ -4395,9 +4508,8 @@ Test aus Abschnitt~\ref{sec:test}.
   \lstinputlisting[caption={Annotationen: Herzfrequenz (Abschnitt~\ref{sec:tiefe-J}) und verrauschter Abschnitt (Abschnitt~\ref{sec:daten})},label={lst:kap6-herzfrequenz}]{code/kap6_herzfrequenz.py}}{%
   \anmerkung{Datei \texttt{code/kap6\_herzfrequenz.py} fehlt noch.}}
 \IfFileExists{code/kap6_abb_vergleich.py}{%
-  \lstinputlisting[caption={Abbildung~\ref{fig:vergleich}; Schätzer $\hat\sigma$ der Datensätze},label={lst:kap6-vergleich}]{code/kap6_abb_vergleich.py}}{%
+  \lstinputlisting[caption={Abbildung~\ref{fig:vergleich} und Schätzer $\hat\sigma$ der Datensätze},label={lst:kap6-vergleich}]{code/kap6_abb_vergleich.py}}{%
   \anmerkung{Datei \texttt{code/kap6\_abb\_vergleich.py} fehlt noch.}}
-
 \IfFileExists{code/kap6_test.py}{%
   \lstinputlisting[caption={Test an einem künstlichen EKG: Tabelle~\ref{tab:test}, Energien je Stufe, Kontrolle über $10$ Realisierungen und Rauschpegel},label={lst:kap6-test}]{code/kap6_test.py}}{%
   \anmerkung{Datei \texttt{code/kap6\_test.py} fehlt noch.}}
@@ -4416,7 +4528,6 @@ Test aus Abschnitt~\ref{sec:test}.
 \IfFileExists{code/kap6_abb_zerlegung.py}{%
   \lstinputlisting[caption={Abbildungen~\ref{fig:zerlegung-f} bis~\ref{fig:zerlegung-fhat}},label={lst:kap6-abb-zerlegung}]{code/kap6_abb_zerlegung.py}}{%
   \anmerkung{Datei \texttt{code/kap6\_abb\_zerlegung.py} fehlt noch.}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LITERATURVERZEICHNIS

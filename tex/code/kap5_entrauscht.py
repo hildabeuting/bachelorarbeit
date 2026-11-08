@@ -1,8 +1,9 @@
-# Beispiel aus Kapitel 5: Entrauschen des Testsignals mit Hard- und Soft-Thresholding (Abb. 5.8).
+# Beispiel 5.14: Entrauschtes Testsignal, Abbildung 5.8
+import os
 import numpy as np
 import pywt
-import matplotlib.pyplot as plt
 
+ordner = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "abbildungen")
 N = 2048
 J = 5
 sigma = 0.3
@@ -10,53 +11,21 @@ zentren = [1.3, 3.7, 6.2]
 
 t = 8 * np.arange(N) / N
 u = np.sin(2 * np.pi * t)
-
 s = sum(3 * np.maximum(0, 1 - np.abs(t - c) / 0.03) for c in zentren)
 f = u + s
-
 Z = np.random.default_rng(93).standard_normal(N)
 Y = f + sigma * Z
-
 c = pywt.wavedec(Y, "db2", mode="periodization", level=J)
 sigma_dach = np.median(np.abs(c[-1])) / 0.6745
 T = sigma_dach * np.sqrt(2 * np.log(N))
-
-hart = pywt.waverec([pywt.threshold(d, T, "hard") for d in c], "db2", mode="periodization")
-weich = pywt.waverec([pywt.threshold(d, T, "soft") for d in c], "db2", mode="periodization")
+c_hart = [pywt.threshold(d, T, "hard") for d in c]
+c_weich = [pywt.threshold(d, T, "soft") for d in c]
+hart = pywt.waverec(c_hart, "db2", mode="periodization")
+weich = pywt.waverec(c_weich, "db2", mode="periodization")
 
 print(f"||Y - f||^2 = {np.sum((Y - f) ** 2):.1f}")
 print(f"hart:  ||f_hart - f||^2 = {np.sum((hart - f) ** 2):.1f}")
 print(f"weich: ||f_weich - f||^2 = {np.sum((weich - f) ** 2):.1f}")
 
-plt.rcParams.update({"font.size": 11, "mathtext.fontset": "cm"})
-fig = plt.figure(figsize=(7.0, 5.4))
-gs = fig.add_gridspec(2, 2, width_ratios=[2.2, 1])
-ax0 = fig.add_subplot(gs[0, 0])
-ax1 = fig.add_subplot(gs[0, 1], sharey=ax0)
-ax2 = fig.add_subplot(gs[1, :], sharey=ax0)
-
-ax0.plot(t, hart, color="royalblue", lw=0.9, label="hart")
-ax0.plot(t, weich, color="red", lw=0.7, label="weich")
-ax0.set_xlim(0, 8)
-ax0.set_ylim(-2.2, 4.0)
-ax0.set_xlabel("$t$")
-
-aus = (t > 3.45) & (t < 3.95)
-ax1.plot(t[aus], f[aus], color="black", ls=":", lw=0.9, label="$f$")
-ax1.plot(t[aus], hart[aus], color="royalblue", lw=0.9, label="hart")
-ax1.plot(t[aus], weich[aus], color="red", lw=0.7, label="weich")
-ax1.set_xlabel("$t$ (Ausschnitt)")
-ax1.legend(frameon=False, loc="upper right")
-
-ax2.plot(t, Y, color="gray", lw=0.6, label="$Y$")
-ax2.plot(t, hart, color="royalblue", lw=0.9, label="hart")
-ax2.set_xlim(0, 8)
-ax2.set_xlabel("$t$")
-ax2.legend(frameon=False, loc="upper right", ncol=2)
-
-for a in (ax0, ax1, ax2):
-    a.spines[["top", "right"]].set_visible(False)
-
-fig.tight_layout()
-
-plt.show()
+tabelle = np.column_stack([t, f, Y, hart, weich])
+np.savetxt(os.path.join(ordner, "kap5_entrauscht.dat"), tabelle, header="t f Y hart weich", comments="", fmt="%.6f")
