@@ -10,15 +10,19 @@
 \graphicspath{{abbildungen/}{../abbildungen/}{./}}
 \usepackage{psfrag}
 \usepackage{tikz, pgfplots}
-\usepgfplotslibrary{groupplots}
 
+\usepgfplotslibrary{groupplots}
 \pgfplotsset{compat=1.18,
   ba/.style={width=\textwidth, height=4.5cm, axis lines=left,
     tick label style={font=\footnotesize}, label style={font=\small},
-    /pgf/number format/use comma, typeset ticklabels with strut,
+    /pgf/number format/use comma, /pgf/number format/1000 sep={},
+    typeset ticklabels with strut,
     title style={text height=2.2ex, text depth=0.6ex},
     cycle list={{uhh_blue, no marks}},
     every axis plot/.append style={uhh_blue, line width=0.8pt}}}
+
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikz-cache/]
 
 \usepackage[T1]{fontenc}
 \renewcommand{\familydefault}{cmss} % Schriftart
@@ -233,295 +237,292 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\anmerkung{Einleitung ganz zum Schluss schreiben. Laut Vorlage muss hier
-stehen: (a) Worum geht es, (b) Einordnung ins Forschungsfeld, (c) Fragestellung,
-(d) Relevanz, (e) vorhandene Literatur, (f) EIGENER ANTEIL der Arbeit,
-(g) grober Aufbau der Arbeit.}
+Das Elektrokardiogramm (EKG) zeichnet die elektrische Aktivität des Herzens
+auf und gehört zu den am besten erforschten biomedizinischen Signalen mit
+hohem diagnostischem Wert \cite[Kap.~2.1]{gacek}. % S. 22
+Jede Aufzeichnung ist jedoch gestört
+\cite[Kap.~2.3]{gacek}: % S. 25
+Bewegung und Atmung verschieben die Grundlinie, Muskelaktivität und das
+Stromnetz überlagern zusätzliche Schwingungen, und die Messung selbst
+erzeugt Rauschen (Abschnitt~\ref{sec:ekg}). Ein Teil dieser Störungen liegt im
+selben Frequenzbereich wie das EKG. Sie lassen sich daher nicht entfernen,
+ohne diagnostische Information zu beschädigen \cite[Kap.~2.3]{gacek}. % S. 26
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Motivation: EKG-Signale und ihre Störquellen}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Die Fourier-Analyse stellt ein Signal durch Schwingungen dar, die über die
+ganze Zeitachse ausgedehnt sind. Kurze, scharfe Strukturen wie der
+QRS-Komplex erfassen sie schlecht. Hanke-Bourgeois zeigt das an einem EKG mit
+$2048$ Messwerten: Seine Approximation durch trigonometrische Polynome glättet
+die Spitzen, und bei niedrigem Grad geht ein Minimum ganz verloren
+\cite[Bsp.~52.7]{hankebourgeois}. % S. 404
+Wavelets sind dagegen zeitlich lokalisiert. Im selben EKG sind über ein
+Viertel der $2048$ Waveletkoeffizienten betragsmä\ss ig kleiner als $10^{-4}$,
+aber nur $24$ der Fourierkoeffizienten \cite[Bsp.~56.3]{hankebourgeois}. % S. 440
+Das Signal steckt also in wenigen Waveletkoeffizienten. Darauf beruht das
+Thresholding nach Donoho und Johnstone: Setzt man kleine Koeffizienten auf
+null, entfernt man vor allem Rauschen, und scharfe Strukturen bleiben erhalten
+\cite[Kap.~11.3.1]{mallat}. % S. 563
+Castillo et al.\ entfernen auf diese Weise Drift und Rauschen aus EKG-Signalen
+in einer einzigen Zerlegung \cite{castillo}, % S. 1
+Alessio stellt dieses Verfahren als Beispiel dar \cite[Kap.~15.2.4]{alessio}. % S. 728--734
 
-\anmerkung{EKG-Signale und ihre Störquellen Das EKG ist ein nichtstationäres 
-biomedizinisches Signal, dessen diagnostisch entscheidende Strukturen von 
-Störungen überlagert werden, die im selben Frequenzband liegen wie das 
-Nutzsignal — womit einfache Frequenzfilter ausscheiden.}
+Diese Arbeit geht der Frage nach, warum das Thresholding von
+Waveletkoeffizienten Rauschen aus einem EKG entfernt und wie gut das
+Verfahren von Castillo et al.\ an realen Aufzeichnungen funktioniert. Wir
+beschränken uns dabei auf orthogonale Daubechies-Wavelets. Andere Verfahren
+werden nicht verglichen, und eine klinische Bewertung der Ergebnisse ist nicht
+Gegenstand der Arbeit.
 
-\anmerkung{hier schon kurzer aufbau ekg signal kurzer qrskomplex und langer t p welle... }
+Der eigene Beitrag liegt in zwei Teilen. Zum einen wird der Weg vom
+Hilbertraum $\LZwei$ über die Multiskalenanalyse und die diskrete
+Wavelet-Transformation bis zum Thresholding geschlossen und in einheitlicher
+Notation hergeleitet. Zum anderen werden die Parameter des Verfahrens von
+Castillo et al.\ über die Frequenzbänder der Transformation begründet, an
+einem künstlichen EKG getestet und auf zwei Aufzeichnungen der MIT-BIH
+Arrhythmia Database angewandt.
 
-\quellen{ \begin{itemize}
-  \item LMR, Kap. 3.1.2 „EKG-Analyse", S. 238–240 [bestätigt] — Herzklappenrhythmus 
-        und „late potentials" als diagnostische Fragestellungen; Abb. 3.1 (S. 239)  
-  \item Gacek, Kap. 2.1, S. 21–22 [bestätigt] — diagnostische Bedeutung, historische 
-        Einordnung
-  \item Gacek, Kap. 2.3, S. 25–27 [bestätigt] — Störquellen im Überblick
-  \item Chatterjee, Kap. 1.1 „Predominant noises in ECG", S. 570 [bestätigt]
-  \item Aqil, Kap. 2, S. 53–54 [bestätigt] — Fig. 3, Rauschtypen
-  \item Rebstadt, Kap. 2.1, S. 7–11 [bestätigt] — Abb. 2.3 (S. 10)
-          \end{itemize}
-        }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Warum die Fourier-Analyse nicht genügt}
-\label{sec:fourier-grenzen}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{VERSCHOBEN aus dem alten Abschnitt~2.5. Begründung: In Kapitel~2 war das
-ein Fremdkörper -- dort werden Werkzeuge bereitgestellt, hier wird die Fragestellung
-motiviert. Der Abschnitt liefert genau das Argument, das die ganze Arbeit trägt:
-Die Fourier-Basis sagt, \emph{welche} Frequenzen auftreten, nicht \emph{wann}.}
-\anmerkung{Die Fourier-Basis ist global; sie sagt welche Frequenzen auftreten, nicht wann 
-— bei einem QRS-Komplex ist genau die Lokalisierung entscheidend.}
-\quellen{
-  \begin{itemize}
-    \item LMR, Kap. 1.3.2 „Wavelet-Transformation und gefensterte Fourier-Transformation", 
-    S. 36–37 [bestätigt] — direkter Vergleich beider Transformationen, in der 2. Auflage 
-    eigens dafür neu aufgenommen
-    \item LMR, Kap. 1.3.1 „Phasenraumdarstellung", S. 30–35 [bestätigt]
-    \item LMR, Vorwort zur ersten Auflage, S. 3 [bestätigt] — fehlende 
-    Lokalisierungseigenschaft der Fourier-Transformation, prägnant formuliert
-    \item Blatter, Kap. 1.4, S. 10–12 [bestätigt]; Kap. 2.3 „Heisenbergsche Unschärferelation", 
-    S. 43–46 [bestätigt]
-    \item SteinShakarchi, Kap. 5.4, S. 158–160 [bestätigt]
-    \item HankeBourgeois, Beispiel 52.7 mit Abbildung 52.1, S. 403–404 [bestätigt] — reales 
-    EKG-Signal mit $N = 2048$
-          Me\ss{}werten und seinen Bestapproximationen aus $T_8$ und $T_{32}$
-          ; die scharfen Peaks werden mit sinkendem Polynomgrad ausgeglättet, 
-          $t_8$ „übersieht" das Minimum am ca. 200. Datenpunkt
-    \item HankeBourgeois, S. 433–434 [bestätigt] — quantitativ: die Fourierkoeffizienten 
-    von $\chi_{[a,b]}$ fallen nur wie $1/k$, der $L^2$-Fehler nach $n$ Termen ist 
-    $\sim n^{-1/2}$; „schlechte Lokalisierungseigenschaft bezüglich der Ortsvariablen"
-    \item HankeBourgeois, Beispiel 56.3 mit Abbildung 56.2, S. 440 [bestätigt] — Fourier- 
-    vs. Waveletkoeffizienten desselben EKG-Signals in logarithmischer Skala
-    \item Rebstadt, Abb. 2.7, S. 22 [bestätigt]
-    \item Fu\ss{}note S. 404: Die EKG-Daten stammen laut HankeBourgeois von Prof. Dr. P. Maa\ss{}, 
-    Universität Bremen — demselben Maa\ss{} wie in Louis/Maa\ss{}/Rieder. Deine beiden 
-    deutschsprachigen Quellen arbeiten am selben Signal.
-  \end{itemize}
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Zielsetzung und Abgrenzung}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\anmerkung{Ziel ist die mathematisch vollständige Herleitung der DWT-Entrauschung; 
-Abgrenzung gegenüber konkurrierenden Verfahren, die nur benannt werden.}
-
-\quellen{ \begin{itemize}
-  \item LMR, Vorwort zur ersten Auflage, S. 3–4 [bestätigt] — Verzahnung von 
-  Theorie und Anwendung als Programm
-  \item Chatterjee, Kap. 2–4, S. 571–581
-  \item Rebstadt, Kap. 2.3, S. 14–31 [bestätigt]
-         \end{itemize}
-        }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Aufbau der Arbeit}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Kapitel~\ref{chapter:grundlagen} stellt die mathematischen Grundlagen bereit.
+Kapitel~\ref{chapter:mra} führt von der kontinuierlichen Wavelet-Transformation
+zur Multiskalenanalyse und zu einer Orthonormalbasis aus Wavelets.
+Kapitel~\ref{chapter:dwt} konstruiert daraus die diskrete
+Wavelet-Transformation mit dem Mallat-Algorithmus und den Daubechies-Wavelets.
+Kapitel~\ref{chapter:denoising} begründet das Entrauschen durch Thresholding
+und die Wahl der Schwelle. Kapitel~\ref{chapter:anwendung} wendet das Verfahren
+auf EKG-Signale an, zuerst an einem künstlichen EKG, dann an den realen
+Aufzeichnungen. Kapitel~\ref{chapter:fazit} fasst die Ergebnisse zusammen und
+gibt einen Ausblick.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Funktionalanalytische Grundlagen}
+\chapter{Mathematische Grundlagen}
 \label{chapter:grundlagen}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\anmerkung{Block A. Kapiteleinleitung: Ziel ist der funktionalanalytische
-Rahmen, in dem die Wavelet-Transformation als unitäre Abbildung erscheint.}
-
-\anmerkung{davor support definieren - in grundlagen ist der träger einfach...}
-\anmerkung{davor auf jeden fall l2 norm definienren}
-\anmerkung{wenn heisenbergunschärfe geschirieben dann richtigen verweis einfügen...}
-
-\anmerkung{klein l defiiniern.}
+Dieses Kapitel stellt die Begriffe bereit, die in den folgenden Kapiteln
+benutzt werden: den Hilbertraum $\LZwei$, unitäre Operatoren, die
+Fourier-Transformation und das stochastische Modell für das Rauschen.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Der Hilbertraum \texorpdfstring{$L^2(\R)$}{L2(R)}}
+\section{Der Hilbertraum \texorpdfstring{$L^2(\R)$}{L2(R)} und Orthonormalbasen}
 \label{sec:l2}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Einführung von $L^2(\R)$ als vollständigem Raum mit Skalarprodukt — 
-dem Raum, in dem sämtliche Signale und Wavelets im Folgenden leben.}
 
-\quellen{
-  \begin{itemize}
-    \item Serov, Kap. 25, S. 249–253 [bestätigt] (Def. 25.1 Skalarprodukt, Def. 
-          25.7 Hilbertraum)
-    \item Blatter, Kap. 2.1, S. 26–27 [bestätigt]
-    \item LMR, „Notationen", S. 9–12 [bestätigt] — Räume $L^p, C^(\infty), S(\R), 
-          S'(\R)$ in genau der Notation, die LMR durchgehend verwendet
-  \end{itemize}
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Orthonormalbasen und ihre Charakterisierung}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Der zentrale Satz: Vollständigkeit, Parseval-Gleichung und die 
-Entwicklung jedes Elements sind für ein Orthonormalsystem äquivalent.}
-\quellen{
-  \begin{itemize}
-    \item Serov, Satz 25.18 „Characterization of an orthonormal basis", S. 258 [bestätigt]
-    \item Serov, Def. 25.16–25.17, S. 257–258 [bestätigt]
-    \item Serov, Satz 25.12 (Projektionssatz), S. 254–255 [geschätzt]
-    \item Blatter, Kap. 2.1, S. 27 [bestätigt]
-    \item HankeBourgeois, Satz 31.6, S. 281 [bestätigt] — (a) Entwicklung, 
-    (b) Satz des Pythagoras, (c) Bestapproximation, (d) Besselsche Ungleichung, mit Beweis
-    \item HankeBourgeois, §31 „Innenprodukträume, Orthonormalbasen und Gramsche 
-    Matrizen", S. 275–282 [bestätigt]; Definition von $L{\omega}$, S. 279–280 [geschätzt]
-  \end{itemize}
-}
+\begin{Definition}[Hilbertraum, {\cite[Def.~25.5, Def.~25.7]{serov}}] % S. 251
+\label{def:hilbertraum}
+Sei $\mathcal H$ ein Vektorraum mit Skalarprodukt $\scal{\cdot}{\cdot}$ und der
+davon erzeugten Norm $\norm{x} := \scal{x}{x}^{1/2}$. Ist $\mathcal H$
+bezüglich dieser Norm vollständig, konvergiert also jede Cauchy-Folge in
+$\mathcal H$, so hei\ss t $\mathcal H$ Hilbertraum.
+\end{Definition}
 
+\begin{Definition}[Der Raum $\LZwei$, {\cite[Kap.~25]{serov}}] % S. 253--254, Beispiel (4) mit Omega = R
+\label{def:l2}
+$\LZwei$ ist der Raum der messbaren Funktionen $f\colon\R\to\C$, deren Betrag
+quadratisch integrierbar ist\footnote{Funktionen, die sich nur auf einer
+Nullmenge unterscheiden, werden dabei als gleich angesehen
+\cite[Kap.~2.1--2.2]{blatter}.}, % S. 26 (Nullmenge), S. 31 (gilt analog für L^2(R))
+mit
+\[
+  \scal{f}{g} := \int_\R f(t)\,\overline{g(t)}\,dt ,
+  \qquad
+  \norm{f} := \scal{f}{f}^{1/2} .
+\]
+\end{Definition}
+
+\begin{Satz}[{\cite[Kap.~25, Übung~25.3]{serov}}] % S. 251, 254 (Satz von Riesz-Fischer)
+\label{satz:l2-hilbert}
+$\LZwei$ ist ein Hilbertraum. Für alle $f,g\in\LZwei$ gilt die
+Cauchy-Schwarz-Ungleichung
+\[
+  \abs{\scal{f}{g}} \;\le\; \norm{f}\,\norm{g} .
+\]
+\end{Satz}
+
+Ebenso sind der $\R^N$ mit $\scal{x}{y} := \sum_{n} x_n y_n$ und der Folgenraum
+$\ellZwei$ mit $\scal{c}{d} := \sum_{k\in\Z} c_k\,\overline{d_k}$ Hilberträume,
+vgl.\ \cite[Kap.~25]{serov}. % S. 252--253, dort Folgen mit Index in N
+Normen ohne Index sind im Folgenden Normen in $\LZwei$, bei Vektoren die
+euklidische Norm. Analog zu $\LZwei$ ist $L^1(\R)$ der Raum der Funktionen mit
+$\norm{f}_1 := \int_\R \abs{f(t)}\,dt < \infty$ \cite[Kap.~2.2]{blatter}. % S. 31
+
+\begin{Definition}[Träger, vgl.\ {\cite[Def.~56.1]{hankebourgeois}}] % S. 436
+\label{def:traeger}
+Der Träger einer Funktion $f$ ist
+\[
+  \supp f \;:=\; \overline{\{t\in\R : f(t)\neq 0\}} .
+\]
+Ist $\supp f$ beschränkt, so hei\ss t $f$ kompakt getragen.
+\end{Definition}
+
+\begin{Definition}[Orthonormalbasis, {\cite[Def.~25.4, Def.~25.17]{serov}}] % S. 250, 257
+\label{def:onb}
+Sei $\mathcal H$ ein Hilbertraum. Eine Familie $\{e_k\}_{k\in\Z}$ in
+$\mathcal H$ hei\ss t Orthonormalsystem, wenn $\scal{e_k}{e_l} = \delta_{k,l}$
+für alle $k,l\in\Z$ gilt. Lässt sich zudem jedes $x\in\mathcal H$ beliebig
+genau durch endliche Linearkombinationen der $e_k$ approximieren, so hei\ss t
+sie Orthonormalbasis von $\mathcal H$.
+\end{Definition}
+
+\begin{Satz}[{\cite[Übung~25.2, Satz~25.18]{serov}}] % S. 250, 257--258, dort für separable Räume
+\label{satz:onb}
+Sei $\{e_k\}_{k\in\Z}$ ein Orthonormalsystem im Hilbertraum $\mathcal H$. Für
+jedes $x\in\mathcal H$ gilt die Bessel-Ungleichung
+\[
+  \sum_{k\in\Z} \abs{\scal{x}{e_k}}^2 \;\le\; \norm{x}^2 .
+\]
+Ferner sind äquivalent:
+\begin{enumerate}
+\item[(a)] $\{e_k\}_{k\in\Z}$ ist eine Orthonormalbasis von $\mathcal H$.
+\item[(b)] Jedes $x\in\mathcal H$ hat die Entwicklung
+  $x = \sum_{k\in\Z}\scal{x}{e_k}\,e_k$ mit Konvergenz in der Norm von
+  $\mathcal H$.
+\item[(c)] Jedes $x\in\mathcal H$ erfüllt die Parseval-Gleichung
+  $\norm{x}^2 = \sum_{k\in\Z}\abs{\scal{x}{e_k}}^2$.
+\end{enumerate}
+\end{Satz}
+
+Ist $\{e_k\}_{k\in\Z}$ eine Orthonormalbasis, so ordnet
+$x\mapsto(\scal{x}{e_k})_{k\in\Z}$ jedem $x\in\mathcal H$ nach (c) eine Folge
+in $\ellZwei$ mit derselben Norm zu.
+Für einen Teilraum $M\subset\mathcal H$ hei\ss t
+$M^\perp := \{y\in\mathcal H : \scal{y}{x} = 0 \text{ für alle } x\in M\}$
+das orthogonale Komplement von $M$ \cite[Def.~25.8]{serov}. % S. 254
+Der Teilraum $M$ hei\ss t abgeschlossen, wenn jeder Grenzwert einer Folge in
+$M$ wieder in $M$ liegt \cite[Def.~25.10]{serov}. % S. 254
+
+\begin{Satz}[Projektionssatz, {\cite[Satz~25.12]{serov}}] % S. 254--255
+\label{satz:projektion}
+Sei $M$ ein abgeschlossener Teilraum des Hilbertraums $\mathcal H$. Dann hat
+jedes $x\in\mathcal H$ genau eine Darstellung $x = u + v$ mit $u\in M$ und
+$v\in M^\perp$. Dabei gilt
+\[
+  \norm{x - u} \;=\; \inf_{y\in M}\,\norm{x - y} .
+\]
+\end{Satz}
+
+Man schreibt dafür $\mathcal H = M\oplus M^\perp$ und nennt $\mathcal H$ die
+orthogonale Summe von $M$ und $M^\perp$ \cite[Satz~25.12]{serov}. % S. 254
+Die Abbildung $P_M\colon x\mapsto u$ ist linear, und es gilt $P_M^2 = P_M$ und
+$P_M^* = P_M$. Sie hei\ss t Orthogonalprojektion auf $M$
+\cite[Def.~27.1, Prop.~27.2\,(4)]{serov}. % S. 279, Beweis von (4) S. 280
+Nach Satz~\ref{satz:projektion} ist $P_M x$ die beste Näherung von $x$ in $M$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Unitäre Operatoren}
 \label{sec:unitaer}
-\anmerkung{Ein unitärer Operator ist eine surjektive Isometrie; er erhält Skalarprodukte 
-und damit Energie — der Grund, warum Rauschen unter der DWT seine Statistik behält.}
-\quellen{
-  \begin{itemize}
-   \item Serov, Def. 27.7 und Bem. 27.8, S. 282 [bestätigt] (Sachverz.: „unitary operator, 282")
-   \item LMR, Kap. 1.2 „Affine Operatoren", S. 26–29 [bestätigt] — Dilatationsoperator $D_a$, 
-   Translationsoperator $T_b$, beide Isometrien mit Bild ganz $L^2$, daher Adjungierte = Inverse
-   \item LMR, Lemma 1.2.1 (adjungierte affine Operatoren), S. 27 [bestätigt]
-   \item LMR, S. 27 [bestätigt] — affin-lineare Gruppe $G_{a,f}$ und Verknüpfungsgesetz
-   $T_{b'}D_{a'}T_{b}D_a = T_{b'+a'b}D_{aa'}$ 
-  \end{itemize}
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{Definition}[Isometrie, unitärer Operator, vgl.\ {\cite[Def.~27.6, Def.~27.7]{serov}}] % S. 282
+\begin{Definition}[Isometrie, unitärer Operator, {\cite[Def.~27.6, Def.~27.7]{serov}}] % S. 282
 \label{def:isometrie}
-Seien $\mathcal H_1$ und $\mathcal H_2$ Hilberträume. Eine lineare Abbildung
-$U\colon \mathcal H_1 \to \mathcal H_2$ hei\ss{}t Isometrie, wenn
-$\norm{Ux} = \norm{x}$ für alle $x \in \mathcal H_1$ gilt. Eine surjektive
+Sei $\mathcal H$ ein Hilbertraum. Eine lineare Abbildung
+$U\colon \mathcal H \to \mathcal H$ hei\ss{}t Isometrie, wenn
+$\norm{Ux} = \norm{x}$ für alle $x \in \mathcal H$ gilt. Eine surjektive
 Isometrie hei\ss{}t unitär.
 \end{Definition}
- 
+
 Eine Isometrie erhält auch Skalarprodukte, also
-$\scal{Ux}{Uy} = \scal{x}{y}$ für alle $x,y$ \cite[Übung~27.2]{serov}. % S. 282
+$\scal{Ux}{Uy} = \scal{x}{y}$ für alle $x,y\in\mathcal H$
+\cite[Übung~27.2, Bem.~27.8]{serov}. % S. 282
+
+Ein wichtiges Beispiel sind orthogonale Matrizen. Eine Matrix
+$S\in\R^{N\times N}$ hei\ss t orthogonal, wenn $S^\top = S^{-1}$ gilt, also
+$S^\top S = SS^\top = I$ \cite[Übung~16.5]{serov}. % S. 138
+\label{def:orthogonale-matrix}%
+Für quadratische Matrizen folgt das schon aus $S^\top S = I$. Sind
+$s_0,\dots,s_{N-1}$ die Zeilen von $S$, so ist der Eintrag $(m,p)$ von
+$SS^\top$ gleich $\scal{s_m}{s_p}$. Die Bedingung $SS^\top = I$ besagt also,
+dass die Zeilen von $S$ eine Orthonormalbasis des $\R^N$ bilden. Wegen
+\[
+  \norm{Sx}^2 \;=\; x^\top S^\top S\,x \;=\; \norm{x}^2
+\]
+und $SS^\top = I$ ist $S$ eine surjektive Isometrie, also ein unitärer
+Operator auf dem $\R^N$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Fourier-Transformation und Satz von Plancherel}
+\section{Fourier-Transformation}
 \label{sec:fourier-plancherel}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\anmerkung{Die Fourier-Transformation setzt sich von der Schwartz-Klasse eindeutig zu 
-einem unitären Isomorphismus auf $L^2(\R)$ fort.}
-\quellen{
-  \begin{itemize}
-    \item Serov, Satz 17.5 (Plancherel), S. 145 [bestätigt]
-    \item Serov, Kap. 16–17, S. 133–152 [bestätigt]
-    \item SteinShakarchi, Kap. 5.1, S. 131–144 [bestätigt]
-    \item Blatter, Kap. 2.2, S. 31–42 [bestätigt]; Plancherel-Formel S. 36 [bestätigt]
-    \item LMR, Anhang „Fourier-Transformation", S. 313–316 [bestätigt] — kompakte 
-    Zusammenstellung genau der Regeln, die LMR im Waveletteil benutzt
-  \end{itemize}
-}
+
+\begin{Definition}[Fourier-Transformation, {\cite[Kap.~2.2]{blatter}}] % S. 31, gleiche Konvention wie Serov Kap. 12, S. 85
+\label{def:fourier}
+Für $f\in L^1(\R)$ hei\ss t
+\[
+  \hat f(\omega) \;:=\; \frac{1}{\sqrt{2\pi}}\int_\R f(t)\,e^{-i\omega t}\,dt,
+  \qquad \omega\in\R ,
+\]
+die Fourier-Transformierte von $f$.
+\end{Definition}
 
 \begin{Bemerkung}[Fourier-Konvention]
 \label{bem:fourier-konvention}
-In dieser Arbeit wird durchgehend die unitäre Normierung
-\[
-  \hat f(\omega) \;=\; (2\pi)^{-1/2}\int_\R f(t)\,e^{-i\omega t}\,dt
-\]
-verwendet. Mit ihr ist die Fourier-Transformation ein unitärer Operator auf
-$\LZwei$, und die Plancherel-Formel gilt ohne Vorfaktor:
-$\scal{f}{g} = \scal{\hat f}{\hat g}$.
-
-Die Literatur normiert uneinheitlich, und die Konstanten der folgenden
-Kapitel hängen von der Wahl ab. Der Faktor $2\pi$ in der
-Zulässigkeitsbedingung \eqref{eq:zulaessigkeit} gilt nur für diese
-Normierung. Beim Vergleich mit einer Quelle ist deshalb zuerst deren
-Konvention nachzusehen.
+Diese Normierung gilt in der ganzen Arbeit. In der Literatur ist sie nicht
+einheitlich, und je nach Wahl ändern sich die Konstanten in den Formeln
+\cite[Kap.~2.2]{blatter}. % S. 32
+So gilt der Faktor $2\pi$ in \eqref{eq:zulaessigkeit} nur für diese Normierung.
 \end{Bemerkung}
 
-\anmerkung{das vll besser erst später}
+\begin{Satz}[{\cite[Satz~(2.9)]{blatter}}] % Blatter S. 32, Serov S. 85
+\label{satz:riemann-lebesgue}
+Für $f\in L^1(\R)$ ist $\hat f$ stetig.
+\end{Satz}
 
-\begin{Satz}[Plancherel-Formel für die Fourier-Transformation, {\cite[Satz~(2.11)]{blatter}}] % S. 36
+\begin{Satz}[Plancherel-Formel, {\cite[Satz~(2.11)]{blatter}}] % Blatter S. 36, Serov S. 145
 \label{satz:plancherel-ft}
-Die Fourier-Transformation lässt sich von $L^1(\R) \cap \LZwei$ zu einer
-bijektiven Abbildung $\LZwei \to \LZwei$ fortsetzen. Für alle
-$f, g \in \LZwei$ gilt
+Die Fourier-Transformation lässt sich von $L^1(\R) \cap \LZwei$ eindeutig zu
+einer bijektiven Abbildung $\LZwei \to \LZwei$ fortsetzen. Für
+$f\in L^1(\R)\cap\LZwei$ ist $\hat f$ also weiterhin durch das Integral aus
+Definition~\ref{def:fourier} gegeben. Für alle $f, g \in \LZwei$ gilt
 \begin{equation}
 \label{eq:plancherel-ft}
   \scal{\hat f}{\hat g} \;=\; \scal{f}{g},
   \qquad\text{insbesondere}\qquad
-  \norm{\hat f}_{\LZwei} \;=\; \norm{f}_{\LZwei} .
+  \norm{\hat f} \;=\; \norm{f} .
 \end{equation}
 \end{Satz}
 
 Die Fourier-Transformation ist also unitär (Definition~\ref{def:isometrie}).
-Für $f \in \LZwei \setminus L^1(\R)$ ist $\hat f$ nur als Element von
-$\LZwei$ erklärt, also nur bis auf Nullmengen \cite[Kap.~2.2]{blatter}. % S. 36
 
-\section{Die gefensterte Fourier-Transformation}
-\label{sec:wft}
-
-\anmerkung{Hierher gehört die quantitative Begründung der festen Fensterbreite: Heisenbergsche Unschärferelation, Zeit-Bandbreite-Produkt. Abschnitt~\ref{sec:cwt} verweist darauf. Belege: Blatter, Kap.~2.3, S.~43--46 [bestätigt]; LMR, Kap.~1.3.1, S.~30--35 [bestätigt].}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Grundbegriffe der Wahrscheinlichkeitsrechnung}
 \label{sec:wahrscheinlichkeit}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\quellen{
-%  \begin{itemize}
-%    \item Mallat, Anhang A.6, S. 761--762 -- Zufallsvektor, Erwartungswert, Varianz,
-%          Kovarianz (A.19), Kovarianzmatrix
-%    \item Mallat, Kap. 11.2.2, S. 554 -- Gaußdichte phi, nach Gl. (11.56)
-%    \item Mallat, Kap. 11.1.1, S. 538 -- gemeinsam normalverteilt und unkorreliert
-%          => unabhängig ("two jointly Gaussian random vectors are independent if
-%          they are noncorrelated [53]")
-%  \end{itemize}
-%}
 
 In Kapitel~\ref{chapter:denoising} wird das Rauschen in einem Messsignal als
 zufällig modelliert. Dafür genügen die folgenden Begriffe
-\cite[Anhang~A.6]{mallat}. % S. 761--762
-Ein Zufallsvektor $X = (X_0,\dots,X_{N-1})$ besteht aus $N$ Zufallsvariablen
-$X_n$. Hat eine Zufallsvariable $X$ die Wahrscheinlichkeitsdichte $p$, so hei\ss en
-\[
-  \mathbb E[X] \;=\; \int_\R x\,p(x)\,dx
-  \qquad\text{und}\qquad
-  \operatorname{Var}(X) \;=\; \mathbb E\bigl[\lvert X - \mathbb E[X]\rvert^2\bigr]
-\]
-ihr Erwartungswert und ihre Varianz; die Kovarianz zweier Zufallsvariablen ist
-\[
-  \operatorname{Cov}(X_1,X_2) \;=\; \mathbb E\bigl[(X_1-\mathbb E[X_1])\,(X_2-\mathbb E[X_2])\bigr].
-\]
-Ist $\operatorname{Cov}(X_1,X_2) = 0$, so hei\ss en $X_1$ und $X_2$ unkorreliert.
-Der Erwartungswert ist linear. Mit $\mathbb P$ bezeichnen wir
-Wahrscheinlichkeiten.
+\cite[Anhang~A.6]{mallat}. % S. 761
+Alle Zufallsvariablen sind reellwertig. Ein Zufallsvektor
+$X = (X_0,\dots,X_{N-1})$ besteht aus $N$ Zufallsvariablen $X_n$. Hat eine
+Zufallsvariable $X$ die Wahrscheinlichkeitsdichte $p$, so hei\ss en
+$\mathbb E[X] = \int_\R x\,p(x)\,dx$ ihr Erwartungswert und
+$\mathbb E\bigl[(X - \mathbb E[X])^2\bigr]$ ihre Varianz. Der Erwartungswert
+ist linear. Zwei Zufallsvariablen $X_1$, $X_2$ hei\ss en unkorreliert, wenn
+$\mathbb E\bigl[(X_1-\mathbb E[X_1])(X_2-\mathbb E[X_2])\bigr] = 0$ gilt.
 
-\begin{Definition}[Normalverteilung, vgl.\ {\cite[Kap.~11.2.2]{mallat}}] % S. 554
+\begin{Definition}[Normalverteilung, vgl.\ {\cite[Kap.~1.4, Satz~(3.6)]{blatter}}, {\cite[Kap.~11.2.2]{mallat}}] % Blatter S. 11 (1), S. 66 (Dichte mit sigma, Mittelwert 0); Mallat S. 554 (phi, Mittelwert mu)
 \label{def:normalverteilung}
 Sei $\phi(x) = (2\pi)^{-1/2}e^{-x^2/2}$ die Gau\ss'sche Dichte. Eine
 Zufallsvariable $X$ hei\ss t normalverteilt mit Erwartungswert $\mu$ und Varianz
-$\sigma^2>0$, kurz $X\sim\mathcal N(\mu,\sigma^2)$, wenn sie die Dichte
-$p(x) = \sigma^{-1}\phi\bigl((x-\mu)/\sigma\bigr)$ hat, und standardnormalverteilt
-im Fall $\mu = 0$, $\sigma = 1$.
+$\sigma^2>0$, wenn sie die Dichte
+$p(x) = \sigma^{-1}\phi\bigl((x-\mu)/\sigma\bigr)$ hat. Im Fall $\mu = 0$,
+$\sigma = 1$ hei\ss t $X$ standardnormalverteilt.
 \end{Definition}
 
 Gemeinsam normalverteilt hei\ss en Zufallsvariablen, die zusammen einen
 Gau\ss'schen Zufallsvektor bilden. Für sie gilt:
 
-\begin{Satz}[vgl.\ {\cite[Kap.~11.1.1]{mallat}}] % S. 538, dort für zwei Zufallsvektoren
+\begin{Satz}[vgl.\ {\cite[Kap.~10.3.2]{mallat}}] % S. 499 (in jeder Basis Gau\ss'sch, Dichte), S. 500 ("jointly Gaussian", unkorreliert => unabhängig)
 \label{satz:unkorreliert-unabhaengig}
-Gemeinsam normalverteilte Zufallsvariablen, die paarweise unkorreliert sind,
-sind unabhängig.
+Sei $Z$ ein Gau\ss'scher Zufallsvektor im $\R^N$.
+\begin{enumerate}
+\item[(i)] Ist $\{g_m\}_{0\le m<N}$ eine Orthonormalbasis des $\R^N$, so sind
+die Koeffizienten $\scal{Z}{g_0},\dots,\scal{Z}{g_{N-1}}$ gemeinsam
+normalverteilt.
+\item[(ii)] Sind die Komponenten von $Z$ paarweise unkorreliert, so sind sie
+unabhängig.
+\end{enumerate}
 \end{Satz}
 
-In Kapitel~\ref{chapter:denoising} wird ein Messsignal durch eine Matrix
-transformiert. Dafür brauchen wir noch drei Begriffe.
- 
-\begin{Definition}[Orthogonale Matrix, vgl.\ {\cite[Kap.~12]{hankebourgeois}}] % S. 112, dort für komplexe Matrizen "unitär", U^*U = I
-\label{def:orthogonale-matrix}
-Eine Matrix $S\in\R^{M\times M}$ hei\ss t orthogonal, wenn
-$S^\top S = SS^\top = I$ gilt.
-\end{Definition}
- 
-Ausgeschrieben bedeutet $SS^\top = I$, dass die Zeilen von $S$ eine
-Orthonormalbasis des $\R^M$ bilden, $S^\top S = I$ dasselbe für die Spalten
-\cite[Kap.~12]{hankebourgeois}. % S. 112
-Eine orthogonale Matrix erhält die euklidische Länge, denn
-\[
-  \norm{Sx}^2 \;=\; (Sx)^\top Sx \;=\; x^\top S^\top S\,x \;=\; x^\top x \;=\; \norm{x}^2 .
-\]
-Sie ist also ein unitärer Operator auf dem $\R^M$ (Definition~\ref{def:isometrie}).
- 
-\begin{Definition}[Gau\ss'sches wei\ss es Rauschen, {\cite[Kap.~11.2.1--11.2.2]{mallat}}] % S. 548, 552
+\begin{Definition}[Wei\ss es Rauschen, {\cite[Kap.~11.2.1]{mallat}}] % S. 548
 \label{def:weisses-rauschen}
 Ein Zufallsvektor $W = (W_0,\dots,W_{N-1})^\top$ hei\ss t wei\ss es Rauschen der
 Varianz $\sigma^2$, wenn
@@ -530,15 +531,15 @@ Varianz $\sigma^2$, wenn
   \mathbb E[W_nW_k] = \sigma^2\,\delta_{n,k}
   \qquad\text{für alle } n,k = 0,\dots,N-1
 \]
-gilt. Sind die $W_n$ zudem gemeinsam normalverteilt, hei\ss t $W$
+gilt. Ist $W$ zudem ein Gau\ss'scher Zufallsvektor, hei\ss t $W$
 Gau\ss'sches wei\ss es Rauschen.
 \end{Definition}
- 
-Nach Satz~\ref{satz:unkorreliert-unabhaengig} sind die Komponenten eines
+
+Nach Satz~\ref{satz:unkorreliert-unabhaengig}\,(ii) sind die Komponenten eines
 Gau\ss'schen wei\ss en Rauschens der Varianz $1$ unabhängig und
 standardnormalverteilt.
- 
-\begin{Satz}[{vgl.\ \cite[Kap.~11.2.1--11.2.2]{mallat}}] % S. 549 (bleibt weiß in jeder ONB), S. 554, 556
+
+\begin{Satz}[{vgl.\ \cite[Kap.~11.2.1--11.2.2]{mallat}}] % S. 548--549 (W_B bleibt wei\ss{} in jeder ONB), S. 556 (W_B: N unabhängige Gau\ss'sche ZV der Varianz sigma^2, ohne Beweis)
 \label{satz:rauschen-orthogonal}
 Sei $Z$ Gau\ss'sches wei\ss es Rauschen der Varianz $1$ im $\R^N$ und
 $S\in\R^{N\times N}$ orthogonal. Dann ist $\tilde Z := SZ$ wieder
@@ -546,34 +547,39 @@ Gau\ss'sches wei\ss es Rauschen der Varianz $1$. Die
 $\tilde Z_0,\dots,\tilde Z_{N-1}$ sind also unabhängig und
 standardnormalverteilt.
 \end{Satz}
- 
+
 \begin{proof}
-Seien $s_0,\dots,s_{N-1}$ die Zeilen von $S$, also
-$\tilde Z_m = \sum_{n=0}^{N-1} s_m[n]\,Z_n$. Wegen der Linearität des
-Erwartungswerts ist $\mathbb E[\tilde Z_m] = \sum_n s_m[n]\,\mathbb E[Z_n] = 0$
-und
+Seien $s_0,\dots,s_{N-1}$ die Zeilen von $S$. Sie bilden eine
+Orthonormalbasis des $\R^N$ (Abschnitt~\ref{sec:unitaer}), und es ist
+$\tilde Z_m = \scal{Z}{s_m} = \sum_{n=0}^{N-1} s_m[n]\,Z_n$. Wegen der
+Linearität des Erwartungswerts ist
+$\mathbb E[\tilde Z_m] = \sum_n s_m[n]\,\mathbb E[Z_n] = 0$ und
 \[
   \mathbb E\bigl[\tilde Z_m\tilde Z_p\bigr]
   = \sum_{n=0}^{N-1}\sum_{k=0}^{N-1} s_m[n]\,s_p[k]\,\mathbb E[Z_nZ_k]
   = \sum_{n=0}^{N-1} s_m[n]\,s_p[n]
-  = \scal{s_m}{s_p} = \delta_{m,p} ,
+  = \scal{s_m}{s_p} = \delta_{m,p} .
 \]
-da die Zeilen von $S$ eine Orthonormalbasis bilden \cite[Kap.~11.2.1]{mallat}. % S. 549
-Die $\tilde Z_m$ sind Linearkombinationen der gemeinsam normalverteilten $Z_n$
-und damit selbst gemeinsam normalverteilt, vgl.\ \cite[Kap.~11.2.2]{mallat}. % S. 554, 556: dort nur das Ergebnis
-Nach Satz~\ref{satz:unkorreliert-unabhaengig} sind sie also unabhängig.
+Nach Satz~\ref{satz:unkorreliert-unabhaengig}\,(i) sind die $\tilde Z_m$
+gemeinsam normalverteilt. Also ist $\tilde Z$ Gau\ss'sches wei\ss es Rauschen
+der Varianz $1$. Da alle Erwartungswerte null sind, ist
+$\mathbb E[\tilde Z_m\tilde Z_p]$ die Kovarianz von $\tilde Z_m$ und
+$\tilde Z_p$. Die $\tilde Z_m$ sind also paarweise unkorreliert und nach
+Satz~\ref{satz:unkorreliert-unabhaengig}\,(ii) unabhängig. Jedes $\tilde Z_m$
+ist normalverteilt \cite[Kap.~10.3.2]{mallat} % S. 499
+mit Erwartungswert $0$ und Varianz $\mathbb E[\tilde Z_m^2] = 1$, also
+standardnormalverteilt.
 \end{proof}
- 
+
 \begin{Definition}[Median, {\cite[Kap.~11.3.1]{mallat}}] % S. 565
 \label{def:median}
 Ordnet man $P$ Zahlen der Grö\ss e nach, so hei\ss t der Wert vom Rang $P/2$
 ihr Median.
 \end{Definition}
- 
+
 Anders als der Mittelwert hängt der Median nicht davon ab, wie gro\ss{} die
 Werte über ihm sind. Wenige sehr gro\ss e Werte verändern ihn daher kaum
-\cite[Kap.~11.3.1]{mallat}. % S. 565
- 
+\cite[Kap.~11.3.1]{mallat}. % S. 565 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3289,10 +3295,23 @@ Repolarisation \cite[Abb.~2.1]{gacek}, % S. 24--25
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{abb6_1_muster.pdf}
+  \begin{tikzpicture}[declare function={g(\x,\a,\m,\s)=\a*exp(-((\x-\m)/\s)^2/2);}]
+    \begin{axis}[width=0.8\textwidth, height=5cm, hide axis,
+        xmin=0, xmax=800, ymin=-0.5, ymax=1.45]
+      \draw[gray, dashed] (axis cs:0,0) -- (axis cs:800,0);
+      \addplot[uhh_blue, line width=0.8pt, domain=0:800, samples=600]
+        {g(x,0.15,130,22) + g(x,-0.12,275,8) + g(x,1.2,300,9)
+         + g(x,-0.25,322,9) + g(x,0.3,600,45) + g(x,0.06,740,15)};
+      \node[above, font=\footnotesize] at (axis cs:130,0.15) {P};
+      \node[below, font=\footnotesize] at (axis cs:272,-0.10) {Q};
+      \node[above, font=\footnotesize] at (axis cs:300,1.19) {R};
+      \node[below, font=\footnotesize] at (axis cs:323,-0.23) {S};
+      \node[above, font=\footnotesize] at (axis cs:600,0.30) {T};
+    \end{axis}
+  \end{tikzpicture}
   \caption[Schematischer Herzschlag]{Schematischer Herzschlag mit P-, Q-, R-,
   S- und T-Welle in Anlehnung an \cite[Abb.~2.2]{rebstadt}, Amplituden und
-  Dauern frei gewählt (Code in Anhang~\ref{anh:code-kap6}).}
+  Dauern frei gewählt.}
   \label{fig:muster}
 \end{figure}
 
@@ -3408,26 +3427,38 @@ Bei Datensatz~$100$ ist kein Abschnitt des oberen
 Signals als stark verrauscht markiert, bei Datensatz~$103$ ein Abschnitt von
 etwa $9$\,s \cite[Abschn.~Records]{mitdbdir}, % Record 100: "Both clean 1 30:06"; Record 103: "Upper noisy 1 0:09"
 nach der Annotationsdatei liegt er zwischen $1089{,}8$ und $1098{,}4$\,s
-(Code in Anhang~\ref{anh:code-kap6}).
+(Code in Anhang~\ref{anh:code-herzfrequenz}).
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb6_2_datensaetze.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 2, vertical sep=1.2cm},
+        width=0.9\textwidth, height=4cm, ylabel style={align=center}]
+    \nextgroupplot[xmin=393, xmax=401, xtick={393,...,401},
+        ylabel={Datensatz $100$\\in mV}]
+      \addplot[line width=0.6pt] table[x=t100, y=y100] {abbildungen/kap6_datensaetze.dat};
+    \nextgroupplot[xmin=1088, xmax=1096, xtick={1088,...,1096},
+        ylabel={Datensatz $103$\\in mV}, xlabel={Zeit $t$ in s}]
+      \fill[gray!15] (axis cs:1089.8,\pgfkeysvalueof{/pgfplots/ymin})
+        rectangle (axis cs:1096,\pgfkeysvalueof{/pgfplots/ymax});
+      \addplot[line width=0.6pt] table[x=t103, y=y103] {abbildungen/kap6_datensaetze.dat};
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Ausschnitte aus den Datensätzen 100 und 103]{Je ein Ausschnitt von
   $8$\,s aus den Datensätzen $100$ (oben, ab $393$\,s) und $103$ (unten, ab
   $1088$\,s), oberes Signal MLII. Grau hinterlegt der Abschnitt, in dem das
-  obere Signal von Datensatz~$103$ als stark verrauscht annotiert ist (Code in Anhang~\ref{anh:code-kap6}).}
+  obere Signal von Datensatz~$103$ als stark verrauscht annotiert ist (Code in
+  Anhang~\ref{anh:code-datensaetze}).}
   \label{fig:datensaetze}
 \end{figure}
 
 Abbildung~\ref{fig:datensaetze} zeigt je einen Ausschnitt von $8$\,s.
 Gestört sind beide Aufzeichnungen, auch au\ss erhalb der als verrauscht
-markierten Abschnitte. In beiden Datensätzen ist die Basisliniendrift die auffälligste
-Störung. Bei
-Datensatz~$100$ schwankt die Nulllinie innerhalb weniger Sekunden um etwa
-$0{,}4$\,mV. Bei Datensatz~$103$ fällt die Nulllinie zu Beginn des
-verrauschten Abschnitts innerhalb von etwa einer Sekunde um rund $2$\,mV und
-steigt danach langsam wieder an.
+markierten Abschnitte. In beiden Datensätzen ist die Basisliniendrift die
+auffälligste Störung. Bei Datensatz~$100$ schwankt die Nulllinie innerhalb
+weniger Sekunden um etwa $0{,}4$\,mV. Bei Datensatz~$103$ fällt die Nulllinie
+zu Beginn des verrauschten Abschnitts innerhalb von etwa einer Sekunde um rund
+$2$\,mV und steigt danach langsam wieder an.
 
 \paragraph{Länge.}
 Wir transformieren jede Aufzeichnung als Ganzes. Das ist möglich, weil
@@ -3673,7 +3704,7 @@ $0{,}15$ bis $0{,}3$\,Hz \cite[Abschn.~2.2.1]{castillo}. % S. 3: "BW usually com
 Nach den Annotationen liegt die Herzfrequenz im Mittel bei $75$ bzw.\ $70$
 Schlägen pro Minute und für keinen Schlag unter $53$ pro Minute, also
 $f_{\mathrm{Herz}} > 53/60\,\mathrm{Hz} \approx 0{,}88$\,Hz
-(Code in Anhang~\ref{anh:code-kap6}). Mit
+(Code in Anhang~\ref{anh:code-herzfrequenz}). Mit
 $F_{\max} = 180$\,Hz gilt:
 \begin{itemize}
 \item $f_c = 1$\,Hz wie bei Castillo et al.\ ergibt
@@ -3779,8 +3810,8 @@ enthalten, und für alle Stufen verwenden
 Für $N$ zwischen $2^6$ und $2^{19}$ überschreitet reines Rauschen diese
 Schwelle nur in etwa einem Zehntel der Realisierungen
 \cite[Kap.~15.2.3]{alessio}. % S. 723
-Gerechnet wurde mit PyWavelets \cite{pywavelets} (Code in 
-Anhang~\ref{anh:code-kap6}).
+Umgesetzt ist das Verfahren mit PyWavelets \cite{pywavelets}
+(Listing~\ref{lst:kap6-verfahren} in Anhang~\ref{anh:code-verfahren}).
 
 \paragraph{Zusammenfassung.}
 Mit den gewählten Parametern lautet das Verfahren:
@@ -3830,6 +3861,10 @@ Modell von McSharry et al.\ \cite{mcsharry}, berechnet mit der Funktion
 pro Minute und $N = 2^{16}$ Abtastwerte, also etwa $3$\,min. Das Modell
 enthält von sich aus eine Atmungsdrift \cite[Abschn.~IV, Gl.~(2)]{mcsharry}. % S. 291
 Diese haben wir abgeschaltet, damit das Test-EKG selbst keine Drift enthält.
+Die Differentialgleichung des Modells lösen wir mit der relativen Toleranz
+$10^{-8}$ statt der voreingestellten $10^{-3}$, da das Ergebnis sonst von der
+Rechenumgebung abhängt (eigene Festlegung, Code in
+Anhang~\ref{anh:code-testekg}).
 
 Für $x\in\R^N$ sei $\bar x = \frac1N\sum_{n=0}^{N-1} x_n$ der Mittelwert und
 $\mathbf 1 = (1,\dots,1)\in\R^N$, also $\scal{x}{\mathbf 1} = N\bar x$.
@@ -3888,10 +3923,24 @@ unruhig, die R-Zacken bleiben aber erkennbar.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb6_3_testsignal.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 2, vertical sep=0.5cm,
+        x descriptions at=edge bottom}, width=0.9\textwidth, height=4cm,
+        xmin=60, xmax=64, xlabel={Zeit $t$ in s}]
+    \nextgroupplot[ylabel={$f$ in mV}, ymin=-0.6, ymax=1.2]
+      \addplot table[x=t, y=f] {abbildungen/kap6_test.dat};
+    \nextgroupplot[ylabel={$Y$ in mV}, ymin=-0.9, ymax=1.7,
+        legend style={font=\footnotesize, draw=none, at={(1,1)}, anchor=north east},
+        legend columns=2]
+      \addplot[gray, line width=0.4pt] table[x=t, y=Y] {abbildungen/kap6_test.dat};
+      \addplot[uhh_red, dashed] table[x=t, y=b] {abbildungen/kap6_test.dat};
+      \legend{$Y$, Drift $b$}
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Test-EKG und gestörte Messung]{Ausschnitt von $4$\,s aus dem
   Test-EKG $f$ (oben) und der gestörten Messung $Y$ mit der Drift $b$
-  (gestrichelt, unten) mit $\sigma = 0{,}025$\,mV (Code in Anhang~\ref{anh:code-kap6}).}
+  (gestrichelt, unten) mit $\sigma = 0{,}025$\,mV (Code in
+  Anhang~\ref{anh:code-test-abb}).}
   \label{fig:testsignal}
 \end{figure}
 
@@ -3901,7 +3950,7 @@ Definition~\ref{def:risiko}, wobei $\hat f$ das Ergebnis des Verfahrens aus
 Definition~\ref{def:verfahren} für die Messung $Y$ ist. Sie hängt von der
 Realisierung $Z$ ab, wegen der gro\ss en Länge $N$ aber kaum: Für $10$
 verschiedene Realisierungen weichen alle Werte in Tabelle~\ref{tab:test}
-um höchstens $2\,\%$ von denen für unser $Z$ ab, und die Reihenfolge der
+um höchstens $2{,}2\,\%$ von denen für unser $Z$ ab, und die Reihenfolge der
 Varianten bleibt gleich (eigene Rechnung, Code im Anhang~\ref{lst:kap6-test}).
 
 \begin{table}[htbp]
@@ -3912,67 +3961,200 @@ Varianten bleibt gleich (eigene Rechnung, Code im Anhang~\ref{lst:kap6-test}).
     Variante & $\norm{\hat f - f}^2$ in mV$^2$ \\
     \midrule
     vorher (Messung $Y$)                 & $8236{,}4$ \\
-    $J = 8$, $J_S = 2$, Soft (Verfahren) & $18{,}1$ \\
-    Hard statt Soft                      & $18{,}1$ \\
-    $J_S = 1$                            & $28{,}2$ \\
-    $J_S = 3$                            & $24{,}1$ \\
-    $d_3$ mit $0{,}2\,T$                 & $15{,}2$ \\
-    nur Drift entfernt ($J_S = 0$)       & $48{,}7$ \\
-    $J = 7$                              & $269{,}4$ \\
-    $J = 9$                              & $521{,}2$ \\
+    $J = 8$, $J_S = 2$, Soft (Verfahren) & $20{,}4$ \\
+    Hard statt Soft                      & $20{,}4$ \\
+    $J_S = 1$                            & $30{,}5$ \\
+    $J_S = 3$                            & $26{,}6$ \\
+    $d_3$ mit $0{,}2\,T$                 & $17{,}5$ \\
+    nur Drift entfernt ($J_S = 0$)       & $51{,}1$ \\
+    $J = 7$                              & $272{,}4$ \\
+    $J = 9$                              & $523{,}6$ \\
     \bottomrule
   \end{tabular}
   \caption[Fehlerenergie am Test-EKG]{Fehlerenergie $\norm{\hat f - f}^2$
-  am Test-EKG, zum Vergleich $\norm{f}^2 \approx 3823$. In der Zeile
+  am Test-EKG, zum Vergleich $\norm{f}^2 \approx 3841$. In der Zeile
   \glqq vorher\grqq{} ist $\hat f = Y$. In jeder Zeile ist nur der genannte
   Parameter gegenüber dem Verfahren geändert ($J = 8$, $J_S = 2$, Soft, db6,
-  universelle Schwelle). Code in Anhang~\ref{anh:code-kap6}.}
+  universelle Schwelle). Code in Anhang~\ref{anh:code-test}.}
   \label{tab:test}
 \end{table}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb6_4_test.pdf}
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=0.9\textwidth, height=4cm, xmin=60, xmax=64,
+        ymin=-0.6, ymax=1.6, xlabel={Zeit $t$ in s}, ylabel={in mV},
+        legend style={font=\footnotesize, draw=none, at={(1,1)}, anchor=north east},
+        legend columns=2]
+      \addplot[gray!60, line width=1.4pt] table[x=t, y=f] {abbildungen/kap6_test.dat};
+      \addplot[line width=0.6pt] table[x=t, y=fdach] {abbildungen/kap6_test.dat};
+      \legend{$f$, $\hat f$}
+    \end{axis}
+  \end{tikzpicture}
   \caption[Ergebnis am Test-EKG]{Derselbe Ausschnitt von $4$\,s wie in
-  Abbildung~\ref{fig:testsignal}: $f$ (grau) und $\hat f$ (blau). Code in
-  Anhang~\ref{anh:code-kap6}.}
+  Abbildung~\ref{fig:testsignal}: $f$ (grau) und $\hat f$ (blau) (Code in
+  Anhang~\ref{anh:code-test-abb}).}
   \label{fig:test}
 \end{figure}
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb6_5_test_schlag.pdf}
+  \begin{tikzpicture}
+    \begin{axis}[ba, width=0.9\textwidth, height=4.5cm, xmin=60.45, xmax=61.35,
+        ymin=-0.6, ymax=1.2, ytick={-0.5,0,0.5,1},
+        xlabel={Zeit $t$ in s}, ylabel={in mV},
+        legend style={font=\footnotesize, draw=none, at={(1,1)}, anchor=north east},
+        legend columns=2]
+      \addplot[gray!60, line width=2pt] table[x=t, y=f] {abbildungen/kap6_test.dat};
+      \addplot table[x=t, y=fdach] {abbildungen/kap6_test.dat};
+      \legend{$f$, $\hat f$}
+    \end{axis}
+  \end{tikzpicture}
   \caption[Ein Herzschlag am Test-EKG]{Ein Herzschlag aus
-  Abbildung~\ref{fig:test} vergrö\ss ert: $f$ (grau) und $\hat f$ (blau).
-  Code in Anhang~\ref{anh:code-kap6}.}
+  Abbildung~\ref{fig:test} vergrö\ss ert: $f$ (grau) und $\hat f$ (blau) (Code
+  in Anhang~\ref{anh:code-test-abb}).}
   \label{fig:test-schlag}
 \end{figure}
 
 \begin{figure}[p]
   \centering
-  \includegraphics[width=\textwidth]{abb6_7_zerlegung_f.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 9, vertical sep=0.2cm,
+        x descriptions at=edge bottom}, width=0.95\textwidth, height=2.3cm,
+        xmin=60, xmax=64, xlabel={Zeit $t$ in s}, ylabel style={rotate=-90},
+        tick label style={font=\scriptsize}, unbounded coords=discard,
+        every axis plot/.append style={ycomb, line width=0.5pt}]
+    \nextgroupplot[ymin=-0.15, ymax=0.15, ytick={-0.1,0,0.1}, ylabel={$d_1$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \draw[gray, dashed] (axis cs:60,0.118) -- (axis cs:64,0.118);
+      \draw[gray, dashed] (axis cs:60,-0.118) -- (axis cs:64,-0.118);
+      \addplot table[x=td1, y=d1] {abbildungen/kap6_zerlegung_f.dat};
+    \nextgroupplot[ymin=-0.15, ymax=0.15, ytick={-0.1,0,0.1}, ylabel={$d_2$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \draw[gray, dashed] (axis cs:60,0.118) -- (axis cs:64,0.118);
+      \draw[gray, dashed] (axis cs:60,-0.118) -- (axis cs:64,-0.118);
+      \addplot table[x=td2, y=d2] {abbildungen/kap6_zerlegung_f.dat};
+    \nextgroupplot[ymin=-0.4, ymax=0.4, ytick={-0.3,0,0.3}, ylabel={$d_3$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td3, y=d3] {abbildungen/kap6_zerlegung_f.dat};
+    \nextgroupplot[ymin=-2, ymax=2, ytick={-1,0,1}, ylabel={$d_4$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td4, y=d4] {abbildungen/kap6_zerlegung_f.dat};
+    \nextgroupplot[ymin=-3, ymax=3, ytick={-2,0,2}, ylabel={$d_5$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td5, y=d5] {abbildungen/kap6_zerlegung_f.dat};
+    \nextgroupplot[ymin=-2.1, ymax=2.1, ytick={-2,0,2}, ylabel={$d_6$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td6, y=d6] {abbildungen/kap6_zerlegung_f.dat};
+    \nextgroupplot[ymin=-1.7, ymax=1.7, ytick={-1,0,1}, ylabel={$d_7$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td7, y=d7] {abbildungen/kap6_zerlegung_f.dat};
+    \nextgroupplot[ymin=-1.6, ymax=1.6, ytick={-1,0,1}, ylabel={$d_8$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td8, y=d8] {abbildungen/kap6_zerlegung_f.dat};
+    \nextgroupplot[ymin=-8.5, ymax=8.5, ytick={-5,0,5}, ylabel={$a_8$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=ta8, y=a8] {abbildungen/kap6_zerlegung_f.dat};
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Zerlegung des Test-EKG]{Koeffizienten $d_1$ (oben) bis $d_8$ und
   $a_8$ (unten) von $f$ in mV im Ausschnitt aus Abbildung~\ref{fig:testsignal}.
-  Gestrichelt $\pm T$ auf den geschwellten Stufen. Code in
-  Anhang~\ref{anh:code-kap6}.}
+  Gestrichelt $\pm T$ auf den geschwellten Stufen (Code in
+  Anhang~\ref{anh:code-test-abb}).}
   \label{fig:zerlegung-f}
 \end{figure}
 
 \begin{figure}[p]
   \centering
-  \includegraphics[width=\textwidth]{abb6_7_zerlegung_Y.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 9, vertical sep=0.2cm,
+        x descriptions at=edge bottom}, width=0.95\textwidth, height=2.3cm,
+        xmin=60, xmax=64, xlabel={Zeit $t$ in s}, ylabel style={rotate=-90},
+        tick label style={font=\scriptsize}, unbounded coords=discard,
+        every axis plot/.append style={ycomb, line width=0.5pt}]
+    \nextgroupplot[ymin=-0.15, ymax=0.15, ytick={-0.1,0,0.1}, ylabel={$d_1$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \draw[gray, dashed] (axis cs:60,0.118) -- (axis cs:64,0.118);
+      \draw[gray, dashed] (axis cs:60,-0.118) -- (axis cs:64,-0.118);
+      \addplot table[x=td1, y=d1] {abbildungen/kap6_zerlegung_Y.dat};
+    \nextgroupplot[ymin=-0.15, ymax=0.15, ytick={-0.1,0,0.1}, ylabel={$d_2$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \draw[gray, dashed] (axis cs:60,0.118) -- (axis cs:64,0.118);
+      \draw[gray, dashed] (axis cs:60,-0.118) -- (axis cs:64,-0.118);
+      \addplot table[x=td2, y=d2] {abbildungen/kap6_zerlegung_Y.dat};
+    \nextgroupplot[ymin=-0.4, ymax=0.4, ytick={-0.3,0,0.3}, ylabel={$d_3$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td3, y=d3] {abbildungen/kap6_zerlegung_Y.dat};
+    \nextgroupplot[ymin=-2, ymax=2, ytick={-1,0,1}, ylabel={$d_4$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td4, y=d4] {abbildungen/kap6_zerlegung_Y.dat};
+    \nextgroupplot[ymin=-3, ymax=3, ytick={-2,0,2}, ylabel={$d_5$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td5, y=d5] {abbildungen/kap6_zerlegung_Y.dat};
+    \nextgroupplot[ymin=-2.1, ymax=2.1, ytick={-2,0,2}, ylabel={$d_6$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td6, y=d6] {abbildungen/kap6_zerlegung_Y.dat};
+    \nextgroupplot[ymin=-1.7, ymax=1.7, ytick={-1,0,1}, ylabel={$d_7$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td7, y=d7] {abbildungen/kap6_zerlegung_Y.dat};
+    \nextgroupplot[ymin=-1.6, ymax=1.6, ytick={-1,0,1}, ylabel={$d_8$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td8, y=d8] {abbildungen/kap6_zerlegung_Y.dat};
+    \nextgroupplot[ymin=-8.5, ymax=8.5, ytick={-5,0,5}, ylabel={$a_8$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=ta8, y=a8] {abbildungen/kap6_zerlegung_Y.dat};
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Zerlegung der Messung]{Wie Abbildung~\ref{fig:zerlegung-f}, für
-  die Messung $Y$, Ma\ss stab je Stufe gleich. Code in
-  Anhang~\ref{anh:code-kap6}.}
+  die Messung $Y$, Ma\ss stab je Stufe gleich (Code in
+  Anhang~\ref{anh:code-test-abb}).}
   \label{fig:zerlegung-Y}
 \end{figure}
 
 \begin{figure}[p]
   \centering
-  \includegraphics[width=\textwidth]{abb6_7_zerlegung_fhat.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 9, vertical sep=0.2cm,
+        x descriptions at=edge bottom}, width=0.95\textwidth, height=2.3cm,
+        xmin=60, xmax=64, xlabel={Zeit $t$ in s}, ylabel style={rotate=-90},
+        tick label style={font=\scriptsize}, unbounded coords=discard,
+        every axis plot/.append style={ycomb, line width=0.5pt}]
+    \nextgroupplot[ymin=-0.15, ymax=0.15, ytick={-0.1,0,0.1}, ylabel={$d_1$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \draw[gray, dashed] (axis cs:60,0.118) -- (axis cs:64,0.118);
+      \draw[gray, dashed] (axis cs:60,-0.118) -- (axis cs:64,-0.118);
+      \addplot table[x=td1, y=d1] {abbildungen/kap6_zerlegung_fdach.dat};
+    \nextgroupplot[ymin=-0.15, ymax=0.15, ytick={-0.1,0,0.1}, ylabel={$d_2$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \draw[gray, dashed] (axis cs:60,0.118) -- (axis cs:64,0.118);
+      \draw[gray, dashed] (axis cs:60,-0.118) -- (axis cs:64,-0.118);
+      \addplot table[x=td2, y=d2] {abbildungen/kap6_zerlegung_fdach.dat};
+    \nextgroupplot[ymin=-0.4, ymax=0.4, ytick={-0.3,0,0.3}, ylabel={$d_3$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td3, y=d3] {abbildungen/kap6_zerlegung_fdach.dat};
+    \nextgroupplot[ymin=-2, ymax=2, ytick={-1,0,1}, ylabel={$d_4$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td4, y=d4] {abbildungen/kap6_zerlegung_fdach.dat};
+    \nextgroupplot[ymin=-3, ymax=3, ytick={-2,0,2}, ylabel={$d_5$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td5, y=d5] {abbildungen/kap6_zerlegung_fdach.dat};
+    \nextgroupplot[ymin=-2.1, ymax=2.1, ytick={-2,0,2}, ylabel={$d_6$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td6, y=d6] {abbildungen/kap6_zerlegung_fdach.dat};
+    \nextgroupplot[ymin=-1.7, ymax=1.7, ytick={-1,0,1}, ylabel={$d_7$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td7, y=d7] {abbildungen/kap6_zerlegung_fdach.dat};
+    \nextgroupplot[ymin=-1.6, ymax=1.6, ytick={-1,0,1}, ylabel={$d_8$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=td8, y=d8] {abbildungen/kap6_zerlegung_fdach.dat};
+    \nextgroupplot[ymin=-8.5, ymax=8.5, ytick={-5,0,5}, ylabel={$a_8$}]
+      \draw[gray] (axis cs:60,0) -- (axis cs:64,0);
+      \addplot table[x=ta8, y=a8] {abbildungen/kap6_zerlegung_fdach.dat};
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Zerlegung des Ergebnisses]{Wie Abbildung~\ref{fig:zerlegung-f},
-  für $\hat f$, Ma\ss stab je Stufe gleich. Code in
-  Anhang~\ref{anh:code-kap6}.}
+  für $\hat f$, Ma\ss stab je Stufe gleich (Code in
+  Anhang~\ref{anh:code-test-abb}).}
   \label{fig:zerlegung-fhat}
 \end{figure}
 
@@ -3986,7 +4168,7 @@ leicht unruhiger als $f$. Der Fehler $\hat f - f$ besteht vor allem aus dem Raus
 $d_3$ bis $d_8$, dessen erwartete Energie nach
 Abschnitt~\ref{sec:verfahren}
 $(2^{-2} - 2^{-8})\,\sigma^2 N \approx 0{,}246 \cdot 40{,}96 \approx 10{,}1$
-beträgt, also gut die Hälfte von $\norm{\hat f - f}^2 = 18{,}1$.
+beträgt, also etwa die Hälfte von $\norm{\hat f - f}^2 = 20{,}4$.
 Fehler, die das Thresholding selbst erzeugt, entstehen dort, wo $f$ gro\ss e
 Koeffizienten hat: Jeder geänderte Koeffizient $\scal{f}{\psi_{j,m}}$
 hinterlässt im Fehler ein kurzes Wavelet $\psi_{j,m}$
@@ -4000,7 +4182,7 @@ Listing~\ref{lst:kap6-test}):
 \begin{itemize}
 \item In $a_8$ liegt bei $Y$ die Drift, bei $f$ fast nichts. In $\hat f$ ist
   $a_8$ null.
-\item Auf $d_1$ und $d_2$ hat $f$ fast keine Energie ($0{,}2$ und $0{,}5$),
+\item Auf $d_1$ und $d_2$ hat $f$ fast keine Energie ($0{,}2$ und $0{,}4$),
   $Y$ dort also fast nur Rauschen mit erwarteter Energie $\sigma^2 N/2^j$
   ($20{,}5$ und $10{,}2$). Das Thresholding setzt fast alle Koeffizienten auf
   null und entfernt so das Rauschen.
@@ -4013,18 +4195,16 @@ Listing~\ref{lst:kap6-test}):
   (Abbildung~\ref{fig:zerlegung-fhat}).
 \item Auch $d_4$ bis $d_8$ bleiben unverändert, mit dem kleinen Rauschanteil.
 \end{itemize}
-Der Code steht in Listing~\ref{lst:kap6-test} (Tabelle~\ref{tab:test}) sowie
-in den Listings~\ref{lst:kap6-abb-test}, \ref{lst:kap6-abb-test-schlag}
-und~\ref{lst:kap6-abb-zerlegung}
-(Abbildungen) im Anhang.
+Der Code steht in Listing~\ref{lst:kap6-test} (Tabelle~\ref{tab:test}) und
+Listing~\ref{lst:kap6-test-abb} (Abbildungen) im Anhang.
 Aus Tabelle~\ref{tab:test} folgt:
 \begin{itemize}
 \item $J = 8$ ist deutlich besser als $J = 7$ und $J = 9$. Das bestätigt
   \eqref{eq:j-bedingung}: Mit $J = 7$ wird ein Teil des EKG gelöscht, mit
   $J = 9$ bleibt Drift stehen.
 \item Das Thresholding von $d_1$ und $d_2$ senkt die Fehlerenergie gegenüber
-  dem blo\ss en Entfernen der Drift von $48{,}7$ auf $18{,}1$, also auf gut ein
-  Drittel.
+  dem blo\ss en Entfernen der Drift von $51{,}1$ auf $20{,}4$, also auf zwei
+  Fünftel.
 \item $J_S = 1$ ist deutlich schlechter, weil das Rauschen auf $d_2$
   stehen bleibt. Auch $J_S = 3$ ist schlechter, weil das Schwellen von $d_3$
   mehr vom EKG entfernt als vom Rauschen. Da $A$ orthogonal ist, gilt
@@ -4033,12 +4213,13 @@ Aus Tabelle~\ref{tab:test} folgt:
     + \sum_{j=1}^{8} \norm{d_j(\hat f) - d_j(f)}^2 ,
   \]
   und beide Varianten unterscheiden sich nur auf $d_3$. Dort ist der Fehler
-  $5{,}1$, wenn $d_3$ unverändert bleibt, und $11{,}1$ nach dem Schwellen. Das
-  ergibt genau $24{,}1 - 18{,}1 = 6{,}0$ (eigene Rechnung,
+  $5{,}1$, wenn $d_3$ unverändert bleibt, und $11{,}2$ nach dem Schwellen. Das
+  ergibt $11{,}2 - 5{,}1 = 6{,}1$, bis auf Rundung den Unterschied
+  $26{,}6 - 20{,}4$ der Fehlerenergien (eigene Rechnung,
   Listing~\ref{lst:kap6-test}). Das bestätigt die Wahl $J_S = 2$ aus
   Abschnitt~\ref{sec:verfahren}.
 \item Hard- und Soft-Thresholding liefern dieselbe Fehlerenergie
-  ($18{,}1$). Soft-Thresholding verkleinert zwar auch die gro\ss en
+  ($20{,}4$). Soft-Thresholding verkleinert zwar auch die gro\ss en
   Koeffizienten um $T$ und braucht deshalb für ähnliche Ergebnisse oft etwa
   die halbe Schwelle \cite[Kap.~11.2.2]{mallat}. % S. 556 "it is often necessary to reduce by two the threshold of the soft thresholding"
   Auf $d_1$ und $d_2$ hat $f$ aber kaum gro\ss e Koeffizienten. Wir bleiben
@@ -4062,7 +4243,7 @@ $0{,}2\,T \approx 0{,}024$\,mV, und das Ergebnis ist
   \rho^{\mathrm S}_{0{,}2T}(d_3),\; \rho^{\mathrm S}_T(d_2),\;
   \rho^{\mathrm S}_T(d_1)\bigr).
 \]
-Die Fehlerenergie sinkt von $18{,}1$ auf $15{,}2$. Der Fehler auf $d_3$ fällt
+Die Fehlerenergie sinkt von $20{,}4$ auf $17{,}5$. Der Fehler auf $d_3$ fällt
 von $5{,}1$ auf $2{,}2$, alle anderen Stufen bleiben gleich (eigene Rechnung,
 Listing~\ref{lst:kap6-test}). Abbildung~\ref{fig:test-d3} zeigt denselben
 Herzschlag wie Abbildung~\ref{fig:test-schlag}. Oben ist $\hat f_3$ vor und
@@ -4071,11 +4252,32 @@ Fehler im QRS-Komplex gleich bleibt und vor und nach ihm kleiner wird.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb6_10_test_d3.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 2, vertical sep=0.5cm,
+        x descriptions at=edge bottom}, width=0.9\textwidth, height=4.5cm,
+        xmin=60.45, xmax=61.35, xlabel={Zeit $t$ in s},
+        legend style={font=\footnotesize, draw=none, at={(1,1)}, anchor=north east}]
+    \nextgroupplot[ylabel={in mV}, legend columns=3,
+        ymin=-0.6, ymax=1.2, ytick={-0.5,0,0.5,1}]
+      \addplot[gray!60, line width=2pt] table[x=t, y=f] {abbildungen/kap6_test.dat};
+      \addplot table[x=t, y=fdach] {abbildungen/kap6_test.dat};
+      \addplot[uhh_red, line width=0.5pt] table[x=t, y=fdach3] {abbildungen/kap6_test.dat};
+      \legend{$f$, $\hat f$, $\hat f_3$}
+    \nextgroupplot[ylabel={Fehler in mV}, legend columns=2, scaled y ticks=false,
+        ymin=-0.035, ymax=0.05, ytick={-0.02,0,0.02,0.04},
+        yticklabel style={/pgf/number format/fixed,
+        /pgf/number format/precision=2}]
+      \draw[gray] (axis cs:60.45,0) -- (axis cs:61.35,0);
+      \addplot table[x=t, y expr=\thisrow{fdach}-\thisrow{f}] {abbildungen/kap6_test.dat};
+      \addplot[uhh_red, line width=0.5pt] table[x=t, y expr=\thisrow{fdach3}-\thisrow{f}] {abbildungen/kap6_test.dat};
+      \legend{$\hat f - f$, $\hat f_3 - f$}
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Herzschlag mit kleinerer Schwelle auf $d_3$]{Der Herzschlag aus
   Abbildung~\ref{fig:test-schlag}: oben $f$ (grau), $\hat f$ (blau) und
-  $\hat f_3$ mit Schwelle $0{,}2\,T$ auf $d_3$ (rot gestrichelt), unten die
-  Fehler $\hat f - f$ und $\hat f_3 - f$. Code in Anhang~\ref{anh:code-kap6}.}
+  $\hat f_3$ mit Schwelle $0{,}2\,T$ auf $d_3$ (rot), unten die Fehler
+  $\hat f - f$ (blau) und $\hat f_3 - f$ (rot) (Code in
+  Anhang~\ref{anh:code-test-abb}).}
   \label{fig:test-d3}
 \end{figure}
 
@@ -4083,8 +4285,6 @@ Bei echten Aufzeichnungen lässt sich das nicht umsetzen. Die Schwelle
 $0{,}2\,T$ haben wir mit Kenntnis von $f$ gewählt, und bei echten
 Aufzeichnungen ist $f$ unbekannt. Zudem hängt die beste Schwelle vom
 Rauschen ab. 
-%Bei $\sigma = 0{,}05$ und $0{,}1$\,mV liegt sie bei $0{,}25\,T$
-%und $0{,}3\,T$ (eigene Rechnung, Listing~\ref{lst:kap6-test}). 
 Wir bleiben
 deshalb beim Verfahren aus Definition~\ref{def:verfahren}.
 
@@ -4099,34 +4299,89 @@ Ergebnis deshalb nur an den Ausschnitten aus Abbildung~\ref{fig:datensaetze}.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=\textwidth]{abb6_10_vergleich.pdf}
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 2, vertical sep=1.3cm},
+        width=0.9\textwidth, height=4.5cm, xtick distance=1,
+        legend style={font=\footnotesize, draw=none, fill=white,
+          fill opacity=0.8, text opacity=1, at={(1,1)}, anchor=north east},
+        legend columns=2]
+    \nextgroupplot[xmin=393, xmax=401, ymin=-0.5, ymax=1.5,
+        ytick={-0.5,0,0.5,1}, ylabel={Datensatz 100 in mV}]
+      \draw[gray, dashed, thin] (axis cs:393,0) -- (axis cs:401,0);
+      \addplot[gray!70, line width=1pt] table[x=t100, y=y100] {abbildungen/kap6_vergleich.dat};
+      \addplot table[x=t100, y=f100] {abbildungen/kap6_vergleich.dat};
+      \legend{$Y$, $\hat f$}
+    \nextgroupplot[xmin=1088, xmax=1096, ymin=-2.8, ymax=3.6,
+        ytick={-2,0,2}, ylabel={Datensatz 103 in mV},
+        xlabel={Zeit $t$ in s}]
+      \draw[gray, dashed, thin] (axis cs:1088,0) -- (axis cs:1096,0);
+      \addplot[gray!70, line width=1pt] table[x=t103, y=y103] {abbildungen/kap6_vergleich.dat};
+      \addplot table[x=t103, y=f103] {abbildungen/kap6_vergleich.dat};
+      \legend{$Y$, $\hat f$}
+    \end{groupplot}
+  \end{tikzpicture}
   \caption[Ausschnitte vor und nach dem Entrauschen]{Die Ausschnitte aus
-  Abbildung~\ref{fig:datensaetze} nach dem Entrauschen ($\hat f$, blau) und
-  darunter vorher ($Y$, grau), je Datensatz im selben Ma\ss stab; gestrichelt
-  die Nulllinie (Code in Anhang~\ref{anh:code-kap6}).}
+  Abbildung~\ref{fig:datensaetze} vor ($Y$, grau) und nach dem Entrauschen
+  ($\hat f$, blau); gestrichelt die Nulllinie (Code in
+  Anhang~\ref{anh:code-vergleich}).}
   \label{fig:vergleich}
 \end{figure}
 
-Abbildung~\ref{fig:vergleich} zeigt jeweils oben $\hat f$ und darunter die
-Messwerte $Y$. Bei Datensatz~$100$ liegt die Grundlinie nach dem Entrauschen
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \begin{groupplot}[ba, group style={group size=1 by 2, vertical sep=1.3cm},
+        width=0.9\textwidth, height=4.5cm, xtick distance=0.5,
+        legend style={font=\footnotesize, draw=none, fill=white,
+          fill opacity=0.8, text opacity=1, at={(1,1)}, anchor=north east},
+        legend columns=2]
+    \nextgroupplot[xmin=397, xmax=399, ymin=-0.5, ymax=1.5,
+        ytick={-0.5,0,0.5,1}, ylabel={Datensatz 100 in mV}]
+      \draw[gray, dashed, thin] (axis cs:397,0) -- (axis cs:399,0);
+      \addplot[gray!70, line width=1pt] table[x=t100, y=y100] {abbildungen/kap6_vergleich.dat};
+      \addplot table[x=t100, y=f100] {abbildungen/kap6_vergleich.dat};
+      \legend{$Y$, $\hat f$}
+    \nextgroupplot[xmin=1088, xmax=1090, ymin=-1, ymax=2.6,
+        ytick={-1,0,1,2}, ylabel={Datensatz 103 in mV},
+        xlabel={Zeit $t$ in s}]
+      \draw[gray, dashed, thin] (axis cs:1088,0) -- (axis cs:1090,0);
+      \addplot[gray!70, line width=1pt] table[x=t103, y=y103] {abbildungen/kap6_vergleich.dat};
+      \addplot table[x=t103, y=f103] {abbildungen/kap6_vergleich.dat};
+      \legend{$Y$, $\hat f$}
+    \end{groupplot}
+  \end{tikzpicture}
+  \caption[Ausschnitte vor und nach dem Entrauschen, vergrö\ss ert]{Je
+  $2$\,s aus Abbildung~\ref{fig:vergleich} vergrö\ss ert: vor ($Y$, grau) und
+  nach dem Entrauschen ($\hat f$, blau); gestrichelt die Nulllinie (Code in
+  Anhang~\ref{anh:code-vergleich}).}
+  \label{fig:vergleich-zoom}
+\end{figure}
+
+Abbildung~\ref{fig:vergleich} zeigt die Messwerte $Y$ und darüber $\hat f$.
+Bei Datensatz~$100$ liegt die Grundlinie nach dem Entrauschen
 gleichmä\ss ig bei null; die Anhebung zwischen $395$ und $396$\,s ist
 entfernt, die Form der Schläge bleibt erhalten. Bei Datensatz~$103$ ist die
 Drift weitgehend entfernt. Nur der schnelle Abfall bei etwa $1090$\,s bleibt
-als Einbruch sichtbar.
+als Einbruch sichtbar. Abbildung~\ref{fig:vergleich-zoom} vergrö\ss ert je
+$2$\,s: P-Welle, QRS-Komplex und T-Welle bleiben in Form und Höhe erhalten,
+$\hat f$ ist nur etwas glatter als $Y$. Das passt zu
+$\hat\sigma \approx 0{,}006$\,mV: Das wei\ss e Rauschen ist in beiden
+Datensätzen schwach.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Diskussion}
 \label{sec:diskussion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Am Test-EKG sinkt die Fehlerenergie von $8236{,}4$ auf $18{,}1$, und $J = 8$ ist deutlich besser als $J = 7$ und $J = 9$, wie es
-\eqref{eq:j-bedingung} erwarten lässt (Tabelle~\ref{tab:test}). An den
+Am Test-EKG sinkt die Fehlerenergie von $8236{,}4$ auf $20{,}4$, und $J = 8$ ist 
+deutlich besser als $J = 7$ und $J = 9$, wie es\eqref{eq:j-bedingung} erwarten lässt 
+(Tabelle~\ref{tab:test}). An den
 Datensätzen $100$ und $103$ ist die Drift sichtbar entfernt, die Form der
 Schläge bleibt erhalten (Abbildung~\ref{fig:vergleich}). Dazu braucht es beide
 Bausteine: Das Thresholding aus Kapitel~\ref{chapter:denoising} entfernt die Drift
 nicht. Ihre Energie steckt in wenigen gro\ss en Koeffizienten von $a_J$,
 und gro\ss e Koeffizienten bleiben beim Thresholding erhalten.
-Erst die Wahl von $J$ nach den Frequenzen von Drift und Herzschlag erlaubt,
+Erst die Wahl von $J$ nach den Frequenzen von Drift und Herzschlag erlaubt, 
 $a_J$ gezielt zu entfernen.
 Beides geschieht in einer einzigen Zerlegung (Abschnitt~\ref{sec:verfahren}).
 
@@ -4164,9 +4419,9 @@ Die Ergebnisse haben folgende Grenzen.
   $f_S = 31{,}25$\,Hz (Abschnitt~\ref{sec:verfahren}) und bestätigt sich am
   Test-EKG. Welches $J_S$ am besten ist, hängt aber vom Verhältnis von EKG
   und Rauschen auf $d_3$ ab: Bei $\sigma = 0{,}01$ und $0{,}05$\,mV ist
-  ebenfalls $J_S = 2$ besser ($9{,}7$ statt $11{,}7$ und $48{,}2$ statt
-  $52{,}0$), bei $\sigma = 0{,}1$\,mV dagegen $J_S = 3$ ($116{,}1$ statt
-  $168{,}1$; eigene Rechnung, Listing~\ref{lst:kap6-test}).
+  ebenfalls $J_S = 2$ besser ($12{,}0$ statt $14{,}0$ und $50{,}5$ statt
+  $55{,}3$), bei $\sigma = 0{,}1$\,mV dagegen $J_S = 3$ ($120{,}2$ statt
+  $170{,}4$; Listing~\ref{lst:kap6-test}).
   Bei den Datensätzen $100$ und $103$ ist $\hat\sigma \approx 0{,}006$\,mV
   (Listing~\ref{lst:kap6-vergleich}), das wei\ss e Rauschen also schwächer
   als im Test; für dieses spricht das ebenfalls für $J_S = 2$.
@@ -4489,46 +4744,114 @@ $T$ bearbeitet, einschlie\ss lich der Approximation $a_5$.
 \section{Entrauschung von EKG-Signalen}
 \label{anh:code-kap6}
 
-Die Skripte zu Kapitel~\ref{chapter:anwendung} lesen die Datensätze $100$ und
-$103$ der MIT-BIH Arrhythmia Database mit dem Paket \texttt{wfdb} aus dem
-Ordner \texttt{daten/mitdb}. \texttt{kap6\_verfahren.py} enthält das
-Verfahren aus Abschnitt~\ref{sec:verfahren}, \texttt{kap6\_test.py} den
-Test aus Abschnitt~\ref{sec:test}.
+Die Skripte zu Kapitel~\ref{chapter:anwendung} lesen ihre Daten aus dem
+Ordner \texttt{data} (im Code \texttt{daten}): die Datensätze $100$ und $103$
+der MIT-BIH Arrhythmia Database mit dem Paket \texttt{wfdb} und das
+Test-EKG aus Abschnitt~\ref{sec:test}.
+
+\subsection{Verfahren}
+\label{anh:code-verfahren}
+
+Der folgende Code enthält das Ein-Schritt-Verfahren aus
+Definition~\ref{def:ein-schritt} mit den Parametern aus
+Abschnitt~\ref{sec:verfahren}. Die übrigen Skripte dieses Kapitels
+importieren es. Die zusätzlichen Argumente erzeugen die Varianten aus
+Tabelle~\ref{tab:test}.
 
 \IfFileExists{code/kap6_verfahren.py}{%
-  \lstinputlisting[caption={Verfahren},label={lst:kap6-verfahren}]{code/kap6_verfahren.py}}{%
+  \lstinputlisting[caption={Ein-Schritt-Verfahren aus
+    Definition~\ref{def:ein-schritt}},
+    label={lst:kap6-verfahren}]{code/kap6_verfahren.py}}{%
   \anmerkung{Datei \texttt{code/kap6\_verfahren.py} fehlt noch.}}
-\IfFileExists{code/kap6_abb_muster.py}{%
-  \lstinputlisting[caption={Abbildung~\ref{fig:muster}},label={lst:kap6-muster}]{code/kap6_abb_muster.py}}{%
-  \anmerkung{Datei \texttt{code/kap6\_abb\_muster.py} fehlt noch.}}
-\IfFileExists{code/kap6_abb_datensaetze.py}{%
-  \lstinputlisting[caption={Abbildung~\ref{fig:datensaetze}},label={lst:kap6-datensaetze}]{code/kap6_abb_datensaetze.py}}{%
-  \anmerkung{Datei \texttt{code/kap6\_abb\_datensaetze.py} fehlt noch.}}
+
+\subsection{Datensätze}
+\label{anh:code-datensaetze}
+
+Der folgende Code berechnet die Daten von Abbildung~\ref{fig:datensaetze}.
+Von jedem Datensatz wird das obere Signal (MLII) gelesen, auf die ersten
+$N = 2^{19}$ Werte gekürzt und mittelwertfrei gemacht.
+
+\IfFileExists{code/kap6_datensaetze.py}{%
+  \lstinputlisting[caption={Ausschnitte aus den Datensätzen $100$ und $103$},
+    label={lst:kap6-datensaetze}, linerange={1-5,10-18},
+    showlines=true]{code/kap6_datensaetze.py}}{%
+  \anmerkung{Datei \texttt{code/kap6\_datensaetze.py} fehlt noch.}}
+
+\subsection{Annotationen}
+\label{anh:code-herzfrequenz}
+
+Der folgende Code wertet die Annotationen der Datensätze aus: die mittlere
+Herzfrequenz und die des langsamsten Schlags (Abschnitt~\ref{sec:tiefe-J})
+sowie die als verrauscht markierten Abschnitte (Abschnitt~\ref{sec:daten}).
+Als Herzschlag zählen alle Annotationen, deren Symbol einen Schlag markiert
+\cite{mitdbdir}. Das Symbol \texttt{\~} markiert eine Änderung der
+Signalqualität. Der Subtyp $0$ bedeutet, dass beide Signale sauber sind,
+$1$ das obere und $2$ das untere Signal verrauscht.
+
 \IfFileExists{code/kap6_herzfrequenz.py}{%
-  \lstinputlisting[caption={Annotationen: Herzfrequenz (Abschnitt~\ref{sec:tiefe-J}) und verrauschter Abschnitt (Abschnitt~\ref{sec:daten})},label={lst:kap6-herzfrequenz}]{code/kap6_herzfrequenz.py}}{%
+  \lstinputlisting[caption={Herzfrequenz und verrauschte Abschnitte},
+    label={lst:kap6-herzfrequenz}, linerange={1-5,9-18},
+    showlines=true]{code/kap6_herzfrequenz.py}}{%
   \anmerkung{Datei \texttt{code/kap6\_herzfrequenz.py} fehlt noch.}}
-\IfFileExists{code/kap6_abb_vergleich.py}{%
-  \lstinputlisting[caption={Abbildung~\ref{fig:vergleich} und Schätzer $\hat\sigma$ der Datensätze},label={lst:kap6-vergleich}]{code/kap6_abb_vergleich.py}}{%
-  \anmerkung{Datei \texttt{code/kap6\_abb\_vergleich.py} fehlt noch.}}
+
+\subsection{Entrauschte Datensätze}
+\label{anh:code-vergleich}
+
+Der folgende Code berechnet die Daten der Abbildungen~\ref{fig:vergleich}
+und~\ref{fig:vergleich-zoom} und den Schätzer $\hat\sigma$ aus
+\eqref{eq:mad} für beide Datensätze.
+
+\IfFileExists{code/kap6_vergleich.py}{%
+  \lstinputlisting[caption={Ausschnitte vor und nach dem Entrauschen},
+    label={lst:kap6-vergleich}, linerange={1-1,3-7,11-22},
+    showlines=true]{code/kap6_vergleich.py}}{%
+  \anmerkung{Datei \texttt{code/kap6\_vergleich.py} fehlt noch.}}
+
+\subsection{Test-EKG}
+\label{anh:code-testekg}
+
+Der folgende Code erzeugt das Test-EKG $f$ aus Abschnitt~\ref{sec:test} mit
+dem Modell ECGSYN \cite{mcsharry} aus dem Paket NeuroKit2 \cite{neurokit2} (Version $0.3.0$)
+und speichert es in \texttt{data/testekg.dat}. Die Funktion
+\texttt{ableitung\_ohne\_drift} ist die rechte Seite der
+Differentialgleichung aus NeuroKit2 ohne die eingebaute Atmungsdrift. 
+%Die
+%Differentialgleichung wird mit den Toleranzen $10^{-8}$ (relativ) und
+%$10^{-10}$ (absolut) gelöst, damit das Ergebnis nicht vom Rechner abhängt.
+
+\IfFileExists{code/kap6_testekg.py}{%
+  \lstinputlisting[caption={Erzeugung des Test-EKG},
+    label={lst:kap6-testekg}, linerange={1-3,5-10,12-30},
+    showlines=true]{code/kap6_testekg.py}}{%
+  \anmerkung{Datei \texttt{code/kap6\_testekg.py} fehlt noch.}}
+
+\subsection{Test}
+\label{anh:code-test}
+
+Der folgende Code liest das Test-EKG, erzeugt die gestörte Messung $Y$ und
+berechnet die Fehlerenergien aus Tabelle~\ref{tab:test}, die Energien je
+Stufe, die Fehlerenergie für verschiedene Schwellen auf $d_3$, die Kontrolle
+über $10$ Realisierungen von $Z$ und die Abhängigkeit vom Rauschpegel.
+
 \IfFileExists{code/kap6_test.py}{%
-  \lstinputlisting[caption={Test an einem künstlichen EKG: Tabelle~\ref{tab:test}, Energien je Stufe, Kontrolle über $10$ Realisierungen und Rauschpegel},label={lst:kap6-test}]{code/kap6_test.py}}{%
+  \lstinputlisting[caption={Test an einem künstlichen EKG},
+    label={lst:kap6-test}, linerange={1-1,3-6,8-70},
+    showlines=true]{code/kap6_test.py}}{%
   \anmerkung{Datei \texttt{code/kap6\_test.py} fehlt noch.}}
-\IfFileExists{code/kap6_abb_testsignal.py}{%
-  \lstinputlisting[caption={Abbildung~\ref{fig:testsignal}},label={lst:kap6-abb-testsignal}]{code/kap6_abb_testsignal.py}}{%
-  \anmerkung{Datei \texttt{code/kap6\_abb\_testsignal.py} fehlt noch.}}
-\IfFileExists{code/kap6_abb_test.py}{%
-  \lstinputlisting[caption={Abbildung~\ref{fig:test}},label={lst:kap6-abb-test}]{code/kap6_abb_test.py}}{%
-  \anmerkung{Datei \texttt{code/kap6\_abb\_test.py} fehlt noch.}}
-\IfFileExists{code/kap6_abb_test_schlag.py}{%
-  \lstinputlisting[caption={Abbildung~\ref{fig:test-schlag}},label={lst:kap6-abb-test-schlag}]{code/kap6_abb_test_schlag.py}}{%
-  \anmerkung{Datei \texttt{code/kap6\_abb\_test\_schlag.py} fehlt noch.}}
-\IfFileExists{code/kap6_abb_test_d3.py}{%
-  \lstinputlisting[caption={Abbildung~\ref{fig:test-d3}},label={lst:kap6-abb-test-d3}]{code/kap6_abb_test_d3.py}}{%
-  \anmerkung{Datei \texttt{code/kap6\_abb\_test\_d3.py} fehlt noch.}}
-\IfFileExists{code/kap6_abb_zerlegung.py}{%
-  \lstinputlisting[caption={Abbildungen~\ref{fig:zerlegung-f} bis~\ref{fig:zerlegung-fhat}},label={lst:kap6-abb-zerlegung}]{code/kap6_abb_zerlegung.py}}{%
-  \anmerkung{Datei \texttt{code/kap6\_abb\_zerlegung.py} fehlt noch.}}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Abbildungen zum Test}
+\label{anh:code-test-abb}
+
+Der folgende Code berechnet die Daten der Abbildungen~\ref{fig:testsignal}
+bis~\ref{fig:zerlegung-fhat} im Ausschnitt $60$ bis $64$ Sekunden. Der
+Koeffizient $k$ der Stufe $j$ gehört zur Zeit $k \cdot 2^j / f_s$.
+
+\IfFileExists{code/kap6_test_abb.py}{%
+  \lstinputlisting[caption={Abbildungen zum Test},
+    label={lst:kap6-test-abb}, linerange={1-1,3-7,9-35},
+    showlines=true]{code/kap6_test_abb.py}}{%
+  \anmerkung{Datei \texttt{code/kap6\_test\_abb.py} fehlt noch.}}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LITERATURVERZEICHNIS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
